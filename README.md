@@ -26,7 +26,7 @@ https://alpinejs.dev/
 
 https://github.com/casid/jte/
 
-## Spring-view-component is help me reusable ui component
+## Spring-view-component is help me to make reusable ui component
 
 https://github.com/tschuehly/spring-view-component
 

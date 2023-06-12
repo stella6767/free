@@ -46,8 +46,7 @@ especially if you are springboot Backend Developer.
 
 
 
-![image](https://github.com/stella6767/simple-todo/assets/65489223/721cad3e-26b9-43c6-b330-2d7bffc2d5b2)
-
+![image](https://github.com/stella6767/simple-todo/assets/65489223/477863b4-a58b-4b48-af58-47e9b66d5028)
 
 
 # Other Example

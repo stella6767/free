@@ -26,13 +26,13 @@ spring:
               - read:user
           google:
             clientId: 700086744673-keplb3hc6ere9uiqddg4aleho4i08g37.apps.googleusercontent.com
-            clientSecret: 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
+            clientSecret: asdasd
             scope:
               - email
               - profile
           facebook:
             clientId: 700086744673-keplb3hc6ere9uiqddg4aleho4i08g37.apps.googleusercontent.com
-            clientSecret: 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
+            clientSecret: asdasdasd
             scope:
               - email
               - public_profile

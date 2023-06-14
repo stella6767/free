@@ -1,11 +1,13 @@
 @import com.example.simpletodo.entity.Todo
 @import com.example.simpletodo.view.component.TodoViewComponent
+@import com.example.simpletodo.view.component.pagination.PaginationViewComponent
 @import de.tschuehly.spring.viewcomponent.jte.ViewContext
 @import org.springframework.data.domain.Page
 @import java.util.*
 
 @param Page<Todo> todos
 @param TodoViewComponent todoViewComponent
+@param PaginationViewComponent paginationViewComponent
 
 
 <div class="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans">
@@ -47,63 +49,4 @@
 
 </div>
 
-<div class="flex justify-center">
-
-    <div class="join ">
-
-        !{var maxPage = 5;}
-        !{var start =  Math.floor (todos.getNumber() / maxPage) * maxPage + 1;}
-        !{var end = (start + maxPage -1 ) < todos.getTotalPages() ? start + maxPage -1 : todos.getTotalPages(); }
-
-        <button class="join-item btn" onclick="location.href='/todos?page=0'">First</button>
-
-
-        @if(todos.isFirst() )
-            <button class="join-item btn" disabled>&lt;</button>
-        @else
-            <button class="join-item btn"
-                    onclick="location.href='/todos?page=${todos.getNumber()-1}'">&lt;
-            </button>
-        @endif
-
-
-        @for(int i = (int) start; i <= end;  i++ )
-
-            @if( i == (todos.getNumber() + 1))
-                <input class="join-item btn btn-square"
-                       type="radio"
-                       name="options"
-                       aria-label="${i}"
-                       onclick="window.location.href='/todos?page=${i -1}'"
-                       checked
-                />
-
-            @else
-                <input class="join-item btn btn-square"
-                       type="radio"
-                       name="options"
-                       aria-label="${i}"
-                       onclick="window.location.href='/todos?page=${i - 1}'"
-                />
-
-            @endif
-
-        @endfor
-
-        @if(todos.isLast() )
-            <button class="join-item btn" disabled>&gt;</button>
-        @else
-            <button class="join-item btn"
-                    onclick="location.href='/todos?page=${todos.getNumber()+1}'"
-            >&gt;
-            </button>
-        @endif
-
-        <button class="join-item btn"
-                onclick="location.href='/todos?page=${todos.getTotalPages() -1}'">Last
-        </button>
-
-    </div>
-
-</div>
-
+${paginationViewComponent.render(todos, "todos")}

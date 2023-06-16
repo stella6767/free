@@ -23,7 +23,7 @@ plugins {
 
 val jteVersion = "2.3.2"
 
-group = "com.example"
+group = "com.stella"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 

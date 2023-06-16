@@ -1,1 +1,1 @@
-rootProject.name = "simple-todo"
+rootProject.name = "free"

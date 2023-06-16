@@ -43,6 +43,8 @@ class SecurityConfig(
         return WebSecurityCustomizer { web: WebSecurity ->
             web.ignoring()
                 .requestMatchers("/resources/*")
+                .requestMatchers("/static/*")
+                .requestMatchers("/img/*")
         }
     }
 

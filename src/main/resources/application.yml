@@ -44,7 +44,7 @@ spring:
     active:
       - local
   application:
-    name: simple-todo
+    name: free-app
   view-component:
     local-development: false
 

@@ -1,6 +1,6 @@
 package gg.jte.generated.precompiled.com.example.simpletodo.view.page;
 import de.tschuehly.spring.viewcomponent.jte.ViewContext;
-import com.example.simpletodo.view.page.TodoListViewComponent;
+import com.stella.free.view.page.TodoListViewComponent;
 public final class JteTodoListViewComponentGenerated {
 	public static final String JTE_NAME = "com/example/simpletodo/view/page/TodoListViewComponent.jte";
 	public static final int[] JTE_LINE_INFO = {84,84,85,89,89,89,91,91,91,91,92,92,92,94};

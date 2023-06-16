@@ -54,7 +54,7 @@
     </root>
 
 
-    <logger name="com.example.simpletodo" level="debug" additivity="false">
+    <logger name="com.stella.free" level="debug" additivity="false">
         <appender-ref ref="STDOUT"/>
         <springProfile name="local ">
             <appender-ref ref="FILE"/>

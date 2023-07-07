@@ -21,11 +21,12 @@ class LoggerAspect(
 
     // this aspect cause oauth2
 
-    @Pointcut("execution(* com.example.simpletodo.*..*Controller.*(..))")
+
+    @Pointcut("execution(* com.stella.free.*..*Controller.*(..))")
     private fun controllerCut() = Unit
 
 
-    @Pointcut("execution(* com.example.simpletodo.service.*Service.*(..))")
+    @Pointcut("execution(* com.stella.free.service.*Service.*(..))")
     private fun serviceCut() = Unit
 
     @Before("serviceCut()")

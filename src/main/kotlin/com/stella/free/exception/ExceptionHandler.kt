@@ -5,6 +5,7 @@ import com.stella.free.view.component.toast.ToastViewComponent
 import de.tschuehly.spring.viewcomponent.jte.ViewContext
 import org.springframework.http.HttpStatus
 import org.springframework.http.ProblemDetail
+import org.springframework.security.core.AuthenticationException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 
@@ -23,6 +24,20 @@ class ExceptionHandler(
 
         return toastViewComponent.render(
             exception.message!!,
+            10000
+        )
+    }
+
+    @ExceptionHandler(*arrayOf(AuthenticationException::class, AccessDeniedException::class))
+    fun handleAuthException(exception: Exception): ViewContext {
+
+        log.error(exception.message)
+
+        val pd = ProblemDetail.forStatus(HttpStatus.UNAUTHORIZED.value())
+        pd.detail = exception.localizedMessage
+
+        return toastViewComponent.render(
+            pd.detail!!,
             10000
         )
     }

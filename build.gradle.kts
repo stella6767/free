@@ -1,27 +1,22 @@
+import org.jetbrains.kotlin.cli.jvm.main
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.nio.file.Path
 
-buildscript {
-    dependencies {
-        classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.21")
-        classpath("org.jetbrains.kotlin:kotlin-allopen:1.7.21")
-        classpath("org.jetbrains.kotlin:kotlin-noarg:1.7.21")
-    }
-}
+
 
 plugins {
     id("org.springframework.boot") version "3.1.0"
     id("io.spring.dependency-management") version "1.1.0"
     id("gg.jte.gradle") version "2.3.2"
 
-    kotlin("kapt") version "1.7.21"
+    kotlin("kapt") version "1.8.21"
     kotlin("jvm") version "1.8.21"
     kotlin("plugin.spring") version "1.8.21"
     kotlin("plugin.jpa") version "1.8.21"
+    kotlin("plugin.allopen") version "1.8.21"
+    idea
 }
 
-val jteVersion = "2.3.2"
 
 group = "com.stella"
 version = "0.0.1-SNAPSHOT"
@@ -34,6 +29,7 @@ configurations {
 }
 
 val querydslVersion = "5.0.0"
+val jteVersion = "3.0.0"
 
 
 allOpen {
@@ -41,15 +37,11 @@ allOpen {
     annotation("jakarta.persistence.Entity")
     annotation("jakarta.persistence.MappedSuperclass")
     annotation("jakarta.persistence.Embeddable")
-
-//    annotation("javax.persistence.Entity")
-//    annotation("javax.persistence.Embeddable")
-//    annotation("javax.persistence.MappedSuperclass")
 }
 
-sourceSets["main"].withConvention(org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet::class) {
-    kotlin.srcDir("$buildDir/generated/source/kapt/main")
-}
+//sourceSets["main"].withConvention(org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet::class) {
+//    kotlin.srcDir("$buildDir/generated/source/kapt/main")
+//}
 
 
 
@@ -73,9 +65,11 @@ dependencies {
 
     // querydsl && jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("com.vladmihalcea:hibernate-types-60:2.21.1")
-    implementation("com.infobip:infobip-spring-data-jpa-querydsl-boot-starter:8.1.1")
-    kapt("com.querydsl:querydsl-apt:$querydslVersion:jakarta")
+
+
+
+
+    //kapt("com.querydsl:querydsl-apt:$querydslVersion:jakarta")
 
 
     implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0")
@@ -122,15 +116,22 @@ dependencies {
     runtimeOnly("com.h2database:h2")
     runtimeOnly("com.mysql:mysql-connector-j")
 
+    implementation("com.vladmihalcea:hibernate-types-60:2.21.1")
+    implementation("com.infobip:infobip-spring-data-jpa-querydsl-boot-starter:8.1.1")
+    implementation ("com.querydsl:querydsl-jpa:$querydslVersion:jakarta")
 
-    annotationProcessor("com.querydsl:querydsl-apt:$querydslVersion:jakarta")
-    annotationProcessor("jakarta.persistence:jakarta.persistence-api")
-    annotationProcessor("jakarta.annotation:jakarta.annotation-api")
+
+    kapt("com.querydsl:querydsl-apt:$querydslVersion:jakarta")
+    kapt("jakarta.persistence:jakarta.persistence-api")
+    kapt("jakarta.annotation:jakarta.annotation-api")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
 }
+
+
+
 
 
 
@@ -145,8 +146,6 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-
-
 sourceSets {
     test {
         resources {
@@ -159,5 +158,14 @@ sourceSets {
             srcDir("src/main/kotlin")
             exclude("**/*.kt")
         }
+
+    }
+}
+
+idea {
+    module {
+        val kaptMain = file("build/generated/source/kapt/main")
+        sourceDirs.add(kaptMain)
+        generatedSourceDirs.add(kaptMain)
     }
 }

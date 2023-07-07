@@ -1,3 +1,6 @@
+@import org.springframework.security.authentication.AnonymousAuthenticationToken
+@param org.springframework.security.core.Authentication authentication
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,17 +8,17 @@
     <title>Todo App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<%--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">--%>
-<%--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>--%>
+    <%--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">--%>
+    <%--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>--%>
     <!-- include summernote css/js -->
-<%--    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">--%>
-<%--    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>--%>
-<%--    <script type="text/javascript" src="@{/webjars/htmx.org/dist/htmx.min.js}"></script>--%>
+    <%--    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">--%>
+    <%--    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>--%>
+    <%--    <script type="text/javascript" src="@{/webjars/htmx.org/dist/htmx.min.js}"></script>--%>
 
     <script src="https://unpkg.com/htmx.org@1.9.2"></script>
 
 
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.0.3/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.0.3/dist/full.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" crossorigin="anonymous">
@@ -26,24 +29,53 @@
 </head>
 <body>
 <div class="navbar bg-base-100">
-    <div class="flex-none">
-        <button class="btn btn-square btn-ghost">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-        </button>
-    </div>
-    <div class="flex-1">
-        <a class="btn btn-ghost normal-case text-xl">daisyUI + HTMX + SpringBoot + JTE Example</a>
-    </div>
-    <div class="flex-none">
+    <div class="drawer navbar-start">
+        <input id="my-drawer" type="checkbox" class="drawer-toggle"/>
+        <div class="drawer-content ml-5">
+            <!-- Page content here -->
+            <label for="my-drawer" class="drawer-button">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                     class="inline-block w-5 h-5 stroke-current">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </label>
+        </div>
+        <div class="drawer-side">
+            <label for="my-drawer" class="drawer-overlay"></label>
+            <ul class="menu p-4 w-80 h-full bg-base-200 text-base-content">
+                <!-- Sidebar content here -->
+                <li><a href="/">Home</a></li>
+                <li><a href="/resume">about me</a></li>
+                <li><a href="/todos">todos</a></li>
 
-        <ul class="menu menu-horizontal px-1">
+            </ul>
+        </div>
+    </div>
+
+    <div class="navbar-center">
+        <a class="btn btn-ghost normal-case text-xl mt-3">Free App</a>
+    </div>
+    <div class="navbar-end">
+
+        <ul class="menu menu-horizontal px-1 mr-5">
             <li>
                 <details>
                     <summary>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                             class="inline-block w-5 h-5 stroke-current">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                        </svg>
                     </summary>
                     <ul class="p-2 bg-base-100">
-                        <li><a href="/logout">LogOut</a></li>
+
+                        @if(authentication instanceof AnonymousAuthenticationToken)
+                            <li><a href="/login/modal">Login</a></li>
+                        @else
+                            <li><a href="/logout">LogOut</a></li>
+                        @endif
+
                     </ul>
                 </details>
             </li>
@@ -51,3 +83,6 @@
     </div>
 </div>
 <br/>
+
+</body>
+</html>

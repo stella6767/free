@@ -5,6 +5,7 @@ import com.stella.free.config.security.OAuth2DetailsService
 import com.stella.free.util.logger
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -21,6 +22,7 @@ import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.access.AccessDeniedHandler
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler
+import org.springframework.web.servlet.HandlerExceptionResolver
 
 
 @Configuration
@@ -28,6 +30,9 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 class SecurityConfig(
     private val configuration: AuthenticationConfiguration,
     private val oAuth2DetailsService: OAuth2DetailsService,
+    @Suppress("SpringJavaInjectionPointsAutowiringInspection")
+    @Qualifier("handlerExceptionResolver")
+    private val resolver: HandlerExceptionResolver
 ) {
 
 
@@ -65,7 +70,7 @@ class SecurityConfig(
             }
             .exceptionHandling {
                 it.accessDeniedHandler(WebAccessDeniedHandler()) // 권한이 없는 사용자 접근 시
-                it.authenticationEntryPoint(WebAuthenticationEntryPoint()) //인증되지 않는 사용자 접근 시
+                it.authenticationEntryPoint(WebAuthenticationEntryPoint(resolver)) //인증되지 않는 사용자 접근 시
             }
             .logout{
                 it.logoutUrl("/logout")
@@ -113,7 +118,9 @@ class SecurityConfig(
     }
 
 
-    class WebAuthenticationEntryPoint : AuthenticationEntryPoint {
+    class WebAuthenticationEntryPoint(
+        val resolver: HandlerExceptionResolver
+    ) : AuthenticationEntryPoint {
         override fun commence(
             request: HttpServletRequest, response: HttpServletResponse,
             authException: AuthenticationException
@@ -121,7 +128,12 @@ class SecurityConfig(
             // 인증되지 않은 경우 페이지 이동 시 사용
             //response.sendRedirect("error/error403.html")
             // 인증되지 않은 경우 에러코드 반환 시 사용
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED)
+            //response.sendError(HttpServletResponse.SC_UNAUTHORIZED)
+            throw authException
+
+            resolver.resolveException(request, response, null, authException)
+
+
         }
     }
 
@@ -180,7 +192,7 @@ class SecurityConfig(
             "/*/*.jpg",
             "/*/*.html",
             "/*/*.css",
-            "/*/*.js"
+            "/*/*.js", "/resume",
 
         )
 

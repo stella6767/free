@@ -7,6 +7,7 @@
 <html lang="en">
 <div id="toast-element" class="fixed bg-gray-800 w-1/2 bottom-8 left-1/4 py-4 px-8 text-center text-white">
     <script>
+        console.log("Hello")
         setTimeout(() =>
                 document.getElementById('toast-element').style.display = 'none',
                 ${duration}

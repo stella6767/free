@@ -1,5 +1,7 @@
 @import org.springframework.security.authentication.AnonymousAuthenticationToken
-@param org.springframework.security.core.Authentication authentication
+@import org.springframework.security.core.context.SecurityContextHolder
+
+
 
 <!DOCTYPE html>
 <html>
@@ -28,7 +30,7 @@
 
 </head>
 <body>
-<div class="navbar bg-base-100">
+<div class="navbar bg-base-100 ">
     <div class="drawer navbar-start">
         <input id="my-drawer" type="checkbox" class="drawer-toggle"/>
         <div class="drawer-content ml-5">
@@ -41,13 +43,13 @@
                 </svg>
             </label>
         </div>
-        <div class="drawer-side">
+        <div class="drawer-side z-10">
             <label for="my-drawer" class="drawer-overlay"></label>
             <ul class="menu p-4 w-80 h-full bg-base-200 text-base-content">
                 <!-- Sidebar content here -->
                 <li><a href="/">Home</a></li>
                 <li><a href="/resume">about me</a></li>
-                <li><a href="/todos">todos</a></li>
+                <li><a href="/todos" >todos</a></li>
 
             </ul>
         </div>
@@ -70,11 +72,14 @@
                     </summary>
                     <ul class="p-2 bg-base-100">
 
-                        @if(authentication instanceof AnonymousAuthenticationToken)
+                        @if(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)
                             <li><a href="/login/modal">Login</a></li>
                         @else
                             <li><a href="/logout">LogOut</a></li>
                         @endif
+
+
+
 
                     </ul>
                 </details>

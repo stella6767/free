@@ -129,11 +129,8 @@ class SecurityConfig(
             //response.sendRedirect("error/error403.html")
             // 인증되지 않은 경우 에러코드 반환 시 사용
             //response.sendError(HttpServletResponse.SC_UNAUTHORIZED)
-            throw authException
 
             resolver.resolveException(request, response, null, authException)
-
-
         }
     }
 

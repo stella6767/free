@@ -34,7 +34,7 @@ class TodoController(
 
     @GetMapping("/")
     fun index(): ViewContext {
-        log.info("index")
+
         return layoutViewComponent.render(indexViewComponent.render())
     }
 

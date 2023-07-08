@@ -4,6 +4,8 @@ import com.stella.free.config.security.UserPrincipal
 import com.stella.free.entity.Todo
 import com.stella.free.repository.TodoRepository
 import com.stella.free.util.logger
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -24,9 +26,8 @@ class TodoService(
     }
 
 
-    fun findAll(): MutableList<Todo> {
-
-        return todoRepository.findAll()
+    fun findTodosByPage(pageable: Pageable, principal: UserPrincipal): Page<Todo> {
+        return todoRepository.findTodos(pageable, principal.user)
     }
 
 

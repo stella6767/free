@@ -29,7 +29,7 @@ configurations {
 }
 
 val querydslVersion = "5.0.0"
-val jteVersion = "3.0.0"
+val jteVersion = "2.3.2"
 
 
 allOpen {
@@ -125,6 +125,7 @@ dependencies {
     kapt("jakarta.persistence:jakarta.persistence-api")
     kapt("jakarta.annotation:jakarta.annotation-api")
 
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")

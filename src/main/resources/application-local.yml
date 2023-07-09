@@ -38,3 +38,5 @@ spring:
         globally_quoted_identifiers: true #DB 예약어도 가능
 
 
+
+

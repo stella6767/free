@@ -1,5 +1,6 @@
 package com.stella.free.exception
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.stella.free.util.ScriptUtil
 import com.stella.free.util.logger
 import com.stella.free.view.component.toast.ToastViewComponent
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 @ControllerAdvice
 class ExceptionHandler(
     private val toastViewComponent: ToastViewComponent,
+    private val objectMapper: ObjectMapper
 ) {
 
     private val log = logger()
@@ -42,12 +44,10 @@ class ExceptionHandler(
 
         log.info("????")
 
-        return ScriptUtil.alertError(pd.detail!!)
 
-//        return toastViewComponent.render(
-//            pd.detail!!,
-//            10000
-//        )
+        val jsonErrorString = objectMapper.writeValueAsString(pd.detail!!)
+
+        return ScriptUtil.alertError(jsonErrorString)
     }
 
 

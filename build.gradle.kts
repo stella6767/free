@@ -67,6 +67,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
 
+    // https://mvnrepository.com/artifact/net.datafaker/datafaker
+    implementation("net.datafaker:datafaker:2.0.1")
+
 
 
     //kapt("com.querydsl:querydsl-apt:$querydslVersion:jakarta")

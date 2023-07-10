@@ -1,26 +1,30 @@
+<div class="py-4" xmlns="http://www.w3.org/1999/html">
 
-
-
-<div class="bg-slate-100">
     <h1> TOAST UI Editor </h1>
 
-    <div id="editor"  style="color: #fff"></div>
+    <div id="editor"></div>
 
 </div>
 
 
-
-
-
 <style>
-    * {
-        text-align:  center;
+    h1 {
+        text-align: center;
     }
+
     #editor {
-        border : 1px solid;
-        width : 50%;
-        margin : 0 auto;
+        border: 1px solid;
+        width: 50%;
+        margin: 0 auto;
     }
+
+    
+    
+    
+    
+    
+
+    
 </style>
 
 <script>
@@ -37,41 +41,66 @@
                 console.log(editor.getMarkdown());
             }
         },
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
         hooks: {
             addImageBlobHook: (blob, callback) => {
                 
                 
-
                 const formData = new FormData();
                 formData.append('file', blob);
 
-                let url = '/files/';
-                $.ajax({
-                    type: 'POST',
-                    enctype: 'multipart/form-data',
-                    url: '/files/upload',
-                    data: formData,
-                    dataType: 'json',
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    timeout: 600000,
-                    success: function (data) {
-                        
-                        url += data.fileName;
-                        fileIds += data.id + ",";
-                        
-                        
-                        callback(url, '사진 대체 텍스트 입력');
-                    },
-                    error: function (e) {
-                        
-                        
+                
+                
+                
+                
 
-                        callback('image_load_fail', '사진 대체 텍스트 입력');
-                    }
-                });
+                fetch("/blog/file", {
+                    method: "POST",
+                    headers: {
+                        
+                    },
+                    body: formData,
+                }).then((response) => {
+                    return response
+                }).then((res) => {
+                    console.log(res)
+                    callback(res, '사진 대체 텍스트 입력');
+                }).catch((err) => callback('image_load_fail', '사진 대체 텍스트 입력'));
+
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
             }
         }
 

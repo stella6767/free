@@ -1,0 +1,83 @@
+
+
+
+<div class="bg-slate-100">
+    <h1> TOAST UI Editor </h1>
+
+    <div id="editor"  style="color: #fff"></div>
+
+</div>
+
+
+
+
+
+<style>
+    * {
+        text-align:  center;
+    }
+    #editor {
+        border : 1px solid;
+        width : 50%;
+        margin : 0 auto;
+    }
+</style>
+
+<script>
+
+    const editor = new toastui.Editor({
+        el: document.querySelector('#editor'),
+        previewStyle: 'vertical',
+        initialEditType: 'markdown',
+        theme: 'dark',
+        height: '1000px',
+        initialValue: '내용을 입력해주세요',
+        events: {
+            change: function () {
+                console.log(editor.getMarkdown());
+            }
+        },
+
+        hooks: {
+            addImageBlobHook: (blob, callback) => {
+                
+                
+
+                const formData = new FormData();
+                formData.append('file', blob);
+
+                let url = '/files/';
+                $.ajax({
+                    type: 'POST',
+                    enctype: 'multipart/form-data',
+                    url: '/files/upload',
+                    data: formData,
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 600000,
+                    success: function (data) {
+                        
+                        url += data.fileName;
+                        fileIds += data.id + ",";
+                        
+                        
+                        callback(url, '사진 대체 텍스트 입력');
+                    },
+                    error: function (e) {
+                        
+                        
+
+                        callback('image_load_fail', '사진 대체 텍스트 입력');
+                    }
+                });
+            }
+        }
+
+    });
+
+    
+    
+
+</script>

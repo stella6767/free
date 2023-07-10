@@ -11,35 +11,30 @@
     <title>Todo App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <%--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">--%>
-    <%--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>--%>
-    <!-- include summernote css/js -->
-    <%--    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">--%>
-    <%--    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>--%>
-    <%--    <script type="text/javascript" src="@{/webjars/htmx.org/dist/htmx.min.js}"></script>--%>
+
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
 
     <script src="https://unpkg.com/htmx.org@1.9.2"></script>
-
-
     <link href="https://cdn.jsdelivr.net/npm/daisyui@3.0.3/dist/full.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
-
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" crossorigin="anonymous">
     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.1/dist/cdn.min.js" ></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.1/dist/cdn.min.js"></script>
 
     <style>
         .htmx-settling img {
             opacity: 0;
         }
+
         img {
             transition: opacity 300ms ease-in;
         }
     </style>
 
 </head>
-<body>
+
 <div class="navbar bg-base-100 sticky top-0 z-30">
     <div class="drawer navbar-start">
         <input id="my-drawer" type="checkbox" class="drawer-toggle"/>
@@ -60,7 +55,7 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="/resume">about me</a></li>
                 <li><a href="/todos">todos</a></li>
-                <li><a href="/blog/home/posts">blog</a></li>
+                <li><a href="/blog/home">blog</a></li>
 
             </ul>
         </div>
@@ -84,9 +79,10 @@
                     <ul class="p-2 bg-base-100">
 
                         @if(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)
-                            <li><a onclick="login_modal.showModal()" >Login</a></li>
+                            <li><a onclick="login_modal.showModal()">Login</a></li>
                         @else
                             <li><a href="/logout">LogOut</a></li>
+                            <li><a href="/blog/post/editor">새글쓰기</a></li>
                         @endif
 
 
@@ -101,5 +97,5 @@ ${loginModalViewComponent.render()}
 
 <br/>
 
-</body>
-</html>
+
+

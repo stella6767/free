@@ -28,6 +28,13 @@ class Post(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     val user = user
+
+
+
+    fun updateId(id:Long){
+        this.id = id
+    }
+
     override fun toString(): String {
         return "Post(id=$id, title='$title', content='$content', thumbnail='$thumbnail', count=$count, user=$user)"
     }

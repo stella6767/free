@@ -179,7 +179,8 @@ class SecurityConfig(
         val AUTH_PASS_LIST = arrayOf(
             "/public/*", "/webjars/*", "/", "/logout", "/api/**", "/login", "/h2-console/*",
             "/error",
-            "/posts",
+            "/blog/*",
+            "/blog/*/*",
             "/logout",
             "/login/*",
             "/oauth2/authorization/*",

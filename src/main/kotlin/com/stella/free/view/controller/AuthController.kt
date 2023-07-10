@@ -11,8 +11,12 @@ class AuthController(
     private val loginModalViewComponent: LoginModalViewComponent
 ) {
 
+
+
+
     @GetMapping("/login/modal")
     fun loginModal(): ViewContext {
+
         return loginModalViewComponent.render()
     }
 

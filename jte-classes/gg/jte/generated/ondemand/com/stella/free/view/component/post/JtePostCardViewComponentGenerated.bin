@@ -1,8 +1,3 @@
-@import com.stella.free.entity.Post
-@import java.util.*
-
-@param Post post
-@param int pageNum = 1
 
 
 
@@ -11,15 +6,14 @@
     <figure>
         <div x-data="{ loading: true }">
             <img  x-show="loading" alt="Result loading..." src="/img/spinner.svg" />
-            <img x-show="!loading"
-                 src="${post.getThumbnail()}"
+            <img x-show="!loading" src=""
                  alt="post-thumbnail"
                  @load="loading = false"
             >
         </div>
     </figure>
     <div class="card-body">
-        <h2 class="card-title">${post.getTitle()}</h2>
-        <p>${post.getContent()}</p>
+        <h2 class="card-title"></h2>
+        <p></p>
     </div>
 </div>

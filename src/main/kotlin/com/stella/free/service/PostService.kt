@@ -35,15 +35,16 @@ class PostService(
 
 
     fun generateDummyPosts(size: Int) {
-        val posts = mutableListOf<Post>()
+        //val posts = mutableListOf<Post>()
         for (i in 0 until size) {
             val post = generateDummyPost((i + 1).toLong())
-            posts.add(post)
+            println(post)
+            //posts.add(post)
         }
 
-        log.info("data initialized post: ${posts.size}")
+        //log.info("data initialized post: ${posts.size}")
 
-        postRepository.saveAll(posts)
+        //postRepository.saveAll(posts)
     }
 
     fun generateDummyPost(id: Long): Post {
@@ -52,7 +53,7 @@ class PostService(
         val jTransformer = JavaObjectTransformer()
 
         val schema: Schema<Any, Any> = Schema.of(
-            Field.field("id", Supplier { faker.number().positive() }),
+            //Field.field("id", Supplier { faker.number().positive() }),
             Field.field("title", Supplier { faker.book().title() }),
             Field.field("content", Supplier { faker.famousLastWords().lastWords() }),
             Field.field("thumbnail", Supplier { faker.internet().image() }),
@@ -60,6 +61,11 @@ class PostService(
 
         val post =
             jTransformer.apply(Post::class.java, schema) as Post
+
+        post.updateId(id)
+
+        println(post)
+        postRepository.save(post)
 
 
         return post

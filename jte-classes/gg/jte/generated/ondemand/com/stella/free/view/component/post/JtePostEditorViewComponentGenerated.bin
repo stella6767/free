@@ -1,0 +1,124 @@
+
+
+
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
+
+<div class="py-4">
+
+    <h1> TOAST UI Editor </h1>
+
+    <div id="editor"></div>
+
+</div>
+
+
+<style>
+    h1 {
+        text-align: center;
+    }
+
+    #editor {
+        border: 1px solid;
+        width: 50%;
+        margin: 0 auto;
+    }
+
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+</style>
+
+
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script>
+
+
+    const editor = new toastui.Editor({
+        el: document.querySelector('#editor'),
+        previewStyle: 'vertical',
+        initialEditType: 'markdown',
+        height: '1000px',
+        theme: 'dark',
+        initialValue: '내용을 입력해주세요',
+        events: {
+            change: function () {
+                console.log(editor.getMarkdown());
+            }
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        hooks: {
+            addImageBlobHook: (blob, callback) => {
+                
+                
+                const formData = new FormData();
+                formData.append('file', blob);
+
+                
+                
+                
+                
+
+                fetch("/blog/file", {
+                    method: "POST",
+                    headers: {
+                        
+                    },
+                    body: formData,
+                }).then((response) => {
+                    return response
+                }).then((res) => {
+                    console.log(res)
+                    callback(res, '사진 대체 텍스트 입력');
+                }).catch((err) => callback('image_load_fail', '사진 대체 텍스트 입력'));
+
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            }
+        }
+
+    });
+
+    
+    
+
+</script>

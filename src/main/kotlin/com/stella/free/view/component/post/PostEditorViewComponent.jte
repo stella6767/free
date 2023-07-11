@@ -1,4 +1,9 @@
-<div class="py-4" xmlns="http://www.w3.org/1999/html">
+
+<%--스타일시트 우선순위..--%>
+
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
+
+<div class="py-4">
 
     <h1> TOAST UI Editor </h1>
 
@@ -23,18 +28,25 @@
     /*}*/
     /*.toastui-editor-toolbar-icons{*/
     /*    color: white;*/
-
     /*}*/
+
+    /*.toastui-editor-defaultUI {*/
+    /*    background-image: cross-fade();*/
+    /*}*/
+
 </style>
 
+
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script>
+
 
     const editor = new toastui.Editor({
         el: document.querySelector('#editor'),
         previewStyle: 'vertical',
         initialEditType: 'markdown',
-        theme: 'dark',
         height: '1000px',
+        theme: 'dark',
         initialValue: '내용을 입력해주세요',
         events: {
             change: function () {

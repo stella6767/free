@@ -5,9 +5,19 @@
 
 <div class="py-4">
 
-    <h1> TOAST UI Editor </h1>
 
-    <div id="editor"></div>
+    <form action="/post" method="post">
+
+        <h1> TOAST UI Editor </h1>
+
+        <div id="editor">
+
+        </div>
+
+
+        <button type="submit" class="btn">제출</button>
+
+    </form>
 
 </div>
 

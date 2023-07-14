@@ -1,8 +1,8 @@
 package gg.jte.generated.ondemand.com.stella.free.view.component.post;
 public final class JtePostEditorViewComponentGenerated {
 	public static final String JTE_NAME = "com/stella/free/view/component/post/PostEditorViewComponent.jte";
-	public static final int[] JTE_LINE_INFO = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,25,26,27,28,29,30,32,33,34,55,56,57,58,59,60,61,62,63,67,68,72,73,74,75,80,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,120,121,123};
-	private static final gg.jte.runtime.BinaryContent BINARY_CONTENT = gg.jte.runtime.BinaryContent.load(JtePostEditorViewComponentGenerated.class, "JtePostEditorViewComponentGenerated.bin", 1,334,5,5,5,5,5,6,5,5,509,9,9,9,9,9,9,9,9,87,17,114,17,17,17,131,392,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,39,5,11);
+	public static final int[] JTE_LINE_INFO = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,35,36,37,38,39,40,42,43,44,65,66,67,68,69,70,71,72,73,77,78,82,83,84,85,90,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,130,131,133};
+	private static final gg.jte.runtime.BinaryContent BINARY_CONTENT = gg.jte.runtime.BinaryContent.load(JtePostEditorViewComponentGenerated.class, "JtePostEditorViewComponentGenerated.bin", 1,467,5,5,5,5,5,6,5,5,509,9,9,9,9,9,9,9,9,87,17,114,17,17,17,131,392,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,39,5,11);
 	private static final byte[] TEXT_PART_BINARY_0 = BINARY_CONTENT.get(0);
 	private static final byte[] TEXT_PART_BINARY_1 = BINARY_CONTENT.get(1);
 	private static final byte[] TEXT_PART_BINARY_2 = BINARY_CONTENT.get(2);

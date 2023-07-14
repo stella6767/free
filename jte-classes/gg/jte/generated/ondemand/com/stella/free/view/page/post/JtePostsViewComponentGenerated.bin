@@ -1,0 +1,25 @@
+
+
+
+
+<div
+        class="container m-auto grid grid-cols-4 gap-4 "
+        id="posts-container"
+        hx-get="/blog/posts?page="
+        hx-trigger="revealed"
+        hx-swap="afterend">
+    
+    <div
+            class="container m-auto grid grid-cols-4 gap-4 "
+            id="posts-container">
+
+        
+
+        
+            
+        
+
+        
+        
+
+    </div>

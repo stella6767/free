@@ -1,0 +1,60 @@
+
+<div class="flex justify-center">
+
+    <div class="join ">
+
+        
+        
+        
+
+        <button class="join-item btn" onclick="location.href='/?page=0'">First</button>
+
+
+        
+            <button class="join-item btn" disabled>&lt;</button>
+        
+            <button class="join-item btn"
+                    onclick="location.href='/?page='">&lt;
+            </button>
+        
+
+
+        
+
+            
+                <input class="join-item btn btn-square"
+                       type="radio"
+                       name="options" aria-label=""
+                       onclick="window.location.href='/?page='"
+                       checked
+                />
+
+            
+                <input class="join-item btn btn-square"
+                       type="radio"
+                       name="options" aria-label=""
+                       onclick="window.location.href='/?page='"
+                />
+
+            
+
+        
+
+        
+            <button class="join-item btn" disabled>&gt;</button>
+        
+            <button class="join-item btn"
+                    onclick="location.href='/?page='"
+            >&gt;
+            </button>
+        
+
+        <button class="join-item btn"
+                onclick="location.href='/?page='">Last
+        </button>
+
+    </div>
+
+</div>
+
+

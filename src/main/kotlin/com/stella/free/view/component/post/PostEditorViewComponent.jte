@@ -1,25 +1,49 @@
-
-<%--스타일시트 우선순위..--%>
+@import org.springframework.security.authentication.AnonymousAuthenticationToken
+@import org.springframework.security.core.context.SecurityContextHolder
 
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
 
-<div class="py-4">
+<form class="py-4 flex flex-col gap-y-3 mb-3"
+      @submit.prevent="submitForm"
+      x-data="editorForm()"
+>
+
+    <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+        TOAST UI Editor
+    </h1>
 
 
-    <form action="/post" method="post">
+    <divc class = "flex justify-center">
+        @if(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)
+            <input type="text"
+                   x-model="username"
+                   placeholder="input your username"
+                   class="input input-bordered w-64 justify-self-center "/>
+        @endif
 
-        <h1> TOAST UI Editor </h1>
-
-        <div id="editor">
-
-        </div>
+    </divc>
 
 
-        <button type="submit" class="btn">제출</button>
+    <div class="flex justify-center">
+        <input type="text"
+               required
+               x-model="title"
+               placeholder="input your title"
+               class="input input-bordered w-64 justify-self-center"/>
+    </div>
 
-    </form>
 
-</div>
+    <div id="editor"></div>
+
+    <br/>
+
+    <div @click="submitPost" class="flex justify-center gap-x-2">
+        <button class="btn btn-success">제출</button>
+        <button class="btn btn-warning">취소</button>
+    </div>
+
+
+</form>
 
 
 <style>
@@ -33,22 +57,52 @@
         margin: 0 auto;
     }
 
-    /*.toastui-editor-defaultUI-toolbar{*/
-    /*    background-color: black;*/
-    /*}*/
-    /*.toastui-editor-toolbar-icons{*/
-    /*    color: white;*/
-    /*}*/
-
-    /*.toastui-editor-defaultUI {*/
-    /*    background-image: cross-fade();*/
-    /*}*/
-
 </style>
 
 
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+
 <script>
+
+
+    function editorForm() {
+
+        return {
+            title: "",
+            username: "",
+            submitForm() {
+                console.log("???",this.title);
+            }
+
+        }
+    }
+
+
+
+
+    const submitPost = (e) => {
+
+        console.log("click submit", editor.getMarkdown())
+
+        let reqBody = {
+            title: "",
+            content: editor.getMarkdown(),
+            thumbnails: "",
+            anonymousUsername: ""
+        }
+
+
+        // client('login', {body: {username, password}}).then(
+        //     data => {
+        //         console.log('here the logged in user data', data)
+        //     },
+        //     error => {
+        //         console.error('oh no, login failed', error)
+        //     },
+        // )
+
+
+    }
 
 
     const editor = new toastui.Editor({
@@ -60,19 +114,9 @@
         initialValue: '내용을 입력해주세요',
         events: {
             change: function () {
-                console.log(editor.getMarkdown());
+                //console.log(editor.getMarkdown());
             }
         },
-        // toolbarItems: [
-        //
-        //     ['heading', 'bold', 'italic', 'strike'],
-        //     ['hr', 'quote'],
-        //     ['ul', 'ol', 'task', 'indent', 'outdent'],
-        //     ['table', 'image', 'link'],
-        //     ['code', 'codeblock'],
-        //     ['scrollSync'],
-        // ],
-
         hooks: {
             addImageBlobHook: (blob, callback) => {
                 // blob : Java Script 파일 객체
@@ -130,5 +174,7 @@
 
     // document.querySelector('#contents').insertAdjacentHTML('afterbegin' ,editor.getHTML());
     // console.log(editor.getHTML());
+
+</script>
 
 </script>

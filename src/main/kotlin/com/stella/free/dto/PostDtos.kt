@@ -8,6 +8,7 @@ data class PostSaveDto(
     val title:String,
     val content:String,
     val thumbnail:String,
+    val anonymousUsername:String = "",
 ){
     fun toEntity(user:User?): Post {
 

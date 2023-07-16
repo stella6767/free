@@ -1,8 +1,10 @@
 package gg.jte.generated.ondemand.com.stella.free.view.component.post;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 public final class JtePostEditorViewComponentGenerated {
 	public static final String JTE_NAME = "com/stella/free/view/component/post/PostEditorViewComponent.jte";
-	public static final int[] JTE_LINE_INFO = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,35,36,37,38,39,40,42,43,44,65,66,67,68,69,70,71,72,73,77,78,82,83,84,85,90,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,130,131,133};
-	private static final gg.jte.runtime.BinaryContent BINARY_CONTENT = gg.jte.runtime.BinaryContent.load(JtePostEditorViewComponentGenerated.class, "JtePostEditorViewComponentGenerated.bin", 1,467,5,5,5,5,5,6,5,5,509,9,9,9,9,9,9,9,9,87,17,114,17,17,17,131,392,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,39,5,11);
+	public static final int[] JTE_LINE_INFO = {0,0,1,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,21,21,94,95,96,97,98,99,100,101,116,121,122,126,127,128,129,134,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,174,175,179};
+	private static final gg.jte.runtime.BinaryContent BINARY_CONTENT = gg.jte.runtime.BinaryContent.load(JtePostEditorViewComponentGenerated.class, "JtePostEditorViewComponentGenerated.bin", 420,207,1230,9,9,9,9,9,9,9,340,111,17,114,17,17,17,131,392,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,39,5,22);
 	private static final byte[] TEXT_PART_BINARY_0 = BINARY_CONTENT.get(0);
 	private static final byte[] TEXT_PART_BINARY_1 = BINARY_CONTENT.get(1);
 	private static final byte[] TEXT_PART_BINARY_2 = BINARY_CONTENT.get(2);
@@ -49,17 +51,11 @@ public final class JtePostEditorViewComponentGenerated {
 	private static final byte[] TEXT_PART_BINARY_43 = BINARY_CONTENT.get(43);
 	private static final byte[] TEXT_PART_BINARY_44 = BINARY_CONTENT.get(44);
 	private static final byte[] TEXT_PART_BINARY_45 = BINARY_CONTENT.get(45);
-	private static final byte[] TEXT_PART_BINARY_46 = BINARY_CONTENT.get(46);
-	private static final byte[] TEXT_PART_BINARY_47 = BINARY_CONTENT.get(47);
-	private static final byte[] TEXT_PART_BINARY_48 = BINARY_CONTENT.get(48);
-	private static final byte[] TEXT_PART_BINARY_49 = BINARY_CONTENT.get(49);
-	private static final byte[] TEXT_PART_BINARY_50 = BINARY_CONTENT.get(50);
-	private static final byte[] TEXT_PART_BINARY_51 = BINARY_CONTENT.get(51);
-	private static final byte[] TEXT_PART_BINARY_52 = BINARY_CONTENT.get(52);
-	private static final byte[] TEXT_PART_BINARY_53 = BINARY_CONTENT.get(53);
 	public static void render(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor) {
 		jteOutput.writeBinaryContent(TEXT_PART_BINARY_0);
-		jteOutput.writeBinaryContent(TEXT_PART_BINARY_1);
+		if (SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken) {
+			jteOutput.writeBinaryContent(TEXT_PART_BINARY_1);
+		}
 		jteOutput.writeBinaryContent(TEXT_PART_BINARY_2);
 		jteOutput.writeBinaryContent(TEXT_PART_BINARY_3);
 		jteOutput.writeBinaryContent(TEXT_PART_BINARY_4);
@@ -104,14 +100,6 @@ public final class JtePostEditorViewComponentGenerated {
 		jteOutput.writeBinaryContent(TEXT_PART_BINARY_43);
 		jteOutput.writeBinaryContent(TEXT_PART_BINARY_44);
 		jteOutput.writeBinaryContent(TEXT_PART_BINARY_45);
-		jteOutput.writeBinaryContent(TEXT_PART_BINARY_46);
-		jteOutput.writeBinaryContent(TEXT_PART_BINARY_47);
-		jteOutput.writeBinaryContent(TEXT_PART_BINARY_48);
-		jteOutput.writeBinaryContent(TEXT_PART_BINARY_49);
-		jteOutput.writeBinaryContent(TEXT_PART_BINARY_50);
-		jteOutput.writeBinaryContent(TEXT_PART_BINARY_51);
-		jteOutput.writeBinaryContent(TEXT_PART_BINARY_52);
-		jteOutput.writeBinaryContent(TEXT_PART_BINARY_53);
 	}
 	public static void renderMap(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor, java.util.Map<String, Object> params) {
 		render(jteOutput, jteHtmlInterceptor);

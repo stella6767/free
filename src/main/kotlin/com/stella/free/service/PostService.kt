@@ -12,6 +12,7 @@ import net.datafaker.transformations.JavaObjectTransformer
 import net.datafaker.transformations.Schema
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
@@ -76,9 +77,13 @@ class PostService(
         return postRepository.findPostsByPage(pageable)
     }
 
-    fun save(postSaveDto: PostSaveDto, principal: UserPrincipal) {
+    fun savePost(postSaveDto: PostSaveDto) {
 
-        postSaveDto.toEntity(principal.user)
+        //SecurityContextHolder.getContext().authentication.principal
+
+        log.info("Saving post")
+
+        //postSaveDto.toEntity(principal.user)
 
     }
 

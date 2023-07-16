@@ -16,7 +16,7 @@
     <divc class = "flex justify-center">
         @if(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)
             <input type="text"
-                   x-model="username"
+                   x-model="formData.username"
                    placeholder="input your username"
                    class="input input-bordered w-64 justify-self-center "/>
         @endif
@@ -27,7 +27,7 @@
     <div class="flex justify-center">
         <input type="text"
                required
-               x-model="title"
+               x-model="formData.title"
                placeholder="input your title"
                class="input input-bordered w-64 justify-self-center"/>
     </div>
@@ -37,7 +37,7 @@
 
     <br/>
 
-    <div @click="submitPost" class="flex justify-center gap-x-2">
+    <div  class="flex justify-center gap-x-2">
         <button class="btn btn-success">제출</button>
         <button class="btn btn-warning">취소</button>
     </div>
@@ -68,10 +68,27 @@
     function editorForm() {
 
         return {
-            title: "",
-            username: "",
+
+            formData: {
+                title: "",
+                username: "",
+                content: editor.getMarkdown(),
+                anonymousUsername: ""
+            },
             submitForm() {
-                console.log("???",this.title);
+                let body = JSON.stringify(this.formData);
+
+                console.log("submit", body);
+
+                client('/blog/post', 'POST', {body: body}).then(
+                    data => {
+                        console.log('here the logged in user data', data)
+                    },
+                    error => {
+                        console.error('oh no,  failed', error)
+                    },
+                )
+
             }
 
         }

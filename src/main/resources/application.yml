@@ -13,6 +13,9 @@ server:
       enabled: true
 
 spring:
+  devtools:
+    livereload:
+      enabled: true
   security:
     oauth2:
       client:

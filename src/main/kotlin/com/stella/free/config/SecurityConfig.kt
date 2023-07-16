@@ -50,6 +50,7 @@ class SecurityConfig(
                 .requestMatchers("/resources/*")
                 .requestMatchers("/static/*")
                 .requestMatchers("/img/*")
+                .requestMatchers("/js/*")
         }
     }
 
@@ -177,7 +178,13 @@ class SecurityConfig(
     companion object {
 
         val AUTH_PASS_LIST = arrayOf(
-            "/public/*", "/webjars/*", "/", "/logout", "/api/**", "/login", "/h2-console/*",
+            "/public/*",
+            "/webjars/*",
+            "/",
+            "/logout",
+            "/api/**",
+            "/login",
+            "/h2-console/*",
             "/error",
             "/blog/*",
             "/blog/*/*",

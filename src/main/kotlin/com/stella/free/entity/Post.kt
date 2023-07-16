@@ -25,6 +25,10 @@ class Post(
     @ColumnDefault("0")
     var count = 0
 
+
+
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     val user = user

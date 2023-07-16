@@ -12,11 +12,11 @@
     <script src="https://unpkg.com/htmx.org@1.9.2"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@3.0.3/dist/full.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/js/client.js"></script>
 
 
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" crossorigin="anonymous">
-
     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.1/dist/cdn.min.js"></script>
 
@@ -78,9 +78,9 @@
                             <li><a onclick="login_modal.showModal()">Login</a></li>
                         
                             <li><a href="/logout">LogOut</a></li>
-                            <li><a href="/blog/post/editor">새글쓰기</a></li>
                         
 
+                        <li><a href="/blog/post/editor">새글쓰기</a></li>
 
                     </ul>
                 </details>

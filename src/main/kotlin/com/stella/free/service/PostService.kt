@@ -73,7 +73,6 @@ class PostService(
 
 
     fun findPostsByPage(pageable: Pageable): Page<Post> {
-
         return postRepository.findPostsByPage(pageable)
     }
 

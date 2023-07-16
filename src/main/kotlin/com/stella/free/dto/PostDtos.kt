@@ -7,7 +7,7 @@ import com.stella.free.entity.User
 data class PostSaveDto(
     val title:String,
     val content:String,
-    val thumbnail:String,
+    //val thumbnail:String,
     val anonymousUsername:String = "",
 ){
     fun toEntity(user:User?): Post {
@@ -16,7 +16,7 @@ data class PostSaveDto(
             user = user,
             title = this.title,
             content = this.content,
-            thumbnail = this.thumbnail
+            thumbnail = ""
         )
     }
 

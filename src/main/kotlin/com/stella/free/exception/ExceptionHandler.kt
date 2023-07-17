@@ -11,7 +11,6 @@ import org.springframework.security.core.AuthenticationException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
-import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @ControllerAdvice
 class ExceptionHandler(
@@ -42,24 +41,24 @@ class ExceptionHandler(
         val pd = ProblemDetail.forStatus(HttpStatus.UNAUTHORIZED.value())
         pd.detail = exception.localizedMessage
 
-        log.info("????")
-
-
         val jsonErrorString = objectMapper.writeValueAsString(pd.detail!!)
 
-        return ScriptUtil.alertError(jsonErrorString)
+        return ScriptUtil.alertErrorAndHistoryBack(jsonErrorString)
     }
 
 
     @ExceptionHandler(RuntimeException::class)
-    fun handleRuntimeException(exception: AppException): ViewContext {
+    @ResponseBody
+    fun handleRuntimeException(exception: RuntimeException): String {
 
         log.error(exception.message)
 
-        return toastViewComponent.render(
-            exception.message!!,
-            10000
-        )
+        val pd = ProblemDetail.forStatus(HttpStatus.UNAUTHORIZED.value())
+        pd.detail = exception.localizedMessage
+        val jsonErrorString = objectMapper.writeValueAsString(pd.detail!!)
+
+        return ScriptUtil.alertError(jsonErrorString)
+
     }
 
 

@@ -66,13 +66,15 @@ dependencies {
     // querydsl && jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
-
     // https://mvnrepository.com/artifact/net.datafaker/datafaker
     implementation("net.datafaker:datafaker:2.0.1")
 
+    // https://mvnrepository.com/artifact/org.commonmark/commonmark
+    implementation("org.commonmark:commonmark:0.21.0")
+    // https://mvnrepository.com/artifact/org.jsoup/jsoup
+    implementation("org.jsoup:jsoup:1.16.1")
 
 
-    //kapt("com.querydsl:querydsl-apt:$querydslVersion:jakarta")
 
 
     implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0")
@@ -106,8 +108,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.13.3")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-hibernate5-jakarta:2.15.2")
 
 
 

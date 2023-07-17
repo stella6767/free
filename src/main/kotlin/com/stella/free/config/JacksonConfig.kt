@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.*
 import com.fasterxml.jackson.databind.cfg.MapperConfig
 import com.fasterxml.jackson.databind.introspect.AnnotatedField
 import com.fasterxml.jackson.databind.introspect.AnnotatedMethod
-import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module
+import com.fasterxml.jackson.datatype.hibernate5.jakarta.Hibernate5JakartaModule
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.KotlinModule
@@ -77,7 +77,9 @@ class JacksonConfig {
         //objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         //아직 불러오지 않은 엔티티에 대해 null값을 내려주는 모듈이다. lazy loading
-        objectMapper.registerModule(Hibernate5Module())
+        objectMapper.registerModule(Hibernate5JakartaModule())
+
+
 
         // 모르는 property에 대해 무시하고 넘어간다.
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)

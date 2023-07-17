@@ -13,10 +13,10 @@
     </h1>
 
 
-    <divc class = "flex justify-center">
+    <divc class="flex justify-center">
         @if(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)
             <input type="text"
-                   x-model="formData.username"
+                   x-model="formData.anonymousUsername"
                    placeholder="input your username"
                    class="input input-bordered w-64 justify-self-center "/>
         @endif
@@ -37,9 +37,9 @@
 
     <br/>
 
-    <div  class="flex justify-center gap-x-2">
+    <div class="flex justify-center gap-x-2">
         <button class="btn btn-success">제출</button>
-        <button class="btn btn-warning">취소</button>
+        <button @click="cancelPost" class="btn btn-warning">취소</button>
     </div>
 
 
@@ -71,23 +71,24 @@
 
             formData: {
                 title: "",
-                username: "",
+                anonymousUsername: "dd",
                 content: editor.getMarkdown(),
-                anonymousUsername: ""
             },
             submitForm() {
-                let body = JSON.stringify(this.formData);
+                //let req = JSON.stringify(this.formData);
 
-                console.log("submit", body);
+                console.log("submit", JSON.stringify(this.formData));
 
-                client('/blog/post', 'POST', {body: body}).then(
-                    data => {
-                        console.log('here the logged in user data', data)
-                    },
-                    error => {
-                        console.error('oh no,  failed', error)
-                    },
-                )
+                // client('/blog/post', 'POST', {body: this.formData}).then(
+                //     data => {
+                //         console.log('here the logged in user data', data.body)
+                //         location.href = "/blog/home";
+                //     },
+                //     error => {
+                //         console.error('oh no,  failed', error)
+                //     },
+                // )
+
 
             }
 
@@ -95,31 +96,10 @@
     }
 
 
-
-
-    const submitPost = (e) => {
-
-        console.log("click submit", editor.getMarkdown())
-
-        let reqBody = {
-            title: "",
-            content: editor.getMarkdown(),
-            thumbnails: "",
-            anonymousUsername: ""
-        }
-
-
-        // client('login', {body: {username, password}}).then(
-        //     data => {
-        //         console.log('here the logged in user data', data)
-        //     },
-        //     error => {
-        //         console.error('oh no, login failed', error)
-        //     },
-        // )
-
-
+    const cancelPost = () => {
+        location.href = "/blog/home"
     }
+
 
 
     const editor = new toastui.Editor({
@@ -127,11 +107,12 @@
         previewStyle: 'vertical',
         initialEditType: 'markdown',
         height: '1000px',
-        theme: 'dark',
+        //theme: 'dark',
         initialValue: '내용을 입력해주세요',
         events: {
             change: function () {
-                //console.log(editor.getMarkdown());
+                console.log(editor.getMarkdown());
+                console.log(editor.getHTML());
             }
         },
         hooks: {
@@ -158,6 +139,9 @@
                     console.log(res)
                     callback(res, '사진 대체 텍스트 입력');
                 }).catch((err) => callback('image_load_fail', '사진 대체 텍스트 입력'));
+
+                // document.querySelector('#contents').insertAdjacentHTML('afterbegin' ,editor.getHTML());
+                // console.log(editor.getHTML());
 
                 // $.ajax({
                 //     type: 'POST',
@@ -189,9 +173,6 @@
 
     });
 
-    // document.querySelector('#contents').insertAdjacentHTML('afterbegin' ,editor.getHTML());
-    // console.log(editor.getHTML());
 
-</script>
 
 </script>

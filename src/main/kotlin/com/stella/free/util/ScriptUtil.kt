@@ -2,7 +2,7 @@ package com.stella.free.util
 
 object ScriptUtil {
 
-    fun alertError(msg: String): String {
+    fun alertErrorAndHistoryBack(msg: String): String {
 
         val script = """
             <script>
@@ -13,6 +13,18 @@ object ScriptUtil {
 
         return script
     }
+
+
+    fun alertError(msg: String): String {
+        return """
+            <script>
+            alert('$msg');          
+            </script>
+        """.trimIndent()
+    }
+
+
+
 
 
 }

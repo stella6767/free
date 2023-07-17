@@ -17,17 +17,6 @@
 
 
 <script>
-    let imgs = htmx.findAll('img');
-
-    imgs.forEach(img=>{
-
-        htmx.on('img','load', function (){
-
-
-        })
-
-    })
-
 
 </script>
 

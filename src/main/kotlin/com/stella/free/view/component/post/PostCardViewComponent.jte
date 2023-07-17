@@ -6,11 +6,11 @@
 
 
 
-<div class="card w-80 bg-base-100 shadow-xl"
-     id="post-card">
-    <figure>
-        <div x-data="{ loading: true }">
-            <img  x-show="loading" alt="Result loading..." src="/img/spinner.svg" />
+<div class="card w-80 bg-base-100 shadow-xl hover:bg-cyan-600 cursor-pointer"
+     id="post-card-${post.getId()}" onclick="location.href='/blog/post/${post.getId()}'">
+    <figure class="bg-slate-300">
+        <div x-data="{ loading: true }" >
+            <img  x-show="loading"  alt="Result loading..." src="/img/spinner.svg"  />
             <img x-show="!loading"
                  src="${post.getThumbnail()}"
                  alt="post-thumbnail"

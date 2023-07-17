@@ -4,6 +4,7 @@ import com.stella.free.config.security.UserPrincipal
 import com.stella.free.dto.PostSaveDto
 import com.stella.free.service.PostService
 import com.stella.free.util.logger
+import com.stella.free.view.component.post.PostDetailViewComponent
 import com.stella.free.view.component.post.PostEditorViewComponent
 import com.stella.free.view.page.layout.LayoutViewComponent
 import com.stella.free.view.page.post.PostsViewComponent
@@ -13,6 +14,7 @@ import org.springframework.data.web.PageableDefault
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -27,6 +29,7 @@ class BlogController(
     private val layoutViewComponent: LayoutViewComponent,
     private val postsViewComponent: PostsViewComponent,
     private val postEditorViewComponent: PostEditorViewComponent,
+    private val postDetailViewComponent: PostDetailViewComponent,
 ) {
 
     private val log = logger()
@@ -45,6 +48,14 @@ class BlogController(
     }
 
 
+    @GetMapping("/post/{id}")
+    fun getPostById(@PathVariable id: Long): ViewContext {
+
+        return layoutViewComponent.render(postDetailViewComponent.render(id))
+    }
+
+
+
     @GetMapping("/post/editor")
     fun postEditor(@PageableDefault(size = 16) pageable: Pageable): ViewContext {
 
@@ -53,13 +64,14 @@ class BlogController(
 
 
     @PostMapping("/post")
+    @ResponseBody
     fun savePost(
         @RequestBody postSaveDto: PostSaveDto,
     ): String {
 
         postService.savePost(postSaveDto)
 
-        return "/"
+        return "ok"
     }
 
 

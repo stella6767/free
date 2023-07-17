@@ -14,13 +14,14 @@ function client(endpoint, method, {body, ...customConfig} = {}) {
         },
     }
 
-    // if (body) {
-    //     config.body = JSON.stringify(body)
-    // }
+    if (body) {
+        config.body = JSON.stringify(body)
+    }
+
     return fetch(`${endpoint}`, config)
             .then(async response => {
             if (response.ok) {
-                return await response.json()
+                return response;
             } else {
                 const errorMessage = await response.text()
                 return Promise.reject(new Error(errorMessage))

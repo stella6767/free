@@ -1,5 +1,6 @@
 package com.stella.free.entity
 
+import com.stella.free.dto.PostDetailDto
 import jakarta.persistence.*
 import org.hibernate.annotations.ColumnDefault
 
@@ -11,6 +12,7 @@ class Post(
     content:String,
     thumbnail:String,
     user:User?,
+    anonymousUsername:String,
 ) : BaseEntity(id=id) {
 
     @Column(nullable = false, length = 100)
@@ -25,19 +27,31 @@ class Post(
     @ColumnDefault("0")
     var count = 0
 
-
-
-
+    @Column(name = "anonymous_username")
+    val anonymousUsername = anonymousUsername
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     val user = user
 
 
-
     fun updateId(id:Long){
         this.id = id
     }
+
+
+    fun toDetailDto(): PostDetailDto {
+
+        return PostDetailDto(
+            id = this.id,
+            title = this.title,
+            content = this.content,
+            username = this.user?.username ?: this.anonymousUsername,
+            createdAt = this.createdAt
+        )
+
+    }
+
 
     override fun toString(): String {
         return "Post(id=$id, title='$title', content='$content', thumbnail='$thumbnail', count=$count, user=$user)"

@@ -1,0 +1,97 @@
+package gg.jte.generated.ondemand.com.stella.free.view.component.post;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+public final class JtePostEditorViewComponentGenerated {
+	public static final String JTE_NAME = "com/stella/free/view/component/post/PostEditorViewComponent.jte";
+	public static final int[] JTE_LINE_INFO = {0,0,1,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,21,21,78,87,111,116,122,123,127,128,129,130,135,145,146,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,182};
+	private static final gg.jte.runtime.BinaryContent BINARY_CONTENT = gg.jte.runtime.BinaryContent.load(JtePostEditorViewComponentGenerated.class, "JtePostEditorViewComponentGenerated.bin", 418,225,1018,343,462,174,112,17,114,17,17,17,131,392,17,18,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,48);
+	private static final byte[] TEXT_PART_BINARY_0 = BINARY_CONTENT.get(0);
+	private static final byte[] TEXT_PART_BINARY_1 = BINARY_CONTENT.get(1);
+	private static final byte[] TEXT_PART_BINARY_2 = BINARY_CONTENT.get(2);
+	private static final byte[] TEXT_PART_BINARY_3 = BINARY_CONTENT.get(3);
+	private static final byte[] TEXT_PART_BINARY_4 = BINARY_CONTENT.get(4);
+	private static final byte[] TEXT_PART_BINARY_5 = BINARY_CONTENT.get(5);
+	private static final byte[] TEXT_PART_BINARY_6 = BINARY_CONTENT.get(6);
+	private static final byte[] TEXT_PART_BINARY_7 = BINARY_CONTENT.get(7);
+	private static final byte[] TEXT_PART_BINARY_8 = BINARY_CONTENT.get(8);
+	private static final byte[] TEXT_PART_BINARY_9 = BINARY_CONTENT.get(9);
+	private static final byte[] TEXT_PART_BINARY_10 = BINARY_CONTENT.get(10);
+	private static final byte[] TEXT_PART_BINARY_11 = BINARY_CONTENT.get(11);
+	private static final byte[] TEXT_PART_BINARY_12 = BINARY_CONTENT.get(12);
+	private static final byte[] TEXT_PART_BINARY_13 = BINARY_CONTENT.get(13);
+	private static final byte[] TEXT_PART_BINARY_14 = BINARY_CONTENT.get(14);
+	private static final byte[] TEXT_PART_BINARY_15 = BINARY_CONTENT.get(15);
+	private static final byte[] TEXT_PART_BINARY_16 = BINARY_CONTENT.get(16);
+	private static final byte[] TEXT_PART_BINARY_17 = BINARY_CONTENT.get(17);
+	private static final byte[] TEXT_PART_BINARY_18 = BINARY_CONTENT.get(18);
+	private static final byte[] TEXT_PART_BINARY_19 = BINARY_CONTENT.get(19);
+	private static final byte[] TEXT_PART_BINARY_20 = BINARY_CONTENT.get(20);
+	private static final byte[] TEXT_PART_BINARY_21 = BINARY_CONTENT.get(21);
+	private static final byte[] TEXT_PART_BINARY_22 = BINARY_CONTENT.get(22);
+	private static final byte[] TEXT_PART_BINARY_23 = BINARY_CONTENT.get(23);
+	private static final byte[] TEXT_PART_BINARY_24 = BINARY_CONTENT.get(24);
+	private static final byte[] TEXT_PART_BINARY_25 = BINARY_CONTENT.get(25);
+	private static final byte[] TEXT_PART_BINARY_26 = BINARY_CONTENT.get(26);
+	private static final byte[] TEXT_PART_BINARY_27 = BINARY_CONTENT.get(27);
+	private static final byte[] TEXT_PART_BINARY_28 = BINARY_CONTENT.get(28);
+	private static final byte[] TEXT_PART_BINARY_29 = BINARY_CONTENT.get(29);
+	private static final byte[] TEXT_PART_BINARY_30 = BINARY_CONTENT.get(30);
+	private static final byte[] TEXT_PART_BINARY_31 = BINARY_CONTENT.get(31);
+	private static final byte[] TEXT_PART_BINARY_32 = BINARY_CONTENT.get(32);
+	private static final byte[] TEXT_PART_BINARY_33 = BINARY_CONTENT.get(33);
+	private static final byte[] TEXT_PART_BINARY_34 = BINARY_CONTENT.get(34);
+	private static final byte[] TEXT_PART_BINARY_35 = BINARY_CONTENT.get(35);
+	private static final byte[] TEXT_PART_BINARY_36 = BINARY_CONTENT.get(36);
+	private static final byte[] TEXT_PART_BINARY_37 = BINARY_CONTENT.get(37);
+	private static final byte[] TEXT_PART_BINARY_38 = BINARY_CONTENT.get(38);
+	private static final byte[] TEXT_PART_BINARY_39 = BINARY_CONTENT.get(39);
+	private static final byte[] TEXT_PART_BINARY_40 = BINARY_CONTENT.get(40);
+	public static void render(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor) {
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_0);
+		if (SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken) {
+			jteOutput.writeBinaryContent(TEXT_PART_BINARY_1);
+		}
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_2);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_3);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_4);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_5);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_6);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_7);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_8);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_9);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_10);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_11);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_12);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_13);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_14);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_15);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_16);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_17);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_18);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_19);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_20);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_21);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_22);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_23);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_24);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_25);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_26);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_27);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_28);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_29);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_30);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_31);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_32);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_33);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_34);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_35);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_36);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_37);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_38);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_39);
+		jteOutput.writeBinaryContent(TEXT_PART_BINARY_40);
+	}
+	public static void renderMap(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor, java.util.Map<String, Object> params) {
+		render(jteOutput, jteHtmlInterceptor);
+	}
+}

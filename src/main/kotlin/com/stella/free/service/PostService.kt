@@ -88,6 +88,8 @@ class PostService(
 
         log.info("Saving post $principal")
 
+        println(postSaveDto)
+
 
         val parser =
             Parser.builder().build()

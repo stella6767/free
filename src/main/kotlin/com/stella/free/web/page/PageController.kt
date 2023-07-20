@@ -35,7 +35,7 @@ class PageController(
     }
 
 
-    @GetMapping("/home")
+    @GetMapping("/blog")
     fun homeBlog(@PageableDefault(size = 16) pageable: Pageable): ViewContext {
 
         return layoutViewComponent.render(postsViewComponent.render(pageable))

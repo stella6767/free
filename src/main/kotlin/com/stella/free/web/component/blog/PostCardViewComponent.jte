@@ -7,7 +7,7 @@
 
 
 <div class="card w-80 bg-base-100 shadow-xl hover:bg-cyan-600 cursor-pointer"
-     id="post-card-${post.getId()}" onclick="location.href='/blog/post/${post.getId()}'">
+     id="post-card-${post.getId()}" onclick="location.href='/post/${post.getId()}'">
     <figure class="bg-slate-300">
         <div x-data="{ loading: true }" >
             <img  x-show="loading"  alt="Result loading..." src="/img/spinner.svg"  />

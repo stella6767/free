@@ -56,7 +56,7 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="/resume">about me</a></li>
                 <li><a href="/todos">todos</a></li>
-                <li><a href="/blog/home">blog</a></li>
+                <li><a href="/blog">blog</a></li>
 
             </ul>
         </div>
@@ -85,7 +85,7 @@
                             <li><a href="/logout">LogOut</a></li>
                         @endif
 
-                        <li><a href="/blog/post/editor">새글쓰기</a></li>
+                        <li><a href="/post/editor">새글쓰기</a></li>
 
                     </ul>
                 </details>
@@ -98,5 +98,5 @@ ${loginModalViewComponent.render()}
 
 <br/>
 
-
+</html>
 

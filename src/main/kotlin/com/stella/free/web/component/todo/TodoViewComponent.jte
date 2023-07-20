@@ -1,4 +1,4 @@
-@import com.stella.free.entity.Todo
+@import com.stella.free.core.todo.entity.Todo
 @import java.util.*
 
 @param Todo todo

@@ -1,5 +1,5 @@
-@import com.stella.free.entity.Todo
-@import com.stella.free.web.component.TodoViewComponent
+@import com.stella.free.core.todo.entity.Todo
+@import com.stella.free.web.component.todo.TodoViewComponent
 @import com.stella.free.web.component.pagination.PaginationViewComponent
 @import de.tschuehly.spring.viewcomponent.jte.ViewContext
 @import org.springframework.data.domain.Page

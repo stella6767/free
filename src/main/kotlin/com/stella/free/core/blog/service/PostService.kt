@@ -95,18 +95,6 @@ class PostService(
             Jsoup.parseBodyFragment(postSaveDto.content)
 
 
-        val parser =
-            Parser.builder().build()
-
-        val document =
-            parser.parse(postSaveDto.content)
-
-        val htmlRenderer =
-            HtmlRenderer.builder().build()
-
-
-        val htmlText =
-            htmlRenderer.render(document)
 
 
 

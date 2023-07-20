@@ -82,7 +82,7 @@
 
                 console.log("submit", JSON.stringify(this.formData));
 
-                client('/blog/post', 'POST', {body: this.formData}).then(
+                client('/post', 'POST', {body: this.formData}).then(
                     data => {
                         console.log('here the logged in user data', data.body)
                         //location.href = "/blog/home";

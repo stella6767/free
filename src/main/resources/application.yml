@@ -53,7 +53,7 @@ spring:
 
 
 logging:
-  config: classpath:logback-todo.xml
+  config: classpath:logback-free.xml
 
 management:
   endpoints:

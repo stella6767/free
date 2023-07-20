@@ -38,5 +38,15 @@ spring:
         globally_quoted_identifiers: true #DB 예약어도 가능
 
 
-
+cloud:
+  aws:
+    credentials:
+      access-key: AKIARJVQNPZF3J6NJOWT
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+    s3:
+      bucket: free-stella
+      url: https://free-stella.s3.ap-northeast-2.amazonaws.com/
+      #cdnUrl: https://
 

@@ -63,72 +63,66 @@ dependencies {
 //    implementation("org.webjars:webjars-locator-core:0.52")
 //    implementation("org.webjars.npm:htmx.org:1.8.4")
 
-    // querydsl && jpa
+    //aws
+    implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.0.1"))
+    implementation("io.awspring.cloud:spring-cloud-aws-starter-s3")
+
+
+    //jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
-    // https://mvnrepository.com/artifact/net.datafaker/datafaker
-    implementation("net.datafaker:datafaker:2.0.1")
+    // querydsl
+//    implementation("com.vladmihalcea:hibernate-types-60:2.21.1")
+//    implementation("com.infobip:infobip-spring-data-jpa-querydsl-boot-starter:8.1.1")
+//    implementation ("com.querydsl:querydsl-jpa:$querydslVersion:jakarta")
+//    kapt("com.querydsl:querydsl-apt:$querydslVersion:jakarta")
+//    kapt("jakarta.persistence:jakarta.persistence-api")
+//    kapt("jakarta.annotation:jakarta.annotation-api")
 
-    // https://mvnrepository.com/artifact/org.commonmark/commonmark
+
+    // kotlin jdsl
+    // https://mvnrepository.com/artifact/com.linecorp.kotlin-jdsl/spring-data-kotlin-jdsl-starter-jakarta
+    implementation("com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter-jakarta:2.2.1.RELEASE")
+
+    // 더미데이터 셍상
+    implementation("net.datafaker:datafaker:2.0.1")
+    // 마크다운 파싱
     implementation("org.commonmark:commonmark:0.21.0")
-    // https://mvnrepository.com/artifact/org.jsoup/jsoup
+    // html 파싱
     implementation("org.jsoup:jsoup:1.16.1")
 
-
-
-
+    //sql query logging
     implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0")
-
-
+    //환경변수 암호화
     implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
 
-
-//    implementation("com.querydsl:querydsl-core:${querydslVersion}")
-//    implementation("com.querydsl:querydsl-jpa:$querydslVersion:jakarta")
-//
-//    kapt("com.querydsl:querydsl-apt:$querydslVersion:jpa:jakarta")
-//    //kapt(group = "com.querydsl", name = "querydsl-apt", classifier = "jakarta")
-//    kapt("org.springframework.boot:spring-boot-configuration-processor")
-
-// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    //common utilities
     implementation("org.apache.commons:commons-lang3:3.12.0")
 
-
+    // jte template engine
     implementation("gg.jte:jte-spring-boot-starter-3:$jteVersion")
     // jte-kotlin is needed to compile kte templates
     implementation("gg.jte:jte-kotlin:$jteVersion")
+    //spring-view-component
     implementation("de.tschuehly:spring-view-component-jte:0.5.5-RC1")
 
 
     implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-
-
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
+    //json 직렬화
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-hibernate5-jakarta:2.15.2")
 
-
-
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
     runtimeOnly("com.h2database:h2")
     runtimeOnly("com.mysql:mysql-connector-j")
 
-    implementation("com.vladmihalcea:hibernate-types-60:2.21.1")
-    implementation("com.infobip:infobip-spring-data-jpa-querydsl-boot-starter:8.1.1")
-    implementation ("com.querydsl:querydsl-jpa:$querydslVersion:jakarta")
-
-
-    kapt("com.querydsl:querydsl-apt:$querydslVersion:jakarta")
-    kapt("jakarta.persistence:jakarta.persistence-api")
-    kapt("jakarta.annotation:jakarta.annotation-api")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")

@@ -1,4 +1,4 @@
-package com.stella.free.web.component.post
+package com.stella.free.web.component.blog
 
 import com.stella.free.core.blog.entity.Post
 import com.stella.free.global.util.logger

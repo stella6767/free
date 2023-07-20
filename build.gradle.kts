@@ -29,7 +29,7 @@ configurations {
 }
 
 val querydslVersion = "5.0.0"
-val jteVersion = "2.3.2"
+val jteVersion = "3.0.1"
 
 
 allOpen {

@@ -1,4 +1,4 @@
-package com.stella.free.web.component.post
+package com.stella.free.web.component.blog
 
 import com.stella.free.core.blog.service.PostService
 import de.tschuehly.spring.viewcomponent.core.ViewComponent

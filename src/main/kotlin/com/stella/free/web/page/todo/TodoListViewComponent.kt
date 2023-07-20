@@ -3,7 +3,7 @@ package com.stella.free.web.page.todo
 import com.stella.free.global.config.security.UserPrincipal
 import com.stella.free.core.todo.service.TodoService
 import com.stella.free.global.util.logger
-import com.stella.free.web.component.TodoViewComponent
+import com.stella.free.web.component.todo.TodoViewComponent
 import com.stella.free.web.component.pagination.PaginationViewComponent
 import de.tschuehly.spring.viewcomponent.core.ViewComponent
 import de.tschuehly.spring.viewcomponent.core.toProperty

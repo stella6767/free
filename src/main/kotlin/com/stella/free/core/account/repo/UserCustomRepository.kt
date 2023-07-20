@@ -11,8 +11,6 @@ import com.stella.free.core.account.entity.User
 import jakarta.persistence.EntityManager
 
 interface UserCustomRepository {
-
-
     fun findByUsername(username: String): User?
     fun findByEmail(email: String): User?
 }

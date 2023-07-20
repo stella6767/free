@@ -1,5 +1,5 @@
 @import com.stella.free.core.blog.entity.Post
-@import com.stella.free.web.component.post.PostCardViewComponent
+@import com.stella.free.web.component.blog.PostCardViewComponent
 @import org.springframework.data.domain.Page
 
 @param Page<Post> posts

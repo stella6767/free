@@ -1,6 +1,6 @@
 package com.stella.free.util
 
-import com.stella.free.entity.Post
+import com.stella.free.core.blog.entity.Post
 import net.datafaker.Faker
 import net.datafaker.transformations.Field.field
 import net.datafaker.transformations.JavaObjectTransformer

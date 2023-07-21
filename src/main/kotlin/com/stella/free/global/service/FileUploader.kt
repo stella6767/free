@@ -2,7 +2,7 @@ package com.stella.free.global.service
 
 import org.springframework.web.multipart.MultipartFile
 
-interface FileUploaderService {
+interface FileUploader {
 
     fun upload(file: MultipartFile): String
 }

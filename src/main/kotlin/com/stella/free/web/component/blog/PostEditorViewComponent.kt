@@ -9,9 +9,6 @@ class PostEditorViewComponent(
 
 ) {
 
-
-
-
     fun render(): ViewContext {
 
         return ViewContext(

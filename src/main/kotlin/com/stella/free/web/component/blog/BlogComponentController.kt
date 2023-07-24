@@ -27,7 +27,6 @@ class BlogComponentController(
 
     @GetMapping("/posts")
     fun posts(@PageableDefault(size = 16) pageable: Pageable): ViewContext {
-
         return postsViewComponent.render(pageable)
     }
 
@@ -48,8 +47,6 @@ class BlogComponentController(
     @PostMapping("/post/file")
     @ResponseBody
     fun postFile(file: MultipartFile): String {
-
-        println(file.originalFilename)
-        return ""
+        return postService.savePostImg(file)
     }
 }

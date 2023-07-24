@@ -29,9 +29,12 @@ class S3FileUploaderImpl(
 
     override fun upload(multipartFile: MultipartFile): String {
 
+
         if (multipartFile.isEmpty) {
             throw FileNotFoundException()
         }
+
+        log.info(multipartFile.originalFilename)
 
         val uuid = UUID.randomUUID().toString()
         val fileName = uuid + "_" + multipartFile.originalFilename

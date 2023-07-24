@@ -14,7 +14,7 @@ class PostDetailViewComponent(
     fun render(id: Long): ViewContext {
 
         val postDetail =
-            postService.findById(id).toDetailDto()
+            postService.findById(id)
 
         return ViewContext(
             "post" toProperty postDetail

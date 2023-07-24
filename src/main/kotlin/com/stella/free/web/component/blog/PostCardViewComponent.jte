@@ -1,7 +1,9 @@
+@import com.stella.free.core.blog.dto.PostCardDto
+@import com.stella.free.core.blog.dto.PostDetailDto
 @import com.stella.free.core.blog.entity.Post
 @import java.util.*
 
-@param Post post
+@param PostCardDto post
 @param int pageNum = 1
 
 
@@ -18,8 +20,10 @@
             >
         </div>
     </figure>
-    <div class="card-body">
+    <div class="card-body h-32">
         <h2 class="card-title">${post.getTitle()}</h2>
-        <p>${post.getContent()}</p>
+        <p class="truncate">
+            ${post.getThumbnailContent()}
+        </p>
     </div>
 </div>

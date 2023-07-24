@@ -1,6 +1,7 @@
 package com.stella.free.core.blog.entity
 
 import com.stella.free.core.account.entity.User
+import com.stella.free.core.blog.dto.PostCardDto
 import com.stella.free.core.blog.dto.PostDetailDto
 
 import com.stella.free.global.entity.BaseEntity
@@ -13,7 +14,7 @@ class Post(
     id:Long = 0,
     title: String,
     content:String,
-    thumbnail:String,
+    thumbnail:String?,
     user: User?,
     anonymousUsername:String,
 ) : BaseEntity(id=id) {
@@ -25,7 +26,7 @@ class Post(
     val content = content
 
     @Column(nullable = false, length = 1000)
-    var thumbnail: String = thumbnail
+    var thumbnail = thumbnail
 
     @ColumnDefault("0")
     var count = 0
@@ -43,11 +44,24 @@ class Post(
     }
 
 
+    fun toCardDto(thumbnailContent: String): PostCardDto {
+
+        return PostCardDto(
+            id = this.id,
+            title = this.title,
+            thumbnail = this.thumbnail,
+            thumbnailContent = thumbnailContent,
+            username = this.user?.username ?: this.anonymousUsername,
+            createdAt = this.createdAt
+        )
+    }
+
     fun toDetailDto(): PostDetailDto {
 
         return PostDetailDto(
             id = this.id,
             title = this.title,
+            thumbnail = this.thumbnail,
             content = this.content,
             username = this.user?.username ?: this.anonymousUsername,
             createdAt = this.createdAt

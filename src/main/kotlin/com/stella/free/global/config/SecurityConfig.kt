@@ -67,10 +67,10 @@ class SecurityConfig(
         http
             .authorizeHttpRequests { authorizeHttpRequests ->
                 authorizeHttpRequests
-                    .requestMatchers(*AUTH_PASS_LIST)
-                    .permitAll()
-                    .anyRequest()
+                    .requestMatchers(*AUTH_CHECK_LIST)
                     .authenticated()
+                    .anyRequest()
+                    .permitAll()
             }
             .exceptionHandling {
                 it.accessDeniedHandler(WebAccessDeniedHandler()) // 권한이 없는 사용자 접근 시
@@ -195,6 +195,9 @@ class SecurityConfig(
 
 
     companion object {
+
+        val AUTH_CHECK_LIST = arrayOf("/todos")
+
 
         val AUTH_PASS_LIST = arrayOf(
             "/public/*",

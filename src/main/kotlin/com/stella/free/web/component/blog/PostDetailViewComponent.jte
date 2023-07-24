@@ -1,8 +1,8 @@
 @param com.stella.free.core.blog.dto.PostDetailDto post
 
-<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
+<%--<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>--%>
 
-<div class="w-3/6 mx-auto mb-2">
+<div class="w-3/6 mx-auto mb-5">
 
     <div
             class="sm:text-3xl md:text-3xl lg:text-3xl xl:text-4xl font-bold cursor-pointer">
@@ -17,7 +17,9 @@
 </div>
 
 
-<div id="viewer"></div>
+<div id="viewer">
+    $unsafe{post.getContent()}
+</div>
 
 
 <%--<span onclick="showContent('${post.getContent()}')">Click me</span>--%>
@@ -38,13 +40,13 @@
 
 <script>
 
-    console.log(${post.getContent()});
+    //console.log(${post.getContent()});
 
-    const viewer = toastui.Editor.factory({
-        el: document.querySelector('#viewer'),
-        viewer: true,
-        //initialValue: "I want to go home"
-    });
+    // const viewer = toastui.Editor.factory({
+    //     el: document.querySelector('#viewer'),
+    //     viewer: true,
+    //     //initialValue: "I want to go home"
+    // });
 
 
 </script>

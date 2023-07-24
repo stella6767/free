@@ -20,9 +20,6 @@ class GlobalServiceBeanConfig {
     @Bean
     fun fileUploader(s3Client: S3Client): FileUploader {
         //if (profile == "local")
-
-
-
         return S3FileUploaderImpl(s3Client)
     }
 

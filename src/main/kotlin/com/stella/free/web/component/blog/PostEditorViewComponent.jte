@@ -16,6 +16,7 @@
     <divc class="flex justify-center">
         @if(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)
             <input type="text"
+                   required
                    x-model="formData.anonymousUsername"
                    placeholder="input your username"
                    class="input input-bordered w-64 justify-self-center "/>

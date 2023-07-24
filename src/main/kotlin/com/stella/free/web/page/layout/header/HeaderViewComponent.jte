@@ -63,7 +63,7 @@
     </div>
 
     <div class="navbar-center">
-        <a class="btn btn-ghost normal-case text-xl mt-3">Free App</a>
+        <a class="btn btn-ghost normal-case text-xl mt-3" href="/">Free App</a>
     </div>
     <div class="navbar-end">
 

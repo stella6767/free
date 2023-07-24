@@ -25,7 +25,7 @@ class Post(
     @Column(nullable = false, length = 100000)
     val content = content
 
-    @Column(nullable = false, length = 1000)
+    @Column(nullable = true, length = 1000)
     var thumbnail = thumbnail
 
     @ColumnDefault("0")
@@ -49,7 +49,7 @@ class Post(
         return PostCardDto(
             id = this.id,
             title = this.title,
-            thumbnail = this.thumbnail,
+            thumbnail = this.thumbnail ?: "/img/no-thumbnail.jpeg",
             thumbnailContent = thumbnailContent,
             username = this.user?.username ?: this.anonymousUsername,
             createdAt = this.createdAt

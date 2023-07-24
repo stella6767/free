@@ -14,7 +14,6 @@ class PostCardViewComponent(
 
     private val log = logger()
 
-
     fun render(post: Post): ViewContext {
 
         val text =

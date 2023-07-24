@@ -11,8 +11,8 @@
     <div
             class="container m-auto grid grid-cols-4 gap-4 "
             id="posts-container"
-            hx-get="/blog/posts?page=${posts.getPageable().getPageNumber() + 1}"
-            hx-trigger="revealed"
+            hx-get="/posts?page=${posts.getPageable().getPageNumber() + 1}"
+            hx-trigger="revealed"ㅖ
             hx-swap="afterend">
 
         @for(Post post : posts.getContent())

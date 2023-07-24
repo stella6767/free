@@ -44,15 +44,15 @@ class PostService(
 
 
     fun generateDummyPosts(size: Int) {
-        //val posts = mutableListOf<Post>()
+        val posts = mutableListOf<Post>()
         for (i in 0 until size) {
             val post = generateDummyPost((i + 1).toLong())
-            println(post)
+            //println(post)
             //posts.add(post)
         }
 
-        //log.info("data initialized post: ${posts.size}")
-        //postRepository.saveAll(posts)
+//        log.info("data initialized post: ${posts.size}")
+//        postRepository.saveAll(posts)
     }
 
     fun generateDummyPost(id: Long): Post {
@@ -75,10 +75,8 @@ class PostService(
             jTransformer.apply(Post::class.java, schema) as Post
 
         post.updateId(id)
-
-        println(post)
         postRepository.save(post)
-
+        println(post)
 
         return post
     }
@@ -86,7 +84,7 @@ class PostService(
 
     private fun generateDummyPostContent(lorem: Lorem, img:String ): String {
 
-        val paragraph = lorem.paragraph()
+        val paragraph = lorem.paragraph(30)
         val doc = Document.createShell("")
 
         val imgTag =
@@ -97,7 +95,7 @@ class PostService(
 
         div.append(imgTag)
 
-        paragraph.split("\n").forEach {
+        paragraph.split(".").forEach {
             div.appendElement("p").text(it)
         }
         return div.html()
@@ -111,10 +109,10 @@ class PostService(
 
     fun savePost(postSaveDto: PostSaveDto, principal: UserPrincipal?) {
 
-
         if (principal != null) {
             log.info("Saving post $principal")
         }
+
         log.info("Saving post without user => $postSaveDto")
 
         val thumbnail =

@@ -31,14 +31,10 @@ class UtilTest {
             field("content", Supplier { faker.famousLastWords().lastWords() }),
             field("thumbnail", Supplier { faker.internet().image() }))
 
-
         val post =
             jTransformer.apply(Post::class.java, schema) as Post
 
-
         println(post)
-
-
     }
 
 
@@ -52,9 +48,27 @@ class UtilTest {
         val facebookSecret = "asdasd"
 
 
+        val supaBaseSecret = "kmp0WGpjMssxFZI3"
+
+        /**
+         * https://woawqxzinsnwsvghwanp.supabase.co
+         * 5uX/HsTm0vB10jg8bZ1X5cDff8cHPver12oPVD5+bXRjjcSWC/UXerGyq8U4REv1t8hj4V2lNIA+C0mnt54MUg==
+         *
+         * eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvYXdxeHppbnNud3N2Z2h3YW5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTAxOTExNDcsImV4cCI6MjAwNTc2NzE0N30.Rxs3jeXc0D7A8icqP6KYWXs-roF8WT6H6CykiNSeuxI
+         * eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvYXdxeHppbnNud3N2Z2h3YW5wIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MDE5MTE0NywiZXhwIjoyMDA1NzY3MTQ3fQ.Tnt1tP0cn2klbdjEFdBE5uOM7i3OISUT-n-kl1wYIPo
+         *
+         * db.woawqxzinsnwsvghwanp.supabase.co
+         * 5432
+         * postgres
+         * postgres://postgres:[YOUR-PASSWORD]@db.woawqxzinsnwsvghwanp.supabase.co:6543/postgres
+         */
+
+
         val encryptGithub = jasyptEncrypt(key,gitHubSecret)
         val encryptGoogle = jasyptEncrypt(key,googleSecret)
         val encryptFacebook = jasyptEncrypt(key,facebookSecret)
+
+
 
 
         System.out.println("encryptGithub : " + encryptGithub)

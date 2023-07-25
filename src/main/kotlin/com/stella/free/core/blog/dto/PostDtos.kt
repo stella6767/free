@@ -32,7 +32,7 @@ data class PostDetailDto(
     val username:String,
     //val userIp:String,
     val thumbnail:String?,
-    val createdAt:LocalDateTime,
+    val createdAt:String,
 )
 
 
@@ -42,5 +42,5 @@ data class PostCardDto(
     val thumbnailContent:String,
     val username:String,
     val thumbnail:String?,
-    val createdAt:LocalDateTime,
+    val createdAt:String,
 )

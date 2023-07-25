@@ -5,6 +5,7 @@ import com.stella.free.core.blog.dto.PostCardDto
 import com.stella.free.core.blog.dto.PostDetailDto
 
 import com.stella.free.global.entity.BaseEntity
+import com.stella.free.global.util.TimeUtil
 import jakarta.persistence.*
 import org.hibernate.annotations.ColumnDefault
 
@@ -52,7 +53,7 @@ class Post(
             thumbnail = this.thumbnail ?: "/img/no-thumbnail.jpeg",
             thumbnailContent = thumbnailContent,
             username = this.user?.username ?: this.anonymousUsername,
-            createdAt = this.createdAt
+            createdAt = TimeUtil.localDateTimeToString(this.createdAt, "YYYY-MM-dd E HH:mm")
         )
     }
 
@@ -64,7 +65,7 @@ class Post(
             thumbnail = this.thumbnail,
             content = this.content,
             username = this.user?.username ?: this.anonymousUsername,
-            createdAt = this.createdAt
+            createdAt = TimeUtil.localDateTimeToString(this.createdAt, "YYYY-MM-dd E HH:mm")
         )
 
     }

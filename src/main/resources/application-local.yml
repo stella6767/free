@@ -12,6 +12,10 @@ server:
         - local
 
 spring:
+  devtools:
+    restart:
+      quiet-period: 2000
+      poll-interval: 3000
   servlet:
     multipart:
       max-file-size: 100MB

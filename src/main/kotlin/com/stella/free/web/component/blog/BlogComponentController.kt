@@ -1,5 +1,6 @@
 package com.stella.free.web.component.blog
 
+import com.stella.free.core.blog.dto.CommentSaveDto
 import com.stella.free.core.blog.dto.PostSaveDto
 import com.stella.free.core.blog.service.PostService
 import com.stella.free.global.config.security.UserPrincipal
@@ -49,4 +50,16 @@ class BlogComponentController(
     fun postFile(file: MultipartFile): String {
         return postService.savePostImg(file)
     }
+
+
+
+    @PostMapping("/comment")
+    fun saveComment(commentSaveDto: CommentSaveDto): String {
+
+
+
+        TODO()
+    }
+
+
 }

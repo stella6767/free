@@ -9,6 +9,7 @@ import de.tschuehly.spring.viewcomponent.jte.ViewContext
 @ViewComponent
 class PostDetailViewComponent(
     private val postService: PostService,
+    private val commentSectionViewComponent: CommentSectionViewComponent,
 ) {
 
     fun render(id: Long): ViewContext {
@@ -17,7 +18,8 @@ class PostDetailViewComponent(
             postService.findById(id)
 
         return ViewContext(
-            "post" toProperty postDetail
+            "post" toProperty postDetail,
+            "commentSectionViewComponent" toProperty commentSectionViewComponent
         )
     }
 

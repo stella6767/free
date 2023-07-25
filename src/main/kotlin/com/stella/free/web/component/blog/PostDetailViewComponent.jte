@@ -1,4 +1,5 @@
 @param com.stella.free.core.blog.dto.PostDetailDto post
+@param com.stella.free.web.component.blog.CommentSectionViewComponent commentSectionViewComponent
 
 <%--<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>--%>
 
@@ -13,7 +14,7 @@
 
     <div class="font-light text-gray-600">
         <h1 class="font-bold text-gray-700 hover:underline">
-            By ${post.getUsername()} · ${post.getCreatedAt().toString()}
+            By ${post.getUsername()} · ${post.getCreatedAt()}
         </h1>
     </div>
 
@@ -24,6 +25,11 @@
     $unsafe{post.getContent()}
 </div>
 
+
+
+
+
+${commentSectionViewComponent.render()}
 
 <%--<span onclick="showContent('${post.getContent()}')">Click me</span>--%>
 

@@ -1,17 +1,29 @@
 package com.stella.free.util
 
 import com.stella.free.core.blog.entity.Post
+import com.stella.free.global.util.TimeUtil
 import net.datafaker.Faker
 import net.datafaker.transformations.Field.field
 import net.datafaker.transformations.JavaObjectTransformer
 import net.datafaker.transformations.Schema
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
 import org.junit.jupiter.api.Test
+import java.time.LocalDateTime
 import java.util.*
 import java.util.function.Supplier
 
 
 class UtilTest {
+
+
+    @Test
+    fun timeUtilTest(){
+
+        val timeToString =
+            TimeUtil.localDateTimeToString(LocalDateTime.now(), "YYYY-MM-dd E HH:mm")
+
+        println(timeToString)
+    }
 
 
     @Test

@@ -58,12 +58,12 @@ data class GithubAuth2UserInfo(
 ) : OAuth2UserInfo {
 
     override fun getUsername(): String {
-        return attributes.get("id").toString()
+        return attributes["id"].toString()
     }
     override fun getSocialPictureUrl(): String? {
-        return attributes.get("avatar_url")?.toString()
+        return attributes["avatar_url"]?.toString()
     }
     override fun getEmail(): String? {
-        return attributes.get("email")?.toString()
+        return attributes["email"]?.toString()
     }
 }

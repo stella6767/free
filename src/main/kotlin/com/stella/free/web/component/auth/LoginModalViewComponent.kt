@@ -14,7 +14,7 @@ class LoginModalViewComponent(
     fun render(): ViewContext {
 
         val signTypes =
-            SignType.values().map { it.name }
+            SignType.values()
 
         return ViewContext(
             "signTypes" toProperty signTypes,

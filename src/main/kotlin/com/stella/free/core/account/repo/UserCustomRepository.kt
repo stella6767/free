@@ -7,6 +7,7 @@ import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
 import com.linecorp.kotlinjdsl.spring.data.listQuery
 import com.linecorp.kotlinjdsl.spring.data.singleQuery
 import com.stella.free.core.account.entity.User
+import com.stella.free.global.util.singleOrNullQuery
 
 import jakarta.persistence.EntityManager
 
@@ -26,7 +27,7 @@ class UserCustomRepositoryImpl(
     override fun findByUsername(username: String): User? {
 
         val fetch = queryFactory
-            .singleQuery {
+            .singleOrNullQuery {
                 select(entity(User::class))
                 from(entity(User::class))
                 where(

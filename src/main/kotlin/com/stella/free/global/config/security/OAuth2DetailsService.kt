@@ -43,6 +43,8 @@ class OAuth2DetailsService(
         val oAuth2UserInfo =
             getOAuth2UserInfo(userRequest.clientRegistration.clientName, oAuth2User)
 
+        log.info("oAuth2UserInfo=>${oAuth2UserInfo.attributes}")
+
         var userEntity =
             userRepository.findByUsername(oAuth2UserInfo.getUsername())
 

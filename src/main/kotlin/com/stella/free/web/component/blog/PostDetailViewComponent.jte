@@ -27,8 +27,6 @@
 
 
 
-
-
 ${commentSectionViewComponent.render()}
 
 <%--<span onclick="showContent('${post.getContent()}')">Click me</span>--%>

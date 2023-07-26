@@ -106,7 +106,7 @@
 
 
     const cancelPost = () => {
-        location.href = "/blog/home"
+        location.href = "/blog"
     }
 
 

@@ -2,8 +2,8 @@ package com.stella.free.web.page
 
 import com.stella.free.global.config.security.UserPrincipal
 import com.stella.free.global.util.logger
-import com.stella.free.web.component.blog.PostDetailViewComponent
-import com.stella.free.web.component.blog.PostEditorViewComponent
+import com.stella.free.web.component.blog.post.PostDetailViewComponent
+import com.stella.free.web.component.blog.post.PostEditorViewComponent
 import com.stella.free.web.page.layout.LayoutViewComponent
 import com.stella.free.web.page.post.PostsViewComponent
 import com.stella.free.web.page.resume.ResumeViewComponent

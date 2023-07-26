@@ -1,7 +1,9 @@
 package com.stella.free.core.blog.service
 
 import com.stella.free.core.account.repo.UserRepository
+import com.stella.free.core.blog.dto.CommentCardDto
 import com.stella.free.core.blog.dto.CommentSaveDto
+import com.stella.free.core.blog.entity.Comment
 import com.stella.free.core.blog.repo.CommentRepository
 import com.stella.free.core.blog.repo.PostRepository
 import com.stella.free.global.util.logger
@@ -19,20 +21,22 @@ class CommentService(
     private val log = logger()
 
     @Transactional
-    fun saveComment(dto: CommentSaveDto) {
+    fun saveComment(dto: CommentSaveDto): CommentCardDto {
+
+        log.info(dto.toString())
 
         val post =
             postRepository.findById(dto.postId).orElseThrow { throw EntityNotFoundException(dto.postId.toString()) }
 
-        val user = if (dto.userId != null){
+        val user =
                 userRepository.getReferenceById(dto.userId)
-        }else null
 
         val comment =
             commentRepository.saveComment(dto.toEntity(post = post, user = user))
 
         commentRepository.saveCommentClosure(comment.id, dto.idAncestor)
-        //return comment.toDto()
+
+        return comment.toCardDto()
     }
 
 
@@ -44,6 +48,11 @@ class CommentService(
 
     }
 
+
+    @Transactional(readOnly = true)
+    fun findCommentsByPostId(id:Long): List<Comment> {
+        return commentRepository.findCommentsByPostId(id)
+    }
 
 
 

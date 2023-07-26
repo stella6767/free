@@ -9,6 +9,7 @@ import com.linecorp.kotlinjdsl.spring.data.singleQuery
 import com.stella.free.core.account.entity.User
 
 import com.stella.free.core.todo.entity.Todo
+import com.stella.free.global.util.singleOrNullQuery
 import jakarta.persistence.EntityManager
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -43,7 +44,7 @@ class TodoCustomRepositoryImpl(
             }
 
 
-        val count = queryFactory.singleQuery {
+        val count = queryFactory.singleOrNullQuery {
             select(count(column(Todo::id)))
             from(entity(Todo::class))
             where(
@@ -53,7 +54,7 @@ class TodoCustomRepositoryImpl(
 
         return PageableExecutionUtils.getPage(
             fetch, pageable
-        ) { count }
+        ) { count ?: 0}
     }
 
 }

@@ -43,7 +43,7 @@ class UserCustomRepositoryImpl(
 
 
         return queryFactory
-            .singleQuery {
+            .singleOrNullQuery {
                 select(entity(User::class))
                 from(entity(User::class))
                 where(

@@ -7,6 +7,7 @@ import com.linecorp.kotlinjdsl.spring.data.listQuery
 import com.linecorp.kotlinjdsl.spring.data.singleQuery
 
 import com.stella.free.core.blog.entity.Post
+import com.stella.free.global.util.singleOrNullQuery
 
 import jakarta.persistence.EntityManager
 import org.springframework.data.domain.Page
@@ -37,7 +38,7 @@ class PostCustomRepositoryImpl(
                 orderBy(ExpressionOrderSpec(column(Post::id), false))
             }
 
-        val count = queryFactory.singleQuery {
+        val count = queryFactory.singleOrNullQuery {
             select(count(column(Post::id)))
             from(entity(Post::class))
         }
@@ -45,7 +46,7 @@ class PostCustomRepositoryImpl(
 
         return PageableExecutionUtils.getPage(
             fetch, pageable
-        ) { count }
+        ) { count ?: 0L }
     }
 
 

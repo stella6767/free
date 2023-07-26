@@ -6,9 +6,7 @@ import com.stella.free.core.blog.entity.Post
 
 
 data class CommentSaveDto(
-    val userId:Long?,
-    val anonymousUsername:String,
-    val anonymousPassword:String,
+    val userId:Long,
     val content:String,
     val postId: Long,
     val idAncestor:Long?
@@ -18,8 +16,6 @@ data class CommentSaveDto(
         return Comment(
             content = content,
             post = post,
-            anonymousUsername = anonymousUsername,
-            anonymousPassword = anonymousPassword,
             user = user
         )
     }
@@ -28,6 +24,10 @@ data class CommentSaveDto(
 
 
 
-data class CommentRes(
+data class CommentCardDto(
+    val id: Long,
+    val postId: Long,
+    val username:String,
     val content: String,
+    val createdAt: String,
 )

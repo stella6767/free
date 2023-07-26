@@ -1,26 +1,24 @@
-package com.stella.free.web.component.blog
+package com.stella.free.web.component.blog.comment
 
-import com.stella.free.core.blog.entity.Post
+import com.stella.free.core.blog.dto.CommentCardDto
+import com.stella.free.core.blog.entity.Comment
 import com.stella.free.global.util.logger
 import de.tschuehly.spring.viewcomponent.core.ViewComponent
 import de.tschuehly.spring.viewcomponent.core.toProperty
 import de.tschuehly.spring.viewcomponent.jte.ViewContext
-import org.jsoup.Jsoup
+
 
 @ViewComponent
-class PostCardViewComponent(
+class CommentCardViewComponent(
 
 ) {
 
     private val log = logger()
 
-    fun render(post: Post): ViewContext {
-
-        val text =
-            Jsoup.parse(post.content).text()
+    fun render(comment: CommentCardDto): ViewContext {
 
         return ViewContext(
-            "post" toProperty post.toCardDto(text)
+            "comment" toProperty comment
         )
     }
 

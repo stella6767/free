@@ -6,6 +6,12 @@ import com.stella.free.global.config.security.OAuth2UserInfo
 import com.stella.free.core.account.entity.type.SignType
 import jakarta.persistence.*
 
+/**
+ * Add profile url, default profile url
+ * social id as username
+ *
+ */
+
 
 @Entity
 @Table(name = "user")

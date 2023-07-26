@@ -85,6 +85,9 @@ class SecurityConfig(
             .headers {
                 it.frameOptions().sameOrigin()
             }
+            .cors {
+                it.configurationSource(corsConfigurationSource())
+            }
             .oauth2Login { oauth ->
                 oauth
                     .authorizationEndpoint {
@@ -97,7 +100,7 @@ class SecurityConfig(
                     .userInfoEndpoint{
                         it.userService(oAuth2DetailsService)
                     }
-                    .defaultSuccessUrl("/")
+                    //.defaultSuccessUrl("/")
                     .successHandler(OauthLoginSuccessHandler())
                     //.failureHandler()
                     .permitAll()
@@ -161,6 +164,8 @@ class SecurityConfig(
 
     class OauthLoginSuccessHandler : AuthenticationSuccessHandler {
 
+        private val log = logger()
+
         override fun onAuthenticationSuccess(
             request: HttpServletRequest, response: HttpServletResponse,
             authentication: Authentication
@@ -169,10 +174,10 @@ class SecurityConfig(
 //            val SESSION_TIMEOUT_IN_SECONDS = 60 * 120 //단위는 초, 2시간 간격으로 세션만료
 //            request.session.maxInactiveInterval = SESSION_TIMEOUT_IN_SECONDS //세션만료시간.
             request.session.maxInactiveInterval = 3600
-
             SecurityContextHolder.getContext().authentication = authentication
 
-
+            log.info("login success, ${request.requestURI}   ${request.requestURL}")
+            //response.writer.write("")
             response.sendRedirect("/")
         }
     }

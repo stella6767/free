@@ -1,5 +1,5 @@
 @param com.stella.free.core.blog.dto.PostDetailDto post
-@param com.stella.free.web.component.blog.CommentSectionViewComponent commentSectionViewComponent
+@param com.stella.free.web.component.blog.comment.CommentSectionViewComponent commentSectionViewComponent
 
 <%--<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>--%>
 
@@ -27,7 +27,7 @@
 
 
 
-${commentSectionViewComponent.render()}
+${commentSectionViewComponent.render(post)}
 
 <%--<span onclick="showContent('${post.getContent()}')">Click me</span>--%>
 

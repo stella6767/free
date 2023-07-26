@@ -6,8 +6,13 @@
 
 @param SignType[] signTypes
 
-<!-- Open the modal using ID.showModal() method -->
 
+<%--onclick="location.href='${signType.getAuthorizationUrl()}'"--%>
+<%--hx-get="${signType.getAuthorizationUrl()}"--%>
+<%--hx-trigger="click"--%>
+<%--hx-swap="none"--%>
+<%--hx-on="htmx:afterRequest: alert('Done making a request!')"--%>
+<%--hx-on="htmx:configRequest: event.detail.headers=''; event.detail.headers['Content-Type']='application/x-www-form-urlencoded; charset=UTF-8'"--%>
 
 <!-- Open the modal using ID.showModal() method -->
 <dialog id="login_modal" class="modal">
@@ -22,7 +27,8 @@
                     @for(SignType signType : signTypes)
 
                         <button class="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300
- hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100" onclick="location.href='${signType.getAuthorizationUrl()}'"
+ hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100"
+                                onclick="location.href='${signType.getAuthorizationUrl()}'"
                         >
                             <div class="relative flex items-center space-x-4 justify-center">
                                 <img src="${signType.getImgUrl()}"
@@ -46,5 +52,6 @@
         </div>
     </form>
 </dialog>
+
 
 

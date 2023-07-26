@@ -1,5 +1,7 @@
-package com.stella.free.web.component.blog
+package com.stella.free.web.component.blog.comment
 
+import com.stella.free.core.account.entity.type.SignType
+import com.stella.free.core.blog.dto.PostDetailDto
 import de.tschuehly.spring.viewcomponent.core.ViewComponent
 import de.tschuehly.spring.viewcomponent.core.toProperty
 import de.tschuehly.spring.viewcomponent.jte.ViewContext
@@ -8,23 +10,23 @@ import org.springframework.security.core.context.SecurityContextHolder
 
 
 @ViewComponent
-class CommentSectionViewComponent(
+class CommentFormViewComponent(
 
 ) {
 
-    fun render(): ViewContext {
+    fun render(postId: Long): ViewContext {
 
         val authentication =
             SecurityContextHolder.getContext().authentication
 
-        val isDisabled =
-            authentication is AnonymousAuthenticationToken
-
+        val isLogin =
+            authentication !is AnonymousAuthenticationToken
 
         return ViewContext(
             "authentication" toProperty authentication,
-            "isDisabled" toProperty isDisabled
-
+            "isLogin" toProperty isLogin,
+            "signType" toProperty SignType.GITHUB,
+            "postId" toProperty postId,
         )
     }
 

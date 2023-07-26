@@ -2,10 +2,12 @@ package com.stella.free.core.blog.repo
 
 import com.linecorp.kotlinjdsl.querydsl.expression.col
 import com.linecorp.kotlinjdsl.querydsl.expression.column
+import com.linecorp.kotlinjdsl.querydsl.from.fetch
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
 import com.linecorp.kotlinjdsl.spring.data.listQuery
 import com.stella.free.core.blog.entity.Comment
 import com.stella.free.core.blog.entity.CommentClosure
+import com.stella.free.core.blog.entity.Post
 import jakarta.persistence.EntityManager
 import org.springframework.stereotype.Repository
 import org.springframework.util.Assert
@@ -16,6 +18,7 @@ interface CommentRepository {
     fun findCommentByAncestorComment(idAncestor: Long): List<Comment>
     fun saveCommentClosure(idDescendant: Long, idAncestor: Long?): Int
     fun saveComment(comment: Comment): Comment
+    fun findCommentsByPostId(id: Long): List<Comment>
 }
 
 
@@ -27,7 +30,19 @@ class CommentRepositoryImpl(
     private val em: EntityManager,
 ) : CommentRepository {
 
+    override fun findCommentsByPostId(id: Long): List<Comment> {
 
+        return queryFactory.listQuery {
+            select(entity(Comment::class))
+            from(entity(Comment::class))
+            fetch(Comment::post)
+            fetch(Comment::user)
+            where(
+                nestedCol(col(Comment::post), Post::id).equal(id)
+            )
+        }
+
+    }
 
     override fun saveComment(comment: Comment): Comment {
         Assert.notNull(comment, "Entity must not be null")
@@ -46,8 +61,8 @@ class CommentRepositoryImpl(
         var executeCount = 0
 
         val sql = """
-            INSERT INTO Comment_closure
-            ( id_ancestor, id_descendant, depth, update_at, create_at)
+            INSERT INTO comment_closure
+            ( id_ancestor, id_descendant, depth, updated_at, created_at)
             VALUES
             ($idAncestor, $idDescendant, 0, now(), now())                       
         """.trimIndent()

@@ -5,6 +5,7 @@
 @param Boolean isLogin
 @param com.stella.free.core.account.entity.type.SignType signType 
 @param Long postId
+@param Long idAncestor
 
 
 
@@ -41,6 +42,7 @@
 
             <input type="hidden" name="userId" value="${((UserPrincipal)authentication.getPrincipal()).getUser().getId()}">
             <input type="hidden" name="postId" value="${postId}">
+            <input type="hidden" name="idAncestor" value="${idAncestor}">
 
         @endif
 

@@ -1,39 +1,42 @@
 @import com.stella.free.core.blog.dto.*
 
 @param CommentCardDto comment
+@param com.stella.free.web.component.blog.comment.CommentFormViewComponent commentFormViewComponent
 
-<div class="flex" id="comment-card-${comment.getId()}">
-    <div class="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
-        <strong>${comment.getUsername()}</strong>
-        <span class="text-xs text-gray-400">${comment.getCreatedAt()}</span>
-        <p class="text-sm">
-            ${comment.getContent()}
-        </p>
-        <div class="mt-4 flex items-center">
-            <div class="flex -space-x-2 mr-2">
-                <button class="text-right text-blue-500"
-                        hx-get="/comment/form/${comment.getPostId()}"
-                        hx-target="#comment-reply-form-${comment.getId()}"
-                >
-                    Reply
-                </button>
-            </div>
-            <div class="text-sm text-gray-500 font-semibold cursor-pointer">
-                show Replies
+<div x-data="{ open: false }">
+
+    <div class="flex" id="comment-card-${comment.getId()}">
+        <div class="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+            <strong>${comment.getUsername()}</strong>
+            <span class="text-xs text-gray-400">${comment.getCreatedAt()}</span>
+            <p class="text-sm">
+                ${comment.getContent()}
+            </p>
+            <div class="mt-4 flex items-center">
+                <div class="flex -space-x-2 mr-2">
+                    <button class="text-right text-blue-500"
+                            x-on:click="open = ! open"
+                    >
+                        Reply
+                    </button>
+                </div>
+                <div class="text-sm text-gray-500 font-semibold cursor-pointer">
+                    show Replies
+                </div>
             </div>
         </div>
+
+
     </div>
-</div>
+    <div id="comment-reply-form-${comment.getId()}" x-show="open">
+        ${commentFormViewComponent.render(comment.getPostId(), comment.getId())}
+    </div>
 
-
-
-<div id="comment-reply-form-${comment.getId()}">
 </div>
 
 
 <div id="comment-reply-${comment.getId()}">
 </div>
-
 
 
 <%--<div class="flex">--%>

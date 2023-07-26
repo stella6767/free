@@ -16,7 +16,7 @@ import kotlin.reflect.KProperty1
 interface CommentRepository {
 
     fun findCommentByAncestorComment(idAncestor: Long): List<Comment>
-    fun saveCommentClosure(idDescendant: Long, idAncestor: Long?): Int
+    fun saveCommentClosure(idDescendant: Long, idAncestor: Long): Int
     fun saveComment(comment: Comment): Comment
     fun findCommentsByPostId(id: Long): List<Comment>
 }
@@ -56,24 +56,25 @@ class CommentRepositoryImpl(
 
 
 
-    override fun saveCommentClosure(idDescendant: Long, idAncestor:Long?): Int {
+    override fun saveCommentClosure(idDescendant: Long, idAncestor:Long): Int {
 
         var executeCount = 0
+
+        val parentComment = if (idAncestor == 0L ) null else idAncestor
 
         val sql = """
             INSERT INTO comment_closure
             ( id_ancestor, id_descendant, depth, updated_at, created_at)
             VALUES
-            ($idAncestor, $idDescendant, 0, now(), now())                       
+            ($parentComment, $idDescendant, 0, now(), now())                       
         """.trimIndent()
 
         executeCount += em.createNativeQuery(sql).executeUpdate()
 
-        if (idAncestor != null){
+        if (parentComment != null){
 
             executeCount += em.createNativeQuery(
-                """
-                
+                """               
                 INSERT into Comment_closure
                 ( id_ancestor, id_descendant, depth, update_at, create_at)            
                 SELECT 

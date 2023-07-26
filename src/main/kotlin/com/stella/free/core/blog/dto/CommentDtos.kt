@@ -9,7 +9,7 @@ data class CommentSaveDto(
     val userId:Long,
     val content:String,
     val postId: Long,
-    val idAncestor:Long?
+    val idAncestor:Long
 ){
 
     fun toEntity(post: Post, user: User?): Comment {

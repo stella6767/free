@@ -14,7 +14,7 @@ class CommentFormViewComponent(
 
 ) {
 
-    fun render(postId: Long): ViewContext {
+    fun render(postId: Long, idAncestor:Long = 0): ViewContext {
 
         val authentication =
             SecurityContextHolder.getContext().authentication
@@ -27,6 +27,7 @@ class CommentFormViewComponent(
             "isLogin" toProperty isLogin,
             "signType" toProperty SignType.GITHUB,
             "postId" toProperty postId,
+            "idAncestor" toProperty idAncestor,
         )
     }
 

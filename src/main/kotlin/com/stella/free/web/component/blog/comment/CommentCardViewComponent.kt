@@ -10,7 +10,7 @@ import de.tschuehly.spring.viewcomponent.jte.ViewContext
 
 @ViewComponent
 class CommentCardViewComponent(
-
+    private val commentFormViewComponent: CommentFormViewComponent,
 ) {
 
     private val log = logger()
@@ -18,7 +18,8 @@ class CommentCardViewComponent(
     fun render(comment: CommentCardDto): ViewContext {
 
         return ViewContext(
-            "comment" toProperty comment
+            "comment" toProperty comment,
+            "commentFormViewComponent" toProperty commentFormViewComponent
         )
     }
 

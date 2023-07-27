@@ -29,6 +29,7 @@ data class PostDetailDto(
     val id:Long,
     val title:String,
     val content:String,
+    val markDownContent:String,
     val username:String,
     //val userIp:String,
     val thumbnail:String?,

@@ -86,8 +86,8 @@ dependencies {
 
     // 더미데이터 셍상
     implementation("net.datafaker:datafaker:2.0.1")
-    // 마크다운 파싱
-    implementation("org.commonmark:commonmark:0.21.0")
+    // html to 마크다운
+    implementation("com.vladsch.flexmark:flexmark-html2md-converter:0.64.0")
     // html 파싱
     implementation("org.jsoup:jsoup:1.16.1")
 

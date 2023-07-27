@@ -1,6 +1,8 @@
 package com.stella.free.core.blog.entity
 
+import com.stella.free.core.blog.dto.CommentCardDto
 import com.stella.free.global.entity.BaseEntity
+import com.stella.free.global.util.TimeUtil
 import jakarta.persistence.*
 
 @Entity
@@ -11,7 +13,7 @@ import jakarta.persistence.*
 )
 class CommentClosure(
     id:Long = 0,
-    idAncestor: Comment? = null,
+    idAncestor: Comment,
     idDescendant: Comment,
     depth:Int = 0,
 ) : BaseEntity(id) {
@@ -30,8 +32,23 @@ class CommentClosure(
     var depth = depth
         protected set
 
+
+    fun toCardDto(): CommentCardDto {
+
+        return CommentCardDto(
+            commentId = this.idDescendant.id,
+            commentCloserId = this.id,
+            depth = this.depth,
+            idAncestor = this.idAncestor?.id ?: 0,
+            postId = this.idDescendant.post.id,
+            content = this.idDescendant.content,
+            username = this.idDescendant.user?.username ?: "익명",
+            createdAt = TimeUtil.localDateTimeToString(this.createdAt, "hh:mm:ss a")
+        )
+    }
+
     override fun toString(): String {
-        return "CommentClosure(id=$id, idAncestor=$idAncestor, idDescendant=$idDescendant, depth=$depth)"
+        return "CommentClosure(id=$id, idAncestor=${idAncestor?.id}, idDescendant=${idDescendant.id}, depth=$depth)"
     }
 
 }

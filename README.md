@@ -5,6 +5,10 @@
 
 ## Backend
 
+### Kotlin
+
+my AllTime favorite language. I extremely happy with it
+
 ### Spring Boot 
 
 In my experience, Spring Boot is the most well-rounded framework for server-side development. Other frameworks have their strengths and weaknesses, but Spring Boot is the one that checks all the boxes to a certain degree.
@@ -54,6 +58,9 @@ free tier avaliable for cloud relational DB. I'm so happy with it.
 
 ### Github Oauth2
 
+### Intellij
+
+Intellij is a ultimate IDE for JVM developers. super powerful 
 
 
 

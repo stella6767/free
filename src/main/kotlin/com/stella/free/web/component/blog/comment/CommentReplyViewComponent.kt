@@ -12,7 +12,10 @@ class CommentReplyViewComponent(
     private val log = logger()
     fun render(): ViewContext {
 
-        return ViewContext()
+
+        return ViewContext(
+
+        )
     }
 
 

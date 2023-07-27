@@ -6,6 +6,7 @@ import com.stella.free.global.util.logger
 import de.tschuehly.spring.viewcomponent.core.ViewComponent
 import de.tschuehly.spring.viewcomponent.core.toProperty
 import de.tschuehly.spring.viewcomponent.jte.ViewContext
+import java.util.Map
 
 
 @ViewComponent
@@ -15,7 +16,7 @@ class CommentCardViewComponent(
 
     private val log = logger()
 
-    fun render(comment: CommentCardDto): ViewContext {
+    fun render(comment: Map.Entry<Long, List<CommentCardDto>>): ViewContext {
 
         return ViewContext(
             "comment" toProperty comment,

@@ -57,17 +57,17 @@ class Post(
         )
     }
 
-    fun toDetailDto(): PostDetailDto {
+    fun toDetailDto(postMarkDown: String): PostDetailDto {
 
         return PostDetailDto(
             id = this.id,
             title = this.title,
             thumbnail = this.thumbnail,
             content = this.content,
+            markDownContent = postMarkDown,
             username = this.user?.username ?: this.anonymousUsername,
             createdAt = TimeUtil.localDateTimeToString(this.createdAt, "YYYY-MM-dd E HH:mm")
         )
-
     }
 
 

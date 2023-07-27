@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Lab</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.11/themes/default/style.min.css"/>
+</head>
+<body>
+<!--<div id="comments">-->
+<!--    &lt;!&ndash; The jsTree will be dynamically generated here &ndash;&gt;-->
+<!--</div>-->
+
+
+<form class="bg-white rounded-lg border p-2 mx-auto "
+      id="comment-form-0"
+      hx-post="/comment"
+      hx-target="#comment-card-container"
+      hx-swap="beforeend"
+>
+
+<!--    <div class="px-3 mb-2 mt-2">-->
+<!--            <textarea placeholder="comment"-->
+<!--                      name="content" form="comment-form"-->
+<!--                      class="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white">-->
+<!--            </textarea>-->
+<!--    </div>-->
+
+
+    <input type="hidden" name="userId" value="1">
+    <input type="hidden" name="postId" value="103">
+    <input type="hidden" name="idAncestor" value="0">
+
+    <div class="flex justify-end px-4">
+        <input type="submit" class="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500 cursor-pointer" value="Comment">
+    </div>
+
+
+
+</form>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.11/jstree.min.js"></script>
+<script >
+    $(document).ready(function() {
+        // Sample comment data (you can replace this with your dynamic data)
+        const commentsData = [
+            { id: 'comment-1', parent: '#', text: 'Comment 1' },
+            { id: 'comment-2', parent: 'comment-1', text: 'Comment 2' },
+            { id: 'comment-3', parent: 'comment-1', text: 'Comment 3' },
+            { id: 'comment-4', parent: 'comment-2', text: 'Comment 4' },
+            { id: 'comment-5', parent: '#', text: 'Comment 5' },
+            { id: 'comment-6', parent: 'comment-5', text: 'Comment 6' },
+        ];
+
+        // Create the jsTree instance
+        $('#comments').jstree({
+            core: {
+                data: commentsData,
+                check_callback: true,
+            },
+            plugins: ['dnd', 'contextmenu'],
+            contextmenu: {
+                items: customContextMenu,
+            },
+        });
+
+        // Custom context menu items
+        function customContextMenu(node) {
+            const items = {
+                create: {
+                    label: 'Add Comment',
+                    action: function () {
+                        const newNodeId = 'new-comment-' + Date.now();
+                        const newNode = { id: newNodeId, parent: node.id, text: 'New Comment' };
+                        $('#comments').jstree(true).create_node(node, newNode);
+                    },
+                },
+                remove: {
+                    label: 'Delete Comment',
+                    action: function () {
+                        $('#comments').jstree(true).delete_node(node);
+                    },
+                },
+            };
+            return items;
+        }
+    });
+
+
+</script>
+</body>
+</html>

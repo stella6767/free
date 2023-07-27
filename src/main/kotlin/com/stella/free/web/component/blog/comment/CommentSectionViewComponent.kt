@@ -6,8 +6,6 @@ import com.stella.free.global.util.logger
 import de.tschuehly.spring.viewcomponent.core.ViewComponent
 import de.tschuehly.spring.viewcomponent.core.toProperty
 import de.tschuehly.spring.viewcomponent.jte.ViewContext
-import org.springframework.security.authentication.AnonymousAuthenticationToken
-import org.springframework.security.core.context.SecurityContextHolder
 
 
 @ViewComponent
@@ -15,23 +13,25 @@ class CommentSectionViewComponent(
     private val commentService: CommentService,
     private val commentFormViewComponent: CommentFormViewComponent,
     private val commentCardViewComponent: CommentCardViewComponent,
-
+    private val commentReplyViewComponent: CommentReplyViewComponent,
     ) {
 
     private val log = logger()
     fun render(post: PostDetailDto): ViewContext {
 
 
-        val comments =
-            commentService.findCommentsByPostId(post.id).map { it.toCardDto() }
+        val commentsMap =
+            commentService.findCommentsByPostId(post.id).groupBy { it.idAncestor }
+
 
 
         //log.info("post=>{}", post)
         return ViewContext(
             "commentFormViewComponent" toProperty commentFormViewComponent,
             "commentCardViewComponent" toProperty commentCardViewComponent,
+            "commentReplyViewComponent" toProperty commentReplyViewComponent,
             "post" toProperty post,
-            "comments" toProperty comments,
+            "commentsMap" toProperty commentsMap,
         )
     }
 

@@ -7,6 +7,8 @@ import com.stella.free.core.blog.repo.PostRepository
 import com.stella.free.global.config.security.UserPrincipal
 import com.stella.free.global.service.FileUploader
 import com.stella.free.global.util.logger
+import com.vladsch.flexmark.html2md.converter.FlexmarkHtmlConverter
+import com.vladsch.flexmark.util.data.MutableDataSet
 import jakarta.annotation.PostConstruct
 import jakarta.persistence.EntityNotFoundException
 import net.datafaker.Faker
@@ -23,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
 import java.util.*
 import java.util.function.Supplier
+
 
 @Service
 @Transactional
@@ -132,7 +135,11 @@ class PostService(
         val post = postRepository.findById(id)
             .orElseThrow { throw EntityNotFoundException() }
 
-        return post.toDetailDto()
+        val options = MutableDataSet()
+        val postMarkDown =
+            FlexmarkHtmlConverter.builder(options).build().convert(post.content)
+
+        return post.toDetailDto(postMarkDown)
     }
 
 

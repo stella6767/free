@@ -25,7 +25,10 @@ data class CommentSaveDto(
 
 
 data class CommentCardDto(
-    val id: Long,
+    val commentId: Long,
+    val commentCloserId: Long = 0,
+    val depth:Int = 0,
+    val idAncestor: Long = 0,
     val postId: Long,
     val username:String,
     val content: String,

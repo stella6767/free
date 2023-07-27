@@ -65,7 +65,9 @@ class BlogComponentController(
         val commentCardDto =
             commentService.saveComment(commentSaveDto)
 
-        return commentCardViewComponent.render(commentCardDto)
+        //return commentCardViewComponent.render(commentCardDto)
+
+        TODO()
     }
 
 

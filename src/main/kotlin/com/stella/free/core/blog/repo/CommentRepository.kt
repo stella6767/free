@@ -18,7 +18,9 @@ interface CommentRepository {
     fun findCommentByAncestorComment(idAncestor: Long): List<Comment>
     fun saveCommentClosure(idDescendant: Long, idAncestor: Long): Int
     fun saveComment(comment: Comment): Comment
-    fun findCommentsByPostId(id: Long): List<Comment>
+    fun findCommentsByPostId(id: Long): List<CommentClosure>
+
+    //fun findCommentsByPostIdTest(id: Long): List<CommentClosure>
 }
 
 
@@ -30,19 +32,37 @@ class CommentRepositoryImpl(
     private val em: EntityManager,
 ) : CommentRepository {
 
-    override fun findCommentsByPostId(id: Long): List<Comment> {
+//    override fun findCommentsByPostId(id: Long): List<Comment> {
+//
+//        return queryFactory.listQuery {
+//            select(entity(Comment::class))
+//            from(entity(Comment::class))
+//            fetch(Comment::post)
+//            fetch(Comment::user)
+//            where(
+//                nestedCol(col(Comment::post), Post::id).equal(id)
+//            )
+//        }
+//    }
+
+
+    override fun findCommentsByPostId(id: Long): List<CommentClosure> {
 
         return queryFactory.listQuery {
-            select(entity(Comment::class))
-            from(entity(Comment::class))
-            fetch(Comment::post)
+            select(entity(CommentClosure::class))
+            from(entity(CommentClosure::class))
+            fetch(CommentClosure::idDescendant)
             fetch(Comment::user)
+            fetch(Comment::post)
             where(
                 nestedCol(col(Comment::post), Post::id).equal(id)
             )
         }
-
     }
+
+
+
+
 
     override fun saveComment(comment: Comment): Comment {
         Assert.notNull(comment, "Entity must not be null")
@@ -66,7 +86,7 @@ class CommentRepositoryImpl(
             INSERT INTO comment_closure
             ( id_ancestor, id_descendant, depth, updated_at, created_at)
             VALUES
-            ($parentComment, $idDescendant, 0, now(), now())                       
+            ($idDescendant, $idDescendant, 0, now(), now())                       
         """.trimIndent()
 
         executeCount += em.createNativeQuery(sql).executeUpdate()
@@ -75,15 +95,15 @@ class CommentRepositoryImpl(
 
             executeCount += em.createNativeQuery(
                 """               
-                INSERT into Comment_closure
-                ( id_ancestor, id_descendant, depth, update_at, create_at)            
+                INSERT into comment_closure
+                ( id_ancestor, id_descendant, depth, updated_at, created_at)            
                 SELECT 
                 cc.id_ancestor,
                 c.id_descendant,
                 cc.depth + c.depth + 1,
-                c.update_at,
-                c.create_at
-                from Comment_closure as cc, Comment_closure as c
+                c.updated_at,
+                c.created_at
+                from comment_closure as cc, Comment_closure as c
                 where  cc.id_descendant = $idAncestor and c.id_ancestor = $idDescendant
                 
             """.trimIndent()

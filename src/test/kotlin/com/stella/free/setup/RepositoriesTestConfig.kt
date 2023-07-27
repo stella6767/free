@@ -7,6 +7,8 @@ import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactoryImpl
 
 import com.p6spy.engine.spy.P6SpyOptions
+import com.stella.free.core.blog.repo.CommentRepository
+import com.stella.free.core.blog.repo.CommentRepositoryImpl
 
 import com.stella.free.global.config.JacksonConfig
 import com.stella.free.global.config.LoggingConfig
@@ -22,18 +24,26 @@ internal class RepositoriesTestConfig {
     @PersistenceContext
     private lateinit var entityManager: EntityManager
 
-
-//    @Bean
-//    fun springDataQueryFactory(): SpringDataQueryFactory {
-//        P6SpyOptions.getActiveInstance().logMessageFormat = P6SpyLoggingConfig.P6spyPrettySqlFormatter::class.java.getName()
-//        return SpringDataQueryFactoryImpl(CriteriaQueryCreatorImpl(entityManager), SubqueryCreatorImpl())
-//    }
+    @Bean
+    fun springDataQueryFactory(): SpringDataQueryFactory {
+        P6SpyOptions.getActiveInstance().logMessageFormat =
+            LoggingConfig.P6spyPrettySqlFormatter::class.java.name
+        return SpringDataQueryFactoryImpl(CriteriaQueryCreatorImpl(entityManager), SubqueryCreatorImpl())
+    }
 
     @Bean
     fun objectMapper(): ObjectMapper {
 
         return JacksonConfig().objectMapper()
     }
+
+
+    @Bean
+    fun commentRepository(): CommentRepository {
+
+        return CommentRepositoryImpl(springDataQueryFactory(), entityManager)
+    }
+
 
 
 }

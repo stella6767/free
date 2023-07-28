@@ -27,6 +27,7 @@ out/
 !**/src/test/**/out/
 logs/
 jte-classes/
+*.pid
 
 ### NetBeans ###
 /nbproject/private/

@@ -57,7 +57,7 @@ class RepositoryTest(
 
 
         val list = rootComments.map {
-            createTree(it.toCardDto(), commentClosures.map { it.toCardDto() })
+            createTreeFunctional(it.toCardDto(), commentClosures.map { it.toCardDto() })
         }
 
 
@@ -131,15 +131,12 @@ class RepositoryTest(
 
         for (commentClosure in commentClosures) {
             if (commentClosure.idAncestor == parent.commentId) {
-
                 //println(commentClosure)
                 if (commentClosure.depth == 1) {
                     println(commentClosure)
                     parent.childComments.add(commentClosure)
-
                     createTree(commentClosure, commentClosures)
                 }
-
                 //parent.childComments.add(createTree(commentClosure, commentClosures.slice(1..commentClosures.size-1)))
             }
         }
@@ -148,6 +145,14 @@ class RepositoryTest(
         return parent
     }
 
+
+    fun createTreeFunctional(parent: CommentCardDto, commentClosures: List<CommentCardDto>): CommentCardDto {
+        val childComments =
+            commentClosures.filter { it.idAncestor == parent.commentId && it.depth == parent.depth + 1 }
+            .map { createTree(it, commentClosures) }
+            .toMutableList()
+        return parent.copy(childComments = childComments)
+    }
 
 //    fun buildCommentTree(commentClosures: List<CommentClosure>): List<CommentTestDto> {
 //

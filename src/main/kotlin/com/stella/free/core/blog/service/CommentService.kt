@@ -51,7 +51,7 @@ class CommentService(
     fun findCommentsByPostId(id: Long): List<CommentCardDto> {
 
         val commentClosures =
-            commentRepository.findCommentsByPostId(99)
+            commentRepository.findCommentsByPostId(id)
 
         return commentClosures.associateBy { it.idDescendant.id }.map { it.value }.toList().filter { it.depth == 0 }.map {
             createCommentTree(it.toCardDto(), commentClosures.map { it.toCardDto() })

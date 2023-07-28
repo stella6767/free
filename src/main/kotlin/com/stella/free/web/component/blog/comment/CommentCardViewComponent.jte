@@ -6,7 +6,7 @@
 @param com.stella.free.web.component.blog.comment.CommentReplyViewComponent commentReplyViewComponent
 
 
-<div  x-data="{ open: false }">
+<div  x-data="{ open: false }" id="comment-card-${comment.getCommentId()}">
 
     <div class="flex" id="comment-card-${comment.getCommentId()}" >
         <div class="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">

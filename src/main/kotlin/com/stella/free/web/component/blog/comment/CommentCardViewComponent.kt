@@ -16,7 +16,7 @@ class CommentCardViewComponent(
 
     private val log = logger()
 
-    fun render(comment: Map.Entry<Long, List<CommentCardDto>>): ViewContext {
+    fun render(comment: CommentCardDto): ViewContext {
 
         return ViewContext(
             "comment" toProperty comment,

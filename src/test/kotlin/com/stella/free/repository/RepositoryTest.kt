@@ -1,10 +1,13 @@
 package com.stella.free.repository
 
-import com.stella.free.core.blog.entity.Comment
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.stella.free.core.blog.dto.CommentCardDto
+import com.stella.free.core.blog.dto.CommentTestDto
 import com.stella.free.core.blog.entity.CommentClosure
 import com.stella.free.core.blog.repo.CommentRepository
 import com.stella.free.core.blog.repo.PostRepository
 import com.stella.free.setup.RepositoriesTestConfig
+import org.jetbrains.kotlin.build.deserializeFromPlainText
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
@@ -40,49 +43,126 @@ class RepositoryTest(
 
         commentClosures.forEach { println(it) }
 
-        val convertedCommentClosures =
-            hashMapOf<Long, CommentClosure>()
-        commentClosures.forEach {
-            convertedCommentClosures.put(it.idDescendant.id, it)
-        }
-
+        println("================================================")
 
         val closureMap =
-            commentClosures.associateBy { it.idDescendant.id }
+            commentClosures.associateBy { it.idDescendant.id }.map { it.value }.toList()
 
-        println(convertedCommentClosures)
+        val rootComments =
+            closureMap.filter { it.depth == 0 }
 
-        println("================================================")
 
-        println(closureMap)
-
-        println("================================================")
-
-        val closureList =
-            closureMap.map { it.value }.toList().map { it.toCardDto() }
-
-        println(closureList)
-
-        val groupBy =
-            closureList.groupBy { it.idAncestor }
-
+        rootComments.map { it.toCardDto() }.forEach { println(it)}
         println("================================================")
 
 
-        for (entry in groupBy.entries.iterator()) {
-
-            for (commentCardDto in entry.value) {
-                if (commentCardDto.depth == 0) println("" + commentCardDto)
-                else println(" " + commentCardDto)
-            }
-
-            println("========================보소======================")
-
+        val list = rootComments.map {
+            createTree(it.toCardDto(), commentClosures.map { it.toCardDto() })
         }
+
+
+        println("!!!!!!!!!!!!!!!!!!")
+
+
+//        list.forEach {
+//            println(it)
+//        }
+
+        println(ObjectMapper().writeValueAsString(list))
+
+
+
+
+//        val buildCommentTree =
+//            buildCommentTree(commentClosures)
+//
+//
+//        println(buildCommentTree)
+
+
+//        val convertedCommentClosures =
+//            hashMapOf<Long, CommentClosure>()
+//        commentClosures.forEach {
+//            convertedCommentClosures.put(it.idDescendant.id, it)
+//        }
+//        println(convertedCommentClosures)
+//
+//        val closureMap =
+//            commentClosures.associateBy { it.idDescendant.id }
+//
+//        println("================================================")
+//
+//        println(closureMap)
+
+
+//        println("================================================")
+//
+//        val closureList =
+//            closureMap.map { it.value }.toList().map { it.toCardDto() }
+//
+//        println(closureList)
+//
+//        println(  ObjectMapper().writeValueAsString(closureList))
+
+
+//        val groupBy =
+//            closureList.groupBy { it.idAncestor }
+//
+//        println("================================================")
+//
+//
+//        for (entry in groupBy.entries.iterator()) {
+//
+//            for (commentCardDto in entry.value) {
+//                if (commentCardDto.depth == 0) println("" + commentCardDto)
+//                else println(" " + commentCardDto)
+//            }
+//
+//            println("========================보소======================")
+//
+//        }
 
 
     }
 
+
+
+    fun createTree(parent: CommentCardDto, commentClosures: List<CommentCardDto>): CommentCardDto {
+
+        for (commentClosure in commentClosures) {
+            if (commentClosure.idAncestor == parent.commentId) {
+
+                //println(commentClosure)
+                if (commentClosure.depth == 1) {
+                    println(commentClosure)
+                    parent.childComments.add(commentClosure)
+
+                    createTree(commentClosure, commentClosures)
+                }
+
+                //parent.childComments.add(createTree(commentClosure, commentClosures.slice(1..commentClosures.size-1)))
+            }
+        }
+
+        println("================================================")
+        return parent
+    }
+
+
+//    fun buildCommentTree(commentClosures: List<CommentClosure>): List<CommentTestDto> {
+//
+//
+//        val testDtoList = mutableListOf<CommentTestDto>()
+//
+//        for (commentClosure in commentClosures) {
+//            if (commentClosure.depth == 0) {
+//                testDtoList.add()
+//            }
+//
+//        }
+//
+//        TODO()
+//    }
 
 
     /**

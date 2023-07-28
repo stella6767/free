@@ -29,6 +29,19 @@ data class CommentCardDto(
     val commentCloserId: Long = 0,
     val depth:Int = 0,
     val idAncestor: Long = 0,
+    val idDescendant: Long = 0,
+    val postId: Long,
+    val username:String,
+    val content: String,
+    val createdAt: String,
+    val childComments: MutableList<CommentCardDto> = mutableListOf(),
+)
+
+
+data class CommentTestDto(
+    val id: Long,
+    val childComments: List<CommentTestDto> = listOf(),
+    val depth:Int = 0,
     val postId: Long,
     val username:String,
     val content: String,

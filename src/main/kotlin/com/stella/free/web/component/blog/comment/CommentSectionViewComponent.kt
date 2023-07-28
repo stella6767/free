@@ -20,10 +20,10 @@ class CommentSectionViewComponent(
     fun render(post: PostDetailDto): ViewContext {
 
 
-        val commentsMap =
-            commentService.findCommentsByPostId(post.id).groupBy { it.idAncestor }
+        val comments =
+            commentService.findCommentsByPostId(post.id)
 
-
+                //.groupBy { it.idAncestor }
 
         //log.info("post=>{}", post)
         return ViewContext(
@@ -31,7 +31,7 @@ class CommentSectionViewComponent(
             "commentCardViewComponent" toProperty commentCardViewComponent,
             "commentReplyViewComponent" toProperty commentReplyViewComponent,
             "post" toProperty post,
-            "commentsMap" toProperty commentsMap,
+            "comments" toProperty comments,
         )
     }
 

@@ -1,32 +1,22 @@
-<!-- Reply Container  -->
-<%--<div class="text-gray-300 font-bold pl-14">|</div>--%>
-<%--<div class="flex justify-between border ml-5  rounded-md">--%>
+@import com.stella.free.core.blog.dto.*
 
-<%--    <div class="p-3">--%>
-<%--        <div class="flex gap-3 items-center">--%>
-<%--            <h3 class="font-bold">--%>
-<%--                User 2--%>
-<%--                <br>--%>
-<%--                <span class="text-sm text-gray-400 font-normal">Level 1</span>--%>
-<%--            </h3>--%>
-<%--        </div>--%>
-<%--        <p class="text-gray-600 mt-2">--%>
-<%--            this is sample commnent--%>
-<%--        </p>--%>
-<%--    </div>--%>
-
-<%--</div>--%>
-<!-- END Reply Container  -->
+@param com.stella.free.web.component.blog.comment.CommentReplyViewComponent commentReplyViewComponent
+@param com.stella.free.web.component.blog.comment.CommentFormViewComponent commentFormViewComponent
+@param CommentCardDto childComment
+@param String parentCommentUsername
+@param Integer paddingLeft
 
 
-<div class="flex ">
-    <div class="text-gray-300 font-bold pl-14"></div>
+<div x-data="{ open: false }" class="">
+    <div class="flex mt-3">
+        <div class="text-gray-300 font-bold pl-${paddingLeft}"></div>
 
         <div class="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
-            <strong>sss</strong>
-            <span class="text-xs text-gray-400">asd</span>
+            <strong>${childComment.getUsername()}</strong>
+            <span class="text-xs text-gray-400">${childComment.getCreatedAt()}</span>
             <p class="text-sm">
-                asdasddsa
+                <span class="truncate text-sm text-gray-400">@${parentCommentUsername} </span>
+                ${childComment.getContent()}
             </p>
             <div class="mt-4 flex items-center">
                 <div class="flex -space-x-2 mr-2">
@@ -38,6 +28,16 @@
                 </div>
             </div>
         </div>
+    </div>
 
-
+    <div id="comment-reply-form-${childComment.getCommentId()}" x-show="open">
+        ${commentFormViewComponent.render(childComment.getPostId(), childComment.getCommentId())}
+    </div>
 </div>
+
+
+@for(CommentCardDto childChildComment : childComment.getChildComments())
+    ${commentReplyViewComponent.render(
+        commentReplyViewComponent, childChildComment, childComment.getUsername(), paddingLeft * 2
+        )}
+@endfor

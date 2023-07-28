@@ -14,8 +14,8 @@ server:
 spring:
   devtools:
     restart:
-      quiet-period: 1000
-      poll-interval: 1100
+      poll-interval: 1000
+      quiet-period: 900
   servlet:
     multipart:
       max-file-size: 100MB

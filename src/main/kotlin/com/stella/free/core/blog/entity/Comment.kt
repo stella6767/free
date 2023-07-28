@@ -29,10 +29,15 @@ class Comment(
 
 
 
+
     fun toCardDto(): CommentCardDto {
 
         return CommentCardDto(
             commentId = this.id,
+            commentCloserId = 0,
+            depth = 0,
+            idAncestor = this.id,
+            idDescendant = this.id,
             postId = this.post.id,
             content = this.content,
             username = this.user?.username ?: "익명",

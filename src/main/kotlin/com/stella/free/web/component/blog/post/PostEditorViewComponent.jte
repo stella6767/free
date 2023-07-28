@@ -13,7 +13,7 @@
     </h1>
 
 
-    <divc class="flex justify-center">
+    <div class="flex justify-center">
         @if(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)
             <input type="text"
                    required
@@ -21,8 +21,7 @@
                    placeholder="input your username"
                    class="input input-bordered w-64 justify-self-center "/>
         @endif
-
-    </divc>
+    </div>
 
 
     <div class="flex justify-center">

@@ -3,10 +3,12 @@
 
 @param CommentCardDto comment
 @param com.stella.free.web.component.blog.comment.CommentFormViewComponent commentFormViewComponent
+@param com.stella.free.web.component.blog.comment.CommentReplyViewComponent commentReplyViewComponent
 
-<div x-data="{ open: false }">
 
-    <div class="flex" id="comment-card-${comment.getCommentId()}">
+<div  x-data="{ open: false }">
+
+    <div class="flex" id="comment-card-${comment.getCommentId()}" >
         <div class="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
             <strong>${comment.getUsername()}</strong>
             <span class="text-xs text-gray-400">${comment.getCreatedAt()}</span>
@@ -26,17 +28,18 @@
 
 
     </div>
+
     <div id="comment-reply-form-${comment.getCommentId()}" x-show="open">
         ${commentFormViewComponent.render(comment.getPostId(), comment.getCommentId())}
     </div>
-    <div id="comment-reply-${comment.getCommentId()}">
-    </div>
+
+
+    @for(CommentCardDto childComment : comment.getChildComments())
+        ${commentReplyViewComponent.render(commentReplyViewComponent, childComment, comment.getUsername(), 3)}
+    @endfor
 
 
 </div>
-
-
-
 
 
 <%--<div class="flex">--%>

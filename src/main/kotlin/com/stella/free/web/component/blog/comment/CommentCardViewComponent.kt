@@ -12,6 +12,7 @@ import java.util.Map
 @ViewComponent
 class CommentCardViewComponent(
     private val commentFormViewComponent: CommentFormViewComponent,
+    private val commentReplyViewComponent: CommentReplyViewComponent,
 ) {
 
     private val log = logger()
@@ -20,7 +21,8 @@ class CommentCardViewComponent(
 
         return ViewContext(
             "comment" toProperty comment,
-            "commentFormViewComponent" toProperty commentFormViewComponent
+            "commentFormViewComponent" toProperty commentFormViewComponent,
+            "commentReplyViewComponent" toProperty commentReplyViewComponent,
         )
     }
 

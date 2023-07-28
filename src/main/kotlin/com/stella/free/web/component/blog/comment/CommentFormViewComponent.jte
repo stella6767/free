@@ -51,12 +51,13 @@
 `;}
 
 
+<%--hx-target="#comment-reply-${idAncestor}"--%>
+
 @if(idAncestor != 0)
     <form class="bg-white rounded-lg border p-2 mx-auto "
           id="comment-form-${idAncestor}"
           hx-post="/comment"
-          hx-target="#comment-reply-${idAncestor}"
-          hx-swap="beforeend"
+          hx-swap="none"
     >
         ${content}
     </form>

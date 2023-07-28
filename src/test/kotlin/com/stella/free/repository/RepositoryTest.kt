@@ -2,12 +2,9 @@ package com.stella.free.repository
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.stella.free.core.blog.dto.CommentCardDto
-import com.stella.free.core.blog.dto.CommentTestDto
-import com.stella.free.core.blog.entity.CommentClosure
 import com.stella.free.core.blog.repo.CommentRepository
 import com.stella.free.core.blog.repo.PostRepository
 import com.stella.free.setup.RepositoriesTestConfig
-import org.jetbrains.kotlin.build.deserializeFromPlainText
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
@@ -26,17 +23,18 @@ import org.springframework.transaction.annotation.Transactional
 class RepositoryTest(
     private val postRepository: PostRepository,
     private val commentRepository: CommentRepository,
+    private val mapper: ObjectMapper,
 ) {
 
 
     @Test
-    fun findPostsTest(){
+    fun findPostsTest() {
 
         postRepository.findAll().forEach { println(it) }
     }
 
     @Test
-    fun findCommentsByPostIdTest(){
+    fun findCommentsByPostIdTest2() {
 
         val commentClosures =
             commentRepository.findCommentsByPostId(99)
@@ -45,32 +43,49 @@ class RepositoryTest(
 
         println("================================================")
 
-        val closureMap =
+        val convertedCommentClosures =
             commentClosures.associateBy { it.idDescendant.id }.map { it.value }.toList()
 
         val rootComments =
-            closureMap.filter { it.depth == 0 }
+            convertedCommentClosures.filter { it.depth == 0 }
 
 
-        rootComments.map { it.toCardDto() }.forEach { println(it)}
+        rootComments.map { it.toCardDto() }.forEach { println(it) }
         println("================================================")
 
 
         val list = rootComments.map {
-            createTreeFunctional(it.toCardDto(), commentClosures.map { it.toCardDto() })
+            createTree(it.toCardDto(), commentClosures.map { it.toCardDto() })
         }
-
 
         println("!!!!!!!!!!!!!!!!!!")
 
+        println(mapper.writeValueAsString(list))
 
-//        list.forEach {
-//            println(it)
+    }
+
+    @Test
+    fun findCommentsByPostIdTest() {
+
+
+//        val commentClosures = commentRepository.findCommentsByPostId(99)
+//            .associateBy { it.idDescendant.id }.map { it.value }.toList()
+//
+//        val commentCardDtos = commentClosures.filter { it.depth == 0 }.map {
+//            createTree(it.toCardDto(), commentClosures.map { it.toCardDto() })
 //        }
 
-        println(ObjectMapper().writeValueAsString(list))
 
+        val commentClosures =
+            commentRepository.findCommentsByPostId(99)
 
+        val commentCardDtos =
+            commentClosures.associateBy { it.idDescendant.id }.map { it.value }.toList().filter { it.depth == 0 }.map {
+            createTree(it.toCardDto(), commentClosures.map { it.toCardDto() })
+        }
+
+        println("!!!!!!!!!!!!!!!!!!")
+        println(mapper.writeValueAsString(commentCardDtos))
 
 
 //        val buildCommentTree =
@@ -126,7 +141,6 @@ class RepositoryTest(
     }
 
 
-
     fun createTree(parent: CommentCardDto, commentClosures: List<CommentCardDto>): CommentCardDto {
 
         for (commentClosure in commentClosures) {
@@ -141,7 +155,7 @@ class RepositoryTest(
             }
         }
 
-        println("================================================")
+        //println("================================================")
         return parent
     }
 
@@ -149,8 +163,8 @@ class RepositoryTest(
     fun createTreeFunctional(parent: CommentCardDto, commentClosures: List<CommentCardDto>): CommentCardDto {
         val childComments =
             commentClosures.filter { it.idAncestor == parent.commentId && it.depth == parent.depth + 1 }
-            .map { createTree(it, commentClosures) }
-            .toMutableList()
+                .map { createTreeFunctional(it, commentClosures) }
+                .toMutableList()
         return parent.copy(childComments = childComments)
     }
 
@@ -189,7 +203,7 @@ class RepositoryTest(
      */
 
     @Test
-    fun findCommentByAncestorCommentTest(){
+    fun findCommentByAncestorCommentTest() {
         val comments =
             commentRepository.findCommentByAncestorComment(15)
 
@@ -198,7 +212,6 @@ class RepositoryTest(
         }
 
     }
-
 
 
 }

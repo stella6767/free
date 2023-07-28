@@ -20,7 +20,8 @@
 
 !{var content = @`
     <div class="px-3 mb-2 mt-2">
-            <textarea placeholder="comment" disabled="${!isLogin}"
+            <textarea placeholder="comment"
+                      disabled="${!isLogin}"
                       name="content"
                       class="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white">
             </textarea>
@@ -51,13 +52,14 @@
 `;}
 
 
-<%--hx-target="#comment-reply-${idAncestor}"--%>
+
 
 @if(idAncestor != 0)
     <form class="bg-white rounded-lg border p-2 mx-auto "
           id="comment-form-${idAncestor}"
           hx-post="/comment"
-          hx-swap="none"
+          hx-swap="beforeend"
+          hx-target="#comment-card-${idAncestor}"
     >
         ${content}
     </form>

@@ -17,7 +17,7 @@ class CommentReplyViewComponent(
                parentCommentUsername: String,
                paddingLeft: Int,
                ): ViewContext {
-        
+
 
         return ViewContext(
             "commentReplyViewComponent" toProperty commentReplyViewComponent,

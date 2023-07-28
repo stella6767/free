@@ -7,10 +7,9 @@
 @param Integer paddingLeft
 
 
-<div x-data="{ open: false }" class="">
+<div x-data="{ open: false }" id="comment-card-${childComment.getCommentId()}" >
     <div class="flex mt-3">
         <div class="text-gray-300 font-bold pl-${paddingLeft}"></div>
-
         <div class="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
             <strong>${childComment.getUsername()}</strong>
             <span class="text-xs text-gray-400">${childComment.getCreatedAt()}</span>
@@ -33,11 +32,13 @@
     <div id="comment-reply-form-${childComment.getCommentId()}" x-show="open">
         ${commentFormViewComponent.render(childComment.getPostId(), childComment.getCommentId())}
     </div>
+
+
+    @for(CommentCardDto childChildComment : childComment.getChildComments())
+        ${commentReplyViewComponent.render(
+        commentReplyViewComponent, childChildComment, childComment.getUsername(), paddingLeft * 2
+        )}
+    @endfor
 </div>
 
 
-@for(CommentCardDto childChildComment : childComment.getChildComments())
-    ${commentReplyViewComponent.render(
-        commentReplyViewComponent, childChildComment, childComment.getUsername(), paddingLeft * 2
-        )}
-@endfor

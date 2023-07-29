@@ -1,4 +1,6 @@
-<div class="font-sans antialiased text-gray-100 leading-normal tracking-wider bg-cover"
+@param String author
+
+<div class="font-sans antialiased text-gray-100 leading-normal tracking-wider bg-cover  h-auto"
      style="background-image:url('/img/resumeBackground.png');">
 
 
@@ -13,7 +15,7 @@
                 <!-- Image for mobile view-->
                 <div class="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center"></div>
 
-                <h1 class="text-3xl font-bold pt-8 lg:pt-0">Kang Min</h1>
+                <h1 class="text-3xl font-bold pt-8 lg:pt-0">${author}</h1>
                 <div class="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25"></div>
                 <p class="pt-4 text-base font-bold flex items-center justify-center lg:justify-start">
                     <svg class="h-4 fill-current text-green-700 pr-4" xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +23,7 @@
                         <path
                                 d="M9 12H1v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6h-8v2H9v-2zm0-1H0V5c0-1.1.9-2 2-2h4V2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1h4a2 2 0 0 1 2 2v6h-9V9H9v2zm3-8V2H8v1h4z"/>
                     </svg>
-                    What you do
+                    I'm a Software Developer
                 </p>
                 <p class="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">
                     <svg class="h-4 fill-current text-green-700 pr-4" xmlns="http://www.w3.org/2000/svg"
@@ -29,13 +31,85 @@
                         <path
                                 d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm7.75-8a8.01 8.01 0 0 0 0-4h-3.82a28.81 28.81 0 0 1 0 4h3.82zm-.82 2h-3.22a14.44 14.44 0 0 1-.95 3.51A8.03 8.03 0 0 0 16.93 14zm-8.85-2h3.84a24.61 24.61 0 0 0 0-4H8.08a24.61 24.61 0 0 0 0 4zm.25 2c.41 2.4 1.13 4 1.67 4s1.26-1.6 1.67-4H8.33zm-6.08-2h3.82a28.81 28.81 0 0 1 0-4H2.25a8.01 8.01 0 0 0 0 4zm.82 2a8.03 8.03 0 0 0 4.17 3.51c-.42-.96-.74-2.16-.95-3.51H3.07zm13.86-8a8.03 8.03 0 0 0-4.17-3.51c.42.96.74 2.16.95 3.51h3.22zm-8.6 0h3.34c-.41-2.4-1.13-4-1.67-4S8.74 3.6 8.33 6zM3.07 6h3.22c.2-1.35.53-2.55.95-3.51A8.03 8.03 0 0 0 3.07 6z"/>
                     </svg>
-                    Your Location - 25.0000° N, 71.0000° W
+                    My Location - Seoul
                 </p>
-                <p class="pt-8 text-sm">Totally optional short description about yourself, what you do and so on.</p>
+
+
+                <p class="pt-8 text-sm">
+                    주로 벡엔드 개발파트를 맡고 있는 개발자입니다. 다양한 기술스택에 관심이 있으며, 가장 좋아하는 언어는 코틀린입니다.
+                </p>
+
+
+                <h2 class="text-xl font-bold mt-6">Skills</h2>
+
+                <h3 class="text-lg indent-2	font-bold mb-1 mt-2">Main</h3>
+                <p class="text-sm indent-2">
+                    GIT, AWS, MySQL, SpringBoot, JAVA/Kotlin, Gradle/Maven, JPA/MyBatis, Linux
+                </p>
+
+
+                <h3 class="text-lg indent-2	font-bold mb-1 mt-2">Sub</h3>
+                <p class="text-sm indent-2">
+                    JavaScript, React, Node.js, HTML/CSS, Tailwind Css, Jenkins, Docker, Android, Shell Script ...
+                </p>
+
+                <h2 class="text-xl font-bold mt-4 mb-1"> Currently Interested in Technologies</h2>
+                <p class="text-sm indent-2">
+                    HTMX, Go, Jetpack Compose
+                </p>
+
+
+                <h2 class="text-xl font-bold mt-6 mb-4">Experience</h2>
+                <div class="mb-6">
+                    <div class="flex justify-between">
+                        <span class="text-gray-600 font-bold">Server Developer</span>
+                        <p>
+                            <span class="text-gray-600 mr-2">at SP Company</span>
+                            <span class="text-gray-600">2022 - ..</span>
+                        </p>
+                    </div>
+                    <ul class="mt-2">
+                        <li class="text-sm">기밀</li>
+                    </ul>
+                </div>
+
+                <div class="mb-6">
+                    <div class="flex justify-between">
+                        <span class="text-gray-600 font-bold">Server Developer</span>
+                        <p>
+                            <span class="text-gray-600 mr-2">at Lunalabs Company</span>
+                            <span class="text-gray-600">2021 - 2022</span>
+                        </p>
+                    </div>
+                    <ul class="mt-2">
+                        <li class="text-sm mb-1">Sap(ERP) 연동해서, 키 대여 전자사물함 관련 API 개발 (SpringBoot + JAVA 8) </li>
+                        <li class="text-sm mb-1">
+                            KCC 유지보수 - node.js 기반 (express.js + ejs template + react.js) 으로 만들어진 웹 사이트 유지보수,
+                            WespJS SDK
+                        </li>
+                        <li class="text-sm mb-1">
+                            전기자전거(IOT) 중앙 컨트롤러 GW 제작 - 기기센서가 전달하는 코드(헥스)를 받아 변환 후
+                            API 서버에 전달. (NIO Socket + Springboot) (기여도 100%)
+                        </li>
+                        <li class="text-sm mb-1">
+                            환자 모니터링 웹 기반 솔루션(POC) 개발 -
+                            환자 기기(QT)와 연동할 GW (hl7 프로토콜) (Springboot without WebMVC + NIO Socket)
+                            + 웹 API 서버 제작(Springboot + Oracle DB + Mysql DB + SSE + NIO Socket + FTP) (기여도 100%)
+                            + 웹 페이지 프론트 작업 (next.js + Redux + chartjs-plugin-streaming) 실시간 데이터 스트리밍 차트 구현 (기여도 70%)
+                        </li>
+                        <li class="text-sm mb-1">
+                            크레스콤 비동기 기능 추가 - 기존 API 호출 비동기 처리, ui에 프로그레스바로 표시 대체 (Springboot + JSP + Jquery) (기여도 100%)
+                        </li>
+                        <li class="text-sm mb-1">
+                            주차관리 서버 - 입출차 관리 API 서버(springboot + mySql + myBatis) (기여도 100%)
+                            웹페이지 제작(React.js + redux + axios) (기여도 50%)
+                        </li>
+                    </ul>
+                </div>
 
                 <div class="pt-12 pb-8">
                     <button class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full">
-                        Get In Touch
+                        Get In Touch 노션, velog, naver blog, github, youtube, email
                     </button>
                 </div>
 
@@ -79,14 +153,7 @@
                                     d="M12 24C5.385 24 0 18.615 0 12S5.385 0 12 0s12 5.385 12 12-5.385 12-12 12zm10.12-10.358c-.35-.11-3.17-.953-6.384-.438 1.34 3.684 1.887 6.684 1.992 7.308 2.3-1.555 3.936-4.02 4.395-6.87zm-6.115 7.808c-.153-.9-.75-4.032-2.19-7.77l-.066.02c-5.79 2.015-7.86 6.025-8.04 6.4 1.73 1.358 3.92 2.166 6.29 2.166 1.42 0 2.77-.29 4-.814zm-11.62-2.58c.232-.4 3.045-5.055 8.332-6.765.135-.045.27-.084.405-.12-.26-.585-.54-1.167-.832-1.74C7.17 11.775 2.206 11.71 1.756 11.7l-.004.312c0 2.633.998 5.037 2.634 6.855zm-2.42-8.955c.46.008 4.683.026 9.477-1.248-1.698-3.018-3.53-5.558-3.8-5.928-2.868 1.35-5.01 3.99-5.676 7.17zM9.6 2.052c.282.38 2.145 2.914 3.822 6 3.645-1.365 5.19-3.44 5.373-3.702-1.81-1.61-4.19-2.586-6.795-2.586-.825 0-1.63.1-2.4.285zm10.335 3.483c-.218.29-1.935 2.493-5.724 4.04.24.49.47.985.68 1.486.08.18.15.36.22.53 3.41-.43 6.8.26 7.14.33-.02-2.42-.88-4.64-2.31-6.38z"/>
                         </svg>
                     </a>
-                    <a class="link" href="#" data-tippy-content="@instagram_handle">
-                        <svg class="h-6 fill-current text-gray-600 hover:text-green-700" role="img" viewBox="0 0 24 24"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <title>Instagram</title>
-                            <path
-                                    d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/>
-                        </svg>
-                    </a>
+
                     <a class="link" href="#" data-tippy-content="@youtube_handle">
                         <svg class="h-6 fill-current text-gray-600 hover:text-green-700" role="img"
                              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

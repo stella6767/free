@@ -45,5 +45,9 @@ class Comment(
         )
     }
 
+    override fun toString(): String {
+        return "Comment(id= $id, content='$content')"
+    }
+
 
 }

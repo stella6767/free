@@ -190,6 +190,7 @@ class RepositoryTest(
 
     @Test
     fun findCommentByAncestorCommentTest() {
+
         val comments =
             commentRepository.findCommentByAncestorComment(15)
 
@@ -208,10 +209,22 @@ class RepositoryTest(
 
         comments.forEach { println(it) }
 
+        println("================================================")
 
+        val commentClosures =
+            commentRepository.findCommentClosuresByBottomUp(40)
 
+        println(commentClosures)
 
+        println("================================================")
 
+        val commentCardDto = if (commentClosures.size == 1) {
+            commentClosures.first().toCardDto()
+        }else{
+            commentClosures.map { it.toCardDto() }.maxBy { it.depth }
+        }
+
+        println(commentCardDto)
 
     }
 

@@ -12,7 +12,7 @@ class Comment(
     id: Long = 0,
     content: String,
     post: Post,
-    user: User?,
+    user: User,
 ) : BaseEntity() {
 
     @Column(name = "content", nullable = false, length = 1000)
@@ -30,20 +30,20 @@ class Comment(
 
 
 
-    fun toCardDto(): CommentCardDto {
-
-        return CommentCardDto(
-            commentId = this.id,
-            commentCloserId = 0,
-            depth = 0,
-            idAncestor = this.id,
-            idDescendant = this.id,
-            postId = this.post.id,
-            content = this.content,
-            username = this.user?.username ?: "익명",
-            createdAt = TimeUtil.localDateTimeToString(this.createdAt, "hh:mm:ss a")
-        )
-    }
+//    fun toCardDto(): CommentCardDto {
+//
+//        return CommentCardDto(
+//            commentId = this.id,
+//            commentCloserId = 0,
+//            depth = 0,
+//            idAncestor = this.id,
+//            idDescendant = this.id,
+//            postId = this.post.id,
+//            content = this.content,
+//            username = this.user?.username ?: "익명",
+//            createdAt = TimeUtil.localDateTimeToString(this.createdAt, "hh:mm:ss a")
+//        )
+//    }
 
     override fun toString(): String {
         return "Comment(id= $id, content='$content')"

@@ -36,11 +36,15 @@ class CommentClosure(
 
     fun toCardDto(): CommentCardDto {
 
+        val parentCommentUsername =
+            if (this.idAncestor != this.idDescendant) this.idAncestor.user.username  else ""
+
         return CommentCardDto(
             commentId = this.idDescendant.id,
             commentCloserId = this.id,
             depth = this.depth,
-            idAncestor = this.idAncestor.id ?: 0,
+            idAncestor = this.idAncestor.id,
+            parentCommentUsername = parentCommentUsername,
             idDescendant = this.idDescendant.id,
             postId = this.idDescendant.post.id,
             content = this.idDescendant.content,

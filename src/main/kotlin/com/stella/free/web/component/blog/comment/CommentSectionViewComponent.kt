@@ -13,7 +13,7 @@ class CommentSectionViewComponent(
     private val commentService: CommentService,
     private val commentFormViewComponent: CommentFormViewComponent,
     private val commentCardViewComponent: CommentCardViewComponent,
-    private val commentReplyViewComponent: CommentReplyViewComponent,
+
     ) {
 
     private val log = logger()
@@ -29,7 +29,6 @@ class CommentSectionViewComponent(
         return ViewContext(
             "commentFormViewComponent" toProperty commentFormViewComponent,
             "commentCardViewComponent" toProperty commentCardViewComponent,
-            "commentReplyViewComponent" toProperty commentReplyViewComponent,
             "post" toProperty post,
             "comments" toProperty comments,
         )

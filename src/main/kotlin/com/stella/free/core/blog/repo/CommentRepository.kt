@@ -10,6 +10,7 @@ import com.linecorp.kotlinjdsl.spring.data.querydsl.SpringDataCriteriaQueryDsl
 import com.stella.free.core.blog.entity.Comment
 import com.stella.free.core.blog.entity.CommentClosure
 import com.stella.free.core.blog.entity.Post
+import com.stella.free.global.util.singleOrNullQuery
 import jakarta.persistence.EntityManager
 import org.springframework.stereotype.Repository
 import org.springframework.util.Assert
@@ -24,6 +25,7 @@ interface CommentRepository {
 
     //fun findCommentsByPostIdTest(id: Long): List<CommentClosure>
     fun findCommentsByBottomUp(commentId: Long, depth: Int): List<Comment>
+    fun findCommentClosuresByBottomUp(commentId: Long, depth: Int? = null): List<CommentClosure>
 }
 
 
@@ -123,7 +125,7 @@ class CommentRepositoryImpl(
         return queryFactory.listQuery {
             select(entity(Comment::class))
             from(entity(Comment::class))
-            
+
             join(
                 entity(CommentClosure::class),
                 on(entity(Comment::class).equal(column(CommentClosure::idDescendant)))
@@ -152,16 +154,30 @@ class CommentRepositoryImpl(
     }
 
 
+    override fun findCommentClosuresByBottomUp(commentId: Long, depth: Int?): List<CommentClosure> {
+
+        return queryFactory.listQuery {
+            select(entity(CommentClosure::class))
+            from(entity(CommentClosure::class))
+            fetch(CommentClosure::idDescendant)
+            fetch(Comment::user)
+            fetch(Comment::post)
+            where(
+                findByDepthAndCommentId(commentId, depth)
+            )
+        }
+    }
+
     private fun <T> SpringDataCriteriaQueryDsl<T>.findByDepthAndCommentId(
         commentId: Long,
-        depth: Int,
+        depth: Int?,
     ): PredicateSpec {
         //.and(column(CategoryClosure::depth).equal(depth))
         return and(
             nestedCol(col(CommentClosure::idDescendant),Comment::id).equal(
                 commentId
             ),
-            depth.let { column(CommentClosure::depth).lessThan(depth) },
+            depth?.let { column(CommentClosure::depth).lessThan(depth) },
         )
     }
 

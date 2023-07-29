@@ -6,6 +6,7 @@
 @param com.stella.free.core.account.entity.type.SignType signType 
 @param Long postId
 @param Long idAncestor
+@param Integer paddingLeft
 
 
 <%--@if(idAncestor != 0)--%>
@@ -43,6 +44,7 @@
         <input type="hidden" name="userId" value="${((UserPrincipal)authentication.getPrincipal()).getUser().getId()}">
         <input type="hidden" name="postId" value="${postId}">
         <input type="hidden" name="idAncestor" value="${idAncestor}">
+        <input type="hidden" name="paddingLeft" value="${paddingLeft}">
 
         <div class="flex justify-end px-4">
             <input type="submit" class="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500 cursor-pointer" value="Comment" x-on:click="open = ! open">

@@ -65,9 +65,10 @@ class BlogComponentController(
         val comment =
             commentService.saveComment(commentSaveDto)
 
-        commentService.findCommentByAncestorComment(comment.id)
-        //return commentCardViewComponent.render(commentCardDto)
-        TODO()
+        val childComment =
+            commentService.findCommentsByBottomUp(comment.id)
+
+        return commentCardViewComponent.render(childComment, commentCardViewComponent, commentSaveDto.paddingLeft)
     }
 
 

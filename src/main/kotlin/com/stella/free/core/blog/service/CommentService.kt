@@ -33,6 +33,7 @@ class CommentService(
         val comment =
             commentRepository.saveComment(dto.toEntity(post = post, user = user))
 
+        dto.calculatePaddingLeft()
         commentRepository.saveCommentClosure(comment.id, dto.idAncestor)
 
         return comment
@@ -48,13 +49,15 @@ class CommentService(
     }
 
     @Transactional(readOnly = true)
-    fun findCommentsByBottomUp(commentId: Long){
+    fun findCommentsByBottomUp(commentId: Long): CommentCardDto {
 
-        val comments =
-            commentRepository.findCommentsByBottomUp(commentId, 2)
-
-
-
+        val commentClosures =
+            commentRepository.findCommentClosuresByBottomUp(commentId, 2)
+        return if (commentClosures.size == 1) {
+            commentClosures.first().toCardDto()
+        }else{
+            commentClosures.map { it.toCardDto() }.first { it.idAncestor != it.idDescendant }
+        }
     }
 
 

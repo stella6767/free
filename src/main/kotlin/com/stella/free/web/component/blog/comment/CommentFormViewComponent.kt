@@ -14,7 +14,10 @@ class CommentFormViewComponent(
 
 ) {
 
-    fun render(postId: Long, idAncestor:Long = 0): ViewContext {
+    fun render(postId: Long,
+               idAncestor:Long = 0,
+               paddingLeft:Int = 0,
+    ): ViewContext {
 
         val authentication =
             SecurityContextHolder.getContext().authentication
@@ -28,6 +31,7 @@ class CommentFormViewComponent(
             "signType" toProperty SignType.GITHUB,
             "postId" toProperty postId,
             "idAncestor" toProperty idAncestor,
+            "paddingLeft" toProperty paddingLeft
         )
     }
 

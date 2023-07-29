@@ -17,8 +17,8 @@
         <div class="hero-overlay bg-opacity-60"></div>
         <div class="hero-content text-center text-neutral-content">
             <div class="max-w-md">
-                <h1 class="mb-5 text-5xl font-bold">Hello everyone!
-                    <br/> Try This simple Web </h1>
+                <h1 class="mb-5 text-3xl font-bold">Hello everyone!
+                    <br/>My Simple Web Introduction</h1>
                 <div id="viewer"></div>
                 <p class="mb-5">Provide by stella6767</p>
 

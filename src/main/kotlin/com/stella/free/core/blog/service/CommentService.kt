@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.stella.free.core.account.repo.UserRepository
 import com.stella.free.core.blog.dto.CommentCardDto
 import com.stella.free.core.blog.dto.CommentSaveDto
+import com.stella.free.core.blog.entity.Comment
 import com.stella.free.core.blog.repo.CommentRepository
 import com.stella.free.core.blog.repo.PostRepository
 import com.stella.free.global.util.logger
@@ -22,7 +23,7 @@ class CommentService(
     private val log = logger()
 
     @Transactional
-    fun saveComment(dto: CommentSaveDto): CommentCardDto {
+    fun saveComment(dto: CommentSaveDto): Comment {
 
         log.info(dto.toString())
         val post =
@@ -34,15 +35,25 @@ class CommentService(
 
         commentRepository.saveCommentClosure(comment.id, dto.idAncestor)
 
-        return comment.toCardDto()
+        return comment
     }
 
 
     @Transactional(readOnly = true)
     fun findCommentByAncestorComment(idAncestor: Long) {
 
-        commentRepository.findCommentByAncestorComment(idAncestor)
-            .map { it }
+        val comments =
+            commentRepository.findCommentByAncestorComment(idAncestor)
+
+    }
+
+    @Transactional(readOnly = true)
+    fun findCommentsByBottomUp(commentId: Long){
+
+        val comments =
+            commentRepository.findCommentsByBottomUp(commentId, 2)
+
+
 
     }
 

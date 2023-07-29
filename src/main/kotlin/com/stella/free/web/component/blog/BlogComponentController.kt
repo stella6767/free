@@ -62,10 +62,12 @@ class BlogComponentController(
     @PostMapping("/comment")
     fun saveComment(commentSaveDto: CommentSaveDto): ViewContext {
 
-        val commentCardDto =
+        val comment =
             commentService.saveComment(commentSaveDto)
 
-        return commentCardViewComponent.render(commentCardDto)
+        commentService.findCommentByAncestorComment(comment.id)
+        //return commentCardViewComponent.render(commentCardDto)
+        TODO()
     }
 
 

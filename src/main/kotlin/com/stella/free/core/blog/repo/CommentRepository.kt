@@ -1,10 +1,12 @@
 package com.stella.free.core.blog.repo
 
+import com.linecorp.kotlinjdsl.query.spec.predicate.PredicateSpec
 import com.linecorp.kotlinjdsl.querydsl.expression.col
 import com.linecorp.kotlinjdsl.querydsl.expression.column
 import com.linecorp.kotlinjdsl.querydsl.from.fetch
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
 import com.linecorp.kotlinjdsl.spring.data.listQuery
+import com.linecorp.kotlinjdsl.spring.data.querydsl.SpringDataCriteriaQueryDsl
 import com.stella.free.core.blog.entity.Comment
 import com.stella.free.core.blog.entity.CommentClosure
 import com.stella.free.core.blog.entity.Post
@@ -21,6 +23,7 @@ interface CommentRepository {
     fun findCommentsByPostId(id: Long): List<CommentClosure>
 
     //fun findCommentsByPostIdTest(id: Long): List<CommentClosure>
+    fun findCommentsByBottomUp(commentId: Long, depth: Int): List<Comment>
 }
 
 
@@ -120,17 +123,47 @@ class CommentRepositoryImpl(
         return queryFactory.listQuery {
             select(entity(Comment::class))
             from(entity(Comment::class))
+            
             join(
                 entity(CommentClosure::class),
                 on(entity(Comment::class).equal(column(CommentClosure::idDescendant)))
             )
             where(
-                nestedCol(col(CommentClosure::idAncestor as KProperty1<CommentClosure, Comment>), Comment::id).equal(idAncestor)
+                nestedCol(col(CommentClosure::idAncestor), Comment::id).equal(idAncestor)
             )
         }
 
     }
 
+
+    override fun findCommentsByBottomUp(commentId: Long, depth: Int): List<Comment> {
+
+        return queryFactory.listQuery<Comment> {
+            select(entity(Comment::class))
+            from(entity(Comment::class))
+            join(
+                entity(CommentClosure::class),
+                on(entity(Comment::class).equal(column(CommentClosure::idAncestor)))
+            )
+            where(
+                findByDepthAndCommentId(commentId, depth)
+            )
+        }
+    }
+
+
+    private fun <T> SpringDataCriteriaQueryDsl<T>.findByDepthAndCommentId(
+        commentId: Long,
+        depth: Int,
+    ): PredicateSpec {
+        //.and(column(CategoryClosure::depth).equal(depth))
+        return and(
+            nestedCol(col(CommentClosure::idDescendant),Comment::id).equal(
+                commentId
+            ),
+            depth.let { column(CommentClosure::depth).lessThan(depth) },
+        )
+    }
 
 
 }

@@ -45,7 +45,7 @@
         <input type="hidden" name="idAncestor" value="${idAncestor}">
 
         <div class="flex justify-end px-4">
-            <input type="submit" class="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500 cursor-pointer" value="Comment">
+            <input type="submit" class="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500 cursor-pointer" value="Comment" x-on:click="open = ! open">
         </div>
     @endif
 

@@ -168,20 +168,6 @@ class RepositoryTest(
         return parent.copy(childComments = childComments)
     }
 
-//    fun buildCommentTree(commentClosures: List<CommentClosure>): List<CommentTestDto> {
-//
-//
-//        val testDtoList = mutableListOf<CommentTestDto>()
-//
-//        for (commentClosure in commentClosures) {
-//            if (commentClosure.depth == 0) {
-//                testDtoList.add()
-//            }
-//
-//        }
-//
-//        TODO()
-//    }
 
 
     /**
@@ -210,6 +196,22 @@ class RepositoryTest(
         comments.forEach {
             println(it)
         }
+
+    }
+
+
+    @Test
+    fun findCommentsByBottomUpTest(){
+
+        val comments =
+            commentRepository.findCommentsByBottomUp(26, 2)
+
+        comments.forEach { println(it) }
+
+
+
+
+
 
     }
 

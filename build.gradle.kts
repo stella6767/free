@@ -68,6 +68,18 @@ dependencies {
     implementation("io.awspring.cloud:spring-cloud-aws-starter-s3")
 
 
+
+    // mac silicon only
+    // https://github.com/apache/commons-lang/blob/master/src/main/java/org/apache/commons/lang3/SystemUtils.java#L1173
+    val isMacOS: Boolean = System.getProperty("os.name").startsWith("Mac OS X")
+    val architecture = System.getProperty("os.arch").toLowerCase()
+    if (isMacOS && architecture == "aarch64") {
+        developmentOnly("io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64")
+    }
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+
+
+
     //jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 

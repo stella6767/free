@@ -1,6 +1,6 @@
 @param String author
 
-<div class="font-sans antialiased text-gray-100 leading-normal tracking-wider bg-cover  h-auto"
+<div class="font-sans antialiased text-gray-100 leading-normal tracking-wider bg-cover my-32 lg:my-0 h-auto lg:h-screen"
      style="background-image:url('/img/resumeBackground.png');">
 
 
@@ -82,7 +82,7 @@
                         </p>
                     </div>
                     <ul class="mt-2">
-                        <li class="text-sm mb-1">Sap(ERP) 연동해서, 키 대여 전자사물함 관련 API 개발 (SpringBoot + JAVA 8) </li>
+                        <li class="text-sm mb-1">Sap(ERP) 연동해서, 키 대여 전자사물함 관련 API 개발 (SpringBoot + JAVA 8)</li>
                         <li class="text-sm mb-1">
                             KCC 유지보수 - node.js 기반 (express.js + ejs template + react.js) 으로 만들어진 웹 사이트 유지보수,
                             WespJS SDK
@@ -174,9 +174,4 @@
     </div>
 
 </div>
-<script>
 
-
-</script>
-
-</div>

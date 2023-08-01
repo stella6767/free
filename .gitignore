@@ -29,6 +29,7 @@ logs/
 jte-classes/
 *.pid
 *.hprof
+*.args
 
 ### NetBeans ###
 /nbproject/private/

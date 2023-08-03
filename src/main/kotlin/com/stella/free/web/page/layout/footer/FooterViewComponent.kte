@@ -1,7 +1,7 @@
 
-@param String creator
-@param String creatorEmail
-@param String githubUrl
+@param creator:String
+@param creatorEmail:String
+@param githubUrl:String
 
 
 

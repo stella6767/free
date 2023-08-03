@@ -2,7 +2,7 @@
 @import org.springframework.security.core.context.SecurityContextHolder
 @import com.stella.free.web.component.auth.LoginModalViewComponent
 
-@param LoginModalViewComponent loginModalViewComponent
+@param loginModalViewComponent:LoginModalViewComponent
 
 <!DOCTYPE html>
 <html>
@@ -79,7 +79,7 @@
                     </summary>
                     <ul class="p-2 bg-base-100">
 
-                        @if(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)
+                        @if(SecurityContextHolder.getContext().getAuthentication() is AnonymousAuthenticationToken)
                             <li><a onclick="login_modal.showModal()">Login</a></li>
                         @else
                             <li><a href="/logout">LogOut</a></li>

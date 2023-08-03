@@ -23,7 +23,7 @@ class TemplateConfiguration {
     @Bean
     fun jteViewResolver(templateEngine: TemplateEngine): JteViewResolver {
         //.kte 아직 불완전..
-        return JteViewResolver(templateEngine, ".jte").apply {
+        return JteViewResolver(templateEngine, ".kte").apply {
             //this.setSuffix(".kte")
         }
     }

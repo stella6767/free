@@ -4,7 +4,7 @@
 @import java.util.List
 
 
-@param SignType[] signTypes
+@param signTypes:Array<SignType>
 
 
 <%--onclick="location.href='${signType.getAuthorizationUrl()}'"--%>
@@ -24,17 +24,17 @@
             <div class="p-5">
                 <div class="mt-3 grid space-y-4">
 
-                    @for(SignType signType : signTypes)
+                    @for(signType in signTypes)
 
                         <button class="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300
  hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100"
-                                onclick="location.href='${signType.getAuthorizationUrl()}'"
+                                onclick="location.href='${signType.authorizationUrl}'"
                         >
                             <div class="relative flex items-center space-x-4 justify-center">
-                                <img src="${signType.getImgUrl()}"
+                                <img src="${signType.imgUrl}"
                                      class="absolute left-0 w-5" alt="logo">
                                 <span class="block w-max font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base">
-                                    Continue with ${signType.getClientName()}
+                                    Continue with ${signType.clientName}
                                 </span>
                             </div>
                         </button>

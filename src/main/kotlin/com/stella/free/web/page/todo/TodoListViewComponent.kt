@@ -5,7 +5,7 @@ import com.stella.free.core.todo.service.TodoService
 import com.stella.free.global.util.logger
 import com.stella.free.web.component.todo.TodoViewComponent
 import com.stella.free.web.component.pagination.PaginationViewComponent
-import de.tschuehly.spring.viewcomponent.core.ViewComponent
+import de.tschuehly.spring.viewcomponent.core.component.ViewComponent
 import de.tschuehly.spring.viewcomponent.core.toProperty
 import de.tschuehly.spring.viewcomponent.jte.ViewContext
 import org.springframework.data.domain.Pageable

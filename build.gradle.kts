@@ -55,6 +55,7 @@ jte {
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven("https://jitpack.io")
 }
 
@@ -77,8 +78,6 @@ dependencies {
         developmentOnly("io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64")
     }
     implementation("org.springframework.boot:spring-boot-starter-webflux")
-
-
 
     //jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -116,7 +115,9 @@ dependencies {
     // jte-kotlin is needed to compile kte templates
     implementation("gg.jte:jte-kotlin:$jteVersion")
     //spring-view-component
-    implementation("de.tschuehly:spring-view-component-jte:0.5.5-RC1")
+    //implementation("de.tschuehly:spring-view-component-jte:0.5.5-RC1")
+    implementation("de.tschuehly:spring-view-component-kte:0.6.0")
+    //implementation("de.tschuehly:spring-view-component-jte:0.6.0")
 
 
     implementation("org.springframework.boot:spring-boot-starter-aop")

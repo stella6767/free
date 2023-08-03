@@ -3,7 +3,7 @@ package com.stella.free.web.page.layout.header
 
 
 import com.stella.free.web.component.auth.LoginModalViewComponent
-import de.tschuehly.spring.viewcomponent.core.ViewComponent
+import de.tschuehly.spring.viewcomponent.core.component.ViewComponent
 import de.tschuehly.spring.viewcomponent.core.toProperty
 import de.tschuehly.spring.viewcomponent.jte.ViewContext
 

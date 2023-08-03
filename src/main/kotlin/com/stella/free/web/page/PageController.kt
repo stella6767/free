@@ -31,6 +31,7 @@ class PageController(
 
     @GetMapping("/")
     fun index(): ViewContext {
+
         return layoutViewComponent.render(indexViewComponent.render())
     }
 

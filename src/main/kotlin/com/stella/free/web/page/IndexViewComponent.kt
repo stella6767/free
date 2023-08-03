@@ -1,7 +1,7 @@
 package com.stella.free.web.page
 
 import com.stella.free.global.util.logger
-import de.tschuehly.spring.viewcomponent.core.ViewComponent
+import de.tschuehly.spring.viewcomponent.core.component.ViewComponent
 import de.tschuehly.spring.viewcomponent.core.toProperty
 import de.tschuehly.spring.viewcomponent.jte.ViewContext
 import org.springframework.security.authentication.AnonymousAuthenticationToken

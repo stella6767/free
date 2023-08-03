@@ -1,36 +1,36 @@
+
+@import com.stella.free.core.openapi.dto.*
+@import java.util.*
+
+@param  List<Entry> entries
+@param  List<String> fieldNames
+
+
 <div class="overflow-x-auto">
     <table class="table">
         <!-- head -->
         <thead>
         <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Job</th>
-            <th>Favorite Color</th>
+            @for(String name: fieldNames)
+                <th>${name}</th>
+            @endfor
         </tr>
         </thead>
         <tbody>
         <!-- row 1 -->
-        <tr>
-            <th>1</th>
-            <td>Cy Ganderton</td>
-            <td>Quality Control Specialist</td>
-            <td>Blue</td>
-        </tr>
-        <!-- row 2 -->
-        <tr class="hover">
-            <th>2</th>
-            <td>Hart Hagerty</td>
-            <td>Desktop Support Technician</td>
-            <td>Purple</td>
-        </tr>
-        <!-- row 3 -->
-        <tr>
-            <th>3</th>
-            <td>Brice Swyre</td>
-            <td>Tax Accountant</td>
-            <td>Red</td>
-        </tr>
+
+        @for(Entry entry: entries)
+            <tr>
+                <td>${entry.getAPI()}</td>
+                <td>${entry.getAuth()}</td>
+                <td>${entry.getCategory()}</td>
+                <td>${entry.getCors()}</td>
+                <td>${entry.getDescription()}</td>
+                <td>${entry.getHTTPS()}</td>
+                <td>${entry.getLink()}</td>
+            </tr>
+
+        @endfor
         </tbody>
     </table>
 </div>

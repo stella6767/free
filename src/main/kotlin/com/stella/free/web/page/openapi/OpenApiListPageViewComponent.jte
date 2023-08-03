@@ -4,6 +4,6 @@
 <div class="container mx-auto px-4">
 
     ${tabViewComponent.render()}
-    ${tableViewComponent.render()}
+    ${tableViewComponent.render("Animals")}
 
 </div>

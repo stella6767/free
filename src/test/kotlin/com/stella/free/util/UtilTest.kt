@@ -1,6 +1,7 @@
 package com.stella.free.util
 
 import com.stella.free.core.blog.entity.Post
+import com.stella.free.core.openapi.dto.Entry
 import com.stella.free.core.openapi.service.PublicApiService
 import com.stella.free.global.config.WebClientConfig
 import com.stella.free.global.util.TimeUtil
@@ -17,6 +18,19 @@ import java.util.function.Supplier
 
 class UtilTest {
 
+
+    @Test
+    fun getNamesUsingReflectionTest(){
+
+        val fieldNames =
+            Entry::class.java.getDeclaredFields().map {
+                it.isAccessible = true
+                it.name
+            }
+
+        println(fieldNames)
+
+    }
 
 
     @Test

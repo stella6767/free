@@ -49,6 +49,8 @@ spring:
       hibernate:
         globally_quoted_identifiers: true #DB 예약어도 가능
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  view-component:
+    local-development: false
 
 
 cloud:

@@ -13,9 +13,9 @@ server:
       enabled: true
 
 spring:
-  devtools:
-    livereload:
-      enabled: true
+
+
+
   security:
     oauth2:
       client:
@@ -48,8 +48,7 @@ spring:
       - local
   application:
     name: free-app
-  view-component:
-    local-development: false
+
 
 
 logging:

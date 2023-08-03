@@ -30,6 +30,8 @@ jte-classes/
 *.pid
 *.hprof
 *.args
+application-prod.yml
+
 
 ### NetBeans ###
 /nbproject/private/

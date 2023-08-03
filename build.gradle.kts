@@ -55,7 +55,7 @@ jte {
 
 repositories {
     mavenCentral()
-    mavenLocal()
+    //mavenLocal()
     maven("https://jitpack.io")
 }
 
@@ -68,6 +68,7 @@ dependencies {
     implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.0.1"))
     implementation("io.awspring.cloud:spring-cloud-aws-starter-s3")
 
+    implementation(fileTree(mapOf("dir" to "${projectDir}/libs", "include" to listOf("*.jar"))))
 
 
     // mac silicon only
@@ -116,7 +117,7 @@ dependencies {
     implementation("gg.jte:jte-kotlin:$jteVersion")
     //spring-view-component
     //implementation("de.tschuehly:spring-view-component-jte:0.5.5-RC1")
-    implementation("de.tschuehly:spring-view-component-kte:0.6.0")
+    //implementation("de.tschuehly:spring-view-component-kte:0.6.0")
     //implementation("de.tschuehly:spring-view-component-jte:0.6.0")
 
 

@@ -9,17 +9,9 @@ server:
   config:
     activate:
       on-profile:
-        - local
+        - prod
 
 spring:
-  view-component:
-    local-development: true
-  devtools:
-    livereload:
-      enabled: true
-    restart:
-      poll-interval: 1000
-      quiet-period: 900
   servlet:
     multipart:
       max-file-size: 100MB
@@ -49,11 +41,9 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-
       ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-
     properties:
       hibernate.default_batch_fetch_size: 1000
       hibernate:

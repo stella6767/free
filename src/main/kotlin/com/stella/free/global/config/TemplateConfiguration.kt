@@ -38,15 +38,14 @@ class TemplateConfiguration {
         println("profile = $profile")
 
         return if ("prod" == profile) {
-
             log.info("preCompiled")
             // Templates will be compiled by the maven build task
             TemplateEngine.createPrecompiled(ContentType.Html)
         } else {
-
 //            val split = jteProperties.templateLocation.split("/".toRegex()).dropLastWhile { it.isEmpty() }
 //                .toTypedArray()
 //            val codeResolver: CodeResolver = DirectoryCodeResolver(FileSystems.getDefault().getPath("", *split))
+
             val codeResolver: CodeResolver = DirectoryCodeResolver(Path.of("src", "main", "kotlin"))
 
             val templateEngine =

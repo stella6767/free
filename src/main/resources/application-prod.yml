@@ -1,0 +1,66 @@
+
+server:
+  tomcat:
+    max-swallow-size: 500MB
+  port: 8081
+  # shutdown: "graceful"
+
+
+  config:
+    activate:
+      on-profile:
+        - prod
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  #  datasource:
+  #    driver-class-name: org.h2.Driver
+  #    url: jdbc:h2:~/todo
+  #    username: sa
+  #    password:
+  #    hikari:
+  #      maximum-pool-size: 5
+
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://db.woawqxzinsnwsvghwanp.supabase.co/postgres
+    username: postgres
+    password: kmp0WGpjMssxFZI3
+    hikari:
+      maximum-pool-size: 5
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate.default_batch_fetch_size: 1000
+      hibernate:
+        globally_quoted_identifiers: true #DB 예약어도 가능
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+
+cloud:
+  aws:
+    credentials:
+      access-key: AKIARJVQNPZF3J6NJOWT
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+    s3:
+      bucket: free-stella
+      url: https://free-stella.s3.ap-northeast-2.amazonaws.com/
+      #cdnUrl: https://
+
+#secret_AE2oKVxGbtwuCYSqYbHwNJkK9QrscLdtO0FpRpAUg9s

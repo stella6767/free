@@ -1,6 +1,8 @@
 package com.stella.free.util
 
 import com.stella.free.core.blog.entity.Post
+import com.stella.free.core.openapi.service.PublicApiService
+import com.stella.free.global.config.WebClientConfig
 import com.stella.free.global.util.TimeUtil
 import net.datafaker.Faker
 import net.datafaker.transformations.Field.field
@@ -15,6 +17,16 @@ import java.util.function.Supplier
 
 class UtilTest {
 
+
+
+    @Test
+    fun openApiTest(){
+
+        val apiClient = WebClientConfig().publicApiClient()
+
+        PublicApiService(apiClient).getAllCategory()
+
+    }
 
     @Test
     fun timeUtilTest(){

@@ -5,6 +5,7 @@ import com.stella.free.global.util.logger
 import com.stella.free.web.component.blog.post.PostDetailViewComponent
 import com.stella.free.web.component.blog.post.PostEditorViewComponent
 import com.stella.free.web.page.layout.LayoutViewComponent
+import com.stella.free.web.page.openapi.OpenApiListPageViewComponent
 import com.stella.free.web.page.post.PostsViewComponent
 import com.stella.free.web.page.resume.ResumeViewComponent
 import com.stella.free.web.page.todo.TodoListViewComponent
@@ -25,6 +26,8 @@ class PageController(
     private val postsViewComponent: PostsViewComponent,
     private val postEditorViewComponent: PostEditorViewComponent,
     private val postDetailViewComponent: PostDetailViewComponent,
+    private val openApiListPageViewComponent: OpenApiListPageViewComponent,
+
 ) {
 
     private val log = logger()
@@ -67,6 +70,12 @@ class PageController(
     fun getPostById(@PathVariable id: Long): ViewContext {
 
         return layoutViewComponent.render(postDetailViewComponent.render(id))
+    }
+
+
+    @GetMapping("/openApis")
+    fun getOpenApiPage(): ViewContext {
+        return layoutViewComponent.render(openApiListPageViewComponent.render())
     }
 
 

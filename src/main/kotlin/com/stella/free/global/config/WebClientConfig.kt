@@ -25,10 +25,11 @@ class WebClientConfig(
 
 
     @Bean
-    fun notionClient(): WebClient {
+    fun publicApiClient(): WebClient {
+        //https://github.com/davemachado/public-api
 
         return WebClient.builder()
-            .baseUrl("")
+            .baseUrl("https://api.publicapis.org/")
             .defaultHeader(HttpHeaders.ACCEPT, MediaType.ALL_VALUE)
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .filter(addContentTypeHeader())

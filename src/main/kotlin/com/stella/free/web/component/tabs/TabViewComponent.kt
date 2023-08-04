@@ -8,17 +8,12 @@ import de.tschuehly.spring.viewcomponent.jte.ViewContext
 
 @ViewComponent
 class TabViewComponent(
-    private val publicApiService: PublicApiService,
 ) {
 
-    fun render(): ViewContext {
-
-        val allCategory =
-            publicApiService.getAllCategory()
-
+    fun render(category: String): ViewContext {
 
         return ViewContext(
-            "categories" toProperty allCategory.categories,
+            "category" toProperty category,
         )
     }
 

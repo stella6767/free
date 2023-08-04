@@ -4,9 +4,10 @@
 
 @param  List<Entry> entries
 @param  List<String> fieldNames
+@param String category
 
 
-<div class="overflow-x-auto">
+<div class="overflow-x-auto" id="category-table">
     <table class="table">
         <!-- head -->
         <thead>
@@ -20,14 +21,14 @@
         <!-- row 1 -->
 
         @for(Entry entry: entries)
-            <tr>
+            <tr id="${entry.getLink()}">
                 <td>${entry.getAPI()}</td>
                 <td>${entry.getAuth()}</td>
                 <td>${entry.getCategory()}</td>
                 <td>${entry.getCors()}</td>
                 <td>${entry.getDescription()}</td>
                 <td>${entry.getHTTPS()}</td>
-                <td>${entry.getLink()}</td>
+                <td><a href="${entry.getLink()}">${entry.getLink()}</a></td>
             </tr>
 
         @endfor

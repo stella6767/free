@@ -73,7 +73,7 @@ class PageController(
     }
 
 
-    @GetMapping("/openApis")
+    @GetMapping("/publicApis")
     fun getOpenApiPage(): ViewContext {
         return layoutViewComponent.render(openApiListPageViewComponent.render())
     }

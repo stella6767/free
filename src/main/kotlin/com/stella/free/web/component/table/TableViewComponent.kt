@@ -13,7 +13,7 @@ class TableViewComponent(
 ) {
 
 
-    fun render(category:String = "Animals"): ViewContext {
+    fun render(category:String): ViewContext {
 
         val entriesByCategory =
             publicApiService.getEntriesByCategory(category)
@@ -26,7 +26,8 @@ class TableViewComponent(
 
         return ViewContext(
             "entries" toProperty  entriesByCategory.entries,
-            "fieldNames" toProperty fieldNames
+            "fieldNames" toProperty fieldNames,
+            "category" toProperty category,
         )
     }
 

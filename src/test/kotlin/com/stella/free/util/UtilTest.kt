@@ -4,6 +4,7 @@ import com.stella.free.core.blog.entity.Post
 import com.stella.free.core.openapi.dto.Entry
 import com.stella.free.core.openapi.service.PublicApiService
 import com.stella.free.global.config.WebClientConfig
+import com.stella.free.global.util.StringUtil
 import com.stella.free.global.util.TimeUtil
 import net.datafaker.Faker
 import net.datafaker.transformations.Field.field
@@ -18,6 +19,14 @@ import java.util.function.Supplier
 
 class UtilTest {
 
+
+
+    @Test
+    fun removeSpecialCharactersTest(){
+        val input = "Hello! @#World 123!"
+        val result = StringUtil.removeSpecialCharacters(input)
+        System.out.println(result)
+    }
 
     @Test
     fun getNamesUsingReflectionTest(){

@@ -8,7 +8,7 @@ import de.tschuehly.spring.viewcomponent.jte.ViewContext
 class ChatViewComponent(
 
 ) {
-    
+
     fun render(): ViewContext {
         return ViewContext()
     }

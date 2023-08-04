@@ -15,6 +15,8 @@
 
 
     <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+<%--    <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>--%>
+
     <link href="https://cdn.jsdelivr.net/npm/daisyui@3.0.3/dist/full.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="/js/client.js" defer></script>

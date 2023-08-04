@@ -4,6 +4,7 @@ import com.stella.free.global.config.security.UserPrincipal
 import com.stella.free.global.util.logger
 import com.stella.free.web.component.blog.post.PostDetailViewComponent
 import com.stella.free.web.component.blog.post.PostEditorViewComponent
+import com.stella.free.web.page.chat.ChatViewComponent
 import com.stella.free.web.page.layout.LayoutViewComponent
 import com.stella.free.web.page.openapi.OpenApiListPageViewComponent
 import com.stella.free.web.page.post.PostsViewComponent
@@ -27,6 +28,7 @@ class PageController(
     private val postEditorViewComponent: PostEditorViewComponent,
     private val postDetailViewComponent: PostDetailViewComponent,
     private val openApiListPageViewComponent: OpenApiListPageViewComponent,
+    private val chatViewComponent: ChatViewComponent,
 
 ) {
 
@@ -78,6 +80,10 @@ class PageController(
         return layoutViewComponent.render(openApiListPageViewComponent.render())
     }
 
+    @GetMapping("/chat")
+    fun chatPage(): ViewContext {
 
+        return layoutViewComponent.render(chatViewComponent.render())
+    }
 
 }

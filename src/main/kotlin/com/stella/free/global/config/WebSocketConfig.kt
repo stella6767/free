@@ -4,102 +4,35 @@ import com.stella.free.global.util.logger
 import jakarta.websocket.*
 import jakarta.websocket.server.ServerEndpoint
 import org.springframework.context.annotation.Configuration
+import org.springframework.messaging.converter.MessageConverter
+import org.springframework.messaging.handler.invocation.HandlerMethodArgumentResolver
+import org.springframework.messaging.handler.invocation.HandlerMethodReturnValueHandler
+import org.springframework.messaging.simp.config.ChannelRegistration
+import org.springframework.messaging.simp.config.MessageBrokerRegistry
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker
+import org.springframework.web.socket.config.annotation.StompEndpointRegistry
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer
+import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration
 
 
 @Configuration
-@ServerEndpoint("/ws")
+@EnableWebSocketMessageBroker
 class WebSocketConfig(
 
-) {
+) :  WebSocketMessageBrokerConfigurer {
 
     private val log = logger()
 
-
-    /**
-     * 웹소켓 세션을 담는 ArrayList
-     */
-    private val sessionList = ArrayList<Session>()
-
-
-    /**
-     * 웹소켓 사용자 연결 성립하는 경우 호출
-     */
-    @OnOpen
-    fun handleOpen(session: Session?) {
-
-        if (session != null) {
-            val sessionId: String = session.getId()
-            log.info("client is connected. sessionId == [$sessionId]")
-            sessionList.add(session)
-            // 웹소켓 연결 성립되어 있는 모든 사용자에게 메시지 전송
-            sendMessageToAll("***** [USER-$sessionId] is connected. *****")
-        }
-
+    override fun configureMessageBroker(registry: MessageBrokerRegistry) {
+        registry.setApplicationDestinationPrefixes("/app") //서버에서 클라이언트로부터의 메시지를 받을 api의 prefix 설정
+        registry.enableSimpleBroker("/topic/chat")
     }
 
-
-    /**
-     * 웹소켓 메시지(From Client) 수신하는 경우 호출
-     */
-    @OnMessage
-    fun handleMessage(message: String, session: Session?): String? {
-        if (session != null) {
-            val sessionId: String = session.getId()
-            println("message is arrived. sessionId == [$sessionId] / message == [$message]")
-            // 웹소켓 연결 성립되어 있는 모든 사용자에게 메시지 전송
-            sendMessageToAll("[USER-$sessionId] $message")
-        }
-        return null
+    override fun registerStompEndpoints(registry: StompEndpointRegistry) {
+        registry.addEndpoint("/ws")//client에서 websocket을 연결할 api를 설정, 여러개의 endpoint 설정가능
+            .setAllowedOriginPatterns("*")
+            .withSockJS()
     }
 
-
-    /**
-     * 웹소켓 사용자 연결 해제하는 경우 호출
-     */
-    @OnClose
-    fun handleClose(session: Session?) {
-        if (session != null) {
-            val sessionId: String = session.getId()
-            println("client is disconnected. sessionId == [$sessionId]")
-
-            // 웹소켓 연결 성립되어 있는 모든 사용자에게 메시지 전송
-            sendMessageToAll("***** [USER-$sessionId] is disconnected. *****")
-        }
-    }
-
-
-    /**
-     * 웹소켓 에러 발생하는 경우 호출
-     */
-    @OnError
-    fun handleError(t: Throwable) {
-        t.printStackTrace()
-    }
-
-
-    /**
-     * 웹소켓 연결 성립되어 있는 모든 사용자에게 메시지 전송
-     */
-    fun sendMessageToAll(message: String?): Boolean {
-        if (sessionList == null) {
-            return false
-        }
-        val sessionCount = sessionList.size
-        if (sessionCount < 1) {
-            return false
-        }
-        var singleSession: Session? = null
-        for (i in 0 until sessionCount) {
-            singleSession = sessionList[i]
-            if (singleSession == null) {
-                continue
-            }
-            if (!singleSession.isOpen()) {
-                continue
-            }
-            sessionList[i].getAsyncRemote().sendText(message)
-        }
-        return true
-    }
 
 }

@@ -1,9 +1,11 @@
 
+
+
 <div class="bg-yellow-400 h-screen overflow-hidden flex items-center justify-center">
     <div class="bg-white lg:w-5/12 md:6/12 w-10/12 shadow-3xl">
         <div class="bg-gray-800 absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full p-4 md:p-8">
         </div>
-        <form   id="chatUsernameForm"
+        <form id="chat-username-form"
                 class="p-12 md:p-24">
             <div class="flex items-center text-lg mb-6 md:mb-8">
                 <svg class="absolute ml-3" width="24" viewBox="0 0 24 24">
@@ -23,7 +25,6 @@
     <div class="chat chat-start">
         <div class="chat-image avatar">
             <div class="w-10 rounded-full">
-                <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
             </div>
         </div>
         <div class="chat-header">
@@ -56,14 +57,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
-<script src="/js/main.js"></script>
 <script>
 
     'use strict';
 
     const usernamePage = document.querySelector('#username-page');
     const chatPage = document.querySelector('#chat-page');
-    const usernameForm = document.querySelector('#chatUsernameForm');
+    const usernameForm = document.querySelector('#chat-username-form');
     const messageForm = document.querySelector('#messageForm');
     const messageInput = document.querySelector('#message');
     const messageArea = document.querySelector('#messageArea');
@@ -77,26 +77,33 @@
         '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
     ];
 
-    usernameForm.addEventListener('submit', connect, true)
-    //messageForm.addEventListener('submit', sendMessage, true)
+
 
     const connect = (event) => {
-        username = document.querySelector('#name').value.trim();
-        if (username) {
-            usernamePage.classList.add('hidden');
-            chatPage.classList.remove('hidden');
-            var socket = new SockJS('/ws');
-            stompClient = Stomp.over(socket);
-            stompClient.connect({}, onConnected, onError);
-        }
+
+        //username = document.querySelector('#name').value.trim();
+
+        console.log(">>>>>")
+
+        // if (username) {
+        //     usernamePage.classList.add('hidden');
+        //     //chatPage.classList.remove('hidden');
+        //     var socket = new SockJS('/ws');
+        //     stompClient = Stomp.over(socket);
+        //     stompClient.connect({}, onConnected, onError);
+        // }
+
+        var socket = new SockJS('/ws');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, onConnected, onError);
+
         event.preventDefault();
     }
 
 
     function onConnected() {
         // Subscribe to the Public Topic
-        stompClient.subscribe('/topic/public', onMessageReceived);
-
+        stompClient.subscribe('/topic/chat', onMessageReceived);
         // Tell your username to the server
         stompClient.send("/app/chat.addUser",
             {},
@@ -108,8 +115,10 @@
 
 
     function onError(error) {
-        connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
-        connectingElement.style.color = 'red';
+        //connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
+        //connectingElement.style.color = 'red';
+
+        console.log(error)
     }
 
 
@@ -175,5 +184,8 @@
         return colors[index];
     }
 
+
+    usernameForm.addEventListener('submit', connect, true)
+    //messageForm.addEventListener('submit', sendMessage, true)
 
 </script>

@@ -60,8 +60,6 @@ repositories {
 
 dependencies {
 
-//    implementation("org.webjars:webjars-locator-core:0.52")
-//    implementation("org.webjars.npm:htmx.org:1.8.4")
 
     //aws
     implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.0.1"))
@@ -79,19 +77,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 
 
-
     //jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-
-    // querydsl
-//    implementation("com.vladmihalcea:hibernate-types-60:2.21.1")
-//    implementation("com.infobip:infobip-spring-data-jpa-querydsl-boot-starter:8.1.1")
-//    implementation ("com.querydsl:querydsl-jpa:$querydslVersion:jakarta")
-//    kapt("com.querydsl:querydsl-apt:$querydslVersion:jakarta")
-//    kapt("jakarta.persistence:jakarta.persistence-api")
-//    kapt("jakarta.annotation:jakarta.annotation-api")
-
-
     // kotlin jdsl
     // https://mvnrepository.com/artifact/com.linecorp.kotlin-jdsl/spring-data-kotlin-jdsl-starter-jakarta
     implementation("com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter-jakarta:2.2.1.RELEASE")
@@ -123,6 +110,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+    implementation("org.springframework.boot:spring-boot-starter-websocket")
+
 
     //json 직렬화
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

@@ -18,20 +18,22 @@ class WebSocketEventListener(
 
     private val log = logger()
 
-
     @EventListener
-    fun handleWebSocketConnectListener(event: SessionConnectedEvent?) {
+    fun handleWebSocketConnectListener(event: SessionConnectedEvent) {
         log.info("Received a new web socket connection")
     }
 
     @EventListener
     fun handleWebSocketDisconnectListener(event: SessionDisconnectEvent) {
 
-        val headerAccessor = StompHeaderAccessor.wrap(event.message)
-        val username = headerAccessor.sessionAttributes?.get("username") as String?
+        val headerAccessor =
+            StompHeaderAccessor.wrap(event.message)
+
+        val username =
+            headerAccessor.sessionAttributes?.get("username") as String?
+
         if (username != null) {
             log.info("User Disconnected : $username")
-
             val chatMessage = ChatDto(
                 type = ChatDto.MessageType.LEAVE,
                 sender = username,

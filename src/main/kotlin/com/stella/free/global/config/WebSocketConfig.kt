@@ -25,7 +25,7 @@ class WebSocketConfig(
 
     override fun configureMessageBroker(registry: MessageBrokerRegistry) {
         registry.setApplicationDestinationPrefixes("/app") //서버에서 클라이언트로부터의 메시지를 받을 api의 prefix 설정
-        registry.enableSimpleBroker("/topic/chat")
+        registry.enableSimpleBroker("/topic/public")
     }
 
     override fun registerStompEndpoints(registry: StompEndpointRegistry) {

@@ -52,23 +52,30 @@ class LoggerAspect(
         val method = joinPoint.signature.name
         val args = joinPoint.args
 
-        val request = (RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes).request
-
-        log.info (
-            """
+        try {
+            val request =
+                (RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes).request
+            log.info (
+                """
                                
                  requset url : ${request.servletPath}
                  httpMethod: ${request.method}
                  type : $type
                  methodName : $method
                  """
-        )
+            )
 
-        if (args.size <= 0) log.info("no parameter")
-        for (arg in args) {
-            //log.info("parameter type = {}", arg.getClass().getSimpleName());
-            log.info("parameter value = {}", arg)
+            if (args.size <= 0) log.info("no parameter")
+            for (arg in args) {
+                //log.info("parameter type = {}", arg.getClass().getSimpleName());
+                log.info("parameter value = {}", arg)
+            }
+        }catch (e:Exception){
+            log.error(e.message)
         }
+
+
+
     }
 
 

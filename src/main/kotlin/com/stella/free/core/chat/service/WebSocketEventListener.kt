@@ -1,6 +1,6 @@
 package com.stella.free.core.chat.service
 
-import com.stella.free.core.chat.dto.ChatDto
+import com.stella.free.core.chat.dto.ChatSendDto
 import com.stella.free.global.util.logger
 import org.springframework.context.event.EventListener
 import org.springframework.messaging.simp.SimpMessagingTemplate
@@ -20,7 +20,8 @@ class WebSocketEventListener(
 
     @EventListener
     fun handleWebSocketConnectListener(event: SessionConnectedEvent) {
-        log.info("Received a new web socket connection")
+        log.info("Received a new web socket connection ${event.message}")
+
     }
 
     @EventListener
@@ -34,8 +35,8 @@ class WebSocketEventListener(
 
         if (username != null) {
             log.info("User Disconnected : $username")
-            val chatMessage = ChatDto(
-                type = ChatDto.MessageType.LEAVE,
+            val chatMessage = ChatSendDto(
+                type = ChatSendDto.MessageType.LEAVE,
                 sender = username,
                 message = "",
                 time = LocalDateTime.now().toString()

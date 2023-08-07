@@ -19,24 +19,9 @@
 </div>
 
 
-<div id="chat-page" class="flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen container mx-auto hidden">
+<div id="chat-page" class="flex-1 p:2 sm:p-6 justify-between flex flex-col container mx-auto hidden">
 
-    <div id="message-area" class="overflow-y-auto h-60">
-        <div id="messages"
-             class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
-            <div class="chat-message">
-                <div class="items-end">
-                    <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
-                        <div><span class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">Can be verified on any platform using docker</span>
-                        </div>
-                    </div>
-                    <div class="max-w-xs mx-2 stext-xs font-bold">
-                        username
-                    </div>
-                </div>
-            </div>
-        </div>
-
+    <div id="message-area" class="overflow-y-auto h-96">
     </div>
 
     <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
@@ -59,33 +44,8 @@
     </div>
 </div>
 
-<style>
-    .scrollbar-w-2::-webkit-scrollbar {
-        width: 0.25rem;
-        height: 0.25rem;
-    }
 
-    .scrollbar-track-blue-lighter::-webkit-scrollbar-track {
-        --bg-opacity: 1;
-        background-color: #f7fafc;
-        background-color: rgba(247, 250, 252, var(--bg-opacity));
-    }
 
-    .scrollbar-thumb-blue::-webkit-scrollbar-thumb {
-        --bg-opacity: 1;
-        background-color: #edf2f7;
-        background-color: rgba(237, 242, 247, var(--bg-opacity));
-    }
-
-    .scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
-        border-radius: 0.25rem;
-    }
-</style>
-
-<script>
-    const el = document.getElementById('messages')
-    el.scrollTop = el.scrollHeight
-</script>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
@@ -121,7 +81,6 @@
     const onConnected = () => {
         // Subscribe to the Public Topic
         stompClient.subscribe('/topic/public', onMessageReceived);
-
         console.log("add User")
 
         let chatDto = {
@@ -138,10 +97,7 @@
 
 
     const onError = (error) => {
-        //connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
-        //connectingElement.style.color = 'red';
-
-        console.log(error)
+        console.error(error)
     }
 
 
@@ -150,7 +106,6 @@
         let messageContent = messageInput.value.trim();
 
         if (messageContent && stompClient) {
-
             const chatMessage = {
                 sender: username,
                 message: messageContent,
@@ -166,12 +121,26 @@
 
 
     const onMessageReceived = (payload) => {
-
         console.log("arrived", payload)
-        let htmlTemplate = payload.body;
-        console.log("htmlTemplate", htmlTemplate);
-        messageArea.insertAdjacentHTML("beforeend", htmlTemplate)
+        let response = JSON.parse(payload.body);
+        console.log("response", response);
 
+        const chatDom =
+            new DOMParser().parseFromString(response.html, 'text/html').body.childNodes[0];
+
+        console.log("chatDom", chatDom)
+
+        //messageArea.insertAdjacentHTML("beforeend", response.html)
+
+        if (username == response.sender){
+            console.log("username", username)
+            chatDom.querySelector("#chat-box-comment").classList.add('items-end', 'justify-end');
+            chatDom.querySelector("#chat-message-box").classList.add('bg-blue-600', 'text-white');
+            chatDom.querySelector("#chat-message-box").classList.remove('bg-gray-300', 'text-gray-600');
+        }
+
+        console.log("chatDom", chatDom)
+        messageArea.append(chatDom)
 
     }
 

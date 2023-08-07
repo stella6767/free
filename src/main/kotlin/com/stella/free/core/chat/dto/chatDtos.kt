@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 //){
 //}
 
-data class ChatDto(
+data class ChatSendDto(
     val type: MessageType,
     val sender: String,
     val message:String = "",
@@ -23,3 +23,9 @@ data class ChatDto(
     }
 
 }
+
+
+data class ChatResDto(
+    val sender: String,
+    val html:String,
+    )

@@ -1,6 +1,6 @@
 package com.stella.free.core.chat.dto
 
-
+import java.time.LocalDateTime
 
 
 //data class ChatRoom(
@@ -8,19 +8,18 @@ package com.stella.free.core.chat.dto
 //    val name:String,
 //    val userCount:Int,
 //){
-//
 //}
-
-
 
 data class ChatDto(
     val type: MessageType,
     val sender: String,
-    val message:String,
-    val time:String
+    val message:String = "",
+    val time:String = LocalDateTime.now().toString()
 ){
     enum class MessageType {
-        ENTER, TALK, LEAVE;
+        JOIN,
+        TALK,
+        LEAVE;
     }
 
 }

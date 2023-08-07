@@ -1,7 +1,6 @@
-package com.stella.free.global.config
+package com.stella.free.global.config.security
 
 
-import com.stella.free.global.config.security.OAuth2DetailsService
 import com.stella.free.global.util.logger
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse

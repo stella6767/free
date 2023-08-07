@@ -32,6 +32,7 @@ class CacheConfig(
         return cacheManager
     }
 
+
     private fun makeCaffeineCache(cache: CacheType) = CaffeineCache(
         cache.cacheName, Caffeine.newBuilder().recordStats()
             .expireAfterWrite(cache.expiredAfterWrite, TimeUnit.SECONDS)

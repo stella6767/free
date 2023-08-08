@@ -9,17 +9,18 @@ import org.springframework.data.domain.Pageable
 
 
 @ViewComponent
-class PostsViewComponent(
+class SearchedPostsViewComponent(
     private val postService: PostService,
     private val postCardViewComponent: PostCardViewComponent,
 ) {
 
-    fun render(pageable: Pageable): ViewContext {
+    fun render(pageable: Pageable, keyword:String): ViewContext {
 
         val posts =
-            postService.findPostsByPage(pageable)
+            postService.findPostsByKeyword(keyword, pageable)
 
         return ViewContext(
+            "keyword" toProperty keyword,
             "posts" toProperty posts,
             "postCardViewComponent" toProperty postCardViewComponent
         )

@@ -37,6 +37,12 @@ class BlogComponentController(
         return postsViewComponent.render(pageable)
     }
 
+    @GetMapping("/posts/search")
+    fun postsByKeyword(@PageableDefault(size = 16) pageable: Pageable): ViewContext {
+
+        return postsViewComponent.render(pageable)
+    }
+
 
     @PostMapping("/post")
     @ResponseBody

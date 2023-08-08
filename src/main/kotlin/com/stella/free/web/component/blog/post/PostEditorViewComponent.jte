@@ -2,6 +2,8 @@
 @import org.springframework.security.core.context.SecurityContextHolder
 
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 
 <form class="py-4 flex flex-col gap-y-3 mb-3"
       @submit.prevent="submitForm"
@@ -33,7 +35,18 @@
     </div>
 
 
-    <div id="editor"></div>
+
+    <div class="flex w-6/12 mx-auto justify-center">
+        <input placeholder="태그를 입력하세요"
+               name='hashtag'
+               tabindex="2"
+               class="input input-bordered justify-self-center w-full"
+               value="">
+
+    </div>
+
+    <div id="editor">
+    </div>
 
     <br/>
 
@@ -63,7 +76,12 @@
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 
 <script>
-    let content = ""
+
+    const input = document.querySelector('input[name=hashtag]');
+    let tagify = new Tagify(input); // initialize Tagify
+    tagify.on('add', function() {
+        console.log(tagify.value); // 입력된 태그 정보 객체
+    })
 
 
     function editorForm() {
@@ -82,12 +100,17 @@
 
                 let reqBody = JSON.stringify(this.formData);
                 console.log("submit", reqBody);
-
                 let headers = {
                     'Content-Type': 'application/json'
                 }
+                let tagNames = tagify.value.map((el)=>{
+                    return el.value
+                });
 
-                client('/post', {body: reqBody, headers : headers}).then(
+                console.log(tagNames)
+
+
+                client('/post', {body: reqBody, headers: headers}).then(
                     data => {
                         console.log('here the logged in user data', data.body)
                         location.href = "/blog";
@@ -133,7 +156,7 @@
 
                 client('/post/file', {body: formData, method: 'POST'}).then(
                     data => {
-                        console.log("data", data )
+                        console.log("data", data)
                         callback(data, '사진 대체 텍스트 입력');
                     },
                     error => {

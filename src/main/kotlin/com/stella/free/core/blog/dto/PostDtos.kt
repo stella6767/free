@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 data class PostSaveDto(
     val title:String,
     val content:String,
-    //val thumbnail:String,
+    val postTags: List<String> = listOf(),
     val anonymousUsername:String = "",
 ){
     fun toEntity(user: User?, thumbnail: String?): Post {

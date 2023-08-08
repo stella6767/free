@@ -6,7 +6,7 @@ console.log("setup custom client");
 function client(endpoint, {body, ...customConfig} = {}) {
     //const headers = {'Content-Type': 'application/json'}
 
-    //console.log("customconfig", ...customConfig)
+
 
     const config = {
         method: body ? 'POST' : 'GET',
@@ -17,7 +17,8 @@ function client(endpoint, {body, ...customConfig} = {}) {
     }
 
     if (body) {
-        config.body = body
+        config.body = body;
+        console.log("body", body);
     }
 
     return fetch(`${endpoint}`, config)

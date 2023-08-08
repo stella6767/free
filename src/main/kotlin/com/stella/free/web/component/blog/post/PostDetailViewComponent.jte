@@ -2,24 +2,34 @@
 
 @param com.stella.free.core.blog.dto.PostDetailDto post
 @param com.stella.free.web.component.blog.comment.CommentSectionViewComponent commentSectionViewComponent
+
+@param java.util.List<String> postTags
+@param com.stella.free.web.component.blog.tag.TagViewComponent tagViewComponent
 @param Content content
 
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
-<%--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown-light.css" integrity="sha512-n5zPz6LZB0QV1eraRj4OOxRbsV7a12eAGfFcrJ4bBFxxAwwYDp542z5M0w24tKPEhKk2QzjjIpR5hpOjJtGGoA==" crossorigin="anonymous" referrerpolicy="no-referrer" />--%>
+<%--<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>--%>
+<%--<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />--%>
 
 <div class="w-3/6 mx-auto mb-5">
 
-    <div
-            class="sm:text-3xl md:text-3xl lg:text-3xl xl:text-4xl font-bold cursor-pointer">
+    <div class="sm:text-3xl md:text-3xl lg:text-3xl xl:text-4xl font-bold cursor-pointer">
         ${post.getTitle()}
-
     </div>
 
 
-    <div class="font-light text-gray-600">
+    <div class="font-light text-gray-600 mt-2">
         <h1 class="font-bold text-gray-700 hover:underline">
             By ${post.getUsername()} · ${post.getCreatedAt()}
         </h1>
+    </div>
+
+    <div class="mt-2">
+
+        @for(String tag : postTags)
+            ${tagViewComponent.render(tag)}
+        @endfor
+
     </div>
 
 </div>

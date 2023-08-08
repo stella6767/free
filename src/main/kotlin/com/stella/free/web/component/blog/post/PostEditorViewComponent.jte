@@ -87,28 +87,29 @@
     function editorForm() {
 
         return {
-
             formData: {
                 title: "",
                 anonymousUsername: "",
                 content: "",
+                postTags: null,
             },
             submitForm() {
                 //let req = JSON.stringify(this.formData);
 
                 this.formData.content = editor.getHTML();
-
-                let reqBody = JSON.stringify(this.formData);
-                console.log("submit", reqBody);
                 let headers = {
                     'Content-Type': 'application/json'
                 }
-                let tagNames = tagify.value.map((el)=>{
+
+                const tagNames = tagify.value.map((el)=>{
                     return el.value
                 });
 
-                console.log(tagNames)
+                console.log("tagNames", tagNames)
+                this.formData.postTags = tagNames;
 
+                let reqBody = JSON.stringify(this.formData);
+                console.log("submit", reqBody);
 
                 client('/post', {body: reqBody, headers: headers}).then(
                     data => {

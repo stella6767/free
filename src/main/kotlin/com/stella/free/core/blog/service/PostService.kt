@@ -120,6 +120,10 @@ class PostService(
             Jsoup.parseBodyFragment(postSaveDto.content).getElementsByTag("img")
                 .firstOrNull()?.attr("src")
 
+
+
+
+
         postRepository.save(postSaveDto.toEntity(principal?.user, thumbnail))
     }
 

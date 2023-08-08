@@ -18,3 +18,22 @@
     ${tableViewComponent.render(categories.get(0))}
 
 </div>
+
+
+<script defer>
+
+    const showActive = (category) => {
+
+        const aTeg = document.querySelectorAll('.m-tab');
+        aTeg.forEach((el) => {
+            el.classList.remove('tab-active');
+        });
+
+        let selector = "#category-tab-"+category;
+        console.log("selector", selector)
+
+        const element = document.querySelector(selector);
+        element.classList.add("tab-active");
+    }
+
+</script>

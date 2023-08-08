@@ -19,7 +19,7 @@
         <div
                 class="container mx-auto w-1/2"
                 id="posts-searched-container"
-                hx-get="/posts/search?keyword=${keyword}&page=${posts.getPageable().getPageNumber() + 1}"
+                hx-get="/posts?keyword=${keyword}&page=${posts.getPageable().getPageNumber() + 1}"
                 hx-trigger="revealed"
                 hx-swap="afterend">
 

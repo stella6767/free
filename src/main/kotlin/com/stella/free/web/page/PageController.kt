@@ -44,18 +44,13 @@ class PageController(
 
 
     @GetMapping("/blog")
-    fun homeBlog(@PageableDefault(size = 16) pageable: Pageable): ViewContext {
+    fun homeBlog(@PageableDefault(size = 16) pageable: Pageable,
+                 @RequestParam(required = false, defaultValue = "") keyword: String): ViewContext {
 
-        return layoutViewComponent.render(postsViewComponent.render(pageable))
+        return layoutViewComponent.render(postsViewComponent.render(pageable, keyword))
     }
 
 
-    @GetMapping("/posts/search")
-    fun postsByKeyword(@PageableDefault(size = 16) pageable: Pageable,
-                       @RequestParam keyword:String): ViewContext {
-
-        return layoutViewComponent.render(searchedPostsViewComponent.render(pageable, keyword))
-    }
 
     @GetMapping("/resume")
     fun resume(): ViewContext {

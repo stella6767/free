@@ -25,7 +25,6 @@ class CommentService(
     @Transactional
     fun saveComment(dto: CommentSaveDto): Comment {
 
-        log.info(dto.toString())
         val post =
             postRepository.findById(dto.postId).orElseThrow { throw EntityNotFoundException(dto.postId.toString()) }
         val user =

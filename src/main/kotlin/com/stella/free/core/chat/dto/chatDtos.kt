@@ -28,4 +28,4 @@ data class ChatSendDto(
 data class ChatResDto(
     val sender: String,
     val html:String,
-    )
+)

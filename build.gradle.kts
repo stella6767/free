@@ -65,7 +65,8 @@ dependencies {
     implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.0.1"))
     implementation("io.awspring.cloud:spring-cloud-aws-starter-s3")
 
-
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+    //implementation("org.seleniumhq.selenium:selenium-java:4.11.0")
 
     // mac silicon only
     // https://github.com/apache/commons-lang/blob/master/src/main/java/org/apache/commons/lang3/SystemUtils.java#L1173
@@ -74,17 +75,18 @@ dependencies {
     if (isMacOS && architecture == "aarch64") {
         developmentOnly("io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64")
     }
+
     implementation("org.springframework.boot:spring-boot-starter-webflux")
-
-
     //jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
     // kotlin jdsl
     // https://mvnrepository.com/artifact/com.linecorp.kotlin-jdsl/spring-data-kotlin-jdsl-starter-jakarta
     implementation("com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter-jakarta:2.2.1.RELEASE")
 
     // 더미데이터 셍상
     implementation("net.datafaker:datafaker:2.0.1")
+
     // html to 마크다운
     implementation("com.vladsch.flexmark:flexmark-html2md-converter:0.64.0")
     // html 파싱
@@ -129,6 +131,7 @@ dependencies {
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
+
 }
 
 

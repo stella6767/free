@@ -36,7 +36,6 @@ class PostService(
 
     private val log = logger()
 
-
     @PostConstruct
     fun init() {
         val posts = findAll()
@@ -49,20 +48,19 @@ class PostService(
     fun generateDummyPosts(size: Int) {
         val posts = mutableListOf<Post>()
         for (i in 0 until size) {
-            val post = generateDummyPost((i + 1).toLong())
+            generateDummyPost((i + 1).toLong())
             //println(post)
             //posts.add(post)
         }
-
 //        log.info("data initialized post: ${posts.size}")
 //        postRepository.saveAll(posts)
     }
+
 
     fun generateDummyPost(id: Long): Post {
 
         val faker = Faker(Locale("ko"))
         val jTransformer = JavaObjectTransformer()
-
         val image = faker.internet().image()
         val lorem = faker.lorem()
 

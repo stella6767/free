@@ -28,7 +28,6 @@ class CacheConfig(
             }
             .collect(Collectors.toList())
         cacheManager.setCaches(caches)
-
         return cacheManager
     }
 

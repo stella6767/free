@@ -1,15 +1,19 @@
 package com.stella.free.core.blog.repo
 
+import com.linecorp.kotlinjdsl.query.spec.ExpressionOrderSpec
 import com.linecorp.kotlinjdsl.querydsl.expression.col
 import com.linecorp.kotlinjdsl.querydsl.expression.column
 import com.linecorp.kotlinjdsl.querydsl.from.fetch
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
 import com.linecorp.kotlinjdsl.spring.data.listQuery
-import com.stella.free.core.account.entity.User
 import com.stella.free.core.blog.entity.*
+import com.stella.free.global.util.singleOrNullQuery
 import jakarta.persistence.EntityManager
 import jakarta.persistence.criteria.JoinType
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.support.PageableExecutionUtils
 import org.springframework.util.Assert
 
 interface HashTagRepository : JpaRepository<HashTag, Long>, HashTagCustomRepository {
@@ -21,6 +25,7 @@ interface HashTagRepository : JpaRepository<HashTag, Long>, HashTagCustomReposit
 interface HashTagCustomRepository {
     fun savePostTag(postTag: PostTag): PostTag
     fun findTagsByPostId(postId: Long): List<PostTag>
+    fun findPostsByTagName(tagName: String, pageable: Pageable): Page<PostTag>
 }
 
 class HashTagCustomRepositoryImpl(
@@ -52,6 +57,38 @@ class HashTagCustomRepositoryImpl(
             )
         }
 
+    }
+
+
+    override fun findPostsByTagName(tagName: String, pageable: Pageable): Page<PostTag> {
+
+        val fetch = queryFactory.listQuery {
+            select(entity(PostTag::class))
+            from(entity(PostTag::class))
+            fetch(PostTag::post, JoinType.LEFT)
+            fetch(PostTag::hashTag, JoinType.LEFT)
+            where(
+                nestedCol(col(PostTag::hashTag), HashTag::name).equal(tagName)
+            )
+            offset(pageable.offset.toInt())
+            limit(pageable.pageSize)
+            orderBy(ExpressionOrderSpec(column(PostTag::id), false))
+        }
+
+
+        val count = queryFactory.singleOrNullQuery {
+            select(count(column(PostTag::id)))
+            from(entity(PostTag::class))
+            fetch(PostTag::post, JoinType.LEFT)
+            fetch(PostTag::hashTag, JoinType.LEFT)
+            where(
+                nestedCol(col(PostTag::hashTag),HashTag::name).equal(tagName)
+            )
+        }
+
+        return PageableExecutionUtils.getPage(
+            fetch, pageable
+        ) { count ?: 0L }
     }
 
 

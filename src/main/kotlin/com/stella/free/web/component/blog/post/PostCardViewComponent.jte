@@ -8,7 +8,7 @@
 
 
 
-<div class="card w-80 bg-base-100 shadow-xl hover:bg-cyan-600 cursor-pointer"
+<div class="card mt-5 bg-base-100 shadow-xl hover:bg-cyan-600 cursor-pointer"
      id="post-card-${post.getId()}" onclick="location.href='/post/${post.getId()}'">
     <figure class="bg-slate-300">
         <div x-data="{ loading: true }" >

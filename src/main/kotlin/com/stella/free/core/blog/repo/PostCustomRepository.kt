@@ -6,6 +6,7 @@ import com.linecorp.kotlinjdsl.querydsl.from.fetch
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
 import com.linecorp.kotlinjdsl.spring.data.listQuery
 import com.linecorp.kotlinjdsl.spring.data.singleQuery
+import com.stella.free.core.account.entity.User
 
 import com.stella.free.core.blog.entity.Post
 import com.stella.free.global.util.singleOrNullQuery
@@ -20,6 +21,7 @@ import org.springframework.data.support.PageableExecutionUtils
 interface PostCustomRepository {
 
     fun findPostsByPage(pageable: Pageable): Page<Post>
+    fun findPostsByKeyword(keyword: String, pageable: Pageable): Page<Post>
 
 }
 
@@ -51,6 +53,41 @@ class PostCustomRepositoryImpl(
         return PageableExecutionUtils.getPage(
             fetch, pageable
         ) { count ?: 0L }
+    }
+
+    override fun findPostsByKeyword(keyword: String, pageable: Pageable): Page<Post> {
+
+        val fetch = queryFactory
+            .listQuery {
+                select(entity(Post::class))
+                from(entity(Post::class))
+                fetch(Post::user, JoinType.LEFT)
+                where(
+                    or(
+                        column(Post::title).like("%$keyword%"),
+                        column(Post::content).like("%$keyword%"),
+                    )
+                )
+                offset(pageable.offset.toInt())
+                limit(pageable.pageSize)
+                orderBy(ExpressionOrderSpec(column(Post::id), false))
+            }
+
+        val count = queryFactory.singleOrNullQuery {
+            select(count(column(Post::id)))
+            from(entity(Post::class))
+            where(
+                or(
+                    column(Post::title).like("%$keyword%"),
+                    column(Post::content).like("%$keyword%"),
+                )
+            )
+        }
+
+        return PageableExecutionUtils.getPage(
+            fetch, pageable
+        ) { count ?: 0L }
+
     }
 
 

@@ -8,6 +8,7 @@ import com.stella.free.web.page.chat.ChatViewComponent
 import com.stella.free.web.page.layout.LayoutViewComponent
 import com.stella.free.web.page.openapi.OpenApiListPageViewComponent
 import com.stella.free.web.page.post.PostsViewComponent
+import com.stella.free.web.page.post.SearchedPostsViewComponent
 import com.stella.free.web.page.resume.ResumeViewComponent
 import com.stella.free.web.page.todo.TodoListViewComponent
 import de.tschuehly.spring.viewcomponent.jte.ViewContext
@@ -17,6 +18,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestParam
 
 @Controller
 class PageController(
@@ -29,6 +31,7 @@ class PageController(
     private val postDetailViewComponent: PostDetailViewComponent,
     private val openApiListPageViewComponent: OpenApiListPageViewComponent,
     private val chatViewComponent: ChatViewComponent,
+    private val searchedPostsViewComponent: SearchedPostsViewComponent,
 
 ) {
 
@@ -46,6 +49,13 @@ class PageController(
         return layoutViewComponent.render(postsViewComponent.render(pageable))
     }
 
+
+    @GetMapping("/posts/search")
+    fun postsByKeyword(@PageableDefault(size = 16) pageable: Pageable,
+                       @RequestParam keyword:String): ViewContext {
+
+        return layoutViewComponent.render(searchedPostsViewComponent.render(pageable, keyword))
+    }
 
     @GetMapping("/resume")
     fun resume(): ViewContext {

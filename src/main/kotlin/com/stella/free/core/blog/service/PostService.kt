@@ -31,7 +31,6 @@ import java.util.function.Supplier
 
 
 @Service
-@Transactional
 class PostService(
     private val postRepository: PostRepository,
     private val fileUploader: FileUploader,
@@ -87,7 +86,7 @@ class PostService(
     }
 
 
-    private fun generateDummyPostContent(lorem: Lorem, img:String ): String {
+    private fun generateDummyPostContent(lorem: Lorem, img: String): String {
 
         val paragraph = lorem.paragraph(30)
         val doc = Document.createShell("")
@@ -106,12 +105,14 @@ class PostService(
         return div.html()
     }
 
-
+    @Transactional(readOnly = true)
     fun findPostsByPage(pageable: Pageable): Page<Post> {
 
         return postRepository.findPostsByPage(pageable)
     }
 
+
+    @Transactional
     fun savePost(postSaveDto: PostSaveDto, principal: UserPrincipal?) {
 
         if (principal != null) {
@@ -134,15 +135,19 @@ class PostService(
         }
     }
 
-
+    @Transactional(readOnly = true)
     fun findAll(): MutableList<Post> {
         return postRepository.findAll()
     }
 
+
+    @Transactional
     fun findById(id: Long): PostDetailDto {
 
         val post = postRepository.findById(id)
             .orElseThrow { throw EntityNotFoundException() }
+
+        post.count ++
 
         val options = MutableDataSet()
         val postMarkDown =
@@ -152,9 +157,8 @@ class PostService(
     }
 
 
-
     @Transactional(readOnly = true)
-    fun findTagsByPostId(postId:Long): List<String> {
+    fun findTagsByPostId(postId: Long): List<String> {
 
         return hashTagRepository.findTagsByPostId(postId).map {
             it.hashTag.name
@@ -162,10 +166,29 @@ class PostService(
     }
 
 
+    @Transactional(readOnly = true)
+    fun findPostsByTagName(tagName: String, pageable: Pageable) {
+
+        val posts =
+            hashTagRepository.findPostsByTagName(tagName, pageable).map {
+                it.post
+            }
+
+        println(posts)
+
+    }
+
 
     fun deleteById(id: Long) {
 
     }
+
+    @Transactional(readOnly = true)
+    fun findPostsByKeyword(keyword:String, pageable: Pageable): Page<Post> {
+
+        return postRepository.findPostsByKeyword(keyword, pageable)
+    }
+
 
 
     fun savePostImg(file: MultipartFile): String {

@@ -3,12 +3,14 @@ package com.stella.free.repository
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.stella.free.core.blog.dto.CommentCardDto
 import com.stella.free.core.blog.repo.CommentRepository
+import com.stella.free.core.blog.repo.HashTagRepository
 import com.stella.free.core.blog.repo.PostRepository
 import com.stella.free.setup.RepositoriesTestConfig
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.context.annotation.Import
+import org.springframework.data.domain.PageRequest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.TestConstructor
 import org.springframework.transaction.annotation.Transactional
@@ -23,9 +25,21 @@ import org.springframework.transaction.annotation.Transactional
 class RepositoryTest(
     private val postRepository: PostRepository,
     private val commentRepository: CommentRepository,
+    private val hashTagRepository: HashTagRepository,
     private val mapper: ObjectMapper,
 ) {
 
+
+    @Test
+    fun findPostsByTagNameTest(){
+
+        val posts =
+            hashTagRepository.findPostsByTagName("123", PageRequest.of(0, 10))
+                .map { it.post }
+
+        println(posts)
+
+    }
 
     @Test
     fun findPostsTest() {

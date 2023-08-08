@@ -2,7 +2,10 @@ package com.stella.free.core.blog.service
 
 import com.stella.free.core.blog.dto.PostDetailDto
 import com.stella.free.core.blog.dto.PostSaveDto
+import com.stella.free.core.blog.entity.HashTag
 import com.stella.free.core.blog.entity.Post
+import com.stella.free.core.blog.entity.PostTag
+import com.stella.free.core.blog.repo.HashTagRepository
 import com.stella.free.core.blog.repo.PostRepository
 import com.stella.free.global.config.security.UserPrincipal
 import com.stella.free.global.service.FileUploader
@@ -32,6 +35,7 @@ import java.util.function.Supplier
 class PostService(
     private val postRepository: PostRepository,
     private val fileUploader: FileUploader,
+    private val hashTagRepository: HashTagRepository,
 ) {
 
     private val log = logger()
@@ -120,11 +124,14 @@ class PostService(
             Jsoup.parseBodyFragment(postSaveDto.content).getElementsByTag("img")
                 .firstOrNull()?.attr("src")
 
+        val post =
+            postRepository.save(postSaveDto.toEntity(principal?.user, thumbnail))
 
-
-
-
-        postRepository.save(postSaveDto.toEntity(principal?.user, thumbnail))
+        postSaveDto.postTags.forEach {
+            val hashTag =
+                hashTagRepository.findByName(it) ?: hashTagRepository.save(HashTag(name = it))
+            hashTagRepository.savePostTag(PostTag(post, hashTag))
+        }
     }
 
 
@@ -143,6 +150,17 @@ class PostService(
 
         return post.toDetailDto(postMarkDown)
     }
+
+
+
+    @Transactional(readOnly = true)
+    fun findTagsByPostId(postId:Long): List<String> {
+
+        return hashTagRepository.findTagsByPostId(postId).map {
+            it.hashTag.name
+        }
+    }
+
 
 
     fun deleteById(id: Long) {

@@ -13,6 +13,9 @@ class HashTag(
 
     @Column(name = "name", nullable = false)
     val name: String = name
+    override fun toString(): String {
+        return "HashTag(name='$name')"
+    }
 
 
 }

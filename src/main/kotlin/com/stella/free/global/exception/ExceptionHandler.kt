@@ -7,6 +7,7 @@ import com.stella.free.web.component.toast.ToastViewComponent
 import de.tschuehly.spring.viewcomponent.jte.ViewContext
 import org.springframework.http.HttpStatus
 import org.springframework.http.ProblemDetail
+import org.springframework.http.ResponseEntity
 import org.springframework.security.core.AuthenticationException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -20,17 +21,31 @@ class ExceptionHandler(
 
     private val log = logger()
 
+//    @ExceptionHandler(AppException::class)
+//    fun handleMyAppException(exception: AppException): ViewContext {
+//
+//        val pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST.value())
+//        pd.detail = exception.localizedMessage
+//
+//        return toastViewComponent.render(
+//            exception.message!!,
+//            10000
+//        )
+//    }
+
+
     @ExceptionHandler(AppException::class)
-    fun handleMyAppException(exception: AppException): ViewContext {
+    fun handleMyAppException(exception: AppException): ResponseEntity<String> {
 
-        val pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST.value())
-        pd.detail = exception.localizedMessage
+        log.error(exception.message)
 
-        return toastViewComponent.render(
-            exception.message!!,
-            10000
-        )
+        val status = HttpStatus.UNAUTHORIZED
+        val pd = ProblemDetail.forStatus(status.value())
+        pd.detail = exception.message
+
+        return ResponseEntity(objectMapper.writeValueAsString(pd), status)
     }
+
 
     @ExceptionHandler(*arrayOf(AuthenticationException::class, AccessDeniedException::class))
     @ResponseBody
@@ -49,16 +64,15 @@ class ExceptionHandler(
 
     @ExceptionHandler(RuntimeException::class)
     @ResponseBody
-    fun handleRuntimeException(exception: RuntimeException): String {
+    fun handleRuntimeException(exception: RuntimeException): ResponseEntity<String> {
 
-        log.error(exception.message)
+        log.error(exception.localizedMessage)
 
-        val pd = ProblemDetail.forStatus(HttpStatus.UNAUTHORIZED.value())
+        val status = HttpStatus.UNAUTHORIZED
+        val pd = ProblemDetail.forStatus(status.value())
         pd.detail = exception.localizedMessage
-        val jsonErrorString = objectMapper.writeValueAsString(pd.detail!!)
 
-        return ScriptUtil.alertError(jsonErrorString)
-
+        return ResponseEntity(objectMapper.writeValueAsString(pd), status)
     }
 
 

@@ -9,18 +9,29 @@
 
 
 
+
+
+
+@if(StringUtils.hasLength(keyword))
+    <div class="container m-auto">
+        <div class="flex justify-center">
+            <h1 class="text-xl font-bold">"${keyword}" 의 검색결과</h1>
+        </div>
+        <div class="flex justify-center">
+            총  <span class="italic">${posts.getTotalElements()} </span> 개의 포스트를 찾았습니다.
+        </div>
+        <div class="flex justify-center mt-3">
+            <button class="btn btn-wide" onclick="location.href='/blog'">전체보기</button>
+        </div>
+    </div>
+@endif
+
+
 @if(!posts.isLast())
 
-
-    @if(StringUtils.hasLength(keyword))
-
-
-
-        
-    @endif
     
     <div
-            class="container m-auto"
+            class="container m-auto grid grid-cols-4 gap-4"
             id="posts-container"
             hx-get="/posts?page=${posts.getPageable().getPageNumber() + 1}&keyword=${keyword}"
             hx-trigger="revealed"
@@ -32,7 +43,7 @@
 
     </div>
 @else
-    <div class="container m-auto"
+    <div class="container m-auto grid grid-cols-4 gap-4"
          id="posts-container">
         @for(Post post : posts.getContent())
             ${postCardViewComponent.render(post)}
@@ -43,10 +54,10 @@
 
 <script>
     
-    if ('${keyword}' === '') {
-        console.log("why??")
-        document.querySelector('#posts-container').classList.add('grid', 'grid-cols-4', 'gap-4')
-    }
+    <%--if ('${keyword}' === '') {--%>
+    <%--    console.log("why??")--%>
+    <%--    document.querySelector('#posts-container').classList.add('grid', 'grid-cols-4', 'gap-4')--%>
+    <%--}--%>
 
 
 </script>

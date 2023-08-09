@@ -23,14 +23,51 @@ interface PostCustomRepository {
     fun findPostsByPage(pageable: Pageable): Page<Post>
     fun findPostsByKeyword(keyword: String, pageable: Pageable): Page<Post>
 
+    fun findPostByIdAndPassword(id: Long, password: String): Post?
+    fun findPostByIdAndUser(id: Long, user: User): Post?
 }
 
 
 class PostCustomRepositoryImpl(
     private val queryFactory: SpringDataQueryFactory,
     private val em: EntityManager,
-): PostCustomRepository {
+) : PostCustomRepository {
 
+
+    override fun findPostByIdAndUser(id:Long, user: User): Post? {
+
+        return queryFactory
+            .singleOrNullQuery {
+                select(entity(Post::class))
+                from(entity(Post::class))
+                fetch(Post::user, JoinType.LEFT)
+                where(
+                    and(
+                        column(Post::user).equal(user),
+                        column(Post::id).equal(id),
+                    )
+                )
+            }
+    }
+
+
+    override fun findPostByIdAndPassword(id: Long, password: String): Post? {
+
+        val post = queryFactory
+            .singleOrNullQuery {
+                select(entity(Post::class))
+                from(entity(Post::class))
+                fetch(Post::user, JoinType.LEFT)
+                where(
+                    and(
+                        column(Post::anonymousPassword).equal(password),
+                        column(Post::id).equal(id),
+                    )
+                )
+            }
+
+        return post
+    }
 
     override fun findPostsByPage(pageable: Pageable): Page<Post> {
 

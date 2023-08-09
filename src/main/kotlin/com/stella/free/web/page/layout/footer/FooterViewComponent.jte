@@ -18,7 +18,18 @@
 
 <script>
 
+    document.body.addEventListener('htmx:responseError', function (evt) {
 
+        console.log("check error",evt.detail.xhr.responseText)
+        alert(JSON.parse(evt.detail.xhr.responseText).detail);
+
+    });
+
+    htmx.logger = function(elt, event, data) {
+        if(console) {
+            console.log(event, elt, data);
+        }
+    }
 
 </script>
 

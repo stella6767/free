@@ -8,6 +8,7 @@ import com.stella.free.core.blog.entity.PostTag
 import com.stella.free.core.blog.repo.HashTagRepository
 import com.stella.free.core.blog.repo.PostRepository
 import com.stella.free.global.config.security.UserPrincipal
+import com.stella.free.global.exception.PostNotFoundException
 import com.stella.free.global.service.FileUploader
 import com.stella.free.global.util.logger
 import com.vladsch.flexmark.html2md.converter.FlexmarkHtmlConverter
@@ -185,7 +186,7 @@ class PostService(
             postRepository.findPostByIdAndUser(id, principal.user)
         }else {
             postRepository.findPostByIdAndPassword(id, password)
-        }  ?: throw EntityNotFoundException()
+        }  ?: throw PostNotFoundException()
 
         post.softDelete()
 

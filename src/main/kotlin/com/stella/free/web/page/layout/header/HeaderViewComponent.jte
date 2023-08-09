@@ -79,7 +79,9 @@
 
         <div class="max-w-md">
             <form
-                  class="relative mx-auto w-max">
+                 method="get"
+                 action="/blog"
+                 class="relative mx-auto w-max">
                 <input type="search"
                        name="keyword"
                        class="peer cursor-pointer relative z-10 h-12 w-12 rounded-full border bg-transparent pl-12 outline-none focus:w-full focus:cursor-text focus:border-lime-300 focus:pl-16 focus:pr-4" />

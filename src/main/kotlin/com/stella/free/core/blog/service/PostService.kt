@@ -167,15 +167,12 @@ class PostService(
 
 
     @Transactional(readOnly = true)
-    fun findPostsByTagName(tagName: String, pageable: Pageable) {
+    fun findPostsByTagName(tagName: String, pageable: Pageable): Page<Post> {
 
         val posts =
-            hashTagRepository.findPostsByTagName(tagName, pageable).map {
-                it.post
-            }
+            hashTagRepository.findPostsByTagName(tagName, pageable)
 
-        println(posts)
-
+        return posts
     }
 
 

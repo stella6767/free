@@ -35,7 +35,7 @@ class RepositoryTest(
 
         val posts =
             hashTagRepository.findPostsByTagName("123", PageRequest.of(0, 10))
-                .map { it.post }
+
 
         println(posts)
 

@@ -8,6 +8,7 @@ import com.stella.free.global.config.security.UserPrincipal
 import com.stella.free.global.util.logger
 import com.stella.free.web.component.blog.comment.CommentCardViewComponent
 import com.stella.free.web.component.blog.comment.CommentFormViewComponent
+import com.stella.free.web.page.post.PostsByTagViewComponent
 import com.stella.free.web.page.post.PostsViewComponent
 import de.tschuehly.spring.viewcomponent.jte.ViewContext
 import org.springframework.data.domain.Pageable
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile
 class BlogComponentController(
     private val postService: PostService,
     private val postsViewComponent: PostsViewComponent,
+    private val postsByTagViewComponent: PostsByTagViewComponent,
     private val commentCardViewComponent: CommentCardViewComponent,
     private val commentFormViewComponent: CommentFormViewComponent,
     private val commentService: CommentService,
@@ -37,6 +39,15 @@ class BlogComponentController(
         return postsViewComponent.render(pageable, keyword)
     }
 
+
+    @GetMapping("/posts/tag")
+    fun postsByTag(
+        @PageableDefault(size = 16) pageable: Pageable,
+        @RequestParam tagName: String
+    ): ViewContext {
+
+        return postsByTagViewComponent.render(pageable,tagName)
+    }
 
 
 

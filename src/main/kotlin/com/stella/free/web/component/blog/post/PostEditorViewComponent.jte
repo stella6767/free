@@ -15,12 +15,17 @@
     </h1>
 
 
-    <div class="flex justify-center">
+    <div class="flex justify-center gap-x-1">
         @if(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)
             <input type="text"
                    required
                    x-model="formData.anonymousUsername"
                    placeholder="input your username"
+                   class="input input-bordered w-64 justify-self-center "/>
+
+            <input type="text"
+                   x-model="formData.anonymousPassword"
+                   placeholder="input your password"
                    class="input input-bordered w-64 justify-self-center "/>
         @endif
     </div>
@@ -90,6 +95,7 @@
             formData: {
                 title: "",
                 anonymousUsername: "",
+                anonymousPassword: "",
                 content: "",
                 postTags: null,
             },

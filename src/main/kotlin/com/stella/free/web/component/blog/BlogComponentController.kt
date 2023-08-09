@@ -64,6 +64,20 @@ class BlogComponentController(
     }
 
 
+    @DeleteMapping("/post/{id}")
+    @ResponseBody
+    fun deletePostById(
+        @PathVariable id:Long,
+        @RequestParam password:String,
+        @AuthenticationPrincipal principal: UserPrincipal?
+    ): String {
+
+        postService.deleteByIdAndPassword(id, password, principal)
+
+        return "ok"
+    }
+
+
     @PostMapping("/post/file")
     @ResponseBody
     fun postFile(file: MultipartFile): String {

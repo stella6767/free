@@ -176,7 +176,18 @@ class PostService(
     }
 
 
-    fun deleteById(id: Long) {
+    @Transactional
+    fun deleteByIdAndPassword(id: Long,
+                              password: String,
+                              principal: UserPrincipal?) {
+
+        val post = if (principal != null) {
+            postRepository.findPostByIdAndUser(id, principal.user)
+        }else {
+            postRepository.findPostByIdAndPassword(id, password)
+        }  ?: throw EntityNotFoundException()
+
+        post.softDelete()
 
     }
 

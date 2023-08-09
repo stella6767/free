@@ -14,6 +14,7 @@ class PostDetailViewComponent(
     private val postService: PostService,
     private val commentSectionViewComponent: CommentSectionViewComponent,
     private val tagViewComponent: TagViewComponent,
+    private val postModalViewComponent: PostModalViewComponent,
 ) {
 
     fun render(id: Long): ViewContext {
@@ -29,6 +30,7 @@ class PostDetailViewComponent(
             "commentSectionViewComponent" toProperty commentSectionViewComponent,
             "postTags" toProperty postTags,
             "tagViewComponent" toProperty tagViewComponent,
+            "postModalViewComponent" toProperty postModalViewComponent,
         )
     }
 

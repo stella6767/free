@@ -1,5 +1,6 @@
 package com.stella.free.core.blog.entity
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.stella.free.core.account.entity.User
 import com.stella.free.core.blog.dto.PostCardDto
 import com.stella.free.core.blog.dto.PostDetailDto
@@ -8,6 +9,7 @@ import com.stella.free.global.entity.BaseEntity
 import com.stella.free.global.util.TimeUtil
 import jakarta.persistence.*
 import org.hibernate.annotations.ColumnDefault
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "post")
@@ -18,13 +20,14 @@ class Post(
     thumbnail:String?,
     user: User?,
     anonymousUsername:String,
+    anonymousPassword:String,
 ) : BaseEntity(id=id) {
 
     @Column(nullable = false, length = 100)
-    val title = title
+    var title = title
 
     @Column(nullable = false, length = 100000)
-    val content = content
+    var content = content
 
     @Column(nullable = true, length = 1000)
     var thumbnail = thumbnail
@@ -36,13 +39,36 @@ class Post(
     @Column(name = "anonymous_username")
     val anonymousUsername = anonymousUsername
 
+    @Column(name = "anonymous_password")
+    val anonymousPassword = anonymousPassword
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     val user = user
 
 
+    @JsonBackReference
+    @OneToMany(mappedBy = "post", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
+    val postTags = mutableListOf<PostTag>()
+
+    @Column(name = "deleted_at")
+    var deletedAt: LocalDateTime? = null
+        protected set
+
     fun updateId(id:Long){
         this.id = id
+    }
+
+
+    fun softDelete(now: LocalDateTime = LocalDateTime.now()) {
+        this.deletedAt = now
+
+        val timeToString =
+            TimeUtil.localDateTimeToString(now, "YYYY-MM-dd E HH:mm")
+
+        this.title = "삭제된 게시글입니다"
+        this.content = "${timeToString} 경 삭제된 게시글입니다"
     }
 
 

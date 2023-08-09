@@ -1,5 +1,6 @@
 package com.stella.free.core.blog.entity
 
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import com.stella.free.global.entity.BaseEntity
 import jakarta.persistence.*
 
@@ -18,6 +19,8 @@ class PostTag(
     hashTag: HashTag,
 ) : BaseEntity() {
 
+
+    @JsonManagedReference
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Post::class)
     @JoinColumn(name = "post_id")
     val post = post

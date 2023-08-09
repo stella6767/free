@@ -5,23 +5,27 @@
 
 @param java.util.List<String> postTags
 @param com.stella.free.web.component.blog.tag.TagViewComponent tagViewComponent
+@param com.stella.free.web.component.blog.post.PostModalViewComponent postModalViewComponent
 @param Content content
 
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
 <%--<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>--%>
 <%--<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />--%>
 
-<div class="w-3/6 mx-auto mb-5">
+<div class="w-3/6 mx-auto mb-5" >
 
     <div class="sm:text-3xl md:text-3xl lg:text-3xl xl:text-4xl font-bold cursor-pointer">
         ${post.getTitle()}
     </div>
 
 
-    <div class="font-light text-gray-600 mt-2">
+    <div class="font-light text-gray-600 mt-2 flex justify-between">
         <h1 class="font-bold text-gray-700 hover:underline">
             By ${post.getUsername()} · ${post.getCreatedAt()}
         </h1>
+        <div>
+            <button class="btn" onclick="post_modal.showModal()">Edit</button>
+        </div>
     </div>
 
     <div class="mt-2">
@@ -32,6 +36,8 @@
 
     </div>
 
+    ${postModalViewComponent.render(post.getId())}
+
 </div>
 
 
@@ -40,6 +46,8 @@
 ${commentSectionViewComponent.render(post)}
 
 <%--<span onclick="showContent('${post.getContent()}')">Click me</span>--%>
+
+
 
 
 <style>
@@ -65,6 +73,11 @@ ${commentSectionViewComponent.render(post)}
         viewer: true,
         initialValue: postContent
     });
+
+    const showModal = () => {
+
+    }
+
 
 
 </script>

@@ -7,8 +7,9 @@ import com.stella.free.web.component.blog.post.PostEditorViewComponent
 import com.stella.free.web.page.chat.ChatViewComponent
 import com.stella.free.web.page.layout.LayoutViewComponent
 import com.stella.free.web.page.openapi.OpenApiListPageViewComponent
+import com.stella.free.web.page.post.PostsByTagViewComponent
 import com.stella.free.web.page.post.PostsViewComponent
-import com.stella.free.web.page.post.SearchedPostsViewComponent
+
 import com.stella.free.web.page.resume.ResumeViewComponent
 import com.stella.free.web.page.todo.TodoListViewComponent
 import de.tschuehly.spring.viewcomponent.jte.ViewContext
@@ -31,7 +32,7 @@ class PageController(
     private val postDetailViewComponent: PostDetailViewComponent,
     private val openApiListPageViewComponent: OpenApiListPageViewComponent,
     private val chatViewComponent: ChatViewComponent,
-    private val searchedPostsViewComponent: SearchedPostsViewComponent,
+    private val postsByTagViewComponent: PostsByTagViewComponent,
 
 ) {
 
@@ -48,6 +49,16 @@ class PageController(
                  @RequestParam(required = false, defaultValue = "") keyword: String): ViewContext {
 
         return layoutViewComponent.render(postsViewComponent.render(pageable, keyword))
+    }
+
+
+    @GetMapping("/blog/tag")
+    fun blogByTagName(
+        @PageableDefault(size = 16) pageable: Pageable,
+        @RequestParam tagName: String
+    ): ViewContext {
+
+        return layoutViewComponent.render(postsByTagViewComponent.render(pageable, tagName))
     }
 
 
@@ -90,5 +101,7 @@ class PageController(
 
         return layoutViewComponent.render(chatViewComponent.render())
     }
+
+
 
 }

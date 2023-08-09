@@ -18,11 +18,11 @@ class PostTag(
     hashTag: HashTag,
 ) : BaseEntity() {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Post::class)
     @JoinColumn(name = "post_id")
     val post = post
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = HashTag::class)
     @JoinColumn(name = "hashTag_id")
     val hashTag = hashTag
 

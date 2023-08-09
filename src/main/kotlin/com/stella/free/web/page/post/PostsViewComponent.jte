@@ -52,14 +52,5 @@
 @endif
 
 
-<script>
-    
-    <%--if ('${keyword}' === '') {--%>
-    <%--    console.log("why??")--%>
-    <%--    document.querySelector('#posts-container').classList.add('grid', 'grid-cols-4', 'gap-4')--%>
-    <%--}--%>
-
-
-</script>
 
 

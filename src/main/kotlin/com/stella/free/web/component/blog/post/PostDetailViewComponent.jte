@@ -23,9 +23,16 @@
         <h1 class="font-bold text-gray-700 hover:underline">
             By ${post.getUsername()} · ${post.getCreatedAt()}
         </h1>
-        <div>
-            <button class="btn" onclick="post_modal.showModal()">Edit</button>
-        </div>
+
+<%--        post.getDeletedAt() == null--%>
+
+        @if(true)
+            <div>
+                <button class="btn" onclick="post_modal.showModal()">Edit</button>
+            </div>
+        @endif
+
+
     </div>
 
     <div class="mt-2">
@@ -36,7 +43,7 @@
 
     </div>
 
-    ${postModalViewComponent.render(post.getId())}
+    ${postModalViewComponent.render(post)}
 
 </div>
 

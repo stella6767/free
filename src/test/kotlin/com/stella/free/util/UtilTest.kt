@@ -3,24 +3,69 @@ package com.stella.free.util
 import com.stella.free.core.blog.entity.Post
 import com.stella.free.core.openapi.dto.Entry
 import com.stella.free.core.openapi.service.PublicApiService
+import com.stella.free.global.config.TemplateConfiguration
 import com.stella.free.global.config.WebClientConfig
-
 import com.stella.free.global.util.TimeUtil
 import com.stella.free.global.util.removeSpecialCharacters
+import com.stella.free.web.component.toast.ToastViewComponent
+import de.tschuehly.spring.viewcomponent.core.IViewContext
+import gg.jte.html.OwaspHtmlTemplateOutput
+import gg.jte.output.StringOutput
 import net.datafaker.Faker
 import net.datafaker.transformations.Field.field
 import net.datafaker.transformations.JavaObjectTransformer
 import net.datafaker.transformations.Schema
+import org.aspectj.lang.ProceedingJoinPoint
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import java.util.*
 import java.util.function.Supplier
+import kotlin.reflect.full.isSubclassOf
 
 
 class UtilTest {
 
+    fun renderInject(joinPoint: ProceedingJoinPoint): Any {
+        val returnValue = joinPoint.proceed()
+        if (returnValue::class.isSubclassOf(IViewContext::class)) {
+            returnValue as IViewContext
+            val componentName = joinPoint.`this`.javaClass.simpleName.substringBefore("$$")
+            val componentPackage = joinPoint.`this`.javaClass.`package`.name.replace(".", "/") + "/"
+            returnValue.componentTemplate = "$componentPackage$componentName"
+            return returnValue
+        }
+        return returnValue
+    }
 
+
+
+    @Test
+    fun outputTest(){
+
+        val templateEngine =
+            TemplateConfiguration().templateEngine()
+
+        //val output = OwaspHtmlTemplateOutput(StringOutput())
+
+        val output = StringOutput()
+
+
+        val componentName =
+            ToastViewComponent::class.java.simpleName?.substringBefore("$$")
+
+        val componentPackage =
+            ToastViewComponent::class.java.`package`.name.replace(".", "/") + "/"
+
+        println(componentName)
+        println(componentPackage)
+
+        templateEngine.render("$componentPackage$componentName.jte", hashMapOf(), output)
+
+        //templateEngine.render("com/stella/free/web/component/toast/ToastViewComponent.jte", hashMapOf(), output)
+
+        println(output.toString())
+    }
 
     @Test
     fun removeSpecialCharactersTest(){

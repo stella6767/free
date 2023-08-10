@@ -37,7 +37,13 @@ class RepositoryTest(
             hashTagRepository.findPostsByTagName("123", PageRequest.of(0, 10))
 
 
-        println(posts)
+        val map =
+            posts.map { it.post }.map { it.toCardDto("") }
+
+
+
+        //hashTagRepository.fetchJoinTest("123", PageRequest.of(0, 10))
+
 
     }
 

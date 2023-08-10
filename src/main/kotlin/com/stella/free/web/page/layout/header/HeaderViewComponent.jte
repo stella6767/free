@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Free App</title>
+    <title>Whatever</title>
 
 
 
@@ -66,7 +66,7 @@
     </div>
 
     <div class="navbar-center">
-        <a class="btn btn-ghost normal-case text-xl mt-3" href="/">Free App</a>
+        <a class="btn btn-ghost normal-case text-xl mt-3" href="/">Whatever</a>
     </div>
 
 

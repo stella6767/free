@@ -36,6 +36,7 @@ data class PostDetailDto(
     //val userIp:String,
     val thumbnail:String?,
     val createdAt:String,
+    val deletedAt:LocalDateTime?,
 )
 
 

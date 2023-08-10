@@ -3,19 +3,22 @@ package com.stella.free.global.exception
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.stella.free.global.util.ScriptUtil
 import com.stella.free.global.util.logger
-import com.stella.free.web.component.toast.ToastViewComponent
-import de.tschuehly.spring.viewcomponent.jte.ViewContext
+import de.tschuehly.spring.viewcomponent.core.toMap
+import gg.jte.TemplateEngine
 import org.springframework.http.HttpStatus
 import org.springframework.http.ProblemDetail
 import org.springframework.http.ResponseEntity
+import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.security.core.AuthenticationException
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
+import org.springframework.web.bind.annotation.ResponseStatus
 
 @ControllerAdvice
 class ExceptionHandler(
-    private val toastViewComponent: ToastViewComponent,
+    private val templateEngine: TemplateEngine,
     private val objectMapper: ObjectMapper
 ) {
 
@@ -34,14 +37,17 @@ class ExceptionHandler(
 //    }
 
 
+
     @ExceptionHandler(AppException::class)
     fun handleMyAppException(exception: AppException): ResponseEntity<String> {
 
-        log.error(exception.message)
+
+
+        log.error(exception.localizedMessage)
 
         val status = HttpStatus.UNAUTHORIZED
         val pd = ProblemDetail.forStatus(status.value())
-        pd.detail = exception.message
+        pd.detail = exception.localizedMessage
 
         return ResponseEntity(objectMapper.writeValueAsString(pd), status)
     }
@@ -62,18 +68,35 @@ class ExceptionHandler(
     }
 
 
-    @ExceptionHandler(RuntimeException::class)
-    @ResponseBody
-    fun handleRuntimeException(exception: RuntimeException): ResponseEntity<String> {
+    @ExceptionHandler(MethodArgumentNotValidException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun methodArgumentNotValidExceptionHandler(e: MethodArgumentNotValidException): String {
 
-        log.error(exception.localizedMessage)
+        val detail =
+            createProblemDetail(HttpStatus.BAD_REQUEST, e.localizedMessage)
 
-        val status = HttpStatus.UNAUTHORIZED
-        val pd = ProblemDetail.forStatus(status.value())
-        pd.detail = exception.localizedMessage
-
-        return ResponseEntity(objectMapper.writeValueAsString(pd), status)
+        return objectMapper.writeValueAsString(detail)
     }
+
+    @ExceptionHandler(HttpMessageNotReadableException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun httpMessageNotReadableExceptionHandler(e: HttpMessageNotReadableException): String? {
+
+        val detail =
+            createProblemDetail(HttpStatus.BAD_REQUEST, e.localizedMessage)
+
+        return objectMapper.writeValueAsString(detail)
+    }
+
+
+    private fun createProblemDetail(status: HttpStatus, message:String): ProblemDetail {
+        val pd = ProblemDetail.forStatus(status.value())
+        pd.detail = message
+        return pd
+    }
+
+
+
 
 
 }

@@ -8,6 +8,7 @@ import com.stella.free.core.blog.dto.PostDetailDto
 import com.stella.free.global.entity.BaseEntity
 import com.stella.free.global.util.TimeUtil
 import jakarta.persistence.*
+import org.hibernate.Hibernate
 import org.hibernate.annotations.ColumnDefault
 import java.time.LocalDateTime
 
@@ -63,10 +64,8 @@ class Post(
 
     fun softDelete(now: LocalDateTime = LocalDateTime.now()) {
         this.deletedAt = now
-
         val timeToString =
             TimeUtil.localDateTimeToString(now, "YYYY-MM-dd E HH:mm")
-
         this.title = "삭제된 게시글입니다"
         this.content = "${timeToString} 경 삭제된 게시글입니다"
     }
@@ -93,7 +92,8 @@ class Post(
             content = this.content,
             markDownContent = postMarkDown,
             username = this.user?.username ?: this.anonymousUsername,
-            createdAt = TimeUtil.localDateTimeToString(this.createdAt, "YYYY-MM-dd E HH:mm")
+            createdAt = TimeUtil.localDateTimeToString(this.createdAt, "YYYY-MM-dd E HH:mm"),
+            deletedAt = this.deletedAt
         )
     }
 

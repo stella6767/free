@@ -2,8 +2,9 @@
 @import org.springframework.security.core.Authentication
 @import org.springframework.security.core.context.SecurityContextHolder
 
-@param Long postId
+
 @param Authentication authentication
+@param com.stella.free.core.blog.dto.PostDetailDto post
 
 <dialog id="post_modal" class="modal">
     <form method="dialog" class="modal-box">
@@ -25,12 +26,14 @@
                 <div class="mt-3 space-x-2 flex justify-around">
 
                     <div
+
                             class="btn">수정
                     </div>
-                    <div hx-delete="/post/${postId}"
+
+                    <div hx-delete="/post/${post.getId()}"
                          hx-swap="none"
                          hx-include="[name='password']"
-                         class="btn ">삭제
+                         class="btn " id="post-delete-btn">삭제
                     </div>
                 </div>
             </div>
@@ -45,3 +48,16 @@
     </form>
 </dialog>
 
+
+<script>
+
+    document.querySelector('#post-delete-btn').addEventListener('htmx:afterRequest', function (evt) {
+        //var xhr = evt.detail.xhr;
+        //var statusCode = xhr.status;
+        let successful = evt.detail.successful;
+        if (successful) {
+            location.reload();
+        }
+    });
+
+</script>

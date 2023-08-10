@@ -6,7 +6,7 @@
 @param Authentication authentication
 @param com.stella.free.core.blog.dto.PostDetailDto post
 
-<dialog id="post_modal" class="modal">
+<dialog id="post_delete_modal" class="modal">
     <form method="dialog" class="modal-box">
 
 
@@ -24,11 +24,6 @@
 
             <div class="p-5">
                 <div class="mt-3 space-x-2 flex justify-around">
-
-                    <div
-
-                            class="btn">수정
-                    </div>
 
                     <div hx-delete="/post/${post.getId()}"
                          hx-swap="none"

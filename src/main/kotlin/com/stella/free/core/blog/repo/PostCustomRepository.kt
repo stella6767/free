@@ -1,6 +1,7 @@
 package com.stella.free.core.blog.repo
 
 import com.linecorp.kotlinjdsl.query.spec.ExpressionOrderSpec
+import com.linecorp.kotlinjdsl.querydsl.expression.col
 import com.linecorp.kotlinjdsl.querydsl.expression.column
 import com.linecorp.kotlinjdsl.querydsl.from.fetch
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
@@ -9,6 +10,7 @@ import com.linecorp.kotlinjdsl.spring.data.singleQuery
 import com.stella.free.core.account.entity.User
 
 import com.stella.free.core.blog.entity.Post
+import com.stella.free.core.blog.entity.PostTag
 import com.stella.free.global.util.singleOrNullQuery
 
 import jakarta.persistence.EntityManager
@@ -17,6 +19,7 @@ import jakarta.persistence.criteria.JoinType
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.support.PageableExecutionUtils
+import java.util.Optional
 
 interface PostCustomRepository {
 
@@ -25,6 +28,7 @@ interface PostCustomRepository {
 
     fun findPostByIdAndPassword(id: Long, password: String): Post?
     fun findPostByIdAndUser(id: Long, user: User): Post?
+    fun findPostById(id: Long): Optional<Post>
 }
 
 
@@ -33,6 +37,27 @@ class PostCustomRepositoryImpl(
     private val em: EntityManager,
 ) : PostCustomRepository {
 
+
+
+    override fun findPostById(id: Long): Optional<Post> {
+
+        val post = queryFactory
+            .singleOrNullQuery {
+                select(entity(Post::class))
+                from(entity(Post::class))
+//                fetch(PostTag::post, JoinType.LEFT)
+//                fetch(PostTag::hashTag, JoinType.LEFT)
+                fetch(Post::user, JoinType.LEFT)
+                where(
+                    and(
+                        column(Post::id).equal(id),
+                        //nestedCol(col(PostTag::post), Post::id).equal(id)
+                    )
+                )
+            }
+
+        return Optional.ofNullable(post)
+    }
 
     override fun findPostByIdAndUser(id:Long, user: User): Post? {
 

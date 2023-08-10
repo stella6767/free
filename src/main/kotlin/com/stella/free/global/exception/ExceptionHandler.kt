@@ -41,8 +41,6 @@ class ExceptionHandler(
     @ExceptionHandler(AppException::class)
     fun handleMyAppException(exception: AppException): ResponseEntity<String> {
 
-
-
         log.error(exception.localizedMessage)
 
         val status = HttpStatus.UNAUTHORIZED

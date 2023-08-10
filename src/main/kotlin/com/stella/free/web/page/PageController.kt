@@ -78,9 +78,11 @@ class PageController(
 
 
     @GetMapping("/post/editor")
-    fun postEditor(@PageableDefault(size = 16) pageable: Pageable): ViewContext {
+    fun postEditor(@PageableDefault(size = 16) pageable: Pageable,
+                   @RequestParam(required = false, defaultValue = "0") postId:Long,
+                   ): ViewContext {
 
-        return layoutViewComponent.render(postEditorViewComponent.render())
+        return layoutViewComponent.render(postEditorViewComponent.render(postId))
     }
 
 

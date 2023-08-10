@@ -5,6 +5,16 @@ import com.stella.free.core.account.entity.User
 import java.time.LocalDateTime
 
 
+
+data class PostUpdateDto(
+    val id:Long,
+    val title:String,
+    val content:String,
+    val postTags: List<String> = listOf(),
+    val anonymousUsername:String,
+    val anonymousPassword:String,
+)
+
 data class PostSaveDto(
     val title:String,
     val content:String,
@@ -35,6 +45,8 @@ data class PostDetailDto(
     val username:String,
     //val userIp:String,
     val thumbnail:String?,
+    val anonymousPassword: String?,
+    val tagNames: String,
     val createdAt:String,
     val deletedAt:LocalDateTime?,
 )

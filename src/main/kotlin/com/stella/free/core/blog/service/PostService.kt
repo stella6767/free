@@ -140,6 +140,18 @@ class PostService(
         }
     }
 
+    @Transactional
+    fun updatePost(dto: PostUpdateDto, principal: UserPrincipal?) {
+
+        val post =
+            postRepository.findPostByIdAndPassword(dto.id, dto.password) ?: throw PostNotFoundException()
+
+        post.update(dto)
+
+
+    }
+
+
     @Transactional(readOnly = true)
     fun findAll(): MutableList<Post> {
         return postRepository.findAll()
@@ -224,10 +236,6 @@ class PostService(
         return fileUploader.upload(file)
     }
 
-    fun updatePost(dto: PostUpdateDto, principal: UserPrincipal?) {
-
-
-    }
 
 
 }

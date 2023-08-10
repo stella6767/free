@@ -11,8 +11,8 @@ data class PostUpdateDto(
     val title:String,
     val content:String,
     val postTags: List<String> = listOf(),
-    val anonymousUsername:String,
-    val anonymousPassword:String,
+    //val anonymousUsername:String,
+    val password:String,
 )
 
 data class PostSaveDto(
@@ -20,7 +20,7 @@ data class PostSaveDto(
     val content:String,
     val postTags: List<String> = listOf(),
     val anonymousUsername:String,
-    val anonymousPassword:String,
+    val password:String,
 ){
     fun toEntity(user: User?, thumbnail: String?): Post {
 
@@ -30,7 +30,7 @@ data class PostSaveDto(
             content = this.content,
             thumbnail = thumbnail,
             anonymousUsername = this.anonymousUsername,
-            anonymousPassword = this.anonymousPassword
+            anonymousPassword = this.password
         )
     }
 
@@ -39,6 +39,7 @@ data class PostSaveDto(
 
 data class PostDetailDto(
     val id:Long,
+    val userId:Long?,
     val title:String,
     val content:String,
     val markDownContent:String,

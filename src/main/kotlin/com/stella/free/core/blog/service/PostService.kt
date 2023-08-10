@@ -31,7 +31,6 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
 import java.util.*
 import java.util.function.Supplier
-import kotlin.jvm.optionals.getOrNull
 
 
 @Service
@@ -127,8 +126,7 @@ class PostService(
         log.info("Saving post without user => $postSaveDto")
 
         val thumbnail =
-            Jsoup.parseBodyFragment(postSaveDto.content).getElementsByTag("img")
-                .firstOrNull()?.attr("src")
+            createThumbnail(postSaveDto.content)
 
         val post =
             postRepository.save(postSaveDto.toEntity(principal?.user, thumbnail))
@@ -138,7 +136,17 @@ class PostService(
                 hashTagRepository.findByName(it) ?: hashTagRepository.save(HashTag(name = it))
             hashTagRepository.savePostTag(PostTag(post, hashTag))
         }
+
     }
+
+    private fun createThumbnail(content: String): String? {
+
+        val thumbnail =
+            Jsoup.parseBodyFragment(content).getElementsByTag("img")
+                .firstOrNull()?.attr("src")
+        return thumbnail
+    }
+
 
     @Transactional
     fun updatePost(dto: PostUpdateDto, principal: UserPrincipal?) {
@@ -146,7 +154,14 @@ class PostService(
         val post =
             postRepository.findPostByIdAndPassword(dto.id, dto.password) ?: throw PostNotFoundException()
 
-        post.update(dto)
+        val postTags = dto.postTags.map {
+            val hashTag =
+                hashTagRepository.findByName(it) ?: hashTagRepository.save(HashTag(name = it))
+            PostTag(post, hashTag)
+        }
+
+
+        post.update(dto, createThumbnail(dto.content), postTags)
 
 
     }

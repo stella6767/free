@@ -26,7 +26,7 @@
 
 <%--        post.getDeletedAt() == null--%>
 
-        @if(true)
+        @if(post.getDeletedAt() == null)
             <div class="flex gap-x-1">
                 <div
                         onclick="location.href='/post/editor?postId=${post.getId()}'"

@@ -105,16 +105,17 @@ class Post(
         return "Post(id=$id, title='$title', content='$content', thumbnail='$thumbnail', count=$count, user=$user)"
     }
 
-    fun update(dto: PostUpdateDto) {
+    fun update(dto: PostUpdateDto, createThumbnail: String?, postTags: List<PostTag>) {
 
         this.title = dto.title
         this.password = dto.password
         this.content = dto.content
-        //this.anonymousUsername = dto.anonymousUsername
+        this.thumbnail = createThumbnail
 
-        //this.postTags = dto.postTags
-
-        TODO("Not yet implemented")
+        this.postTags.clear()
+        postTags.forEach {
+            this.postTags.add(it)
+        }
     }
 
 

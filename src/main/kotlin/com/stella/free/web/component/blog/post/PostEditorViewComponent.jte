@@ -22,18 +22,18 @@
         TOAST UI Editor
     </h1>
 
-    <div class="flex justify-center gap-x-1 w-6/12 mx-auto">
+    <div class="flex justify-center gap-x-3 w-6/12 mx-auto">
 
         <input type="text"
                required
                disabled="${isLogin || (post.isPresent())}"
-               x-model="formData.anonymousUsername"
+               x-model="formData.username"
                placeholder="input your username"
                class="input input-bordered w-full justify-self-center "/>
 
 
         <input type="text"
-               x-model="formData.anonymousPassword"
+               x-model="formData.password"
                placeholder="input your password"
                class="input input-bordered w-full justify-self-center "/>
 
@@ -121,8 +121,8 @@
         return {
             formData: {
                 title: '${post.map((p)-> p.getTitle()).orElse("")}',
-                anonymousUsername: '${post.map((p)-> p.getUsername()).orElse(username)}',
-                anonymousPassword: '',
+                username: '${post.map((p)-> p.getUsername()).orElse(username)}',
+                password: '',
                 content: "",
                 postTags: null,
             },

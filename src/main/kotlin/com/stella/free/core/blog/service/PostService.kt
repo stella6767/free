@@ -1,7 +1,9 @@
 package com.stella.free.core.blog.service
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.stella.free.core.blog.dto.PostDetailDto
 import com.stella.free.core.blog.dto.PostSaveDto
+import com.stella.free.core.blog.dto.PostUpdateDto
 import com.stella.free.core.blog.entity.HashTag
 import com.stella.free.core.blog.entity.Post
 import com.stella.free.core.blog.entity.PostTag
@@ -29,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
 import java.util.*
 import java.util.function.Supplier
+import kotlin.jvm.optionals.getOrNull
 
 
 @Service
@@ -36,6 +39,7 @@ class PostService(
     private val postRepository: PostRepository,
     private val fileUploader: FileUploader,
     private val hashTagRepository: HashTagRepository,
+    private val mapper:ObjectMapper
 ) {
 
     private val log = logger()
@@ -142,8 +146,10 @@ class PostService(
     }
 
 
+
+
     @Transactional
-    fun findById(id: Long): PostDetailDto {
+    fun findPostDetailById(id: Long): PostDetailDto {
 
         val post = postRepository.findById(id)
             .orElseThrow { throw EntityNotFoundException() }
@@ -199,10 +205,28 @@ class PostService(
     }
 
 
+    @Transactional(readOnly = true)
+    fun findPostById(id:Long): Optional<PostDetailDto> {
+        val post = postRepository.findPostById(id)
+
+        val tagNames =
+            post.map { it.postTags }.map { it.map { it.hashTag.name } }.orElse(listOf())
+
+        log.debug("tagNames?  $tagNames")
+
+        return post.map { it.toDetailDto("", mapper.writeValueAsString(tagNames)) }
+            //.map { it.toDetailDto("") }
+            //.getOrNull()
+    }
 
     fun savePostImg(file: MultipartFile): String {
 
         return fileUploader.upload(file)
+    }
+
+    fun updatePost(dto: PostUpdateDto, principal: UserPrincipal?) {
+
+
     }
 
 

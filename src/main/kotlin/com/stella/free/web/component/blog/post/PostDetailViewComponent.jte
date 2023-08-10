@@ -27,8 +27,14 @@
 <%--        post.getDeletedAt() == null--%>
 
         @if(true)
-            <div>
-                <button class="btn" onclick="post_modal.showModal()">Edit</button>
+            <div class="flex gap-x-1">
+                <div
+                        onclick="location.href='/post/editor?postId=${post.getId()}'"
+                        class="btn">수정
+                </div>
+                <div>
+                    <button class="btn" onclick="post_delete_modal.showModal()">삭제</button>
+                </div>
             </div>
         @endif
 

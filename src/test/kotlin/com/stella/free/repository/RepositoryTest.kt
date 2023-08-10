@@ -31,6 +31,18 @@ class RepositoryTest(
 
 
     @Test
+    fun getTagsTest(){
+
+        val post = postRepository.findPostById(96)
+
+        val tags =
+            post.map { it.postTags }.map { it.map { it.hashTag.name } }.orElse(listOf())
+
+        println(tags)
+
+    }
+
+    @Test
     fun findPostsByTagNameTest(){
 
         val posts =

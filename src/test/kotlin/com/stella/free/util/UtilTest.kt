@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import java.util.*
 import java.util.function.Supplier
+import kotlin.jvm.optionals.getOrElse
+import kotlin.jvm.optionals.getOrNull
 import kotlin.reflect.full.isSubclassOf
 
 
@@ -41,6 +43,25 @@ class UtilTest {
 
 
     @Test
+    fun optionalTest(){
+
+        val city = if (false) {
+            Optional.ofNullable(City(1))
+        } else Optional.ofNullable(null)
+
+        val orElse = city.map { it.id }.orElse(2)
+
+        println(orElse)
+
+
+    }
+
+    data class City(
+        val id:Long
+    )
+
+
+    @Test
     fun outputTest(){
 
         val templateEngine =
@@ -49,21 +70,15 @@ class UtilTest {
         //val output = OwaspHtmlTemplateOutput(StringOutput())
 
         val output = StringOutput()
-
-
         val componentName =
             ToastViewComponent::class.java.simpleName?.substringBefore("$$")
-
         val componentPackage =
             ToastViewComponent::class.java.`package`.name.replace(".", "/") + "/"
 
         println(componentName)
         println(componentPackage)
-
         templateEngine.render("$componentPackage$componentName.jte", hashMapOf(), output)
-
         //templateEngine.render("com/stella/free/web/component/toast/ToastViewComponent.jte", hashMapOf(), output)
-
         println(output.toString())
     }
 

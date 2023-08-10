@@ -1,7 +1,7 @@
 package com.stella.free.web.component.blog
 
-import com.stella.free.core.blog.dto.CommentSaveDto
-import com.stella.free.core.blog.dto.PostSaveDto
+
+import com.stella.free.core.blog.dto.*
 import com.stella.free.core.blog.service.CommentService
 import com.stella.free.core.blog.service.PostService
 import com.stella.free.global.config.security.UserPrincipal
@@ -62,6 +62,20 @@ class BlogComponentController(
 
         return "ok"
     }
+
+
+    @PutMapping("/post")
+    @ResponseBody
+    fun updatePost(
+        @RequestBody postUpdateDto: PostUpdateDto,
+        @AuthenticationPrincipal principal: UserPrincipal?
+    ): String {
+
+        postService.updatePost(postUpdateDto, principal)
+
+        return "ok"
+    }
+
 
 
     @DeleteMapping("/post/{id}")

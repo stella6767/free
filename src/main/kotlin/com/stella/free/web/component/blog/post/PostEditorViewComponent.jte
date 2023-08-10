@@ -1,5 +1,12 @@
+@import com.stella.free.core.blog.dto.PostDetailDto
 @import org.springframework.security.authentication.AnonymousAuthenticationToken
 @import org.springframework.security.core.context.SecurityContextHolder
+@import com.stella.free.core.blog.entity.Post
+@import java.util.List
+@import java.util.Optional
+
+@param Optional<PostDetailDto> post
+@param String tagNames
 
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
@@ -14,13 +21,13 @@
         TOAST UI Editor
     </h1>
 
-
     <div class="flex justify-center gap-x-1">
         @if(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)
             <input type="text"
                    required
                    x-model="formData.anonymousUsername"
                    placeholder="input your username"
+                   autocomplete="off"s
                    class="input input-bordered w-64 justify-self-center "/>
 
             <input type="text"
@@ -31,12 +38,12 @@
     </div>
 
 
-    <div class="flex justify-center">
+    <div class="flex w-6/12 mx-auto justify-center">
         <input type="text"
                required
                x-model="formData.title"
                placeholder="input your title"
-               class="input input-bordered w-64 justify-self-center"/>
+               class="input input-bordered justify-self-center w-full"/>
     </div>
 
 
@@ -56,7 +63,13 @@
     <br/>
 
     <div class="flex justify-center gap-x-2">
-        <button class="btn btn-success">제출</button>
+
+        @if(post.isEmpty())
+            <button class="btn btn-success">제출</button>
+        @else
+            <button class="btn btn-success">수정</button>
+        @endif
+
         <button @click="cancelPost" class="btn btn-warning">취소</button>
     </div>
 
@@ -84,25 +97,38 @@
 
     const input = document.querySelector('input[name=hashtag]');
     let tagify = new Tagify(input); // initialize Tagify
+
+    const originTags = '${tagNames}'
+    console.log("originTags", originTags)
+    tagify.addTags(JSON.parse(originTags));
+
     tagify.on('add', function() {
         console.log(tagify.value); // 입력된 태그 정보 객체
     })
 
+    const postId = '${post.map((p)-> p.getId()).orElse(0L)}'
+
+
+    if (postId != 0) {
+        console.log("postId!", postId)
+    }else{
+        console.log("postId??", postId)
+    }
 
     function editorForm() {
 
         return {
             formData: {
-                title: "",
-                anonymousUsername: "",
-                anonymousPassword: "",
+                title: '${post.map((p)-> p.getTitle()).orElse("")}',
+                anonymousUsername: '${post.map((p)-> p.getUsername()).orElse("")}',
+                anonymousPassword: '${post.map((p)-> p.getAnonymousPassword()).orElse("")}',
                 content: "",
                 postTags: null,
             },
             submitForm() {
                 //let req = JSON.stringify(this.formData);
-
                 this.formData.content = editor.getHTML();
+
                 let headers = {
                     'Content-Type': 'application/json'
                 }
@@ -114,18 +140,36 @@
                 console.log("tagNames", tagNames)
                 this.formData.postTags = tagNames;
 
-                let reqBody = JSON.stringify(this.formData);
-                console.log("submit", reqBody);
+                if (postId != 0) {
 
-                client('/post', {body: reqBody, headers: headers}).then(
-                    data => {
-                        console.log('here the logged in user data', data.body)
-                        location.href = "/blog";
-                    },
-                    error => {
-                        console.error('oh no,  failed', error)
-                    },
-                )
+                    this.formData.id = postId
+                    let reqBody = JSON.stringify(this.formData);
+
+                    client('/post', {body: reqBody, headers: headers, method: 'PUT'}).then(
+                        data => {
+                            console.log('here is response', data.body)
+                            //location.href = "/blog";
+                        },
+                        error => {
+                            console.error('oh no,  failed', error)
+                        },
+                    )
+                }else{
+
+                    let reqBody = JSON.stringify(this.formData);
+
+                    client('/post', {body: reqBody, headers: headers}).then(
+                        data => {
+                            location.href = "/blog";
+                        },
+                        error => {
+                            console.error('oh no,  failed', error)
+                        },
+                    )
+
+                }
+
+
 
 
             }
@@ -139,13 +183,16 @@
     }
 
 
+
+    let contentValue = '${post.map((p)-> p.getContent()).orElse("내용을 입력해주세요")}';
+
     const editor = new toastui.Editor({
         el: document.querySelector('#editor'),
         previewStyle: 'vertical',
         initialEditType: 'markdown',
         height: '1000px',
         //theme: 'dark',
-        initialValue: '내용을 입력해주세요',
+        initialValue: contentValue,
         events: {
             change: function () {
                 console.log(editor.getMarkdown());

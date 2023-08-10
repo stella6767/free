@@ -47,7 +47,7 @@
         <input type="hidden" name="paddingLeft" value="${paddingLeft}">
 
         <div class="flex justify-end px-4">
-            <input type="submit" class="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500 cursor-pointer" value="Comment" x-on:click="open = ! open">
+            <input type="submit" class="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500 cursor-pointer" x-on:click="open = ! open">
         </div>
     @endif
 

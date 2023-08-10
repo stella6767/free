@@ -79,12 +79,12 @@ class OAuth2DetailsService(
         log.info("머로 로그인 됐지? $clientName")
 
         return when (clientName) {
-            SignType.GOOGLE.clientName -> {
-                GoogleAuth2UserInfo(oAuth2User.attributes)
-            }
-            SignType.FACEBOOK.clientName -> {
-                FaceBookAuth2UserInfo(oAuth2User.attributes)
-            }
+//            SignType.GOOGLE.clientName -> {
+//                GoogleAuth2UserInfo(oAuth2User.attributes)
+//            }
+//            SignType.FACEBOOK.clientName -> {
+//                FaceBookAuth2UserInfo(oAuth2User.attributes)
+//            }
             SignType.GITHUB.clientName -> {
                 GithubAuth2UserInfo(oAuth2User.attributes)
             }

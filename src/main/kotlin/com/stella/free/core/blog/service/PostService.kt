@@ -171,7 +171,7 @@ class PostService(
     fun findPostsByTagName(tagName: String, pageable: Pageable): Page<Post> {
 
         val posts =
-            hashTagRepository.findPostsByTagName(tagName, pageable)
+            hashTagRepository.findPostsByTagName(tagName, pageable).map { it.post }
 
         return posts
     }

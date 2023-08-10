@@ -8,12 +8,9 @@ import jakarta.servlet.http.HttpServletResponse
 
 @ViewComponent
 class ToastViewComponent(
-    private val response: HttpServletResponse
 ) {
 
     fun render(message: String, durationMs: Int) : ViewContext{
-
-        //response.addHeader("HX-Retarget", "#toast")
 
         return ViewContext(
             "message" toProperty message,

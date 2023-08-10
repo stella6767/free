@@ -12,6 +12,7 @@ import com.stella.free.global.util.singleOrNullQuery
 import jakarta.persistence.EntityManager
 import jakarta.persistence.criteria.JoinType
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.support.PageableExecutionUtils
@@ -26,7 +27,8 @@ interface HashTagRepository : JpaRepository<HashTag, Long>, HashTagCustomReposit
 interface HashTagCustomRepository {
     fun savePostTag(postTag: PostTag): PostTag
     fun findTagsByPostId(postId: Long): List<PostTag>
-    fun findPostsByTagName(tagName: String, pageable: Pageable): Page<Post>
+    fun findPostsByTagName(tagName: String, pageable: Pageable): Page<PostTag>
+
 }
 
 class HashTagCustomRepositoryImpl(
@@ -61,13 +63,18 @@ class HashTagCustomRepositoryImpl(
     }
 
 
-    override fun findPostsByTagName(tagName: String, pageable: Pageable): Page<Post> {
+
+
+
+
+    override fun findPostsByTagName(tagName: String, pageable: Pageable): Page<PostTag> {
 
         val fetch = queryFactory.listQuery {
-            select(entity(Post::class))
+            select(entity(PostTag::class))
             from(entity(PostTag::class))
-            join(PostTag::post, JoinType.LEFT)
-            join(PostTag::hashTag, JoinType.LEFT)
+            fetch(PostTag::post, JoinType.LEFT)
+            fetch(PostTag::hashTag, JoinType.LEFT)
+            fetch(Post::user, JoinType.LEFT)
             where(
                 nestedCol(col(PostTag::hashTag), HashTag::name).equal(tagName)
             )
@@ -77,11 +84,15 @@ class HashTagCustomRepositoryImpl(
         }
 
 
+        /**
+         * entity를 조회하는 쿼리가 아니라면 ManyToOne 관계라 해도 fetch join X
+         */
         val count = queryFactory.singleOrNullQuery {
-            select(count(column(Post::id)))
+            select(count(column(PostTag::id)))
             from(entity(PostTag::class))
             join(PostTag::post, JoinType.LEFT)
             join(PostTag::hashTag, JoinType.LEFT)
+            join(Post::user, JoinType.LEFT)
             where(
                 nestedCol(col(PostTag::hashTag),HashTag::name).equal(tagName)
             )

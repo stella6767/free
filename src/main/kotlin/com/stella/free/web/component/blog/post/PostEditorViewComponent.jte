@@ -1,16 +1,17 @@
 @import com.stella.free.core.blog.dto.PostDetailDto
-@import org.springframework.security.authentication.AnonymousAuthenticationToken
-@import org.springframework.security.core.context.SecurityContextHolder
 @import com.stella.free.core.blog.entity.Post
 @import java.util.List
 @import java.util.Optional
 
 @param Optional<PostDetailDto> post
 @param String tagNames
+@param Boolean isLogin
+@param String username
+@param Long userId
 
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
-<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css"/>
 
 <form class="py-4 flex flex-col gap-y-3 mb-3"
       @submit.prevent="submitForm"
@@ -21,20 +22,21 @@
         TOAST UI Editor
     </h1>
 
-    <div class="flex justify-center gap-x-1">
-        @if(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)
-            <input type="text"
-                   required
-                   x-model="formData.anonymousUsername"
-                   placeholder="input your username"
-                   autocomplete="off"s
-                   class="input input-bordered w-64 justify-self-center "/>
+    <div class="flex justify-center gap-x-1 w-6/12 mx-auto">
 
-            <input type="text"
-                   x-model="formData.anonymousPassword"
-                   placeholder="input your password"
-                   class="input input-bordered w-64 justify-self-center "/>
-        @endif
+        <input type="text"
+               required
+               disabled="${isLogin && (post.map(PostDetailDto::getUserId) != null && post.map(PostDetailDto::getUserId).orElse(null) == userId)}"
+               x-model="formData.anonymousUsername"
+               placeholder="input your username"
+               class="input input-bordered w-full justify-self-center "/>
+
+
+        <input type="text"
+               x-model="formData.anonymousPassword"
+               placeholder="input your password"
+               class="input input-bordered w-full justify-self-center "/>
+
     </div>
 
 
@@ -45,7 +47,6 @@
                placeholder="input your title"
                class="input input-bordered justify-self-center w-full"/>
     </div>
-
 
 
     <div class="flex w-6/12 mx-auto justify-center">
@@ -102,7 +103,7 @@
     console.log("originTags", originTags)
     tagify.addTags(JSON.parse(originTags));
 
-    tagify.on('add', function() {
+    tagify.on('add', function () {
         console.log(tagify.value); // 입력된 태그 정보 객체
     })
 
@@ -111,7 +112,7 @@
 
     if (postId != 0) {
         console.log("postId!", postId)
-    }else{
+    } else {
         console.log("postId??", postId)
     }
 
@@ -120,8 +121,8 @@
         return {
             formData: {
                 title: '${post.map((p)-> p.getTitle()).orElse("")}',
-                anonymousUsername: '${post.map((p)-> p.getUsername()).orElse("")}',
-                anonymousPassword: '${post.map((p)-> p.getAnonymousPassword()).orElse("")}',
+                anonymousUsername: '${post.map((p)-> p.getUsername()).orElse(username)}',
+                anonymousPassword: '',
                 content: "",
                 postTags: null,
             },
@@ -133,7 +134,7 @@
                     'Content-Type': 'application/json'
                 }
 
-                const tagNames = tagify.value.map((el)=>{
+                const tagNames = tagify.value.map((el) => {
                     return el.value
                 });
 
@@ -154,7 +155,7 @@
                             console.error('oh no,  failed', error)
                         },
                     )
-                }else{
+                } else {
 
                     let reqBody = JSON.stringify(this.formData);
 
@@ -170,8 +171,6 @@
                 }
 
 
-
-
             }
 
         }
@@ -181,7 +180,6 @@
     const cancelPost = () => {
         location.href = "/blog"
     }
-
 
 
     let contentValue = '${post.map((p)-> p.getContent()).orElse("내용을 입력해주세요")}';

@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference
 import com.stella.free.core.account.entity.User
 import com.stella.free.core.blog.dto.PostCardDto
 import com.stella.free.core.blog.dto.PostDetailDto
+import com.stella.free.core.blog.dto.PostUpdateDto
 
 import com.stella.free.global.entity.BaseEntity
 import com.stella.free.global.util.TimeUtil
 import jakarta.persistence.*
-import org.hibernate.Hibernate
 import org.hibernate.annotations.ColumnDefault
 import java.time.LocalDateTime
 
@@ -38,10 +38,10 @@ class Post(
     var count = 0
 
     @Column(name = "anonymous_username")
-    val anonymousUsername = anonymousUsername
+    var anonymousUsername = anonymousUsername
 
     @Column(name = "anonymous_password")
-    val anonymousPassword = anonymousPassword
+    var password = anonymousPassword
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -51,7 +51,7 @@ class Post(
 
     @JsonBackReference
     @OneToMany(mappedBy = "post", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
-    val postTags = mutableListOf<PostTag>()
+    var postTags = mutableListOf<PostTag>()
 
     @Column(name = "deleted_at")
     var deletedAt: LocalDateTime? = null
@@ -87,10 +87,11 @@ class Post(
 
         return PostDetailDto(
             id = this.id,
+            userId = this.user?.id,
             title = this.title,
             thumbnail = this.thumbnail,
             content = this.content,
-            anonymousPassword = this.anonymousPassword,
+            anonymousPassword = this.password,
             tagNames = tagNames,
             markDownContent = postMarkDown,
             username = this.user?.username ?: this.anonymousUsername,
@@ -102,6 +103,18 @@ class Post(
 
     override fun toString(): String {
         return "Post(id=$id, title='$title', content='$content', thumbnail='$thumbnail', count=$count, user=$user)"
+    }
+
+    fun update(dto: PostUpdateDto) {
+
+        this.title = dto.title
+        this.password = dto.password
+        this.content = dto.content
+        //this.anonymousUsername = dto.anonymousUsername
+
+        //this.postTags = dto.postTags
+
+        TODO("Not yet implemented")
     }
 
 

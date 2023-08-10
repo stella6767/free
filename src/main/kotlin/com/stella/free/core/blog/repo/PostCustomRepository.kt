@@ -1,20 +1,16 @@
 package com.stella.free.core.blog.repo
 
 import com.linecorp.kotlinjdsl.query.spec.ExpressionOrderSpec
-import com.linecorp.kotlinjdsl.querydsl.expression.col
 import com.linecorp.kotlinjdsl.querydsl.expression.column
 import com.linecorp.kotlinjdsl.querydsl.from.fetch
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
 import com.linecorp.kotlinjdsl.spring.data.listQuery
-import com.linecorp.kotlinjdsl.spring.data.singleQuery
 import com.stella.free.core.account.entity.User
 
 import com.stella.free.core.blog.entity.Post
-import com.stella.free.core.blog.entity.PostTag
 import com.stella.free.global.util.singleOrNullQuery
 
 import jakarta.persistence.EntityManager
-import jakarta.persistence.FetchType
 import jakarta.persistence.criteria.JoinType
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -85,7 +81,7 @@ class PostCustomRepositoryImpl(
                 fetch(Post::user, JoinType.LEFT)
                 where(
                     and(
-                        column(Post::anonymousPassword).equal(password),
+                        column(Post::password).equal(password),
                         column(Post::id).equal(id),
                     )
                 )

@@ -26,7 +26,7 @@
 
         <input type="text"
                required
-               disabled="${isLogin && (post.map(PostDetailDto::getUserId) != null && post.map(PostDetailDto::getUserId).orElse(null) == userId)}"
+               disabled="${isLogin || (post.isPresent())}"
                x-model="formData.anonymousUsername"
                placeholder="input your username"
                class="input input-bordered w-full justify-self-center "/>

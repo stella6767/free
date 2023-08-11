@@ -9,7 +9,6 @@ import com.stella.free.global.util.TimeUtil
 import com.stella.free.global.util.removeSpecialCharacters
 import com.stella.free.web.component.toast.ToastViewComponent
 import de.tschuehly.spring.viewcomponent.core.IViewContext
-import gg.jte.html.OwaspHtmlTemplateOutput
 import gg.jte.output.StringOutput
 import net.datafaker.Faker
 import net.datafaker.transformations.Field.field
@@ -18,15 +17,56 @@ import net.datafaker.transformations.Schema
 import org.aspectj.lang.ProceedingJoinPoint
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
 import org.junit.jupiter.api.Test
+import org.openqa.selenium.PageLoadStrategy
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.chrome.ChromeOptions
 import java.time.LocalDateTime
 import java.util.*
 import java.util.function.Supplier
-import kotlin.jvm.optionals.getOrElse
-import kotlin.jvm.optionals.getOrNull
 import kotlin.reflect.full.isSubclassOf
 
 
 class UtilTest {
+
+
+    @Test
+    fun seleniumTest(){
+
+        System.setProperty("webdriver.chrome.driver", "/Users/stella6767/chromedriver-mac-arm64/chromedriver")
+
+
+        val url = "https://www.selenium.dev/documentation/webdriver/elements/finders/"
+
+        val options = ChromeOptions()
+        //페이지가 로드될 때까지 대기
+        //Normal: 로드 이벤트 실행이 반환 될 때 까지 기다린다.
+        options.setPageLoadStrategy(PageLoadStrategy.NORMAL)
+        val driver: WebDriver = ChromeDriver(options)
+
+        driver.get(url)
+
+
+    }
+
+
+    @Test
+    fun factorialTest(){
+
+        val result = factorial(3)
+        println(result)
+
+    }
+
+
+    fun factorial(n: Int): Int {
+
+        if ( n == 1)  {
+            return 1
+        }
+
+        return n * factorial(n - 1)
+    }
 
     fun renderInject(joinPoint: ProceedingJoinPoint): Any {
         val returnValue = joinPoint.proceed()

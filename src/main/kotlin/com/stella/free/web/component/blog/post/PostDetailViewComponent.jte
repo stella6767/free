@@ -61,10 +61,7 @@ ${commentSectionViewComponent.render(post)}
 <%--<span onclick="showContent('${post.getContent()}')">Click me</span>--%>
 
 
-
-
 <style>
-
 
     #viewer {
         width: 50%;
@@ -87,9 +84,7 @@ ${commentSectionViewComponent.render(post)}
         initialValue: postContent
     });
 
-    const showModal = () => {
 
-    }
 
 
 

@@ -149,10 +149,11 @@
                     client('/post', {body: reqBody, headers: headers, method: 'PUT'}).then(
                         data => {
                             console.log('here is response', data.body)
-                            //location.href = "/blog";
+                            location.href = "/post/" + postId;
                         },
                         error => {
-                            console.error('oh no,  failed', error)
+                            console.error('oh no,  failed', error);
+                            alert("수정에 실패하였습니다. 비밀번호를 확인해주세요");
                         },
                     )
                 } else {
@@ -165,6 +166,7 @@
                         },
                         error => {
                             console.error('oh no,  failed', error)
+                            alert("출간 실패");
                         },
                     )
 

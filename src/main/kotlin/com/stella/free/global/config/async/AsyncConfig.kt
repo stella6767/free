@@ -53,6 +53,10 @@ class AsyncConfig(
         return CustomAsyncExceptionHandler()
     }
 
+
+    /**
+     * TaskScheduler config
+     */
     @Bean
     fun schedulerTasks(): TaskScheduler {
         val threadPoolTaskScheduler = ThreadPoolTaskScheduler()

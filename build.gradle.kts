@@ -77,6 +77,11 @@ dependencies {
     }
 
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+
+
+
     //jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 

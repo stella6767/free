@@ -66,7 +66,7 @@ dependencies {
     implementation("io.awspring.cloud:spring-cloud-aws-starter-s3")
 
     // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
-    //implementation("org.seleniumhq.selenium:selenium-java:4.11.0")
+    implementation("org.seleniumhq.selenium:selenium-java:4.11.0")
 
     // mac silicon only
     // https://github.com/apache/commons-lang/blob/master/src/main/java/org/apache/commons/lang3/SystemUtils.java#L1173

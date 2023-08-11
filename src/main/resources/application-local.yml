@@ -69,3 +69,6 @@ cloud:
       url: https://free-stella.s3.ap-northeast-2.amazonaws.com/
       #cdnUrl: https://
 
+
+chrome:
+  driver: /Users/stella6767/chromedriver-mac-arm64/chromedriver

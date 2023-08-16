@@ -68,6 +68,10 @@ dependencies {
     // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
     implementation("org.seleniumhq.selenium:selenium-java:4.11.0")
 
+    // https://mvnrepository.com/artifact/org.dhatim/fastexcel
+    implementation("org.dhatim:fastexcel:0.15.6")
+
+
     // mac silicon only
     // https://github.com/apache/commons-lang/blob/master/src/main/java/org/apache/commons/lang3/SystemUtils.java#L1173
     val isMacOS: Boolean = System.getProperty("os.name").startsWith("Mac OS X")
@@ -78,6 +82,7 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
+    //https://kotlinworld.com/381
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 
 
@@ -136,6 +141,8 @@ dependencies {
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
+// https://mvnrepository.com/artifact/org.awaitility/awaitility
+    testImplementation("org.awaitility:awaitility:4.2.0")
 
 }
 

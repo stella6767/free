@@ -3,6 +3,7 @@ package com.stella.free.util
 import com.stella.free.core.blog.entity.Post
 import com.stella.free.core.openapi.dto.Entry
 import com.stella.free.core.openapi.service.PublicApiService
+import com.stella.free.core.scrap.service.DummyDataJenService
 import com.stella.free.global.config.TemplateConfiguration
 import com.stella.free.global.config.WebClientConfig
 import com.stella.free.global.util.TimeUtil
@@ -10,6 +11,7 @@ import com.stella.free.global.util.removeSpecialCharacters
 import com.stella.free.web.component.toast.ToastViewComponent
 import de.tschuehly.spring.viewcomponent.core.IViewContext
 import gg.jte.output.StringOutput
+import kotlinx.coroutines.runBlocking
 import net.datafaker.Faker
 import net.datafaker.transformations.Field.field
 import net.datafaker.transformations.JavaObjectTransformer
@@ -25,10 +27,67 @@ import java.time.LocalDateTime
 import java.util.*
 import java.util.function.Supplier
 import kotlin.reflect.full.isSubclassOf
+import kotlin.system.measureTimeMillis
 
 
 class UtilTest {
 
+    val faker = Faker(Locale("ko"))
+
+    @Test
+    fun largeDataFakerTest3(){
+
+        val jenService = DummyDataJenService()
+
+        val measuredTime = measureTimeMillis {
+            val dummyPeople
+                    = jenService.createDummyPersons(1000000, DummyDataJenService.AsyncType.BLOCK)
+            //println(dummyPeople)
+            println(dummyPeople.size)
+        }
+
+        println(measuredTime) //1645
+
+    }
+
+    @Test
+    fun largeDataFakerTest2(){
+
+        val jenService = DummyDataJenService()
+
+        //https://jsonobject.tistory.com/606
+
+//        val measuredTime = measureTimeMillis {
+//            val dummyPeople
+//            = jenService.createDummyPersonsByExecutorService(1000000)
+//            //println(dummyPeople)
+//            println(dummyPeople.size)
+//        }
+//
+//        println(measuredTime) //1114
+    }
+
+    @Test
+    fun largeDataFakerTest(){
+
+        val jenService = DummyDataJenService()
+
+        //https://jsonobject.tistory.com/606
+
+        val dummyPeople =
+            ArrayList<DummyDataJenService.DummyPerson>()
+
+        val measuredTime = measureTimeMillis {
+            runBlocking {
+                val dummyPeople =
+                    jenService.createDummyPersonsByCoroutine(100000, faker, dummyPeople)
+                //println(dummyPeople)
+                println(dummyPeople.size)
+            }
+        }
+
+        println(measuredTime) //1114
+    }
 
     @Test
     fun seleniumTest(){

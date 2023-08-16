@@ -3,6 +3,8 @@ package com.stella.free.global.util
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
 import com.linecorp.kotlinjdsl.spring.data.querydsl.SpringDataCriteriaQueryDsl
 import jakarta.persistence.NoResultException
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.util.regex.Pattern
 
 
@@ -22,4 +24,9 @@ inline fun String.removeSpecialCharacters(): String {
     val m = p.matcher(this)
     // 매칭되는 패턴을 빈 문자열로 치환하여 제거
     return m.replaceAll("")
+}
+
+
+inline fun <reified T> T.logger(): Logger {
+    return LoggerFactory.getLogger(T::class.java)
 }

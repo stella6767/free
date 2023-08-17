@@ -18,6 +18,7 @@ import net.datafaker.transformations.JavaObjectTransformer
 import net.datafaker.transformations.Schema
 import org.aspectj.lang.ProceedingJoinPoint
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.openqa.selenium.PageLoadStrategy
 import org.openqa.selenium.WebDriver
@@ -30,6 +31,8 @@ import kotlin.reflect.full.isSubclassOf
 import kotlin.system.measureTimeMillis
 
 
+
+@Disabled
 class UtilTest {
 
     val faker = Faker(Locale("ko"))

@@ -15,6 +15,9 @@
 <%--hx-on="htmx:configRequest: event.detail.headers=''; event.detail.headers['Content-Type']='application/x-www-form-urlencoded; charset=UTF-8'"--%>
 
 <!-- Open the modal using ID.showModal() method -->
+
+
+
 <dialog id="login_modal" class="modal">
     <form method="dialog" class="modal-box">
         <h1 class="font-bold text-center text-2xl mb-5">Social Login</h1>

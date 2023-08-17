@@ -4,8 +4,23 @@
 @param ViewContext header
 @param ViewContext nestedView
 
+
+<style>
+    #content-body{
+        height : auto;
+        min-height: 100%;
+    }
+</style>
+
+
+
 ${header}
 
-${nestedView}
+<div id="content-body">
+
+
+    ${nestedView}
+
+</div>
 
 ${footer}

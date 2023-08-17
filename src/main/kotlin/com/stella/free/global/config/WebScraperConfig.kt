@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 
-@Configuration
+//@Configuration
 class WebScraperConfig(
 
 ) {
@@ -16,7 +16,7 @@ class WebScraperConfig(
     private lateinit var driverPath: String
 
 
-    @Bean
+    //@Bean
     fun chromeDriver(): ChromeDriver {
 
         System.setProperty("webdriver.chrome.driver", driverPath)

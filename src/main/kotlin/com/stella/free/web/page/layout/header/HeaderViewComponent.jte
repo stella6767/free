@@ -62,7 +62,7 @@
                 <li><a href="/blog">blog</a></li>
                 <li><a href="/publicApis">public Api List</a></li>
                 <li><a href="/chat">Chat Lab</a></li>
-
+                <li><a href="/dummy">Dummy</a></li>
             </ul>
         </div>
     </div>

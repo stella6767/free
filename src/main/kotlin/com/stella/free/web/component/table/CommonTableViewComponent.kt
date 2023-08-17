@@ -1,6 +1,5 @@
 package com.stella.free.web.component.table
 
-import com.stella.free.core.openapi.dto.Entry
 import com.stella.free.core.scrap.service.DummyDataJenService
 import de.tschuehly.spring.viewcomponent.core.ViewComponent
 import de.tschuehly.spring.viewcomponent.core.toProperty
@@ -13,16 +12,15 @@ class CommonTableViewComponent(
 ) {
 
 
-    fun render(createDummyPersons: List<DummyDataJenService.DummyPerson>): ViewContext {
+    fun render(dummyPeople: List<DummyDataJenService.DummyPerson>): ViewContext {
 
-        val fieldNames =
-            DummyDataJenService.DummyPerson::class.java.getDeclaredFields().map {
-                it.isAccessible = true
-                it.name
-            }
+        val fieldNames = dummyPeople.firstOrNull()?.javaClass?.declaredFields?.map {
+            it.isAccessible = true
+            it.name
+        } ?: listOf()
 
         return ViewContext(
-            "datas" toProperty createDummyPersons,
+            "datas" toProperty dummyPeople,
             "fieldNames" toProperty fieldNames,
         )
     }

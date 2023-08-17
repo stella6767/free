@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.RestControllerAdvice
 
-@ControllerAdvice
+@RestControllerAdvice
 class ExceptionHandler(
     private val templateEngine: TemplateEngine,
     private val objectMapper: ObjectMapper
@@ -52,7 +53,6 @@ class ExceptionHandler(
 
 
     @ExceptionHandler(*arrayOf(AuthenticationException::class, AccessDeniedException::class))
-    @ResponseBody
     fun handleAuthException(exception: Exception): String {
 
         log.error(exception.message)
@@ -72,6 +72,8 @@ class ExceptionHandler(
 
         val detail =
             createProblemDetail(HttpStatus.BAD_REQUEST, e.localizedMessage)
+
+        log.error(e.message)
 
         return objectMapper.writeValueAsString(detail)
     }

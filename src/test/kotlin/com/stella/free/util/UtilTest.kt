@@ -8,7 +8,7 @@ import com.stella.free.global.config.TemplateConfiguration
 import com.stella.free.global.config.WebClientConfig
 import com.stella.free.global.util.TimeUtil
 import com.stella.free.global.util.removeSpecialCharacters
-import com.stella.free.web.component.toast.ToastViewComponent
+import com.stella.free.web.component.common.ToastViewComponent
 import de.tschuehly.spring.viewcomponent.core.IViewContext
 import gg.jte.output.StringOutput
 import kotlinx.coroutines.runBlocking
@@ -41,7 +41,7 @@ class UtilTest {
 
         val measuredTime = measureTimeMillis {
             val dummyPeople
-                    = jenService.createDummyPersons(1000000, DummyDataJenService.AsyncType.BLOCK)
+                    = jenService.createDummyPersons(1000000, DummyDataJenService.AsyncType.SINGLE)
             //println(dummyPeople)
             println(dummyPeople.size)
         }

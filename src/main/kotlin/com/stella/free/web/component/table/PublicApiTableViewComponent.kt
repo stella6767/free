@@ -8,7 +8,7 @@ import de.tschuehly.spring.viewcomponent.jte.ViewContext
 
 
 @ViewComponent
-class TableViewComponent(
+class PublicApiTableViewComponent(
     private val publicApiService: PublicApiService
 ) {
 

@@ -1,5 +1,6 @@
 package com.stella.free.core.scrap.service
 
+import jakarta.validation.constraints.Max
 import kotlinx.coroutines.*
 import net.datafaker.Faker
 import org.springframework.stereotype.Service
@@ -14,14 +15,16 @@ class DummyDataJenService(
 
 ) {
 
-
     enum class AsyncType {
-        COROUTINE, TASK, BLOCK
-
+        COROUTINE, TASK, SINGLE
     }
 
 
-    fun createDummyPersonsByExecutorService(size: Int, faker: Faker, dummyPeople:ArrayList<DummyPerson>): List<DummyPerson> {
+    fun createDummyPersonsByExecutorService(
+        size: Int,
+        faker: Faker,
+        dummyPeople: ArrayList<DummyPerson>
+    ): List<DummyPerson> {
 
         val executorService =
             Executors.newFixedThreadPool(10)
@@ -48,7 +51,11 @@ class DummyDataJenService(
     }
 
 
-    fun createDummyPersonsBySingleThread(size: Int, faker: Faker, dummyPeople:ArrayList<DummyPerson>): List<DummyPerson> {
+    fun createDummyPersonsBySingleThread(
+        size: Int,
+        faker: Faker,
+        dummyPeople: ArrayList<DummyPerson>
+    ): List<DummyPerson> {
 
         for (i in 1..size) {
             dummyPeople.add(createDummyPerson(faker))
@@ -57,31 +64,19 @@ class DummyDataJenService(
         return dummyPeople
     }
 
-    suspend fun createDummyPersonsByCoroutine(size: Int, faker: Faker, dummyPeople:ArrayList<DummyPerson>): List<DummyPerson> {
+    suspend fun createDummyPersonsByCoroutine(
+        size: Int,
+        faker: Faker,
+        dummyPeople: ArrayList<DummyPerson>
+    ): List<DummyPerson> {
 
-//        val async =
-//            CoroutineScope(Dispatchers.Default).async {
-//                for (i in 1..size) {
-//                    dummyPeople.add(createDummyPerson(faker))
-//                }
-//                dummyPeople
-//            }
-
-        val arrayListOf = arrayListOf<Deferred<DummyPerson>>()
-
-        for (i in 1..size) {
-            CoroutineScope(Dispatchers.Default).launch {
-                val deferred = async(Dispatchers.Default) {
-                    createDummyPerson(faker)
-                }
-
+        return coroutineScope {
+            val tasks = List(size) {
+                async(Dispatchers.Default) { createDummyPersonByCoroutine(faker) }
             }
-
+            tasks.awaitAll()
         }
 
-        //todo 잠시만..
-
-        return arrayListOf.awaitAll()
     }
 
 
@@ -92,16 +87,17 @@ class DummyDataJenService(
         val dummyPeople =
             ArrayList<DummyPerson>()
 
-        return when(type) {
-            AsyncType.BLOCK -> createDummyPersonsBySingleThread(size, faker, dummyPeople)
+        return when (type) {
+            AsyncType.SINGLE -> createDummyPersonsBySingleThread(size, faker, dummyPeople)
             AsyncType.COROUTINE -> runBlocking { createDummyPersonsByCoroutine(size, faker, dummyPeople) }
             AsyncType.TASK -> createDummyPersonsByExecutorService(size, faker, dummyPeople)
         }
     }
 
 
-
-
+    suspend fun createDummyPersonByCoroutine(faker: Faker): DummyPerson {
+        return createDummyPerson(faker)
+    }
 
 
     private fun createDummyPerson(faker: Faker): DummyPerson {
@@ -130,6 +126,14 @@ class DummyDataJenService(
         val catchPhrase: String,
         val streetAddress: String,
         val address: String,
+    )
+
+
+    data class DummyGenDto(
+        val type: AsyncType,
+
+        @field:Max(1000000)
+        val size: Int
     )
 
 

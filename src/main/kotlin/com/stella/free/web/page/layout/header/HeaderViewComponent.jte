@@ -1,8 +1,10 @@
 @import org.springframework.security.authentication.AnonymousAuthenticationToken
 @import org.springframework.security.core.context.SecurityContextHolder
 @import com.stella.free.web.component.auth.LoginModalViewComponent
+@import com.stella.free.web.component.common.ProgressViewComponent
 
 @param LoginModalViewComponent loginModalViewComponent
+@param ProgressViewComponent progressViewComponent
 
 <!DOCTYPE html>
 <html>
@@ -21,7 +23,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="/js/client.js" defer></script>
 
-
+    <script src="https://unpkg.com/htmx.org/dist/ext/loading-states.js"></script>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" crossorigin="anonymous">
     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
@@ -119,6 +121,9 @@
 </div>
 
 ${loginModalViewComponent.render()}
+
+
+${progressViewComponent.render()}
 
 <br/>
 

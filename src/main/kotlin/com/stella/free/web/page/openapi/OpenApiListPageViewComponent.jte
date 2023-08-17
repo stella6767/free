@@ -1,7 +1,6 @@
-
 @import java.util.*
 
-@param com.stella.free.web.component.table.TableViewComponent tableViewComponent
+@param com.stella.free.web.component.table.PublicApiTableViewComponent tableViewComponent
 @param com.stella.free.web.component.tabs.TabViewComponent tabViewComponent
 
 @param java.util.List<String> categories
@@ -36,4 +35,4 @@
         element.classList.add("tab-active");
     }
 
-</script>
+</script>>

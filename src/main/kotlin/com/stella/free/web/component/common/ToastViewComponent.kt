@@ -1,10 +1,9 @@
-package com.stella.free.web.component.toast
+package com.stella.free.web.component.common
 
 import de.tschuehly.spring.viewcomponent.core.ViewComponent
 
 import de.tschuehly.spring.viewcomponent.core.toProperty
 import de.tschuehly.spring.viewcomponent.jte.ViewContext
-import jakarta.servlet.http.HttpServletResponse
 
 @ViewComponent
 class ToastViewComponent(

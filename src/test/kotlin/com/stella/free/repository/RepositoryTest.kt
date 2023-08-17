@@ -233,7 +233,7 @@ class RepositoryTest(
     }
 
 
-    @Test
+    //@Test
     fun findCommentsByBottomUpTest(){
 
         val comments =

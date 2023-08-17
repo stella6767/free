@@ -3,11 +3,17 @@
 @param String creatorEmail
 @param String githubUrl
 
+<style>
+    #footer {
+        position : relative;
+        /*transform : translateY(-100%);*/
+    }
 
+</style>
 
 </br>
 
-<footer class="footer footer-center p-4 bg-base-300 text-base-content ">
+<footer id="footer" class="footer footer-center p-4 bg-base-300 text-base-content ">
     <div>
         <p>Created by ${creator}</p>
         <p>📞 ${creatorEmail}</p>
@@ -34,6 +40,4 @@
 </script>
 
 </body>
-
-
 </html>

@@ -21,7 +21,7 @@
 
 <div id="chat-page" class="flex-1 p:2 sm:p-6 justify-between flex flex-col container mx-auto hidden">
 
-    <div id="message-area" class="overflow-y-auto h-96">
+    <div id="message-area" class="overflow-y-auto " style="height: 1000px;">
     </div>
 
     <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">

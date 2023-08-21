@@ -16,8 +16,12 @@ class DummyDataJenService(
 ) {
 
     enum class AsyncType {
+
         COROUTINE, TASK, SINGLE
+
     }
+
+
 
 
     fun createDummyPersonsByExecutorService(
@@ -70,12 +74,28 @@ class DummyDataJenService(
         dummyPeople: ArrayList<DummyPerson>
     ): List<DummyPerson> {
 
-        return coroutineScope {
-            val tasks = List(size) {
-                async(Dispatchers.Default) { createDummyPersonByCoroutine(faker) }
+
+        val deferreds =
+            arrayListOf<Deferred<DummyPerson>>()
+
+
+        for (i in 1..size) {
+            val deferred = coroutineScope {
+                async { createDummyPersonByCoroutine(faker) }
             }
-            tasks.awaitAll()
+            deferreds.add(deferred)
         }
+
+
+        //deferreds.forEach{ it.join() }
+
+        return deferreds.awaitAll()
+//        return coroutineScope {
+//            val tasks = List(size) {
+//                async(Dispatchers.Default) { createDummyPersonByCoroutine(faker) }
+//            }
+//            tasks.awaitAll()
+//        }
 
     }
 
@@ -98,6 +118,8 @@ class DummyDataJenService(
     suspend fun createDummyPersonByCoroutine(faker: Faker): DummyPerson {
         return createDummyPerson(faker)
     }
+
+
 
 
     private fun createDummyPerson(faker: Faker): DummyPerson {

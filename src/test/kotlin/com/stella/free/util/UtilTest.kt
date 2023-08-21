@@ -11,7 +11,7 @@ import com.stella.free.global.util.removeSpecialCharacters
 import com.stella.free.web.component.common.ToastViewComponent
 import de.tschuehly.spring.viewcomponent.core.IViewContext
 import gg.jte.output.StringOutput
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import net.datafaker.Faker
 import net.datafaker.transformations.Field.field
 import net.datafaker.transformations.JavaObjectTransformer
@@ -26,25 +26,65 @@ import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
 import java.time.LocalDateTime
 import java.util.*
+import java.util.concurrent.Callable
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 import java.util.function.Supplier
 import kotlin.reflect.full.isSubclassOf
 import kotlin.system.measureTimeMillis
 
 
-
-@Disabled
+//@Disabled
 class UtilTest {
 
     val faker = Faker(Locale("ko"))
 
     @Test
-    fun largeDataFakerTest3(){
+    fun testThread() {
+        println("Test with java thread ")
+
+        repeat(10) {
+            Thread(Runnable {
+                println(" Number ${it}: ${Thread.currentThread().name}")
+            }).start()
+        }
+        Thread.sleep(100)
+    }
+
+
+    @Test
+    fun testCoroutine() {
+        println("Coroutine test ")
+        repeat(10) {
+            GlobalScope.launch {
+                println("Hi  Number  ${it}: ${Thread.currentThread().name}")
+            }
+        }
+        Thread.sleep(100)
+    }
+
+
+    @Test
+    fun testDelay() {
+        println("Test to delay a coroutine: ")
+        repeat(10) {
+            GlobalScope.launch {
+                println("Before  execution time $it: ${Thread.currentThread().name}")
+                delay(10)
+                println("After  execution time $it: ${Thread.currentThread().name}")
+            }
+        }
+        Thread.sleep(200)
+    }
+
+    @Test
+    fun largeDataFakerTest3() {
 
         val jenService = DummyDataJenService()
 
         val measuredTime = measureTimeMillis {
-            val dummyPeople
-                    = jenService.createDummyPersons(1000000, DummyDataJenService.AsyncType.SINGLE)
+            val dummyPeople = jenService.createDummyPersons(1000000, DummyDataJenService.AsyncType.SINGLE)
             //println(dummyPeople)
             println(dummyPeople.size)
         }
@@ -54,7 +94,7 @@ class UtilTest {
     }
 
     @Test
-    fun largeDataFakerTest2(){
+    fun largeDataFakerTest2() {
 
         val jenService = DummyDataJenService()
 
@@ -71,19 +111,17 @@ class UtilTest {
     }
 
     @Test
-    fun largeDataFakerTest(){
+    fun largeDataFakerTest() {
 
         val jenService = DummyDataJenService()
 
         //https://jsonobject.tistory.com/606
 
-        val dummyPeople =
-            ArrayList<DummyDataJenService.DummyPerson>()
 
         val measuredTime = measureTimeMillis {
             runBlocking {
                 val dummyPeople =
-                    jenService.createDummyPersonsByCoroutine(100000, faker, dummyPeople)
+                    jenService.createDummyPersons(100000, DummyDataJenService.AsyncType.COROUTINE)
                 //println(dummyPeople)
                 println(dummyPeople.size)
             }
@@ -92,8 +130,88 @@ class UtilTest {
         println(measuredTime) //1114
     }
 
+
+    val scope =
+        CoroutineScope(Executors.newFixedThreadPool(1).asCoroutineDispatcher())
+
+
     @Test
-    fun seleniumTest(){
+    fun asTest() {
+
+        val time = measureTimeMillis {
+            runBlocking {
+                executeAsyncTest(DummyDataJenService.AsyncType.COROUTINE, 2)
+            }
+        }
+
+        println(time)
+
+    }
+
+    suspend fun executeAsyncTest(type: DummyDataJenService.AsyncType, size: Int): List<String> {
+
+        when (type) {
+            DummyDataJenService.AsyncType.SINGLE -> {
+
+                val tasks =
+                    arrayListOf<String>()
+
+                for (i in 1..size) {
+                    tasks.add(doSomething())
+                }
+
+                return tasks
+            }
+
+            DummyDataJenService.AsyncType.COROUTINE -> {
+
+                val deferreds =
+                    arrayListOf<Deferred<String>>()
+
+                for (i in 1..size) {
+                    val deferred = scope.async { doSomethingWithSuspend() }
+                    deferreds.add(deferred)
+                }
+
+                return deferreds.awaitAll()
+            }
+
+            DummyDataJenService.AsyncType.TASK -> {
+
+                val executorService = Executors.newFixedThreadPool(10)
+
+                val tasks =
+                    arrayListOf<Callable<DummyDataJenService.DummyPerson>>()
+
+                for (i in 1..size) {
+
+//                    CompletableFuture.runAsync(
+//                        { doSomething() },
+//                        executorService
+//                    )
+
+                }
+
+                executorService.invokeAll(tasks)
+
+                TODO()
+            }
+        }
+
+    }
+
+    suspend fun doSomethingWithSuspend(): String {
+        delay(3000)
+        return "ok"
+    }
+
+    suspend fun doSomething(): String {
+        delay(3000)
+        return "ok"
+    }
+
+    @Test
+    fun seleniumTest() {
 
         System.setProperty("webdriver.chrome.driver", "/Users/stella6767/chromedriver-mac-arm64/chromedriver")
 
@@ -113,7 +231,7 @@ class UtilTest {
 
 
     @Test
-    fun factorialTest(){
+    fun factorialTest() {
 
         val result = factorial(3)
         println(result)
@@ -123,7 +241,7 @@ class UtilTest {
 
     fun factorial(n: Int): Int {
 
-        if ( n == 1)  {
+        if (n == 1) {
             return 1
         }
 
@@ -143,9 +261,8 @@ class UtilTest {
     }
 
 
-
     @Test
-    fun optionalTest(){
+    fun optionalTest() {
 
         val city = if (false) {
             Optional.ofNullable(City(1))
@@ -159,12 +276,12 @@ class UtilTest {
     }
 
     data class City(
-        val id:Long
+        val id: Long
     )
 
 
     @Test
-    fun outputTest(){
+    fun outputTest() {
 
         val templateEngine =
             TemplateConfiguration().templateEngine()
@@ -185,7 +302,7 @@ class UtilTest {
     }
 
     @Test
-    fun removeSpecialCharactersTest(){
+    fun removeSpecialCharactersTest() {
         val input = "Hello! @#World 123!"
         //val result = StringUtil.removeSpecialCharacters(input)
         //System.out.println(result)
@@ -195,7 +312,7 @@ class UtilTest {
     }
 
     @Test
-    fun getNamesUsingReflectionTest(){
+    fun getNamesUsingReflectionTest() {
 
         val fieldNames =
             Entry::class.java.getDeclaredFields().map {
@@ -209,7 +326,7 @@ class UtilTest {
 
 
     @Test
-    fun openApiTest(){
+    fun openApiTest() {
 
         val apiClient = WebClientConfig().publicApiClient()
 
@@ -218,7 +335,7 @@ class UtilTest {
     }
 
     @Test
-    fun timeUtilTest(){
+    fun timeUtilTest() {
 
         val timeToString =
             TimeUtil.localDateTimeToString(LocalDateTime.now(), "YYYY-MM-dd E HH:mm")
@@ -228,7 +345,7 @@ class UtilTest {
 
 
     @Test
-    fun dataFakerTest(){
+    fun dataFakerTest() {
 
         val faker = Faker(Locale("ko"))
         val jTransformer = JavaObjectTransformer()
@@ -242,7 +359,8 @@ class UtilTest {
         val schema: Schema<Any, Any> = Schema.of(
             field("title", Supplier { faker.book().title() }),
             field("content", Supplier { faker.famousLastWords().lastWords() }),
-            field("thumbnail", Supplier { faker.internet().image() }))
+            field("thumbnail", Supplier { faker.internet().image() })
+        )
 
         val post =
             jTransformer.apply(Post::class.java, schema) as Post
@@ -277,9 +395,9 @@ class UtilTest {
          */
 
 
-        val encryptGithub = jasyptEncrypt(key,gitHubSecret)
-        val encryptGoogle = jasyptEncrypt(key,googleSecret)
-        val encryptFacebook = jasyptEncrypt(key,facebookSecret)
+        val encryptGithub = jasyptEncrypt(key, gitHubSecret)
+        val encryptGoogle = jasyptEncrypt(key, googleSecret)
+        val encryptFacebook = jasyptEncrypt(key, facebookSecret)
 
 
 
@@ -291,14 +409,14 @@ class UtilTest {
 
     }
 
-    private fun jasyptEncrypt(key:String, input: String): String? {
+    private fun jasyptEncrypt(key: String, input: String): String? {
         val encryptor = StandardPBEStringEncryptor()
         encryptor.setAlgorithm("PBEWithMD5AndDES")
         encryptor.setPassword(key)
         return encryptor.encrypt(input)
     }
 
-    private fun jasyptDecryt(key:String, input: String): String? {
+    private fun jasyptDecryt(key: String, input: String): String? {
         val encryptor = StandardPBEStringEncryptor()
         encryptor.setAlgorithm("PBEWithMD5AndDES")
         encryptor.setPassword(key)

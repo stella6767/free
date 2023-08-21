@@ -59,8 +59,6 @@ repositories {
 }
 
 dependencies {
-
-
     //aws
     implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.0.1"))
     implementation("io.awspring.cloud:spring-cloud-aws-starter-s3")
@@ -147,9 +145,9 @@ dependencies {
 }
 
 
-
-
-
+tasks.jar {
+    enabled = false
+}
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {

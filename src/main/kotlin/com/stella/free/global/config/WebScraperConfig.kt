@@ -22,6 +22,7 @@ class WebScraperConfig(
         System.setProperty("webdriver.chrome.driver", driverPath)
 
         val options = ChromeOptions()
+
         options.addArguments("--headless")
         options.addArguments("disable-gpu")
         options.addArguments("--disable-gpu")

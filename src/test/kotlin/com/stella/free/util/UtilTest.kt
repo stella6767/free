@@ -18,7 +18,6 @@ import net.datafaker.transformations.JavaObjectTransformer
 import net.datafaker.transformations.Schema
 import org.aspectj.lang.ProceedingJoinPoint
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.openqa.selenium.PageLoadStrategy
 import org.openqa.selenium.WebDriver
@@ -28,7 +27,6 @@ import java.time.LocalDateTime
 import java.util.*
 import java.util.concurrent.Callable
 import java.util.concurrent.CompletableFuture
-import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import java.util.function.Supplier
 import kotlin.reflect.full.isSubclassOf
@@ -38,7 +36,57 @@ import kotlin.system.measureTimeMillis
 //@Disabled
 class UtilTest {
 
-    val faker = Faker(Locale("ko"))
+    //val faker = Faker(Locale("ko"))
+
+    @Test
+    fun asyncTest() {
+        val ints =
+            mutableListOf<Int>(1, 2, 3, 4, 5)
+        runBlocking {
+            ints.map { prev ->
+                CoroutineScope(Executors.newFixedThreadPool(1).asCoroutineDispatcher())
+                    .async {
+                        doSomeWithSuspend(
+                            prev
+                        )
+                    }
+            }.awaitAll().forEach { msg -> println(msg) }
+        }
+    }
+
+
+    fun doSome(prev: Int): Int {
+        Thread.sleep(1000)
+        println(Thread.currentThread().name + " ::: $prev")
+        return prev
+    }
+
+    @Test
+    fun asyncTest2() {
+
+        val executorService = Executors.newFixedThreadPool(1)
+
+        val ints =
+            mutableListOf<Int>(1, 2, 3, 4, 5)
+
+        val callables = ints.map { prev ->
+            CompletableFuture.supplyAsync(
+                {doSome(prev)},
+                executorService
+            )
+        }
+
+        callables.map { it.join() }.forEach { println(it) }
+    }
+
+
+
+    suspend fun doSomeWithSuspend(prev: Int): Int {
+        delay(1000)
+        println(Thread.currentThread().name + " ::: $prev")
+
+        return prev
+    }
 
     @Test
     fun testThread() {
@@ -84,7 +132,8 @@ class UtilTest {
         val jenService = DummyDataJenService()
 
         val measuredTime = measureTimeMillis {
-            val dummyPeople = jenService.createDummyPersons(1000000, DummyDataJenService.AsyncType.SINGLE)
+            val dummyPeople =
+                jenService.createDummyPersons(2, DummyDataJenService.AsyncType.SINGLE)
             //println(dummyPeople)
             println(dummyPeople.size)
         }
@@ -116,7 +165,6 @@ class UtilTest {
         val jenService = DummyDataJenService()
 
         //https://jsonobject.tistory.com/606
-
 
         val measuredTime = measureTimeMillis {
             runBlocking {
@@ -178,35 +226,37 @@ class UtilTest {
 
             DummyDataJenService.AsyncType.TASK -> {
 
-                val executorService = Executors.newFixedThreadPool(10)
+                val executorService = Executors.newFixedThreadPool(1)
 
-                val tasks =
-                    arrayListOf<Callable<DummyDataJenService.DummyPerson>>()
 
                 for (i in 1..size) {
 
-//                    CompletableFuture.runAsync(
-//                        { doSomething() },
-//                        executorService
-//                    )
+                    val future = CompletableFuture.runAsync(
+                        { doSomething() },
+                        executorService
+                    )
+
 
                 }
 
-                executorService.invokeAll(tasks)
+                return listOf()
 
-                TODO()
             }
         }
 
     }
 
     suspend fun doSomethingWithSuspend(): String {
-        delay(3000)
+        //delay(3000)
+        Thread.sleep(3000)
+
         return "ok"
     }
 
-    suspend fun doSomething(): String {
-        delay(3000)
+    fun doSomething(): String {
+
+        Thread.sleep(3000)
+
         return "ok"
     }
 

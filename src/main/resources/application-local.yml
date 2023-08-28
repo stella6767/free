@@ -2,7 +2,7 @@
 server:
   tomcat:
     max-swallow-size: 500MB
-  port: 8081
+  port: 8080
   # shutdown: "graceful"
 
 

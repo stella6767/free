@@ -12,8 +12,8 @@ class WebScraperConfig(
 
 ) {
 
-    @Value("\${chrome.driver}")
-    private lateinit var driverPath: String
+    //@Value("\${chrome.driver}")
+    private var driverPath: String = ""
 
 
     //@Bean

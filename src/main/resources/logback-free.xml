@@ -12,7 +12,7 @@
     </springProfile>
 
     <springProfile name="prod">
-        <property name="LOGS_PATH" value="/Users/stella6767/IdeaProjects/logs"/>
+        <property name="LOGS_PATH" value="./logs"/>
     </springProfile>
 
 

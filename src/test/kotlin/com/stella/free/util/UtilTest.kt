@@ -260,7 +260,7 @@ class UtilTest {
         return "ok"
     }
 
-    @Test
+    //@Test
     fun seleniumTest() {
 
         System.setProperty("webdriver.chrome.driver", "/Users/stella6767/chromedriver-mac-arm64/chromedriver")

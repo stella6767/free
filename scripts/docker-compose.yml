@@ -1,11 +1,15 @@
 version: "3"
 services:
   test_web:
-    image: nginx
+    image: nginx:latest
+    restart: always
+    volumes:
+      - ./conf/:/etc/nginx/conf.d
+      - /data/certbot/conf:/etc/letsencrypt
+      - /data/certbot/www:/var/www/certbot
     ports:
       - 80:80
-    volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
+      - 443:443
     depends_on:
       - free_application
 

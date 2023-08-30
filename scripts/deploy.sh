@@ -1,6 +1,5 @@
 whoami
 
-
 echo " "
 echo "========================"
 echo "Path move"
@@ -33,4 +32,4 @@ echo "========================"
 echo "Jar execute"
 echo "========================"
 
-sudo nohup /usr/bin/java -Djasypt.encryptor.password=1234 -jar ~/cicd/*.jar --spring.profiles.active=prod > /home/ubuntu/cicd/nohup.log 2>&1 &
+sudo nohup /usr/bin/java -Djasypt.encryptor.password=1234 -jar ~/cicd/*.jar --spring.profiles.active=prod > ~/cicd/nohup.log 2>&1 &

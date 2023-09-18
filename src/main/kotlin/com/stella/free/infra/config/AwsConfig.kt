@@ -2,15 +2,13 @@ package com.stella.free.infra.config
 
 import com.stella.free.global.util.logger
 import com.stella.free.infra.property.AwsProperty
-import io.awspring.cloud.autoconfigure.core.AwsProperties
-import io.awspring.cloud.s3.S3Template
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import software.amazon.awssdk.auth.credentials.*
 import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.s3.S3Client
-import software.amazon.awssdk.services.s3.S3ClientBuilder
+
 
 
 @Configuration
@@ -46,7 +44,6 @@ class AwsConfig(
             .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
             .build()
     }
-
 
 
 

@@ -44,7 +44,7 @@ class AsyncConfig(
         executor.queueCapacity = queueCapacity
         executor.setThreadNamePrefix(threadPrefix)
         executor.setRejectedExecutionHandler(ThreadPoolExecutor.CallerRunsPolicy())
-
+        executor.setWaitForTasksToCompleteOnShutdown(true) // graceful
         executor.initialize()
         return executor
     }
@@ -70,10 +70,13 @@ class AsyncConfig(
     class CustomAsyncExceptionHandler : AsyncUncaughtExceptionHandler {
         val log = logger()
         override fun handleUncaughtException(ex: Throwable, method: Method, vararg params: Any?) {
+
             log.error ("""                
                 Exception message: ${ex.message}
                 Method Name: ${method.name}                                            
             """.trimIndent() )
+
+
         }
 
     }

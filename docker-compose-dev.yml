@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+#  proxy:
+#    container_name: abc-proxy
+#    restart: always
+#    build: ./proxy
+#    ports:
+#      - "80:80"
+#    extra_hosts:
+#      - host.docker.internal:host-gateway
+
+  nginx:
+    container_name: nginx
+    image: nginx
+    restart: always
+    ports:
+      - "80:80/tcp"
+      - "443:443"
+    volumes:
+      #docker-compose.yml과 같은 레벨에 둔 nginx.conf를 mount.
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+#    networks:
+#      - front-connection
+    environment:
+      - TZ=Asia/Seoul
+    depends_on:
+      - web
+
+
+
+  web:
+    container_name: web
+    restart: always
+    build: ./
+#      context: ./
+      # dockerfile: Dockerfile  # 파일명이 Dockerfile이 아닌 경우
+    ports:
+      - "8081:8081"
+    environment:
+      - "spring_profiles_active=prod"

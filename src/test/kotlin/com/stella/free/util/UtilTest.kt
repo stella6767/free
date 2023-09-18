@@ -29,6 +29,7 @@ import java.util.concurrent.Callable
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executors
 import java.util.function.Supplier
+import kotlin.concurrent.thread
 import kotlin.reflect.full.isSubclassOf
 import kotlin.system.measureTimeMillis
 
@@ -37,6 +38,22 @@ import kotlin.system.measureTimeMillis
 class UtilTest {
 
     //val faker = Faker(Locale("ko"))
+
+
+
+    @Test
+    fun threadTest(){
+
+        val thread = thread {
+            Thread.sleep(2000)
+            println("doing something")
+        }
+
+        println("main thread ")
+        thread.join()
+    }
+
+
 
     @Test
     fun asyncTest() {
@@ -424,7 +441,7 @@ class UtilTest {
 
         val key = "asdasd"
 
-        val gitHubSecret = "asdasd"
+        val gitHubSecret = "9404bfe223cd1d7c01c1"
         val googleSecret = "asdasd"
         val facebookSecret = "asdasd"
 
@@ -450,6 +467,12 @@ class UtilTest {
         val encryptFacebook = jasyptEncrypt(key, facebookSecret)
 
 
+        val decryt =
+            jasyptDecryt("1234", "JyDEzmBcjaToslpqTnVKxvopkhw5xSnURceG0ggywM9sV23SRstMhMKVFn/ziedt1+HaZ0Lo8LQ=")
+
+
+        println("!!!!!!!!")
+        println(decryt)
 
 
         System.out.println("encryptGithub : " + encryptGithub)

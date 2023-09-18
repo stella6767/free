@@ -16,29 +16,6 @@ spring:
   devtools:
     livereload:
       enabled: true
-  security:
-    oauth2:
-      client:
-        registration:
-          github:
-            clientId: 9404bfe223cd1d7c01c1
-            clientSecret: ENC(JyDEzmBcjaToslpqTnVKxvopkhw5xSnURceG0ggywM9sV23SRstMhMKVFn/ziedt1+HaZ0Lo8LQ=)
-#            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
-            scope:
-              - user:email
-              - read:user
-          google:
-            clientId: 700086744673-keplb3hc6ere9uiqddg4aleho4i08g37.apps.googleusercontent.com
-            clientSecret: asdasd
-            scope:
-              - email
-              - profile
-          facebook:
-            clientId: 700086744673-keplb3hc6ere9uiqddg4aleho4i08g37.apps.googleusercontent.com
-            clientSecret: asdasdasd
-            scope:
-              - email
-              - public_profile
 
 
 

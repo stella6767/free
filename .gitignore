@@ -30,6 +30,7 @@ jte-classes/
 *.pid
 *.hprof
 *.args
+secret.yml
 
 ### NetBeans ###
 /nbproject/private/

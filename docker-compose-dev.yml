@@ -18,8 +18,8 @@ services:
       - "80:80/tcp"
       - "443:443"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf #nginx.conf를 mount.
-      - /etc/letsencrypt/live/freeapp.life/fullchain.pem:/etc/nginx/certs #letsencrypt폴더 위치
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf # nginx.conf를 mount.
+      - /etc/letsencrypt/live/freeapp.life/fullchain.pem:/etc/nginx/certs # letsencrypt폴더 위치
       - /etc/letsencrypt/live/freeapp.life/privkey.pem:/etc/nginx/certs
 #    networks:
 #      - front-connection
@@ -43,7 +43,7 @@ services:
     container_name: web
     restart: always
     build:
-      context: ./
+      context: scripts
       dockerfile: /Users/stella6767/IdeaProjects/free/DockerFile
     ports:
       - "8081:8081"

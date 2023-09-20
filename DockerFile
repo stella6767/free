@@ -2,6 +2,8 @@ FROM arm64v8/openjdk:17
 
 ARG JAR_FILE=/build/libs/*.jar
 
+#https://bgpark.tistory.com/132
+
 COPY ${JAR_FILE} /deploy.jar
 
 ENV AWS_REGION=ap-northeast-2

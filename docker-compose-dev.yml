@@ -44,7 +44,8 @@ services:
     restart: always
     build:
       context: scripts
-      dockerfile: /Users/stella6767/IdeaProjects/free/DockerFile
+      # dockerfile: /Users/stella6767/IdeaProjects/free/DockerFile
+      dockerfile: /home/ubuntu/cicd/DockerFile
     ports:
       - "8081:8081"
     environment:

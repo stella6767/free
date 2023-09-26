@@ -1,15 +1,6 @@
 version: "3"
 
 services:
-#  proxy:
-#    container_name: abc-proxy
-#    restart: always
-#    build: ./proxy
-#    ports:
-#      - "80:80"
-#    extra_hosts:
-#      - host.docker.internal:host-gateway
-
   nginx:
     container_name: nginx
     image: nginx
@@ -19,26 +10,22 @@ services:
       - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf # nginx.conf를 mount.
-      - ./scripts/key.pem:/etc/nginx/certs/key.pem
-      - ./scripts/cert.pem:/etc/nginx/certs/cert.pem
-#    networks:
-#      - front-connection
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
     environment:
       - TZ=Asia/Seoul
     depends_on:
       - web
-#    networks:
-#      - web
-#    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
-#  certbot:
-#    container_name: certbot
-#    image: certbot/certbot:arm32v6-latest
-#    restart: unless-stopped
-#    volumes:
-#      - ./certbot/conf:/etc/letsencrypt
-#      - ./certbot/www:/var/www/certbot
-#    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+  certbot:
+    container_name: certbot
+    image: certbot/certbot:arm32v6-latest
+    restart: unless-stopped
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
   web:
     container_name: web
@@ -51,13 +38,3 @@ services:
       - "8081:8081"
     environment:
       - "spring_profiles_active=prod"
-#    networks:
-#      - web
-
-
-#volumes:
-#  shared-data:
-
-#networks:
-#  web:
-#    driver: bridge

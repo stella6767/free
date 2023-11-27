@@ -82,7 +82,9 @@ class SecurityConfig(
                 it.deleteCookies("JSESSIONID")
             }	// 로그아웃은 기본설정으로 (/logout으로 인증해제)
             .headers {
-                it.frameOptions().sameOrigin()
+                it.frameOptions {config ->
+                    config.sameOrigin()
+                }
             }
             .cors {
                 it.configurationSource(corsConfigurationSource())

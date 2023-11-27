@@ -17,9 +17,6 @@ spring:
     livereload:
       enabled: true
 
-
-
-
   profiles:
     active:
       - local

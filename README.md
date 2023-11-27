@@ -51,6 +51,19 @@ Free-Tier Computing avaliable. why not use it?
 
 ### Github action
 
+simple CI Tool
+
+### Docker
+
+
+
+### Let's encrypt
+
+free ssl 
+
+### NGINX
+
+free web server
 
 ### SupaBase postgresql
 

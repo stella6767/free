@@ -19,6 +19,13 @@
 <%--@else--%>
 <%--@endif--%>
 
+com.munute.munuteadmin.entity.account
+
+com.munute.back.domain.payment.entity
+
+import com.munute.back.global.config.jpa.BaseEntity
+import com.munute.munuteadmin.entity.BaseEntity
+
 !{var content = @`
     <div class="px-3 mb-2 mt-2">
             <textarea placeholder="comment"

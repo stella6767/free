@@ -47,6 +47,7 @@ class TemplateConfiguration {
 //            val split = jteProperties.templateLocation.split("/".toRegex()).dropLastWhile { it.isEmpty() }
 //                .toTypedArray()
 //            val codeResolver: CodeResolver = DirectoryCodeResolver(FileSystems.getDefault().getPath("", *split))
+
             val codeResolver: CodeResolver = DirectoryCodeResolver(Path.of("src", "main", "kotlin"))
 
             val templateEngine =

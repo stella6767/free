@@ -16,7 +16,6 @@ class IndexViewComponent(
 
     fun render(): ViewContext {
 
-
         return ViewContext(
             "introduction" toProperty introduction,
         )

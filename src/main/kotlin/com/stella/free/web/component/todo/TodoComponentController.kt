@@ -45,7 +45,6 @@ class TodoComponentController(
         @AuthenticationPrincipal principal: UserPrincipal,
     ): ViewContext {
 
-
         return todoViewComponent.render(todoService.save(todo, principal))
     }
 

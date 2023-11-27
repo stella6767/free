@@ -84,6 +84,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 
 
+// https://mvnrepository.com/artifact/org.openpnp/opencv
+    implementation("org.openpnp:opencv:4.7.0-0")
+
 
     //jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -172,7 +175,6 @@ sourceSets {
             srcDir("src/main/kotlin")
             exclude("**/*.kt")
         }
-
     }
 }
 

@@ -9,6 +9,7 @@ import com.stella.free.global.config.WebClientConfig
 import com.stella.free.global.util.TimeUtil
 import com.stella.free.global.util.removeSpecialCharacters
 import com.stella.free.web.component.common.ToastViewComponent
+import com.stella.free.web.component.todo.TodoViewComponent
 import de.tschuehly.spring.viewcomponent.core.IViewContext
 import gg.jte.output.StringOutput
 import kotlinx.coroutines.*
@@ -357,9 +358,9 @@ class UtilTest {
 
         val output = StringOutput()
         val componentName =
-            ToastViewComponent::class.java.simpleName?.substringBefore("$$")
+            TodoViewComponent::class.java.simpleName?.substringBefore("$$")
         val componentPackage =
-            ToastViewComponent::class.java.`package`.name.replace(".", "/") + "/"
+            TodoViewComponent::class.java.`package`.name.replace(".", "/") + "/"
 
         println(componentName)
         println(componentPackage)

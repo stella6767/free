@@ -46,4 +46,9 @@ class ScrapController(
         return commonTableViewComponent.render(dummyDataJenService.createDummyPersons(size, type))
     }
 
+
+
+
+
+
 }

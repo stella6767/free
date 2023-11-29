@@ -26,6 +26,21 @@ class WebClientConfig(
     private val velogUrl = "https://v2cdn.velog.io/graphql"
     private val publicApisUrl = "https://api.publicapis.org/"
 
+
+    @Bean
+    fun basicClient(): WebClient {
+
+        val exchangeStrategies = ExchangeStrategies.builder()
+            .codecs { configurer ->
+                configurer.defaultCodecs().maxInMemorySize(-1)
+            } // to unlimited memory size
+            .build()
+
+        return WebClient.builder()
+            .exchangeStrategies(exchangeStrategies)
+            .build()
+    }
+
     @Bean
     fun velogClient(): WebClient {
         //https://github.com/davemachado/public-api
@@ -113,7 +128,7 @@ class WebClientConfig(
 
     fun logResponse(): ExchangeFilterFunction {
         return ExchangeFilterFunction.ofResponseProcessor { clientResponse: ClientResponse ->
-            log.info (
+            log.info(
                 """
                 =========== response ===========
 

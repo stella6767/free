@@ -4,6 +4,7 @@ import com.stella.free.core.blog.entity.Post
 import com.stella.free.core.openapi.dto.Entry
 import com.stella.free.core.openapi.service.PublicApiService
 import com.stella.free.core.scrap.service.DummyDataJenService
+import com.stella.free.core.scrap.service.userTagsQuery
 import com.stella.free.global.config.TemplateConfiguration
 import com.stella.free.global.config.WebClientConfig
 import com.stella.free.global.util.TimeUtil
@@ -20,10 +21,7 @@ import net.datafaker.transformations.Schema
 import org.aspectj.lang.ProceedingJoinPoint
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
 import org.junit.jupiter.api.Test
-import org.openqa.selenium.PageLoadStrategy
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.chrome.ChromeDriver
-import org.openqa.selenium.chrome.ChromeOptions
+
 import java.time.LocalDateTime
 import java.util.*
 import java.util.concurrent.Callable
@@ -40,6 +38,20 @@ class UtilTest {
 
     //val faker = Faker(Locale("ko"))
 
+
+    @Test
+    fun graphQlClientTest(){
+
+//        val execute = graphQlClient
+//            .document(userTagsQuery)
+//            .operationName("UserTags")
+//            .variable("username", username)
+//            .execute()
+//
+//        val block = execute.block()
+//        println(block.toString())
+
+    }
 
 
     @Test
@@ -280,19 +292,19 @@ class UtilTest {
 
     //@Test
     fun seleniumTest() {
-
-        System.setProperty("webdriver.chrome.driver", "/Users/stella6767/chromedriver-mac-arm64/chromedriver")
-
-
-        val url = "https://www.selenium.dev/documentation/webdriver/elements/finders/"
-
-        val options = ChromeOptions()
-        //페이지가 로드될 때까지 대기
-        //Normal: 로드 이벤트 실행이 반환 될 때 까지 기다린다.
-        options.setPageLoadStrategy(PageLoadStrategy.NORMAL)
-        val driver: WebDriver = ChromeDriver(options)
-
-        driver.get(url)
+//
+//        System.setProperty("webdriver.chrome.driver", "/Users/stella6767/chromedriver-mac-arm64/chromedriver")
+//
+//
+//        val url = "https://www.selenium.dev/documentation/webdriver/elements/finders/"
+//
+//        val options = ChromeOptions()
+//        //페이지가 로드될 때까지 대기
+//        //Normal: 로드 이벤트 실행이 반환 될 때 까지 기다린다.
+//        options.setPageLoadStrategy(PageLoadStrategy.NORMAL)
+//        val driver: WebDriver = ChromeDriver(options)
+//
+//        driver.get(url)
 
 
     }

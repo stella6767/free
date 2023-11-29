@@ -1,12 +1,13 @@
 package com.stella.free.core.scrap.api
 
-import com.stella.free.core.scrap.dto.VelogTagDto
-import com.stella.free.core.scrap.dto.VelogUserTagDto
 import com.stella.free.core.scrap.service.DummyDataJenService
-import com.stella.free.core.scrap.service.StaticCrawler
+import com.stella.free.core.scrap.service.VelogCrawler
 import com.stella.free.web.component.table.CommonTableViewComponent
 import de.tschuehly.spring.viewcomponent.jte.ViewContext
+import jakarta.servlet.http.HttpServletResponse
 import jakarta.validation.Valid
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpHeaders.CONTENT_DISPOSITION
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 
@@ -15,15 +16,21 @@ import org.springframework.web.bind.annotation.*
 class ScrapController(
     private val dummyDataJenService: DummyDataJenService,
     private val commonTableViewComponent: CommonTableViewComponent,
-    private val staticCrawler: StaticCrawler
+    private val velogCrawler: VelogCrawler
 ) {
 
 
     @GetMapping("/velog")
     @ResponseBody
-    fun deleteTodoById(): MutableList<Any>? {
+    fun velogApiTest(response: HttpServletResponse) {
 
-        return staticCrawler.getPosts("stella6767")
+
+        val headers = HttpHeaders()
+        headers.add(CONTENT_DISPOSITION, "attachment; filename=files.zip")
+
+        velogCrawler.parseAndDownlaodAsZip("stella6767", response.outputStream )
+
+
     }
 
 

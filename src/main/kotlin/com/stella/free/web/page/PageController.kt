@@ -10,8 +10,8 @@ import com.stella.free.web.page.openapi.OpenApiListPageViewComponent
 import com.stella.free.web.page.post.PostsByTagViewComponent
 import com.stella.free.web.page.post.PostsViewComponent
 
-import com.stella.free.web.page.resume.AboutMeViewComponent
-import com.stella.free.web.page.scraper.DummyTestViewComponent
+import com.stella.free.web.page.aboutme.AboutMeViewComponent
+import com.stella.free.web.page.scraper.VelogCrawlerViewComponent
 import com.stella.free.web.page.todo.TodoListViewComponent
 import de.tschuehly.spring.viewcomponent.jte.ViewContext
 import org.springframework.data.domain.Pageable
@@ -34,7 +34,7 @@ class PageController(
     private val openApiListPageViewComponent: OpenApiListPageViewComponent,
     private val chatViewComponent: ChatViewComponent,
     private val postsByTagViewComponent: PostsByTagViewComponent,
-    private val dummyTestViewComponent: DummyTestViewComponent,
+    private val velogCrawlerViewComponent: VelogCrawlerViewComponent,
 
     ) {
 
@@ -109,9 +109,9 @@ class PageController(
 
 
     @GetMapping("/dummy")
-    fun dummyPage(): ViewContext {
+    fun velogCrawlerViewComponentPage(): ViewContext {
 
-        return layoutViewComponent.render(dummyTestViewComponent.render())
+        return layoutViewComponent.render(velogCrawlerViewComponent.render())
     }
 
 

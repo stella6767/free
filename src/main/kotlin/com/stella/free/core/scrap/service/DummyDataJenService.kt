@@ -135,10 +135,11 @@ class DummyDataJenService(
 
 
     data class DummyGenDto(
+        val username:String,
         val type: AsyncType,
 
-        @field:Max(1000000)
-        val size: Int
+//        @field:Max(1000000)
+//        val size: Int
     )
 
 

@@ -7,7 +7,7 @@ import de.tschuehly.spring.viewcomponent.jte.ViewContext
 
 
 @ViewComponent
-class DummyTestViewComponent(
+class VelogCrawlerViewComponent(
     private val commonTableViewComponent: CommonTableViewComponent
 ) {
 

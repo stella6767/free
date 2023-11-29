@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletResponse
 import jakarta.validation.Valid
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpHeaders.CONTENT_DISPOSITION
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 
@@ -22,14 +24,16 @@ class ScrapController(
 
     @GetMapping("/velog")
     @ResponseBody
-    fun velogApiTest(response: HttpServletResponse) {
+    fun velogApiTest(
 
-
+        @Valid dummyGenDto: DummyDataJenService.DummyGenDto,
+        response: HttpServletResponse
+    ) {
         val headers = HttpHeaders()
         headers.add(CONTENT_DISPOSITION, "attachment; filename=files.zip")
+        headers.add(HttpHeaders.CONTENT_TYPE, "application/zip")
 
-        velogCrawler.parseAndDownlaodAsZip("stella6767", response.outputStream )
-
+        velogCrawler.parseAndDownloadAsZip("stella6767", response.outputStream)
 
     }
 
@@ -45,13 +49,13 @@ class ScrapController(
 
 
 
-    @PostMapping("/dummy")
-    fun dummyPersonGen(@Valid dummyGenDto: DummyDataJenService.DummyGenDto): ViewContext {
-
-        val (type, size) = dummyGenDto
-
-        return commonTableViewComponent.render(dummyDataJenService.createDummyPersons(size, type))
-    }
+//    @PostMapping("/dummy")
+//    fun dummyPersonGen(@Valid dummyGenDto: DummyDataJenService.DummyGenDto): ViewContext {
+//
+//        val (type, size) = dummyGenDto
+//
+//        return commonTableViewComponent.render(dummyDataJenService.createDummyPersons(size, type))
+//    }
 
 
 

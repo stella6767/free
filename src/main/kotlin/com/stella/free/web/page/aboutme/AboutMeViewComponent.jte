@@ -55,34 +55,33 @@
 
                 <h2 class="text-xl font-bold mt-4 mb-1"> Currently Interested in Technologies</h2>
                 <p class="text-sm indent-2">
-                    HTMX, Go, Jetpack Compose
+                    HTMX, Go, KMM
                 </p>
 
 
-                <h2 class="text-xl font-bold mt-6 mb-4">Experience</h2>
-                <div class="mb-6">
-                    <div class="flex justify-between">
-                        <span class="text-gray-600 font-bold">Server Developer</span>
-                        <p>
-                            <span class="text-gray-600 mr-2">at SP Company</span>
-                            <span class="text-gray-600">2022 - ..</span>
-                        </p>
-                    </div>
-                    <ul class="mt-2">
-                        <li class="text-sm">기밀</li>
-                    </ul>
-                </div>
+<%--                <h2 class="text-xl font-bold mt-6 mb-4">Experience</h2>--%>
+<%--                <div class="mb-6">--%>
+<%--                    <div class="flex justify-between">--%>
+<%--                        <span class="text-gray-600 font-bold">Server Developer</span>--%>
+<%--                        <p>--%>
+<%--                            <span class="text-gray-600 mr-2">at SP Company</span>--%>
+<%--                            <span class="text-gray-600">2022 - ..</span>--%>
+<%--                        </p>--%>
+<%--                    </div>--%>
+<%--                    <ul class="mt-2">--%>
+<%--                        <li class="text-sm">기밀</li>--%>
+<%--                    </ul>--%>
+<%--                </div>--%>
 
-                <div class="mb-6">
-                    <div class="flex justify-between">
-                        <span class="text-gray-600 font-bold">Server Developer</span>
-                        <p>
-                            <span class="text-gray-600 mr-2">at Lunalabs Company</span>
-                            <span class="text-gray-600">2021 - 2022</span>
-                        </p>
-                    </div>
-
-                </div>
+<%--                <div class="mb-6">--%>
+<%--                    <div class="flex justify-between">--%>
+<%--                        <span class="text-gray-600 font-bold">Server Developer</span>--%>
+<%--                        <p>--%>
+<%--                            <span class="text-gray-600 mr-2">at Lunalabs Company</span>--%>
+<%--                            <span class="text-gray-600">2021 - 2022</span>--%>
+<%--                        </p>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
 
                 <div class="pt-12 pb-8">
                     <button class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='https://www.notion.so/b3537e6cfe1947a880bf4c70eb5de7af?pvs=4'">

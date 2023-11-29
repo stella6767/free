@@ -25,7 +25,7 @@ class VelogCrawler(
 
     private val log = logger()
 
-    fun parseAndDownlaodAsZip(username: String, outputStream: ServletOutputStream) {
+    fun parseAndDownloadAsZip(username: String, outputStream: ServletOutputStream) {
 
         //todo zip 파일 좀 더 다양하게
         //비밀글 접근 가능

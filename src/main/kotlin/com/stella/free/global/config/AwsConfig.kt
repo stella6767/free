@@ -1,7 +1,7 @@
-package com.stella.free.infra.config
+package com.stella.free.global.config
 
 import com.stella.free.global.util.logger
-import com.stella.free.infra.property.AwsProperty
+import com.stella.free.global.property.AwsProperty
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

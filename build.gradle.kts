@@ -5,15 +5,15 @@ import java.nio.file.Path
 
 
 plugins {
-    id("org.springframework.boot") version "3.1.0"
-    id("io.spring.dependency-management") version "1.1.0"
+    id("org.springframework.boot") version "3.1.5"
+    id("io.spring.dependency-management") version "1.1.3"
     id("gg.jte.gradle") version "2.3.2"
 
-    kotlin("kapt") version "1.8.21"
-    kotlin("jvm") version "1.8.21"
-    kotlin("plugin.spring") version "1.8.21"
-    kotlin("plugin.jpa") version "1.8.21"
-    kotlin("plugin.allopen") version "1.8.21"
+    kotlin("kapt") version "1.8.22"
+    kotlin("jvm") version "1.8.22"
+    kotlin("plugin.spring") version "1.8.22"
+    kotlin("plugin.jpa") version "1.8.22"
+    kotlin("plugin.allopen") version "1.8.22"
     idea
 }
 
@@ -63,11 +63,10 @@ dependencies {
     implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.0.1"))
     implementation("io.awspring.cloud:spring-cloud-aws-starter-s3")
 
-    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
-    implementation("org.seleniumhq.selenium:selenium-java:4.11.0")
 
-    // https://mvnrepository.com/artifact/org.dhatim/fastexcel
-    implementation("org.dhatim:fastexcel:0.15.6")
+
+    implementation("org.dhatim:fastexcel:0.16.4")
+    implementation("org.dhatim:fastexcel-reader:0.16.4")
 
 
     // mac silicon only
@@ -78,14 +77,11 @@ dependencies {
         developmentOnly("io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64")
     }
 
+    implementation("org.springframework.boot:spring-boot-starter-graphql")
+
     implementation("org.springframework.boot:spring-boot-starter-webflux")
-    // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
     //https://kotlinworld.com/381
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-
-
-// https://mvnrepository.com/artifact/org.openpnp/opencv
-    implementation("org.openpnp:opencv:4.7.0-0")
 
 
     //jpa
@@ -94,7 +90,6 @@ dependencies {
     // kotlin jdsl
     // https://mvnrepository.com/artifact/com.linecorp.kotlin-jdsl/spring-data-kotlin-jdsl-starter-jakarta
     implementation("com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter-jakarta:2.2.1.RELEASE")
-
     // 더미데이터 셍상
     implementation("net.datafaker:datafaker:2.0.1")
 
@@ -102,6 +97,8 @@ dependencies {
     implementation("com.vladsch.flexmark:flexmark-html2md-converter:0.64.0")
     // html 파싱
     implementation("org.jsoup:jsoup:1.16.1")
+    //implementation("org.seleniumhq.selenium:selenium-java:4.11.0")
+
 
     //sql query logging
     implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0")
@@ -144,6 +141,8 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
 // https://mvnrepository.com/artifact/org.awaitility/awaitility
     testImplementation("org.awaitility:awaitility:4.2.0")
+    testImplementation("org.springframework:spring-webflux")
+    testImplementation("org.springframework.graphql:spring-graphql-test")
 
 }
 

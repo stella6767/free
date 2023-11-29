@@ -6,7 +6,7 @@ import de.tschuehly.spring.viewcomponent.jte.ViewContext
 
 
 @ViewComponent
-class ResumeViewComponent(
+class AboutMeViewComponent(
 
 ) {
     fun render(): ViewContext {

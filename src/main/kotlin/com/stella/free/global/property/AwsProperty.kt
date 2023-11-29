@@ -1,4 +1,4 @@
-package com.stella.free.infra.property
+package com.stella.free.global.property
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.bind.ConstructorBinding
@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding
 class AwsProperty(
     val credentials: Credentials,
     val s3: S3,
-    val region:Region
+    val region: Region
 ){
 
 

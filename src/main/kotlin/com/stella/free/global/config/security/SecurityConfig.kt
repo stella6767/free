@@ -21,6 +21,7 @@ import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.access.AccessDeniedHandler
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
@@ -48,11 +49,16 @@ class SecurityConfig(
     @Bean
     fun webSecurityCustomizer(): WebSecurityCustomizer {
         return WebSecurityCustomizer { web: WebSecurity ->
+
+            val arrays = arrayOf(
+                AntPathRequestMatcher("/resources/*"),
+                AntPathRequestMatcher("/static/*"), AntPathRequestMatcher("/img/*"),
+                AntPathRequestMatcher("/js/*")
+            )
+
             web.ignoring()
-                .requestMatchers("/resources/*")
-                .requestMatchers("/static/*")
-                .requestMatchers("/img/*")
-                .requestMatchers("/js/*")
+                .requestMatchers(*arrays)
+
         }
     }
 
@@ -191,9 +197,8 @@ class SecurityConfig(
         val configuration = CorsConfiguration()
         configuration.allowedOrigins = listOf("*")
         configuration.allowedMethods = listOf("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH")
-        configuration.addAllowedOrigin("*")
-        configuration.addAllowedHeader("*")
-        configuration.addAllowedMethod("*")
+        configuration.allowedHeaders = listOf("*")
+        configuration.exposedHeaders = listOf("*")
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", configuration)
         return source
@@ -202,7 +207,8 @@ class SecurityConfig(
 
     companion object {
 
-        val AUTH_CHECK_LIST = arrayOf("/todos")
+        val AUTH_CHECK_LIST =
+            arrayOf(AntPathRequestMatcher("/todos"))
 
 
         val AUTH_PASS_LIST = arrayOf(

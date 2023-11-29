@@ -23,13 +23,35 @@ class WebClientConfig(
 
     private val log = logger()
 
+    private val velogUrl = "https://v2cdn.velog.io/graphql"
+    private val publicApisUrl = "https://api.publicapis.org/"
+
+    @Bean
+    fun velogClient(): WebClient {
+        //https://github.com/davemachado/public-api
+
+
+        return WebClient.builder()
+            .baseUrl(velogUrl)
+            .filter(logRequest())  // logging the request headers
+            .filter(logResponse())  // logging the response headers
+            .clientConnector(ReactorClientHttpConnector(createReactorHttpClient()))
+            .codecs { configurer ->
+                configurer
+                    .defaultCodecs()
+                    .maxInMemorySize(500 * 1024 * 1024)
+            }
+            .build()
+    }
+
 
     @Bean
     fun publicApiClient(): WebClient {
         //https://github.com/davemachado/public-api
 
+
         return WebClient.builder()
-            .baseUrl("https://api.publicapis.org/")
+            .baseUrl(publicApisUrl)
             .defaultHeader(HttpHeaders.ACCEPT, MediaType.ALL_VALUE)
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .filter(addContentTypeHeader())

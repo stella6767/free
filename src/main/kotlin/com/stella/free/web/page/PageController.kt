@@ -10,7 +10,7 @@ import com.stella.free.web.page.openapi.OpenApiListPageViewComponent
 import com.stella.free.web.page.post.PostsByTagViewComponent
 import com.stella.free.web.page.post.PostsViewComponent
 
-import com.stella.free.web.page.resume.ResumeViewComponent
+import com.stella.free.web.page.resume.AboutMeViewComponent
 import com.stella.free.web.page.scraper.DummyTestViewComponent
 import com.stella.free.web.page.todo.TodoListViewComponent
 import de.tschuehly.spring.viewcomponent.jte.ViewContext
@@ -20,15 +20,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.ResponseBody
-import kotlin.concurrent.thread
 
 @Controller
 class PageController(
     private val layoutViewComponent: LayoutViewComponent,
-    private val resumeViewComponent: ResumeViewComponent,
+    private val aboutMeViewComponent: AboutMeViewComponent,
     private val indexViewComponent: IndexViewComponent,
     private val todoListViewComponent: TodoListViewComponent,
     private val postsViewComponent: PostsViewComponent,
@@ -39,7 +36,7 @@ class PageController(
     private val postsByTagViewComponent: PostsByTagViewComponent,
     private val dummyTestViewComponent: DummyTestViewComponent,
 
-) {
+    ) {
 
     private val log = logger()
 
@@ -70,7 +67,7 @@ class PageController(
 
     @GetMapping("/resume")
     fun resume(): ViewContext {
-        return layoutViewComponent.render(resumeViewComponent.render())
+        return layoutViewComponent.render(aboutMeViewComponent.render())
     }
 
     @GetMapping("/todos")

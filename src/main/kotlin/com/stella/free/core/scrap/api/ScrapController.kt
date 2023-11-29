@@ -1,29 +1,29 @@
 package com.stella.free.core.scrap.api
 
+import com.stella.free.core.scrap.dto.VelogTagDto
+import com.stella.free.core.scrap.dto.VelogUserTagDto
 import com.stella.free.core.scrap.service.DummyDataJenService
-import com.stella.free.core.scrap.service.WebScrapService
+import com.stella.free.core.scrap.service.StaticCrawler
 import com.stella.free.web.component.table.CommonTableViewComponent
 import de.tschuehly.spring.viewcomponent.jte.ViewContext
 import jakarta.validation.Valid
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 
 @Controller
 class ScrapController(
-    private val scrapService: WebScrapService,
     private val dummyDataJenService: DummyDataJenService,
     private val commonTableViewComponent: CommonTableViewComponent,
+    private val staticCrawler: StaticCrawler
 ) {
 
 
-    @GetMapping("/url")
-    fun scrapping(@RequestParam url:String){
-        scrapService.getPageSource(url)
+    @GetMapping("/velog")
+    @ResponseBody
+    fun deleteTodoById(): MutableList<Any>? {
+
+        return staticCrawler.getPosts("stella6767")
     }
 
 

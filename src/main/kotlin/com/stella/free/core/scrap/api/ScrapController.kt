@@ -1,15 +1,14 @@
 package com.stella.free.core.scrap.api
 
+import com.stella.free.core.scrap.dto.AsyncType
+import com.stella.free.core.scrap.dto.VelogCrawlerReqDto
 import com.stella.free.core.scrap.service.DummyDataJenService
 import com.stella.free.core.scrap.service.VelogCrawler
 import com.stella.free.web.component.table.CommonTableViewComponent
-import de.tschuehly.spring.viewcomponent.jte.ViewContext
 import jakarta.servlet.http.HttpServletResponse
 import jakarta.validation.Valid
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpHeaders.CONTENT_DISPOSITION
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 
@@ -25,22 +24,21 @@ class ScrapController(
     @GetMapping("/velog")
     @ResponseBody
     fun velogApiTest(
-
-        @Valid dummyGenDto: DummyDataJenService.DummyGenDto,
+        @Valid velogCrawlerReqDto: VelogCrawlerReqDto,
         response: HttpServletResponse
     ) {
         val headers = HttpHeaders()
         headers.add(CONTENT_DISPOSITION, "attachment; filename=files.zip")
         headers.add(HttpHeaders.CONTENT_TYPE, "application/zip")
 
-        velogCrawler.parseAndDownloadAsZip("stella6767", response.outputStream)
-
+        velogCrawler.parseAndDownloadAsZip(velogCrawlerReqDto.username, response.outputStream)
     }
 
 
     @GetMapping("/dummy/{size}")
     fun dummyGen(@PathVariable size:Int,
-                 @RequestParam type:DummyDataJenService.AsyncType): String {
+                 @RequestParam type: AsyncType
+    ): String {
 
         dummyDataJenService.createDummyPersons(size, type)
 

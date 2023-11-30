@@ -26,7 +26,8 @@ class VelogCrawler(
     private val log = logger()
 
     fun parseAndDownloadAsZip(username: String, outputStream: ServletOutputStream) {
-
+        //https://hypermedia.systems/htmx-in-action/
+        //https://shanepark.tistory.com/407
         //todo zip 파일 좀 더 다양하게
         //비밀글 접근 가능
         val posts = this.getAllPosts(username).map {
@@ -38,10 +39,8 @@ class VelogCrawler(
 
 
     fun getAllPosts(username: String): MutableList<VelogPostDto> {
-
         var cursor: String? = null
         val allPosts = mutableListOf<VelogPostDto>()
-
         while (true) {
             val posts = getPosts(username, cursor)
             if (posts.size >= 20) {

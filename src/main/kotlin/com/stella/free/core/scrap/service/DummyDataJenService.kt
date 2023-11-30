@@ -1,5 +1,6 @@
 package com.stella.free.core.scrap.service
 
+import com.stella.free.core.scrap.dto.AsyncType
 import jakarta.validation.constraints.Max
 import kotlinx.coroutines.*
 import net.datafaker.Faker
@@ -14,13 +15,6 @@ import kotlin.collections.ArrayList
 class DummyDataJenService(
 
 ) {
-
-    enum class AsyncType {
-        COROUTINE, TASK, SINGLE
-    }
-
-
-
 
     fun createDummyPersonsByExecutorService(
         size: Int,
@@ -134,13 +128,6 @@ class DummyDataJenService(
     )
 
 
-    data class DummyGenDto(
-        val username:String,
-        val type: AsyncType,
-
-//        @field:Max(1000000)
-//        val size: Int
-    )
 
 
 }

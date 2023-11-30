@@ -89,6 +89,23 @@
     });
 
 
+    const generateUrl = () => {
+        // Get values from the select and input elements
+        const type = document.getElementById('typeSelect').value;
+        const username = document.getElementById('usernameInput').value;
+
+        // Construct the URL with parameters
+        const apiUrl = `/api/files/download?type=${type}&username=${encodeURIComponent(username)}`;
+
+
+        // Update the href attribute of the download link
+        document.getElementById('downloadLink').href = apiUrl;
+    }
+
+
+
+
+
 </script>
 </body>
 </html>

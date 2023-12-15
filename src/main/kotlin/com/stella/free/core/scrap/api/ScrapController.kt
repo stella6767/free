@@ -30,7 +30,6 @@ class ScrapController(
         val headers = HttpHeaders()
         headers.add(CONTENT_DISPOSITION, "attachment; filename=files.zip")
         headers.add(HttpHeaders.CONTENT_TYPE, "application/zip")
-
         velogCrawler.parseAndDownloadAsZip(velogCrawlerReqDto.username, response.outputStream)
     }
 
@@ -39,9 +38,7 @@ class ScrapController(
     fun dummyGen(@PathVariable size:Int,
                  @RequestParam type: AsyncType
     ): String {
-
         dummyDataJenService.createDummyPersons(size, type)
-
         return ""
     }
 
@@ -49,9 +46,7 @@ class ScrapController(
 
 //    @PostMapping("/dummy")
 //    fun dummyPersonGen(@Valid dummyGenDto: DummyDataJenService.DummyGenDto): ViewContext {
-//
 //        val (type, size) = dummyGenDto
-//
 //        return commonTableViewComponent.render(dummyDataJenService.createDummyPersons(size, type))
 //    }
 

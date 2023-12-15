@@ -108,7 +108,7 @@ class PageController(
 
 
 
-    @GetMapping("/dummy")
+    @GetMapping("/velog/crawler")
     fun velogCrawlerViewComponentPage(): ViewContext {
 
         return layoutViewComponent.render(velogCrawlerViewComponent.render())

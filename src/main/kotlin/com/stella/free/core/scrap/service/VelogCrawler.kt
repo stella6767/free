@@ -8,6 +8,9 @@ import jakarta.servlet.ServletOutputStream
 import org.springframework.graphql.client.HttpGraphQlClient
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
+import reactor.core.scheduler.Schedulers
 import java.io.OutputStream
 import java.nio.file.Paths
 import java.util.zip.ZipEntry
@@ -29,12 +32,43 @@ class VelogCrawler(
         //https://hypermedia.systems/htmx-in-action/
         //https://shanepark.tistory.com/407
         //todo zip 파일 좀 더 다양하게
+        //todo 파일 다운로드 속도 최적화. webclient 병렬처리
+        //
         //비밀글 접근 가능
-        val posts = this.getAllPosts(username).map {
-            this.getPost(username, it.url_slug!!)
-        }.filterNotNull()
+//        val posts = this.getAllPosts(username).map {
+//            this.getPost(username, it.url_slug!!)
+//        }.filterNotNull()
 
-        responseZipFromAttachments(outputStream, posts)
+
+        val posts2 = Flux.fromIterable(this.getAllPosts(username))
+            .parallel()
+            .runOn(Schedulers.parallel())
+            .flatMap { dto ->
+                this.getPost2(username, dto.url_slug!!)
+            }
+            .sequential()
+            .collectList()
+            .block() ?: mutableListOf()
+
+
+        responseZipFromAttachments(outputStream, posts2)
+    }
+
+
+    fun getPostByType(){
+
+    }
+
+
+    private fun getPost2(username: String, url_slug: String?): Mono<VelogReadPostDto> {
+
+        return graphQlClient
+            .document(velogPostQuery)
+            .operationName("ReadPost")
+            .variables(mapOf("username" to username, "url_slug" to url_slug))
+            .retrieve("post")
+            .toEntity(VelogReadPostDto::class.java)
+
     }
 
 

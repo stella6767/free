@@ -28,7 +28,7 @@ sudo docker-compose -f /home/ubuntu/cicd/docker-compose-dev.yml down
 #echo "========================"
 #
 #sudo docker-compose -f /Users/stella6767/IdeaProjects/free/docker-compose-dev.yml build
-
+sudo docker-compose -f /home/ubuntu/cicd/docker-compose-dev.yml build
 
 echo " "
 echo "========================"

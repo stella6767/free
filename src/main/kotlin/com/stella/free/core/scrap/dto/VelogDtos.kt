@@ -187,7 +187,7 @@ data class VelogConfig(
 
 data class VelogCrawlerReqDto(
     val username:String,
-    val type: AsyncType,
+    //val type: AsyncType,
 
 //        @field:Max(1000000)
 //        val size: Int

@@ -17,12 +17,12 @@
         <%--            <input type="number" name="size" placeholder="number" class="input input-bordered w-full max-w-xs"/>--%>
         <input id="username" name="username" placeholder="input username"
                class="input input-bordered w-full max-w-xs" required/>
-        <select id="type" class="select select-ghost w-full max-w-xs" name="type" required>
-            <option disabled selected>Pick the Type</option>
-            <option value="COROUTINE">Coroutine</option>
-            <option value="TASK">Thread Pool</option>
-            <option value="SINGLE">Single Thread</option>
-        </select>
+<%--        <select id="type" class="select select-ghost w-full max-w-xs" name="type" required>--%>
+<%--            <option disabled selected>Pick the Type</option>--%>
+<%--            <option value="COROUTINE">Coroutine</option>--%>
+<%--            <option value="TASK">Thread Pool</option>--%>
+<%--            <option value="SINGLE">Single Thread</option>--%>
+<%--        </select>--%>
         <button>
 <%--            <a id="downloader" href="#" download="velog.zip" target="_blank">가져오기</a>--%>
             <a id="downloader" href="#" >가져오기</a>
@@ -76,10 +76,10 @@
 
 
         // Get values from the select and input elements
-        const type = document.getElementById('type').value;
+        //const type = document.getElementById('type').value;
         const username = document.getElementById('username').value;
         // Construct the URL with parameters
-        const apiUrl = "/velog?username=" + username + "&type=" + type;
+        const apiUrl = "/velog?username=" + username ;
 
         const req = new XMLHttpRequest();
         req.open("GET", apiUrl, true);

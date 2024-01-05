@@ -28,6 +28,12 @@ class Comment(
         protected set
 
 
+    /**
+     * Migration 일정을 잡아야 되나.
+     * Zalza, mulief
+     *
+     */
+
 
 
 //    fun toCardDto(): CommentCardDto {

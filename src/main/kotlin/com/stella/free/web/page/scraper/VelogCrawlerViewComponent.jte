@@ -1,7 +1,6 @@
-@import com.stella.free.web.component.table.CommonTableViewComponent
+
 @import java.util.List
 
-@param CommonTableViewComponent commonTableViewComponent
 
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
 

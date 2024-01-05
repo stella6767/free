@@ -4,7 +4,6 @@ import com.stella.free.core.scrap.dto.AsyncType
 import com.stella.free.core.scrap.dto.VelogCrawlerReqDto
 import com.stella.free.core.scrap.service.DummyDataJenService
 import com.stella.free.core.scrap.service.VelogCrawler
-import com.stella.free.web.component.table.CommonTableViewComponent
 import jakarta.servlet.http.HttpServletResponse
 import jakarta.validation.Valid
 import org.springframework.http.HttpHeaders
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*
 @Controller
 class ScrapController(
     private val dummyDataJenService: DummyDataJenService,
-    private val commonTableViewComponent: CommonTableViewComponent,
     private val velogCrawler: VelogCrawler
 ) {
 

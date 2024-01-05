@@ -19,6 +19,16 @@ class CommonTableViewComponent(
             it.name
         } ?: listOf()
 
+//        for (dummyPerson in dummyPeople) {
+//
+//            dummyPerson.javaClass.declaredFields.forEach {
+//                val toString = it.get(dummyPerson).toString()
+//            }
+//
+//
+//        }
+
+
         return ViewContext(
             "datas" toProperty dummyPeople,
             "fieldNames" toProperty fieldNames,

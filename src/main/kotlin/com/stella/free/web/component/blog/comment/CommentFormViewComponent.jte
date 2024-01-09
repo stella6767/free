@@ -64,6 +64,7 @@
     <div class="px-3 mb-2 mt-2">
             <textarea placeholder="comment"
                       name="content"
+                      id="comment-text"
                       class="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white">
 <%--                      disabled="${!isLogin}"--%>
             </textarea>
@@ -85,6 +86,7 @@
           hx-post="/comment"
           hx-swap="beforeend"
           hx-target="#comment-card-${idAncestor}"
+          hx-on="htmx:afterRequest: document.getElementById('comment-form-${idAncestor}').reset()"
     >
         ${content}
     </form>
@@ -97,6 +99,7 @@
           hx-post="/comment"
           hx-target="#comment-card-container"
           hx-swap="beforeend"
+          hx-on="htmx:afterRequest: document.getElementById('comment-form-${idAncestor}').reset()"
     >
         ${content}
     </form>

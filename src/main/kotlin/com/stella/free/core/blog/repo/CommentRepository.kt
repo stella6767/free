@@ -28,6 +28,7 @@ interface CommentRepository {
     fun findCommentsByBottomUp(commentId: Long, depth: Int): List<Comment>
     fun findCommentClosuresByBottomUp(commentId: Long, depth: Int? = null): List<CommentClosure>
     fun findCommentById(id: Long): Comment?
+    fun findCommentByIdAndPassword(id: Long, password: String): Comment?
 }
 
 
@@ -51,6 +52,22 @@ class CommentRepositoryImpl(
 //    }
 
 
+    override fun findCommentByIdAndPassword(id: Long, password:String): Comment? {
+
+        return queryFactory
+            .singleOrNullQuery {
+                select(entity(Comment::class))
+                from(entity(Comment::class))
+                where(
+                    and(
+                        column(Comment::id).equal(id),
+                        column(Comment::password).equal(password),
+                    )
+                )
+            }
+    }
+
+
     override fun findCommentById(id: Long): Comment? {
 
         return queryFactory
@@ -66,13 +83,13 @@ class CommentRepositoryImpl(
 
     override fun findCommentsByPostId(id: Long): List<CommentClosure> {
 
-        //todo migration
+        //todo migration 2 => 3
 
         return queryFactory.listQuery {
             select(entity(CommentClosure::class))
             from(entity(CommentClosure::class))
             fetch(CommentClosure::idDescendant)
-            fetch(Comment::user)
+            fetch(Comment::user, JoinType.LEFT)
             fetch(Comment::post)
             where(
                 nestedCol(col(Comment::post), Post::id).equal(id)
@@ -170,7 +187,7 @@ class CommentRepositoryImpl(
             select(entity(CommentClosure::class))
             from(entity(CommentClosure::class))
             fetch(CommentClosure::idDescendant)
-            fetch(Comment::user)
+            fetch(Comment::user, JoinType.LEFT)
             fetch(Comment::post)
             where(
                 findByDepthAndCommentId(commentId, depth)

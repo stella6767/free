@@ -59,11 +59,10 @@ repositories {
 }
 
 dependencies {
+
     //aws
     implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.0.1"))
     implementation("io.awspring.cloud:spring-cloud-aws-starter-s3")
-
-
 
     implementation("org.dhatim:fastexcel:0.16.4")
     implementation("org.dhatim:fastexcel-reader:0.16.4")

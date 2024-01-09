@@ -39,8 +39,10 @@ class Comment(
         protected set
 
 
-    fun deleteByUser(){
-        this.content = "deleted By User"
+    fun deleteByUser(): String {
+        val deletedComment = "deleted By User"
+        this.content = deletedComment
+        return deletedComment
     }
 
 

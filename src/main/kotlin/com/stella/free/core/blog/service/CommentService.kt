@@ -11,6 +11,7 @@ import com.stella.free.global.util.logger
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.util.StringUtils
 
 @Service
 class CommentService(
@@ -42,14 +43,15 @@ class CommentService(
 
 
     @Transactional
-    fun deleteComment(id:Long) {
+    fun deleteComment(id: Long, password: String?): String {
 
-        val comment =
-            commentRepository.findCommentById(id) ?: throw EntityNotFoundException("comment $id not found")
+        val comment = if (StringUtils.hasLength(password)){
+            commentRepository.findCommentByIdAndPassword(id, password!!)
+        }else{
+            commentRepository.findCommentById(id)
+        } ?: throw EntityNotFoundException("comment $id not found")
 
-        comment.deleteByUser()
-
-
+        return comment.deleteByUser()
     }
 
 

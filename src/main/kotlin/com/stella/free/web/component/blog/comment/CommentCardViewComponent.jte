@@ -14,7 +14,7 @@
         <div class="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
             <strong>${comment.getUsername()}</strong>
             <span class="text-xs text-gray-400">${comment.getCreatedAt()}</span>
-            <p class="text-sm">
+            <p class="text-sm" id="comment-content-${comment.getCommentId()}">
                 @if(comment.getParentCommentUsername().isEmpty())
                 @else
                     <span class="truncate text-sm text-gray-400">@${comment.getParentCommentUsername()}</span>
@@ -56,7 +56,9 @@
                         @else
                             <input type="text"
                                    placeholder="input password"
-                                   name="password"
+                                   name="comment-password"
+                                   required
+                                   value=""
                                    class="input input-bordered input-xs w-full max-w-xs" />
 
                         @endif
@@ -64,8 +66,9 @@
                         <button class="btn btn-link delete-comment"
                                 x-on:click="deleteOpen = ! deleteOpen"
                                 hx-delete="/comment/${comment.getCommentId()}"
-                                hx-include="[name='password']"
-                                hx-swap="none"
+                                hx-include="[name='comment-password']"
+                                hx-trigger="click"
+                                hx-target="#comment-content-${comment.getCommentId()}"
                         >${message}</button>
 
                         <button class="btn btn-link delete-comment"

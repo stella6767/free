@@ -102,11 +102,9 @@ class BlogComponentController(
     @ResponseBody
     fun deleteCommentById(@PathVariable id:Long,
                           @RequestParam(required = false) password:String?
-                          ) {
+                          ): String {
 
-        log.info("id===>$id,  password=>$password")
-
-        return commentService.deleteComment(id)
+        return commentService.deleteComment(id, password)
     }
 
     @PostMapping("/comment")
@@ -117,6 +115,7 @@ class BlogComponentController(
 
         val childComment =
             commentService.findCommentsByBottomUp(comment.id)
+
 
         return commentCardViewComponent.render(childComment, commentCardViewComponent, commentSaveDto.paddingLeft)
     }

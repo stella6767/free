@@ -3,6 +3,7 @@ package com.stella.free.core.blog.dto
 import com.stella.free.core.blog.entity.Post
 import com.stella.free.core.account.entity.User
 import com.stella.free.global.util.TimeUtil
+import org.springframework.util.StringUtils
 import java.time.LocalDateTime
 
 
@@ -15,13 +16,11 @@ data class PostUpdateDto(
 )
 
 
-
-
 data class PostSaveDto(
     val title: String,
     val content: String,
     val postTags: List<String> = listOf(),
-    val username: String = "Anonymous",
+    val username: String,
 ) {
     fun toEntity(user: User, thumbnail: String?): Post {
 
@@ -30,7 +29,7 @@ data class PostSaveDto(
             title = this.title,
             content = this.content,
             thumbnail = thumbnail,
-            username = this.username,
+            username = if (StringUtils.hasLength(this.username)) this.username else "Anonymous",
         )
     }
 
@@ -52,7 +51,7 @@ data class PostDetailDto(
 ) {
 
     companion object {
-        fun fromEntity(post: Post, postMarkDown: String, tagNames:String = ""): PostDetailDto {
+        fun fromEntity(post: Post, postMarkDown: String, tagNames: String = ""): PostDetailDto {
 
             return PostDetailDto(
                 id = post.id,
@@ -80,7 +79,7 @@ data class PostCardDto(
     val username: String,
     val thumbnail: String?,
     val createdAt: String,
-){
+) {
 
     companion object {
 

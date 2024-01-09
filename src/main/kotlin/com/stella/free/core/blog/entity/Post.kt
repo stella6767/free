@@ -10,6 +10,7 @@ import com.stella.free.global.entity.BaseEntity
 import com.stella.free.global.util.TimeUtil
 import jakarta.persistence.*
 import org.hibernate.annotations.ColumnDefault
+import org.springframework.util.StringUtils
 import java.time.LocalDateTime
 
 @Entity
@@ -36,7 +37,7 @@ class Post(
     @ColumnDefault("0")
     var count = 0
 
-    @Column(name = "anonymous_username")
+    @Column(name = "username")
     var username = username
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -52,34 +53,40 @@ class Post(
     var deletedAt: LocalDateTime? = null
         protected set
 
-    fun updateId(id:Long){
-        this.id = id
-    }
 
 
     fun softDelete(now: LocalDateTime = LocalDateTime.now()) {
         this.deletedAt = now
-        val timeToString =
-            TimeUtil.localDateTimeToString(now, "YYYY-MM-dd E HH:mm")
-        this.title = "삭제된 게시글입니다"
-        this.content = "${timeToString} 경 삭제된 게시글입니다"
     }
 
+    fun update(
+               title: String,
+               content: String,
+               username: String,
+               createThumbnail: String?,
+               postTags: List<PostTag>
+    ) {
 
-    override fun toString(): String {
-        return "Post(id=$id, title='$title', content='$content', thumbnail='$thumbnail', count=$count, user=$user)"
-    }
+        this.title = title
+        this.content = content
 
-    fun update(dto: PostUpdateDto, createThumbnail: String?, postTags: List<PostTag>) {
+        if (StringUtils.hasLength(username)){
+            this.username = username
+        }else{
+            this.username = "Anonymous"
+        }
 
-        this.title = dto.title
-        this.content = dto.content
+
         this.thumbnail = createThumbnail
         this.postTags.clear()
 
         postTags.forEach {
             this.postTags.add(it)
         }
+    }
+
+    override fun toString(): String {
+        return "Post(id=$id, title='$title', content='$content', thumbnail='$thumbnail', count=$count, user=$user)"
     }
 
 

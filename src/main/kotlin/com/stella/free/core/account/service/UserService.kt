@@ -16,8 +16,7 @@ class UserService(
 
     private val log = logger()
 
-    //todo spring session 도입
-    //todo 댓글 라이브러리
+    //todo session clustering 도입
 
     override fun loadUserByUsername(username: String): UserPrincipal? {
 

@@ -1,6 +1,7 @@
 package com.stella.free.core.blog.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.stella.free.core.account.repo.UserRepository
 import com.stella.free.core.blog.dto.PostDetailDto
 import com.stella.free.core.blog.dto.PostSaveDto
 import com.stella.free.core.blog.dto.PostUpdateDto
@@ -36,9 +37,10 @@ import java.util.function.Supplier
 @Service
 class PostService(
     private val postRepository: PostRepository,
+    private val userRepository: UserRepository,
     private val fileUploader: FileUploader,
     private val hashTagRepository: HashTagRepository,
-    private val mapper:ObjectMapper
+    private val mapper: ObjectMapper
 ) {
 
     private val log = logger()
@@ -67,24 +69,21 @@ class PostService(
     fun generateDummyPost(id: Long): Post {
 
         val faker = Faker(Locale("ko"))
-        val jTransformer = JavaObjectTransformer()
         val image = faker.internet().image()
         val lorem = faker.lorem()
 
-        val schema: Schema<Any, Any> = Schema.of(
-            //Field.field("id", Supplier { faker.number().positive() }),
-            Field.field("title", Supplier { lorem.sentence() }),
-            Field.field("content", Supplier { generateDummyPostContent(lorem, image) }),
-            Field.field("thumbnail", Supplier { image }),
-            Field.field("anonymousUsername", Supplier { faker.name().fullName() }),
+        val user = userRepository.getReferenceById(1)
+
+        val post = Post(
+            id = id,
+            title = lorem.sentence(),
+            content = generateDummyPostContent(lorem, image),
+            thumbnail = image,
+            username = faker.name().fullName(),
+            user = user
         )
 
-        val post =
-            jTransformer.apply(Post::class.java, schema) as Post
-
-        post.updateId(id)
         postRepository.save(post)
-        println(post)
 
         return post
     }
@@ -142,7 +141,7 @@ class PostService(
 
 
     @Transactional
-    fun updatePost(dto: PostUpdateDto, principal: UserPrincipal?) {
+    fun updatePost(dto: PostUpdateDto, principal: UserPrincipal) {
 
         val post =
             postRepository.findPostById(dto.id) ?: throw PostNotFoundException()
@@ -153,9 +152,12 @@ class PostService(
             PostTag(post, hashTag)
         }
 
-
-        post.update(dto, createThumbnail(dto.content), postTags)
-
+        post.update(
+            dto.title,
+            dto.content,
+            dto.username,
+            createThumbnail(dto.content), postTags
+        )
 
     }
 
@@ -166,21 +168,19 @@ class PostService(
     }
 
 
-
-
     @Transactional
     fun findPostDetailById(id: Long): PostDetailDto {
 
         val post = postRepository.findById(id)
             .orElseThrow { throw EntityNotFoundException() }
 
-        post.count ++
+        post.count++
 
         val options = MutableDataSet()
         val postMarkDown =
             FlexmarkHtmlConverter.builder(options).build().convert(post.content)
 
-        return PostDetailDto.fromEntity(post,postMarkDown)
+        return PostDetailDto.fromEntity(post, postMarkDown)
     }
 
 
@@ -204,29 +204,25 @@ class PostService(
 
 
     @Transactional
-    fun deleteByIdAndPassword(id: Long,
-                              password: String,
-                              principal: UserPrincipal?) {
-
-        val post = if (principal != null) {
-            postRepository.findPostByIdAndUser(id, principal.user)
-        }else {
-            postRepository.findPostById(id)
-        }  ?: throw PostNotFoundException()
+    fun deleteById(
+        id: Long,
+        principal: UserPrincipal
+    ) {
+        val post =
+            postRepository.findPostById(id) ?: throw PostNotFoundException()
 
         post.softDelete()
-
     }
 
     @Transactional(readOnly = true)
-    fun findPostsByKeyword(keyword:String, pageable: Pageable): Page<Post> {
+    fun findPostsByKeyword(keyword: String, pageable: Pageable): Page<Post> {
 
         return postRepository.findPostsByKeyword(keyword, pageable)
     }
 
 
     @Transactional(readOnly = true)
-    fun findPostById(id:Long): PostDetailDto {
+    fun findPostById(id: Long): PostDetailDto? {
         val post = postRepository.findPostById(id)
 
         val tagNames =
@@ -234,16 +230,15 @@ class PostService(
 
         log.debug("tagNames?  $tagNames")
 
-        return PostDetailDto.fromEntity(post!!, "", mapper.writeValueAsString(tagNames))
-            //.map { it.toDetailDto("") }
-            //.getOrNull()
+        return if (post != null) {
+            PostDetailDto.fromEntity(post, "", mapper.writeValueAsString(tagNames))
+        } else null
     }
 
     fun savePostImg(file: MultipartFile): String {
 
         return fileUploader.upload(file)
     }
-
 
 
 }

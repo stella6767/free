@@ -68,7 +68,7 @@ class BlogComponentController(
     @ResponseBody
     fun updatePost(
         @RequestBody postUpdateDto: PostUpdateDto,
-        @AuthenticationPrincipal principal: UserPrincipal?
+        @AuthenticationPrincipal principal: UserPrincipal
     ): String {
 
         postService.updatePost(postUpdateDto, principal)
@@ -82,11 +82,10 @@ class BlogComponentController(
     @ResponseBody
     fun deletePostById(
         @PathVariable id:Long,
-        @RequestParam password:String,
-        @AuthenticationPrincipal principal: UserPrincipal?
+        @AuthenticationPrincipal principal: UserPrincipal
     ): String {
 
-        postService.deleteByIdAndPassword(id, password, principal)
+        postService.deleteById(id, principal)
 
         return "ok"
     }

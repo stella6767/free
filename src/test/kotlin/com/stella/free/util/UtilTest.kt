@@ -3,6 +3,7 @@ package com.stella.free.util
 import com.stella.free.core.blog.entity.Post
 import com.stella.free.core.openapi.dto.Entry
 import com.stella.free.core.openapi.service.PublicApiService
+import com.stella.free.core.scrap.dto.AsyncType
 import com.stella.free.core.scrap.service.DummyDataJenService
 import com.stella.free.core.scrap.service.userTagsQuery
 import com.stella.free.global.config.TemplateConfiguration
@@ -21,6 +22,7 @@ import net.datafaker.transformations.Schema
 import org.aspectj.lang.ProceedingJoinPoint
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
 import org.junit.jupiter.api.Test
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 import java.time.LocalDateTime
 import java.util.*
@@ -156,37 +158,20 @@ class UtilTest {
         Thread.sleep(200)
     }
 
-    @Test
-    fun largeDataFakerTest3() {
 
-        val jenService = DummyDataJenService()
-
-        val measuredTime = measureTimeMillis {
-            val dummyPeople =
-                jenService.createDummyPersons(2, DummyDataJenService.AsyncType.SINGLE)
-            //println(dummyPeople)
-            println(dummyPeople.size)
-        }
-
-        println(measuredTime) //1645
-
-    }
 
     @Test
-    fun largeDataFakerTest2() {
+    fun encoderTest() {
 
-        val jenService = DummyDataJenService()
 
-        //https://jsonobject.tistory.com/606
+        val uuid =
+            UUID.randomUUID()
 
-//        val measuredTime = measureTimeMillis {
-//            val dummyPeople
-//            = jenService.createDummyPersonsByExecutorService(1000000)
-//            //println(dummyPeople)
-//            println(dummyPeople.size)
-//        }
-//
-//        println(measuredTime) //1114
+        val encPassword =
+            BCryptPasswordEncoder().encode(uuid.toString())
+
+        println(encPassword)
+
     }
 
     @Test
@@ -199,7 +184,7 @@ class UtilTest {
         val measuredTime = measureTimeMillis {
             runBlocking {
                 val dummyPeople =
-                    jenService.createDummyPersons(100000, DummyDataJenService.AsyncType.COROUTINE)
+                    jenService.createDummyPersons(100000, AsyncType.COROUTINE)
                 //println(dummyPeople)
                 println(dummyPeople.size)
             }
@@ -213,68 +198,7 @@ class UtilTest {
         CoroutineScope(Executors.newFixedThreadPool(1).asCoroutineDispatcher())
 
 
-    @Test
-    fun asTest() {
 
-        val time = measureTimeMillis {
-            runBlocking {
-                executeAsyncTest(DummyDataJenService.AsyncType.COROUTINE, 2)
-            }
-        }
-
-        println(time)
-
-    }
-
-    suspend fun executeAsyncTest(type: DummyDataJenService.AsyncType, size: Int): List<String> {
-
-        when (type) {
-            DummyDataJenService.AsyncType.SINGLE -> {
-
-                val tasks =
-                    arrayListOf<String>()
-
-                for (i in 1..size) {
-                    tasks.add(doSomething())
-                }
-
-                return tasks
-            }
-
-            DummyDataJenService.AsyncType.COROUTINE -> {
-
-                val deferreds =
-                    arrayListOf<Deferred<String>>()
-
-                for (i in 1..size) {
-                    val deferred = scope.async { doSomethingWithSuspend() }
-                    deferreds.add(deferred)
-                }
-
-                return deferreds.awaitAll()
-            }
-
-            DummyDataJenService.AsyncType.TASK -> {
-
-                val executorService = Executors.newFixedThreadPool(1)
-
-
-                for (i in 1..size) {
-
-                    val future = CompletableFuture.runAsync(
-                        { doSomething() },
-                        executorService
-                    )
-
-
-                }
-
-                return listOf()
-
-            }
-        }
-
-    }
 
     suspend fun doSomethingWithSuspend(): String {
         //delay(3000)

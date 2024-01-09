@@ -5,9 +5,7 @@
 
 @param Optional<PostDetailDto> post
 @param String tagNames
-@param Boolean isLogin
-@param String username
-@param Long userId
+
 
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
@@ -25,17 +23,12 @@
     <div class="flex justify-center gap-x-3 w-6/12 mx-auto">
 
         <input type="text"
-               required
-               disabled="${isLogin || (post.isPresent())}"
+
                x-model="formData.username"
-               placeholder="input your username"
+               placeholder="input your username. if you do not input, default name is Anonymous"
                class="input input-bordered w-full justify-self-center "/>
-
-
-        <input type="text"
-               x-model="formData.password"
-               placeholder="input your password"
-               class="input input-bordered w-full justify-self-center "/>
+        <%--               required--%>
+        <%--               disabled="${isLogin || (post.isPresent())}"--%>
 
     </div>
 
@@ -50,7 +43,7 @@
 
 
     <div class="flex w-6/12 mx-auto justify-center">
-        <input placeholder="태그를 입력하세요"
+        <input placeholder="태그를 입력하고 Enter 누르면 됩니다."
                name='hashtag'
                tabindex="2"
                class="input input-bordered justify-self-center w-full"
@@ -65,11 +58,14 @@
 
     <div class="flex justify-center gap-x-2">
 
-        @if(post.isEmpty())
-            <button class="btn btn-success">제출</button>
-        @else
-            <button class="btn btn-success">수정</button>
-        @endif
+        <button class="btn btn-success">제출</button>
+
+
+<%--        @if(post.isEmpty())--%>
+<%--            <button class="btn btn-success">제출</button>--%>
+<%--        @else--%>
+<%--            <button class="btn btn-success">수정</button>--%>
+<%--        @endif--%>
 
         <button @click="cancelPost" class="btn btn-warning">취소</button>
     </div>
@@ -94,6 +90,7 @@
 
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 
+
 <script>
 
     const input = document.querySelector('input[name=hashtag]');
@@ -109,7 +106,6 @@
 
     const postId = '${post.map((p)-> p.getId()).orElse(0L)}'
 
-
     if (postId != 0) {
         console.log("postId!", postId)
     } else {
@@ -121,8 +117,7 @@
         return {
             formData: {
                 title: '${post.map((p)-> p.getTitle()).orElse("")}',
-                username: '${post.map((p)-> p.getUsername()).orElse(username)}',
-                password: '',
+                username: '${post.map((p)-> p.getUsername()).orElse("")}',
                 content: "",
                 postTags: null,
             },
@@ -182,7 +177,6 @@
     const cancelPost = () => {
         location.href = "/blog"
     }
-
 
     let contentValue = '${post.map((p)-> p.getContent()).orElse("내용을 입력해주세요")}';
 

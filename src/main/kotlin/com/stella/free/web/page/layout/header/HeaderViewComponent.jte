@@ -14,11 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Whatever</title>
 
-
-
     <script src="https://unpkg.com/htmx.org@1.9.2"></script>
 <%--    <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>--%>
-
     <link href="https://cdn.jsdelivr.net/npm/daisyui@3.0.3/dist/full.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="/js/client.js" defer></script>
@@ -109,10 +106,8 @@
                             <li><a onclick="login_modal.showModal()">Login</a></li>
                         @else
                             <li><a href="/logout">LogOut</a></li>
+                            <li><a href="/post/editor">새글쓰기</a></li>
                         @endif
-
-                        <li><a href="/post/editor">새글쓰기</a></li>
-
                     </ul>
                 </details>
             </li>

@@ -17,8 +17,8 @@
 <%--            <input type="hidden" name="password" value=""/>--%>
 <%--        @endif--%>
 
-        <input type="text" name="password" placeholder="비밀번호를 입력해주세요"
-               class="input input-bordered w-full mb-2"/>
+<%--        <input type="text" name="password" placeholder="비밀번호를 입력해주세요"--%>
+<%--               class="input input-bordered w-full mb-2"/>--%>
 
         <div class="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
 
@@ -27,9 +27,10 @@
 
                     <div hx-delete="/post/${post.getId()}"
                          hx-swap="none"
-                         hx-include="[name='password']"
                          class="btn " id="post-delete-btn">삭제
                     </div>
+
+<%--                    hx-include="[name='password']"--%>
                 </div>
             </div>
 

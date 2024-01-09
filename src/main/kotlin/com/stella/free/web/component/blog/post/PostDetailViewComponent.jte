@@ -6,7 +6,7 @@
 @param java.util.List<String> postTags
 @param com.stella.free.web.component.blog.tag.TagViewComponent tagViewComponent
 @param com.stella.free.web.component.blog.post.PostModalViewComponent postModalViewComponent
-@param Content content
+@param Long userId
 
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
 <%--<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>--%>
@@ -26,7 +26,7 @@
 
 <%--        post.getDeletedAt() == null--%>
 
-        @if(post.getDeletedAt() == null)
+        @if(userId != null && (post.getUserId() == userId))
             <div class="flex gap-x-1">
                 <div
                         onclick="location.href='/post/editor?postId=${post.getId()}'"

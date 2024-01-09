@@ -17,29 +17,11 @@ class PostEditorViewComponent(
 
     fun render(postId: Long): ViewContext {
 
-        val post = if (postId != 0L) {
-            postService.findPostById(postId)
-        } else Optional.ofNullable(null)
-
-
-        val authentication =
-            SecurityContextHolder.getContext().authentication
-
-        val isLogin =
-            authentication !is AnonymousAuthenticationToken
-
-        val (username, userId) = if (isLogin) {
-            val userPrincipal = authentication.principal as UserPrincipal
-            Pair(userPrincipal.name,userPrincipal.user.id)
-        }else Pair("", null)
+        val post = postService.findPostById(postId)
 
         return ViewContext(
-            "post" toProperty post,
-            "tagNames" toProperty post.map { it.tagNames }.orElse("[]"),
-            "isLogin" toProperty isLogin,
-            "username" toProperty username,
-            "userId" toProperty userId,
-
+            "post" toProperty Optional.ofNullable(post),
+            "tagNames" toProperty Optional.ofNullable(post).map { it.tagNames }.orElse("[]"),
         )
     }
 

@@ -37,7 +37,6 @@ class PostCustomRepositoryImpl(
 ) : PostCustomRepository {
 
 
-
     override fun findPostById(id: Long): Post? {
 
         val post = queryFactory
@@ -58,7 +57,7 @@ class PostCustomRepositoryImpl(
         return post
     }
 
-    override fun findPostByIdAndUser(id:Long, user: User): Post? {
+    override fun findPostByIdAndUser(id: Long, user: User): Post? {
 
         return queryFactory
             .singleOrNullQuery {
@@ -99,6 +98,11 @@ class PostCustomRepositoryImpl(
             .listQuery {
                 select(entity(Post::class))
                 from(entity(Post::class))
+                where(
+                    and(
+                        column(Post::deletedAt).isNull(),
+                    )
+                )
                 fetch(Post::user, JoinType.LEFT)
                 offset(pageable.offset.toInt())
                 limit(pageable.pageSize)
@@ -108,6 +112,11 @@ class PostCustomRepositoryImpl(
         val count = queryFactory.singleOrNullQuery {
             select(count(column(Post::id)))
             from(entity(Post::class))
+            where(
+                and(
+                    column(Post::deletedAt).isNull()
+                )
+            )
         }
 
 
@@ -127,7 +136,7 @@ class PostCustomRepositoryImpl(
                     or(
                         column(Post::title).like("%$keyword%"),
                         column(Post::content).like("%$keyword%"),
-                    )
+                    ).and(  column(Post::deletedAt).isNull())
                 )
                 offset(pageable.offset.toInt())
                 limit(pageable.pageSize)
@@ -141,7 +150,7 @@ class PostCustomRepositoryImpl(
                 or(
                     column(Post::title).like("%$keyword%"),
                     column(Post::content).like("%$keyword%"),
-                )
+                ).and(  column(Post::deletedAt).isNull())
             )
         }
 

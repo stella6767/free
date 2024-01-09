@@ -12,6 +12,7 @@ import com.stella.free.core.blog.entity.CommentClosure
 import com.stella.free.core.blog.entity.Post
 import com.stella.free.global.util.singleOrNullQuery
 import jakarta.persistence.EntityManager
+import jakarta.persistence.criteria.JoinType
 import org.springframework.stereotype.Repository
 import org.springframework.util.Assert
 import kotlin.reflect.KProperty1
@@ -26,9 +27,8 @@ interface CommentRepository {
     //fun findCommentsByPostIdTest(id: Long): List<CommentClosure>
     fun findCommentsByBottomUp(commentId: Long, depth: Int): List<Comment>
     fun findCommentClosuresByBottomUp(commentId: Long, depth: Int? = null): List<CommentClosure>
+    fun findCommentById(id: Long): Comment?
 }
-
-
 
 
 @Repository
@@ -51,7 +51,22 @@ class CommentRepositoryImpl(
 //    }
 
 
+    override fun findCommentById(id: Long): Comment? {
+
+        return queryFactory
+            .singleOrNullQuery {
+                select(entity(Comment::class))
+                from(entity(Comment::class))
+                where(
+                    column(Comment::id).equal(id),
+                    )
+            }
+    }
+
+
     override fun findCommentsByPostId(id: Long): List<CommentClosure> {
+
+        //todo migration
 
         return queryFactory.listQuery {
             select(entity(CommentClosure::class))
@@ -66,9 +81,6 @@ class CommentRepositoryImpl(
     }
 
 
-
-
-
     override fun saveComment(comment: Comment): Comment {
         Assert.notNull(comment, "Entity must not be null")
         return if (comment.id == 0L) {
@@ -80,12 +92,11 @@ class CommentRepositoryImpl(
     }
 
 
-
-    override fun saveCommentClosure(idDescendant: Long, idAncestor:Long): Int {
+    override fun saveCommentClosure(idDescendant: Long, idAncestor: Long): Int {
 
         var executeCount = 0
 
-        val parentComment = if (idAncestor == 0L ) null else idAncestor
+        val parentComment = if (idAncestor == 0L) null else idAncestor
 
         val sql = """
             INSERT INTO comment_closure
@@ -96,7 +107,7 @@ class CommentRepositoryImpl(
 
         executeCount += em.createNativeQuery(sql).executeUpdate()
 
-        if (parentComment != null){
+        if (parentComment != null) {
 
             executeCount += em.createNativeQuery(
                 """               
@@ -117,7 +128,6 @@ class CommentRepositoryImpl(
 
         return executeCount
     }
-
 
 
     override fun findCommentByAncestorComment(idAncestor: Long): List<Comment> {
@@ -174,7 +184,7 @@ class CommentRepositoryImpl(
     ): PredicateSpec {
         //.and(column(CategoryClosure::depth).equal(depth))
         return and(
-            nestedCol(col(CommentClosure::idDescendant),Comment::id).equal(
+            nestedCol(col(CommentClosure::idDescendant), Comment::id).equal(
                 commentId
             ),
             depth?.let { column(CommentClosure::depth).lessThan(depth) },

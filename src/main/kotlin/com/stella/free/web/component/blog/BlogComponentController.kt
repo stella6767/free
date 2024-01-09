@@ -98,6 +98,17 @@ class BlogComponentController(
     }
 
 
+    @DeleteMapping("/comment/{id}")
+    @ResponseBody
+    fun deleteCommentById(@PathVariable id:Long,
+                          @RequestParam(required = false) password:String?
+                          ) {
+
+        log.info("id===>$id,  password=>$password")
+
+        return commentService.deleteComment(id)
+    }
+
     @PostMapping("/comment")
     fun saveComment(commentSaveDto: CommentSaveDto): ViewContext {
 

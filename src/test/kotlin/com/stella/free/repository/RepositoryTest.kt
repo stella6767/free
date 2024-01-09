@@ -83,12 +83,12 @@ class RepositoryTest(
             convertedCommentClosures.filter { it.depth == 0 }
 
 
-        rootComments.map { it.toCardDto() }.forEach { println(it) }
+        rootComments.map { CommentCardDto.fromEntity(it) }.forEach { println(it) }
         println("================================================")
 
 
         val list = rootComments.map {
-            createTree(it.toCardDto(), commentClosures.map { it.toCardDto() })
+            createTree(CommentCardDto.fromEntity(it), commentClosures.map { CommentCardDto.fromEntity(it)})
         }
 
         println("!!!!!!!!!!!!!!!!!!")
@@ -114,7 +114,7 @@ class RepositoryTest(
 
         val commentCardDtos =
             commentClosures.associateBy { it.idDescendant.id }.map { it.value }.toList().filter { it.depth == 0 }.map {
-            createTree(it.toCardDto(), commentClosures.map { it.toCardDto() })
+            createTree(CommentCardDto.fromEntity(it), commentClosures.map { CommentCardDto.fromEntity(it) })
         }
 
         println("!!!!!!!!!!!!!!!!!!")
@@ -252,9 +252,9 @@ class RepositoryTest(
         println("================================================")
 
         val commentCardDto = if (commentClosures.size == 1) {
-            commentClosures.first().toCardDto()
+            CommentCardDto.fromEntity(commentClosures.first())
         }else{
-            commentClosures.map { it.toCardDto() }.maxBy { it.depth }
+            commentClosures.map { CommentCardDto.fromEntity(it)}.maxBy { it.depth }
         }
 
         println(commentCardDto)

@@ -15,6 +15,7 @@ interface UserRepository : JpaRepository<User, Long>, UserCustomRepository {
 interface UserCustomRepository {
     fun findByUsername(username: String): User?
     fun findByEmail(email: String): User?
+    fun findUserById(id: Long): User?
 }
 
 
@@ -24,6 +25,19 @@ class UserCustomRepositoryImpl(
     private val em: EntityManager,
 ) : UserCustomRepository {
 
+
+    override fun findUserById(id:Long): User? {
+
+        return queryFactory
+            .singleOrNullQuery {
+                select(entity(User::class))
+                from(entity(User::class))
+                where(
+                    column(User::id).equal(id)
+                )
+            }
+
+    }
 
     override fun findByUsername(username: String): User? {
 

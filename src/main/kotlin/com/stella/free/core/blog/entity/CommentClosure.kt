@@ -34,27 +34,6 @@ class CommentClosure(
         protected set
 
 
-    fun toCardDto(): CommentCardDto {
-
-        val parentCommentUsername =
-            if (this.idAncestor != this.idDescendant) this.idAncestor.user.username  else ""
-
-        return CommentCardDto(
-            commentId = this.idDescendant.id,
-            commentCloserId = this.id,
-            depth = this.depth,
-            idAncestor = this.idAncestor.id,
-            parentCommentUsername = parentCommentUsername,
-            idDescendant = this.idDescendant.id,
-            postId = this.idDescendant.post.id,
-            content = this.idDescendant.content,
-            username = this.idDescendant.user?.username ?: "익명",
-            createdAt = TimeUtil.localDateTimeToString(this.idDescendant.createdAt, "hh:mm:ss a")
-        )
-    }
-
-
-
     override fun toString(): String {
         return "CommentClosure(id=$id, idAncestor=${idAncestor?.id}, idDescendant=${idDescendant.id}, depth=$depth)"
     }

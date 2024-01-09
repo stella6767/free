@@ -27,8 +27,10 @@ class CommentService(
 
         val post =
             postRepository.findById(dto.postId).orElseThrow { throw EntityNotFoundException(dto.postId.toString()) }
+
         val user =
-            userRepository.getReferenceById(dto.userId)
+            userRepository.findUserById(dto.userId ?: 0)
+
         val comment =
             commentRepository.saveComment(dto.toEntity(post = post, user = user))
 
@@ -37,6 +39,19 @@ class CommentService(
 
         return comment
     }
+
+
+    @Transactional
+    fun deleteComment(id:Long) {
+
+        val comment =
+            commentRepository.findCommentById(id) ?: throw EntityNotFoundException("comment $id not found")
+
+        comment.deleteByUser()
+
+
+    }
+
 
 
     @Transactional(readOnly = true)
@@ -52,10 +67,11 @@ class CommentService(
 
         val commentClosures =
             commentRepository.findCommentClosuresByBottomUp(commentId, 2)
+
         return if (commentClosures.size == 1) {
-            commentClosures.first().toCardDto()
+            CommentCardDto.fromEntity(commentClosures.first())
         }else{
-            commentClosures.map { it.toCardDto() }.first { it.idAncestor != it.idDescendant }
+            commentClosures.map { CommentCardDto.fromEntity(it) }.first { it.idAncestor != it.idDescendant }
         }
     }
 
@@ -67,7 +83,7 @@ class CommentService(
             commentRepository.findCommentsByPostId(id)
 
         return commentClosures.associateBy { it.idDescendant.id }.map { it.value }.toList().filter { it.depth == 0 }.map {
-            createCommentTree(it.toCardDto(), commentClosures.map { it.toCardDto() })
+            createCommentTree(CommentCardDto.fromEntity(it), commentClosures.map { CommentCardDto.fromEntity(it) })
         }
     }
 

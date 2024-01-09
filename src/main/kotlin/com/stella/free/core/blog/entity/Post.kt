@@ -69,17 +69,13 @@ class Post(
 
         this.title = title
         this.content = content
-
         if (StringUtils.hasLength(username)){
             this.username = username
         }else{
             this.username = "Anonymous"
         }
-
-
         this.thumbnail = createThumbnail
         this.postTags.clear()
-
         postTags.forEach {
             this.postTags.add(it)
         }

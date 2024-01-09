@@ -101,10 +101,10 @@ class BlogComponentController(
     @DeleteMapping("/comment/{id}")
     @ResponseBody
     fun deleteCommentById(@PathVariable id:Long,
-                          @RequestParam(required = false) password:String?
+                          @RequestParam(required = false) commentPassword:String?
                           ): String {
 
-        return commentService.deleteComment(id, password)
+        return commentService.deleteComment(id, commentPassword)
     }
 
     @PostMapping("/comment")

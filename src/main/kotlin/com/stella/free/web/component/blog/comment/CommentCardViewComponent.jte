@@ -56,7 +56,7 @@
                         @else
                             <input type="text"
                                    placeholder="input password"
-                                   name="comment-password"
+                                   name="commentPassword"
                                    required
                                    value=""
                                    class="input input-bordered input-xs w-full max-w-xs" />
@@ -66,7 +66,7 @@
                         <button class="btn btn-link delete-comment"
                                 x-on:click="deleteOpen = ! deleteOpen"
                                 hx-delete="/comment/${comment.getCommentId()}"
-                                hx-include="[name='comment-password']"
+                                hx-include="[name='commentPassword']"
                                 hx-trigger="click"
                                 hx-target="#comment-content-${comment.getCommentId()}"
                         >${message}</button>

@@ -53,12 +53,13 @@
 
                         @if(userId != 0 &&  comment.getUserId() == userId)
                             !{message = "삭제";}
+                            <input type="hidden" id="commentPassword-${comment.getCommentId()}" name="test" value=""/>
                         @else
                             <input type="text"
                                    placeholder="input password"
                                    name="commentPassword"
+                                   id="commentPassword-${comment.getCommentId()}"
                                    required
-                                   value=""
                                    class="input input-bordered input-xs w-full max-w-xs" />
 
                         @endif
@@ -66,7 +67,7 @@
                         <button class="btn btn-link delete-comment"
                                 x-on:click="deleteOpen = ! deleteOpen"
                                 hx-delete="/comment/${comment.getCommentId()}"
-                                hx-include="[name='commentPassword']"
+                                hx-include="#commentPassword-${comment.getCommentId()}"
                                 hx-trigger="click"
                                 hx-target="#comment-content-${comment.getCommentId()}"
                         >${message}</button>

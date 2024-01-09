@@ -5,6 +5,7 @@ import com.stella.free.global.util.ScriptUtil
 import com.stella.free.global.util.logger
 import de.tschuehly.spring.viewcomponent.core.toMap
 import gg.jte.TemplateEngine
+import jakarta.persistence.EntityNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ProblemDetail
 import org.springframework.http.ResponseEntity
@@ -52,7 +53,7 @@ class ExceptionHandler(
     }
 
 
-    @ExceptionHandler(*arrayOf(AuthenticationException::class, AccessDeniedException::class))
+    @ExceptionHandler(*arrayOf(AuthenticationException::class, AccessDeniedException::class, EntityNotFoundException::class))
     fun handleAuthException(exception: Exception): String {
 
         log.error(exception.message)

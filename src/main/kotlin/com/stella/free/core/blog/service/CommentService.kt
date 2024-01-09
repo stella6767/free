@@ -45,8 +45,8 @@ class CommentService(
     @Transactional
     fun deleteComment(id: Long, password: String?): String {
 
-        val comment = if (StringUtils.hasLength(password)){
-            commentRepository.findCommentByIdAndPassword(id, password!!)
+        val comment = if (password != null){
+            commentRepository.findCommentByIdAndPassword(id, password)
         }else{
             commentRepository.findCommentById(id)
         } ?: throw EntityNotFoundException("comment $id not found")

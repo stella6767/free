@@ -104,6 +104,8 @@ class BlogComponentController(
                           @RequestParam(required = false) commentPassword:String?
                           ): String {
 
+        log.info("??????$commentPassword")
+
         return commentService.deleteComment(id, commentPassword)
     }
 

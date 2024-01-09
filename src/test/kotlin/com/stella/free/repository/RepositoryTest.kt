@@ -2,6 +2,7 @@ package com.stella.free.repository
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.stella.free.core.blog.dto.CommentCardDto
+import com.stella.free.core.blog.dto.PostCardDto
 import com.stella.free.core.blog.repo.CommentRepository
 import com.stella.free.core.blog.repo.HashTagRepository
 import com.stella.free.core.blog.repo.PostRepository
@@ -50,7 +51,7 @@ class RepositoryTest(
 
 
         val map =
-            posts.map { it.post }.map { it.toCardDto("") }
+            posts.map { it.post }.map { PostCardDto.fromEntity(it,"") }
 
 
 

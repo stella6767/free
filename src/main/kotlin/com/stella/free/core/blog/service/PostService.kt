@@ -117,26 +117,19 @@ class PostService(
 
 
     @Transactional
-    fun savePost(postSaveDto: PostSaveDto, principal: UserPrincipal?) {
-
-        if (principal != null) {
-            log.info("Saving post $principal")
-        }
-
-        log.info("Saving post without user => $postSaveDto")
+    fun savePost(postSaveDto: PostSaveDto, principal: UserPrincipal) {
 
         val thumbnail =
             createThumbnail(postSaveDto.content)
 
         val post =
-            postRepository.save(postSaveDto.toEntity(principal?.user, thumbnail))
+            postRepository.save(postSaveDto.toEntity(principal.user, thumbnail))
 
         postSaveDto.postTags.forEach {
             val hashTag =
                 hashTagRepository.findByName(it) ?: hashTagRepository.save(HashTag(name = it))
             hashTagRepository.savePostTag(PostTag(post, hashTag))
         }
-
     }
 
     private fun createThumbnail(content: String): String? {
@@ -152,7 +145,7 @@ class PostService(
     fun updatePost(dto: PostUpdateDto, principal: UserPrincipal?) {
 
         val post =
-            postRepository.findPostByIdAndPassword(dto.id, dto.password) ?: throw PostNotFoundException()
+            postRepository.findPostById(dto.id) ?: throw PostNotFoundException()
 
         val postTags = dto.postTags.map {
             val hashTag =
@@ -187,7 +180,7 @@ class PostService(
         val postMarkDown =
             FlexmarkHtmlConverter.builder(options).build().convert(post.content)
 
-        return post.toDetailDto(postMarkDown)
+        return PostDetailDto.fromEntity(post,postMarkDown)
     }
 
 
@@ -218,7 +211,7 @@ class PostService(
         val post = if (principal != null) {
             postRepository.findPostByIdAndUser(id, principal.user)
         }else {
-            postRepository.findPostByIdAndPassword(id, password)
+            postRepository.findPostById(id)
         }  ?: throw PostNotFoundException()
 
         post.softDelete()
@@ -233,15 +226,15 @@ class PostService(
 
 
     @Transactional(readOnly = true)
-    fun findPostById(id:Long): Optional<PostDetailDto> {
+    fun findPostById(id:Long): PostDetailDto {
         val post = postRepository.findPostById(id)
 
         val tagNames =
-            post.map { it.postTags }.map { it.map { it.hashTag.name } }.orElse(listOf())
+            post?.postTags?.map { it.hashTag.name } ?: listOf()
 
         log.debug("tagNames?  $tagNames")
 
-        return post.map { it.toDetailDto("", mapper.writeValueAsString(tagNames)) }
+        return PostDetailDto.fromEntity(post!!, "", mapper.writeValueAsString(tagNames))
             //.map { it.toDetailDto("") }
             //.getOrNull()
     }

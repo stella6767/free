@@ -55,7 +55,7 @@ class BlogComponentController(
     @ResponseBody
     fun savePost(
         @RequestBody postSaveDto: PostSaveDto,
-        @AuthenticationPrincipal principal: UserPrincipal?
+        @AuthenticationPrincipal principal: UserPrincipal
     ): String {
 
         postService.savePost(postSaveDto, principal)

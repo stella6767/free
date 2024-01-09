@@ -19,9 +19,8 @@ class Post(
     title: String,
     content:String,
     thumbnail:String?,
-    user: User?,
-    anonymousUsername:String,
-    anonymousPassword:String,
+    user: User,
+    username:String,
 ) : BaseEntity(id=id) {
 
     @Column(nullable = false, length = 100)
@@ -38,11 +37,7 @@ class Post(
     var count = 0
 
     @Column(name = "anonymous_username")
-    var anonymousUsername = anonymousUsername
-
-    @Column(name = "anonymous_password")
-    var password = anonymousPassword
-
+    var username = username
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
@@ -71,36 +66,6 @@ class Post(
     }
 
 
-    fun toCardDto(thumbnailContent: String): PostCardDto {
-
-        return PostCardDto(
-            id = this.id,
-            title = this.title,
-            thumbnail = this.thumbnail ?: "/img/no-thumbnail.jpeg",
-            thumbnailContent = thumbnailContent,
-            username = this.user?.username ?: this.anonymousUsername,
-            createdAt = TimeUtil.localDateTimeToString(this.createdAt, "YYYY-MM-dd E HH:mm")
-        )
-    }
-
-    fun toDetailDto(postMarkDown: String, tagNames:String = ""): PostDetailDto {
-
-        return PostDetailDto(
-            id = this.id,
-            userId = this.user?.id,
-            title = this.title,
-            thumbnail = this.thumbnail,
-            content = this.content,
-            anonymousPassword = this.password,
-            tagNames = tagNames,
-            markDownContent = postMarkDown,
-            username = this.user?.username ?: this.anonymousUsername,
-            createdAt = TimeUtil.localDateTimeToString(this.createdAt, "YYYY-MM-dd E HH:mm"),
-            deletedAt = this.deletedAt
-        )
-    }
-
-
     override fun toString(): String {
         return "Post(id=$id, title='$title', content='$content', thumbnail='$thumbnail', count=$count, user=$user)"
     }
@@ -108,11 +73,10 @@ class Post(
     fun update(dto: PostUpdateDto, createThumbnail: String?, postTags: List<PostTag>) {
 
         this.title = dto.title
-        this.password = dto.password
         this.content = dto.content
         this.thumbnail = createThumbnail
-
         this.postTags.clear()
+
         postTags.forEach {
             this.postTags.add(it)
         }

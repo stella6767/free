@@ -1,5 +1,6 @@
 package com.stella.free.web.component.blog.post
 
+import com.stella.free.core.blog.dto.PostCardDto
 import com.stella.free.core.blog.entity.Post
 import com.stella.free.global.util.logger
 import de.tschuehly.spring.viewcomponent.core.ViewComponent
@@ -20,7 +21,7 @@ class PostCardViewComponent(
             Jsoup.parse(post.content).text()
 
         return ViewContext(
-            "post" toProperty post.toCardDto(text)
+            "post" toProperty PostCardDto.fromEntity(post, text)
         )
     }
 

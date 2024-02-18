@@ -1,12 +1,17 @@
 package com.stella.free.core.blog.repo
 
+import com.linecorp.kotlinjdsl.dsl.jpql.jpql
 import com.linecorp.kotlinjdsl.query.spec.predicate.PredicateSpec
 import com.linecorp.kotlinjdsl.querydsl.expression.col
 import com.linecorp.kotlinjdsl.querydsl.expression.column
 import com.linecorp.kotlinjdsl.querydsl.from.fetch
+import com.linecorp.kotlinjdsl.querymodel.jpql.entity.Entities.entity
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderer
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
 import com.linecorp.kotlinjdsl.spring.data.listQuery
 import com.linecorp.kotlinjdsl.spring.data.querydsl.SpringDataCriteriaQueryDsl
+import com.stella.free.core.account.entity.User
 import com.stella.free.core.blog.entity.Comment
 import com.stella.free.core.blog.entity.CommentClosure
 import com.stella.free.core.blog.entity.Post
@@ -34,7 +39,8 @@ interface CommentRepository {
 
 @Repository
 class CommentRepositoryImpl(
-    private val queryFactory: SpringDataQueryFactory,
+    private val renderer: JpqlRenderer,
+    private val ctx: JpqlRenderContext,
     private val em: EntityManager,
 ) : CommentRepository {
 
@@ -54,47 +60,81 @@ class CommentRepositoryImpl(
 
     override fun findCommentByIdAndPassword(id: Long, password:String): Comment? {
 
-        return queryFactory
-            .singleOrNullQuery {
-                select(entity(Comment::class))
-                from(entity(Comment::class))
-                where(
-                    and(
-                        column(Comment::id).equal(id),
-                        column(Comment::password).equal(password),
-                    )
+        val query = jpql {
+            select(
+                entity(Comment::class),
+            ).from(
+                entity(Comment::class)
+            ).where(
+                and(
+                    path(Comment::id).equal(id),
+                    path(Comment::password).equal(password),
                 )
+            )
+        }
+
+        val render =
+            renderer.render(query = query, ctx)
+
+        val fetch = em.createQuery(render.query, Comment::class.java).apply {
+            render.params.forEach { name, value ->
+                setParameter(name, value)
             }
+        }.singleResult
+
+        return fetch
     }
 
 
     override fun findCommentById(id: Long): Comment? {
 
-        return queryFactory
-            .singleOrNullQuery {
-                select(entity(Comment::class))
-                from(entity(Comment::class))
-                where(
-                    column(Comment::id).equal(id),
-                    )
+        val query = jpql {
+            select(
+                entity(Comment::class),
+            ).from(
+                entity(Comment::class)
+            ).where(
+                path(Comment::id).equal(id)
+            )
+        }
+
+        val render = renderer.render(query = query, ctx)
+
+        val fetch = em.createQuery(render.query, Comment::class.java).apply {
+            render.params.forEach { name, value ->
+                setParameter(name, value)
             }
+        }.singleResult
+
+
+        return fetch
     }
 
 
     override fun findCommentsByPostId(id: Long): List<CommentClosure> {
 
-        //todo migration 2 => 3
-
-        return queryFactory.listQuery {
-            select(entity(CommentClosure::class))
-            from(entity(CommentClosure::class))
-            fetch(CommentClosure::idDescendant)
-            fetch(Comment::user, JoinType.LEFT)
-            fetch(Comment::post)
-            where(
-                nestedCol(col(Comment::post), Post::id).equal(id)
+        val query = jpql {
+            select(
+                entity(CommentClosure::class),
+            ).from(
+                entity(CommentClosure::class),
+                fetchJoin(CommentClosure::idDescendant),
+                leftFetchJoin(Comment::user),
+                fetchJoin(Comment::post),
+            ).where(
+                path(Post::id).equal(id)
             )
         }
+
+        val render = renderer.render(query = query, ctx)
+
+        val fetch = em.createQuery(render.query, CommentClosure::class.java).apply {
+            render.params.forEach { name, value ->
+                setParameter(name, value)
+            }
+        }.resultList
+
+        return fetch
     }
 
 
@@ -149,50 +189,89 @@ class CommentRepositoryImpl(
 
     override fun findCommentByAncestorComment(idAncestor: Long): List<Comment> {
 
-        return queryFactory.listQuery {
-            select(entity(Comment::class))
-            from(entity(Comment::class))
 
-            join(
-                entity(CommentClosure::class),
-                on(entity(Comment::class).equal(column(CommentClosure::idDescendant)))
-            )
-            where(
-                nestedCol(col(CommentClosure::idAncestor), Comment::id).equal(idAncestor)
+        val query = jpql {
+            select(
+                entity(Comment::class),
+            ).from(
+                entity(Comment::class),
+                join(CommentClosure::class).on(path(Comment::id).eq(path(CommentClosure::id))), // Join,
+            ).where(
+                path(Comment::id).equal(idAncestor)
             )
         }
 
+        val render = renderer.render(query = query, ctx)
+
+        val fetch = em.createQuery(render.query, Comment::class.java).apply {
+            render.params.forEach { name, value ->
+                setParameter(name, value)
+            }
+        }.resultList
+
+
+        return fetch
     }
 
 
     override fun findCommentsByBottomUp(commentId: Long, depth: Int): List<Comment> {
 
-        return queryFactory.listQuery<Comment> {
-            select(entity(Comment::class))
-            from(entity(Comment::class))
-            join(
-                entity(CommentClosure::class),
-                on(entity(Comment::class).equal(column(CommentClosure::idAncestor)))
-            )
-            where(
-                findByDepthAndCommentId(commentId, depth)
+
+        val query = jpql {
+            select(
+                entity(Comment::class),
+            ).from(
+                entity(Comment::class),
+                join(CommentClosure::idAncestor)
+            ).where(
+                and(
+                    entity(CommentClosure::class, "b")(CommentClosure::idDescendant)(Comment::id).eq(commentId),
+                    depth?.let { path(CommentClosure::depth).lessThan(depth) },
+                )
             )
         }
+
+        val render = renderer.render(query = query, ctx)
+
+        val fetch = em.createQuery(render.query, Comment::class.java).apply {
+            render.params.forEach { name, value ->
+                setParameter(name, value)
+            }
+        }.resultList
+
+        return fetch
     }
 
 
     override fun findCommentClosuresByBottomUp(commentId: Long, depth: Int?): List<CommentClosure> {
 
-        return queryFactory.listQuery {
-            select(entity(CommentClosure::class))
-            from(entity(CommentClosure::class))
-            fetch(CommentClosure::idDescendant)
-            fetch(Comment::user, JoinType.LEFT)
-            fetch(Comment::post)
-            where(
-                findByDepthAndCommentId(commentId, depth)
+
+        val query = jpql {
+            select(
+                entity(CommentClosure::class),
+            ).from(
+                entity(CommentClosure::class),
+                fetchJoin(CommentClosure::idDescendant),
+                leftFetchJoin(Comment::user),
+                fetchJoin(Comment::post),
+            ).where(
+                and(
+                    entity(CommentClosure::class, "b")(CommentClosure::idDescendant)(Comment::id).eq(commentId),
+                    depth?.let { path(CommentClosure::depth).lessThan(depth) },
+                )
             )
         }
+
+        val render = renderer.render(query = query, ctx)
+
+        val fetch = em.createQuery(render.query, CommentClosure::class.java).apply {
+            render.params.forEach { name, value ->
+                setParameter(name, value)
+            }
+        }.resultList
+
+
+        return fetch
     }
 
     private fun <T> SpringDataCriteriaQueryDsl<T>.findByDepthAndCommentId(

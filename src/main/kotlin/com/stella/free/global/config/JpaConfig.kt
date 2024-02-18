@@ -2,6 +2,8 @@ package com.stella.free.global.config
 
 
 
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderer
 import jakarta.persistence.EntityManager
 import jakarta.persistence.PersistenceContext
 import org.springframework.context.annotation.Bean
@@ -22,6 +24,16 @@ class JpaConfig(
 //        return JPAQueryFactory(entityManager)
 //    }
 
+
+    @Bean
+    fun jpqlRenderContext(): JpqlRenderContext {
+        return JpqlRenderContext()
+    }
+
+    @Bean
+    fun jpqlRenderer(): JpqlRenderer {
+        return JpqlRenderer()
+    }
 
 
 

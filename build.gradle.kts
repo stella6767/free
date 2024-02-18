@@ -60,6 +60,7 @@ repositories {
 
 dependencies {
 
+
     //aws
     implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.0.1"))
     implementation("io.awspring.cloud:spring-cloud-aws-starter-s3")
@@ -89,6 +90,10 @@ dependencies {
     // kotlin jdsl
     // https://mvnrepository.com/artifact/com.linecorp.kotlin-jdsl/spring-data-kotlin-jdsl-starter-jakarta
     implementation("com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter-jakarta:2.2.1.RELEASE")
+    implementation("com.linecorp.kotlin-jdsl:jpql-dsl:3.3.1")
+    implementation("com.linecorp.kotlin-jdsl:jpql-render:3.3.1")
+
+
     // 더미데이터 셍상
     implementation("net.datafaker:datafaker:2.0.1")
 

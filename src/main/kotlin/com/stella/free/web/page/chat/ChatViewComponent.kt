@@ -11,7 +11,7 @@ class ChatViewComponent(
 ) {
 
     fun render(): ViewContext {
-
+        //test
         return ViewContext(
 
         )

@@ -3,6 +3,7 @@ package com.stella.free.global.util
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
 import com.linecorp.kotlinjdsl.spring.data.querydsl.SpringDataCriteriaQueryDsl
 import jakarta.persistence.NoResultException
+import jakarta.persistence.TypedQuery
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.regex.Pattern
@@ -29,4 +30,14 @@ inline fun String.removeSpecialCharacters(): String {
 
 inline fun <reified T> T.logger(): Logger {
     return LoggerFactory.getLogger(T::class.java)
+}
+
+
+fun <T> TypedQuery<T>.getSingleResultOrNull(): T? {
+
+    return try {
+        this.singleResult
+    } catch (e: NoResultException) {
+        null
+    }
 }

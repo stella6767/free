@@ -15,6 +15,7 @@ import com.stella.free.core.account.entity.User
 import com.stella.free.core.blog.entity.Comment
 import com.stella.free.core.blog.entity.CommentClosure
 import com.stella.free.core.blog.entity.Post
+import com.stella.free.global.util.getSingleResultOrNull
 import com.stella.free.global.util.singleOrNullQuery
 import jakarta.persistence.EntityManager
 import jakarta.persistence.criteria.JoinType
@@ -80,7 +81,7 @@ class CommentRepositoryImpl(
             render.params.forEach { name, value ->
                 setParameter(name, value)
             }
-        }.singleResult
+        }.getSingleResultOrNull()
 
         return fetch
     }
@@ -104,7 +105,7 @@ class CommentRepositoryImpl(
             render.params.forEach { name, value ->
                 setParameter(name, value)
             }
-        }.singleResult
+        }.getSingleResultOrNull()
 
 
         return fetch
@@ -189,15 +190,14 @@ class CommentRepositoryImpl(
 
     override fun findCommentByAncestorComment(idAncestor: Long): List<Comment> {
 
-
         val query = jpql {
             select(
                 entity(Comment::class),
             ).from(
                 entity(Comment::class),
-                join(CommentClosure::class).on(path(Comment::id).eq(path(CommentClosure::id))), // Join,
+                join(CommentClosure::idDescendant)
             ).where(
-                path(Comment::id).equal(idAncestor)
+                path(CommentClosure::id).equal(idAncestor)
             )
         }
 
@@ -256,7 +256,7 @@ class CommentRepositoryImpl(
                 fetchJoin(Comment::post),
             ).where(
                 and(
-                    entity(CommentClosure::class, "b")(CommentClosure::idDescendant)(Comment::id).eq(commentId),
+                    entity(CommentClosure::class)(CommentClosure::idDescendant)(Comment::id).eq(commentId),
                     depth?.let { path(CommentClosure::depth).lessThan(depth) },
                 )
             )

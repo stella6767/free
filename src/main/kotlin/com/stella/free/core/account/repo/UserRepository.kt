@@ -6,6 +6,7 @@ import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderer
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
 import com.stella.free.core.account.entity.User
+import com.stella.free.global.util.getSingleResultOrNull
 import com.stella.free.global.util.singleOrNullQuery
 import jakarta.persistence.EntityManager
 import org.springframework.data.jpa.repository.JpaRepository
@@ -50,7 +51,7 @@ class UserCustomRepositoryImpl(
             }
         }
 
-        return jpaQuery.singleResult
+        return jpaQuery.getSingleResultOrNull()
     }
 
     override fun findByUsername(username: String): User? {
@@ -72,7 +73,7 @@ class UserCustomRepositoryImpl(
             render.params.forEach { name, value ->
                 setParameter(name, value)
             }
-        }.singleResult
+        }.getSingleResultOrNull()
 
         return fetch
     }
@@ -96,7 +97,7 @@ class UserCustomRepositoryImpl(
             render.params.forEach { name, value ->
                 setParameter(name, value)
             }
-        }.singleResult
+        }.getSingleResultOrNull()
 
         return fetch
     }

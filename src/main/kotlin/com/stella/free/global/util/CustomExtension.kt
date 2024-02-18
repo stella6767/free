@@ -1,6 +1,13 @@
 package com.stella.free.global.util
 
 
+import com.linecorp.kotlinjdsl.dsl.jpql.Jpql
+import com.linecorp.kotlinjdsl.dsl.jpql.JpqlDsl
+import com.linecorp.kotlinjdsl.querymodel.jpql.select.SelectQuery
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRendered
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderer
+import jakarta.persistence.EntityManager
 import jakarta.persistence.NoResultException
 import jakarta.persistence.TypedQuery
 import org.slf4j.Logger
@@ -40,3 +47,25 @@ fun <T> TypedQuery<T>.getSingleResultOrNull(): T? {
         null
     }
 }
+
+
+fun getCountByQuery(
+    countQuery: SelectQuery<*>,
+    em:EntityManager,
+    ctx: JpqlRenderContext,
+    renderer: JpqlRenderer
+): Long {
+
+
+    val countQueryRenderer = renderer.render(query = countQuery, ctx)
+
+    val count = em.createQuery(countQueryRenderer.query, Long::class.java).apply {
+        countQueryRenderer.params.forEach { name, value ->
+            setParameter(name, value)
+        }
+    }.resultList.size
+
+    return count.toLong()
+}
+
+

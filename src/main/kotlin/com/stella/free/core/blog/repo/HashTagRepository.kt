@@ -6,6 +6,7 @@ import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderer
 
 import com.stella.free.core.blog.entity.*
+import com.stella.free.global.util.getCountByQuery
 import jakarta.persistence.EntityManager
 import jakarta.persistence.criteria.JoinType
 import org.springframework.data.domain.Page
@@ -17,7 +18,6 @@ import org.springframework.util.Assert
 
 interface HashTagRepository : JpaRepository<HashTag, Long>, HashTagCustomRepository {
     fun findByName(name: String): HashTag?
-
 }
 
 
@@ -103,29 +103,7 @@ class HashTagCustomRepositoryImpl(
         fetch.maxResults = pageable.pageSize
 
 
-        val countQuery = jpql {
-            select(
-                count(path(PostTag::id)),
-            ).from(
-                entity(PostTag::class),
-                leftJoin(PostTag::post),
-                leftJoin(PostTag::hashTag),
-                leftJoin(Post::user),
-            ).where(
-                path(HashTag::name).equal(tagName)
-            ).orderBy(
-                path(PostTag::id).desc(),
-            )
-        }
-
-        val countQueryRenderer = renderer.render(query = countQuery, ctx)
-
-
-        val count = em.createQuery(countQueryRenderer.query, Long::class.java).apply {
-            render.params.forEach { name, value ->
-                setParameter(name, value)
-            }
-        }.singleResult
+        val count = getCountByQuery(query, em , ctx, renderer)
 
         /**
          * entity를 조회하는 쿼리가 아니라면 ManyToOne 관계라 해도 fetch join X

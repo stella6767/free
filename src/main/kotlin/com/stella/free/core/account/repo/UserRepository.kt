@@ -1,13 +1,12 @@
 package com.stella.free.core.account.repo
 
 import com.linecorp.kotlinjdsl.dsl.jpql.jpql
-import com.linecorp.kotlinjdsl.querydsl.expression.column
+
 import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderer
-import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
+
 import com.stella.free.core.account.entity.User
 import com.stella.free.global.util.getSingleResultOrNull
-import com.stella.free.global.util.singleOrNullQuery
 import jakarta.persistence.EntityManager
 import org.springframework.data.jpa.repository.JpaRepository
 

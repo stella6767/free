@@ -1,17 +1,11 @@
 package com.stella.free.core.blog.repo
 
 import com.linecorp.kotlinjdsl.dsl.jpql.jpql
-import com.linecorp.kotlinjdsl.query.spec.ExpressionOrderSpec
-import com.linecorp.kotlinjdsl.querydsl.expression.col
-import com.linecorp.kotlinjdsl.querydsl.expression.column
-import com.linecorp.kotlinjdsl.querydsl.from.fetch
-import com.linecorp.kotlinjdsl.querydsl.from.join
+
 import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderer
-import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
-import com.linecorp.kotlinjdsl.spring.data.listQuery
+
 import com.stella.free.core.blog.entity.*
-import com.stella.free.global.util.singleOrNullQuery
 import jakarta.persistence.EntityManager
 import jakarta.persistence.criteria.JoinType
 import org.springframework.data.domain.Page
@@ -114,13 +108,13 @@ class HashTagCustomRepositoryImpl(
                 count(path(PostTag::id)),
             ).from(
                 entity(PostTag::class),
-                leftFetchJoin(PostTag::post),
-                leftFetchJoin(PostTag::hashTag),
-                leftFetchJoin(Post::user),
+                leftJoin(PostTag::post),
+                leftJoin(PostTag::hashTag),
+                leftJoin(Post::user),
             ).where(
                 path(HashTag::name).equal(tagName)
             ).orderBy(
-                path(PostTag::id).asc(),
+                path(PostTag::id).desc(),
             )
         }
 

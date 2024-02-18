@@ -88,8 +88,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     // kotlin jdsl
-    // https://mvnrepository.com/artifact/com.linecorp.kotlin-jdsl/spring-data-kotlin-jdsl-starter-jakarta
-    implementation("com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter-jakarta:2.2.1.RELEASE")
     implementation("com.linecorp.kotlin-jdsl:jpql-dsl:3.3.1")
     implementation("com.linecorp.kotlin-jdsl:jpql-render:3.3.1")
 

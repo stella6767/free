@@ -1,13 +1,16 @@
 package com.stella.free.core.blog.repo
 
-import com.linecorp.kotlinjdsl.query.spec.ExpressionOrderSpec
-import com.linecorp.kotlinjdsl.querydsl.expression.column
-import com.linecorp.kotlinjdsl.querydsl.from.fetch
-import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
-import com.linecorp.kotlinjdsl.spring.data.listQuery
+import com.linecorp.kotlinjdsl.dsl.jpql.jpql
+
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderer
+
 import com.stella.free.core.account.entity.User
+import com.stella.free.core.blog.entity.HashTag
 import com.stella.free.core.blog.entity.Post
-import com.stella.free.global.util.singleOrNullQuery
+import com.stella.free.core.blog.entity.PostTag
+import com.stella.free.global.util.getSingleResultOrNull
+
 import jakarta.persistence.EntityManager
 import jakarta.persistence.criteria.JoinType
 import org.springframework.data.domain.Page
@@ -32,45 +35,66 @@ interface PostCustomRepository {
 
 
 class PostCustomRepositoryImpl(
-    private val queryFactory: SpringDataQueryFactory,
+    private val renderer: JpqlRenderer,
+    private val ctx: JpqlRenderContext,
     private val em: EntityManager,
 ) : PostCustomRepository {
 
 
     override fun findPostById(id: Long): Post? {
 
-        val post = queryFactory
-            .singleOrNullQuery {
-                select(entity(Post::class))
-                from(entity(Post::class))
-//                fetch(PostTag::post, JoinType.LEFT)
-//                fetch(PostTag::hashTag, JoinType.LEFT)
-                fetch(Post::user, JoinType.LEFT)
-                where(
-                    and(
-                        column(Post::id).equal(id),
-                        //nestedCol(col(PostTag::post), Post::id).equal(id)
-                    )
-                )
-            }
 
-        return post
+        val query = jpql {
+            select(
+                entity(Post::class),
+            ).from(
+                entity(Post::class),
+                leftFetchJoin(Post::user),
+            ).where(
+                path(Post::id).equal(id)
+
+            )
+        }
+
+        val render = renderer.render(query = query, ctx)
+
+        val fetch = em.createQuery(render.query, Post::class.java).apply {
+            render.params.forEach { name, value ->
+                setParameter(name, value)
+            }
+        }.getSingleResultOrNull()
+
+
+        return fetch
     }
 
     override fun findPostByIdAndUser(id: Long, user: User): Post? {
 
-        return queryFactory
-            .singleOrNullQuery {
-                select(entity(Post::class))
-                from(entity(Post::class))
-                fetch(Post::user, JoinType.LEFT)
-                where(
-                    and(
-                        column(Post::user).equal(user),
-                        column(Post::id).equal(id),
-                    )
+
+        val query = jpql {
+            select(
+                entity(Post::class),
+            ).from(
+                entity(Post::class),
+                leftFetchJoin(Post::user),
+            ).where(
+                and(
+                    path(Post::id).equal(id),
+                    path(Post::user).equal(user),
                 )
+
+            )
+        }
+
+        val render = renderer.render(query = query, ctx)
+
+        val fetch = em.createQuery(render.query, Post::class.java).apply {
+            render.params.forEach { name, value ->
+                setParameter(name, value)
             }
+        }.getSingleResultOrNull()
+
+        return fetch
     }
 
 
@@ -94,68 +118,123 @@ class PostCustomRepositoryImpl(
 
     override fun findPostsByPage(pageable: Pageable): Page<Post> {
 
-        val fetch = queryFactory
-            .listQuery {
-                select(entity(Post::class))
-                from(entity(Post::class))
-                where(
-                    and(
-                        column(Post::deletedAt).isNull(),
-                    )
-                )
-                fetch(Post::user, JoinType.LEFT)
-                offset(pageable.offset.toInt())
-                limit(pageable.pageSize)
-                orderBy(ExpressionOrderSpec(column(Post::id), false))
-            }
-
-        val count = queryFactory.singleOrNullQuery {
-            select(count(column(Post::id)))
-            from(entity(Post::class))
-            where(
+        val query = jpql {
+            select(
+                entity(Post::class),
+            ).from(
+                entity(Post::class),
+                leftFetchJoin(Post::user),
+            ).where(
                 and(
-                    column(Post::deletedAt).isNull()
+                    path(Post::deletedAt).isNull(),
+                )
+            ).orderBy(
+                path(Post::id).desc(),
+            )
+        }
+
+        val render = renderer.render(query = query, ctx)
+
+        val fetch = em.createQuery(render.query, Post::class.java).apply {
+            render.params.forEach { name, value ->
+                setParameter(name, value)
+            }
+        }
+
+        fetch.firstResult = pageable.offset.toInt()
+        fetch.maxResults = pageable.pageSize
+
+
+        val countQuery = jpql {
+            select(
+                count(path(Post::id)),
+                ).from(
+                entity(Post::class),
+                leftJoin(Post::user),
+            ).where(
+                and(
+                    path(Post::deletedAt).isNull(),
                 )
             )
         }
 
+        val countQueryRenderer = renderer.render(query = countQuery, ctx)
+
+
+        val count = em.createQuery(countQueryRenderer.query, Long::class.java).apply {
+            render.params.forEach { name, value ->
+                setParameter(name, value)
+            }
+        }.singleResult
+
 
         return PageableExecutionUtils.getPage(
-            fetch, pageable
+            fetch.resultList, pageable
         ) { count ?: 0L }
     }
 
     override fun findPostsByKeyword(keyword: String, pageable: Pageable): Page<Post> {
 
-        val fetch = queryFactory
-            .listQuery {
-                select(entity(Post::class))
-                from(entity(Post::class))
-                fetch(Post::user, JoinType.LEFT)
-                where(
-                    or(
-                        column(Post::title).like("%$keyword%"),
-                        column(Post::content).like("%$keyword%"),
-                    ).and(  column(Post::deletedAt).isNull())
-                )
-                offset(pageable.offset.toInt())
-                limit(pageable.pageSize)
-                orderBy(ExpressionOrderSpec(column(Post::id), false))
-            }
 
-        val count = queryFactory.singleOrNullQuery {
-            select(count(column(Post::id)))
-            from(entity(Post::class))
-            where(
+        val query = jpql {
+            select(
+                entity(Post::class),
+            ).from(
+                entity(Post::class),
+                leftFetchJoin(Post::user),
+            ).where(
                 or(
-                    column(Post::title).like("%$keyword%"),
-                    column(Post::content).like("%$keyword%"),
-                ).and(  column(Post::deletedAt).isNull())
+                    path(Post::title).like("%$keyword%"),
+                    path(Post::content).like("%$keyword%"),
+                ).and(
+                    path(Post::deletedAt).isNull()
+                )
+            ).orderBy(
+                path(Post::id).desc(),
             )
         }
 
+        val render = renderer.render(query = query, ctx)
+
+        val fetch = em.createQuery(render.query, Post::class.java).apply {
+            render.params.forEach { name, value ->
+                setParameter(name, value)
+            }
+        }
+
+        fetch.firstResult = pageable.offset.toInt()
+        fetch.maxResults = pageable.pageSize
+
+
+        val countQuery = jpql {
+            select(
+                count(path(Post::id)),
+
+                ).from(
+                entity(Post::class),
+                leftJoin(Post::user),
+            ).where(
+                or(
+                    path(Post::title).like("%$keyword%"),
+                    path(Post::content).like("%$keyword%"),
+                ).and(
+                    path(Post::deletedAt).isNull()
+                )
+            )
+        }
+
+        val countQueryRenderer = renderer.render(query = countQuery, ctx)
+
+
+        val count = em.createQuery(countQueryRenderer.query, Long::class.java).apply {
+            render.params.forEach { name, value ->
+                setParameter(name, value)
+            }
+        }.singleResult
+
+
         return PageableExecutionUtils.getPage(
-            fetch, pageable
+            fetch.resultList, pageable
         ) { count ?: 0L }
 
     }

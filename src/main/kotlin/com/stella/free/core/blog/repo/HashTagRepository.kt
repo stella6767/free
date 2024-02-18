@@ -1,10 +1,13 @@
 package com.stella.free.core.blog.repo
 
+import com.linecorp.kotlinjdsl.dsl.jpql.jpql
 import com.linecorp.kotlinjdsl.query.spec.ExpressionOrderSpec
 import com.linecorp.kotlinjdsl.querydsl.expression.col
 import com.linecorp.kotlinjdsl.querydsl.expression.column
 import com.linecorp.kotlinjdsl.querydsl.from.fetch
 import com.linecorp.kotlinjdsl.querydsl.from.join
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderer
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
 import com.linecorp.kotlinjdsl.spring.data.listQuery
 import com.stella.free.core.blog.entity.*
@@ -19,7 +22,7 @@ import org.springframework.data.support.PageableExecutionUtils
 import org.springframework.util.Assert
 
 interface HashTagRepository : JpaRepository<HashTag, Long>, HashTagCustomRepository {
-    fun findByName(name:String) : HashTag?
+    fun findByName(name: String): HashTag?
 
 }
 
@@ -32,7 +35,8 @@ interface HashTagCustomRepository {
 }
 
 class HashTagCustomRepositoryImpl(
-    private val queryFactory: SpringDataQueryFactory,
+    private val renderer: JpqlRenderer,
+    private val ctx: JpqlRenderContext,
     private val em: EntityManager,
 ) : HashTagCustomRepository {
 
@@ -48,61 +52,96 @@ class HashTagCustomRepositoryImpl(
     }
 
 
-    override fun findTagsByPostId(postId:Long): List<PostTag> {
+    override fun findTagsByPostId(postId: Long): List<PostTag> {
 
-        return queryFactory.listQuery {
-            select(entity(PostTag::class))
-            from(entity(PostTag::class))
-            fetch(PostTag::post, JoinType.LEFT)
-            fetch(PostTag::hashTag, JoinType.LEFT)
-            where(
-                nestedCol(col(PostTag::post), Post::id).equal(postId)
+        val query = jpql {
+            select(
+                entity(PostTag::class),
+            ).from(
+                entity(PostTag::class),
+                leftFetchJoin(PostTag::post),
+                leftFetchJoin(PostTag::hashTag),
+            ).where(
+                path(Post::id).equal(postId)
+
             )
         }
 
+        val render = renderer.render(query = query, ctx)
+
+        val fetch = em.createQuery(render.query, PostTag::class.java).apply {
+            render.params.forEach { name, value ->
+                setParameter(name, value)
+            }
+        }.resultList
+
+        return fetch
     }
-
-
-
-
 
 
     override fun findPostsByTagName(tagName: String, pageable: Pageable): Page<PostTag> {
 
-        val fetch = queryFactory.listQuery {
-            select(entity(PostTag::class))
-            from(entity(PostTag::class))
-            fetch(PostTag::post, JoinType.LEFT)
-            fetch(PostTag::hashTag, JoinType.LEFT)
-            fetch(Post::user, JoinType.LEFT)
-            where(
-                nestedCol(col(PostTag::hashTag), HashTag::name).equal(tagName)
+        val query = jpql {
+            select(
+                entity(PostTag::class),
+            ).from(
+                entity(PostTag::class),
+                leftFetchJoin(PostTag::post),
+                leftFetchJoin(PostTag::hashTag),
+                leftFetchJoin(Post::user),
+            ).where(
+                path(HashTag::name).equal(tagName)
+            ).orderBy(
+                path(PostTag::id).asc(),
             )
-            offset(pageable.offset.toInt())
-            limit(pageable.pageSize)
-            orderBy(ExpressionOrderSpec(column(PostTag::id), false))
         }
 
+
+        val render = renderer.render(query = query, ctx)
+
+        val fetch = em.createQuery(render.query, PostTag::class.java).apply {
+            render.params.forEach { name, value ->
+                setParameter(name, value)
+            }
+        }
+
+        fetch.firstResult = pageable.offset.toInt()
+        fetch.maxResults = pageable.pageSize
+
+
+        val countQuery = jpql {
+            select(
+                count(path(PostTag::id)),
+            ).from(
+                entity(PostTag::class),
+                leftFetchJoin(PostTag::post),
+                leftFetchJoin(PostTag::hashTag),
+                leftFetchJoin(Post::user),
+            ).where(
+                path(HashTag::name).equal(tagName)
+            ).orderBy(
+                path(PostTag::id).asc(),
+            )
+        }
+
+        val countQueryRenderer = renderer.render(query = countQuery, ctx)
+
+
+        val count = em.createQuery(countQueryRenderer.query, Long::class.java).apply {
+            render.params.forEach { name, value ->
+                setParameter(name, value)
+            }
+        }.singleResult
 
         /**
          * entity를 조회하는 쿼리가 아니라면 ManyToOne 관계라 해도 fetch join X
          */
-        val count = queryFactory.singleOrNullQuery {
-            select(count(column(PostTag::id)))
-            from(entity(PostTag::class))
-            join(PostTag::post, JoinType.LEFT)
-            join(PostTag::hashTag, JoinType.LEFT)
-            join(Post::user, JoinType.LEFT)
-            where(
-                nestedCol(col(PostTag::hashTag),HashTag::name).equal(tagName)
-            )
-        }
+
 
         return PageableExecutionUtils.getPage(
-            fetch, pageable
+            fetch.resultList, pageable
         ) { count ?: 0L }
     }
-
 
 
 }

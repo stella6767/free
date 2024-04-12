@@ -8,7 +8,6 @@
 
 
 <div>
-
     <a
             id="category-tab-${CustomExtensionKt.removeSpecialCharacters(category)}"
             class="cursor-pointer tab tab-lifted m-tab"

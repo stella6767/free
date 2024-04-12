@@ -4,8 +4,6 @@ server:
     max-swallow-size: 500MB
   port: 8081
   # shutdown: "graceful"
-
-
   config:
     activate:
       on-profile:

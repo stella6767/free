@@ -6,6 +6,9 @@ gg:
 
 
 server:
+  tomcat:
+    max-swallow-size: 500MB
+  port: 8080
   servlet:
     context-path: /
     encoding:
@@ -13,6 +16,10 @@ server:
       enabled: true
 
 spring:
+
+  config:
+    import:
+      - classpath:secret.yml
   devtools:
     livereload:
       enabled: true
@@ -24,7 +31,26 @@ spring:
     name: free-app
   view-component:
     local-development: false
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
 
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate.default_batch_fetch_size: 1000
+      hibernate:
+        globally_quoted_identifiers: true #DB 예약어도 가능
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
 logging:
   config: classpath:logback-free.xml
@@ -36,7 +62,73 @@ management:
         include: "*"
 
 
+---
+
+server:
+
+  config:
+    activate:
+      on-profile:
+        - local
+
+spring:
+  cloud:
+    config:
+      enabled: false
+
+  config:
+    activate:
+      on-profile:
+        - local
+    import:
+      - classpath:secret.yml
+
+  devtools:
+    restart:
+      poll-interval: 1000
+      quiet-period: 900
+
+---
+
+server:
+
+  config:
+    activate:
+      on-profile:
+        - prod
+
+spring:
+  cloud:
+    config:
+      enabled: false
+
+  config:
+    activate:
+      on-profile:
+        - local
+    import:
+      - classpath:secret.yml
 
 
 
 
+---
+
+server:
+
+  config:
+    activate:
+      on-profile:
+        - test
+
+spring:
+  cloud:
+    config:
+      enabled: false
+
+  config:
+    activate:
+      on-profile:
+        - local
+    import:
+      - classpath:secret.yml

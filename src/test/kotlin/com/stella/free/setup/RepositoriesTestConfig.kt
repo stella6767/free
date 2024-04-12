@@ -1,10 +1,10 @@
 package com.stella.free.setup
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.linecorp.kotlinjdsl.query.creator.CriteriaQueryCreatorImpl
-import com.linecorp.kotlinjdsl.query.creator.SubqueryCreatorImpl
-import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
-import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactoryImpl
+
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderer
+
 
 import com.p6spy.engine.spy.P6SpyOptions
 import com.stella.free.core.blog.repo.CommentRepository
@@ -24,12 +24,25 @@ internal class RepositoriesTestConfig {
     @PersistenceContext
     private lateinit var entityManager: EntityManager
 
+
     @Bean
-    fun springDataQueryFactory(): SpringDataQueryFactory {
-        P6SpyOptions.getActiveInstance().logMessageFormat =
-            LoggingConfig.P6spyPrettySqlFormatter::class.java.name
-        return SpringDataQueryFactoryImpl(CriteriaQueryCreatorImpl(entityManager), SubqueryCreatorImpl())
+    fun loggingConfig(): LoggingConfig {
+
+        return LoggingConfig()
     }
+
+    @Bean
+    fun jpqlRenderContext(): JpqlRenderContext {
+
+        return JpqlRenderContext()
+    }
+
+    @Bean
+    fun jpqlRenderer(): JpqlRenderer {
+        return JpqlRenderer()
+    }
+
+
 
     @Bean
     fun objectMapper(): ObjectMapper {
@@ -41,7 +54,7 @@ internal class RepositoriesTestConfig {
     @Bean
     fun commentRepository(): CommentRepository {
 
-        return CommentRepositoryImpl(springDataQueryFactory(), entityManager)
+        return CommentRepositoryImpl(jpqlRenderer(), jpqlRenderContext(), entityManager)
     }
 
 

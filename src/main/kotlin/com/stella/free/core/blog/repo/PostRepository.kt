@@ -1,21 +1,13 @@
 package com.stella.free.core.blog.repo
 
 import com.linecorp.kotlinjdsl.dsl.jpql.jpql
-import com.linecorp.kotlinjdsl.querymodel.jpql.select.SelectQuery
-
 import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
-import com.linecorp.kotlinjdsl.render.jpql.JpqlRendered
 import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderer
-
 import com.stella.free.core.account.entity.User
-import com.stella.free.core.blog.entity.HashTag
 import com.stella.free.core.blog.entity.Post
-import com.stella.free.core.blog.entity.PostTag
 import com.stella.free.global.util.getCountByQuery
 import com.stella.free.global.util.getSingleResultOrNull
-
 import jakarta.persistence.EntityManager
-import jakarta.persistence.criteria.JoinType
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
@@ -34,6 +26,7 @@ interface PostCustomRepository {
     //fun findPostByIdAndPassword(id: Long, password: String): Post?
     fun findPostByIdAndUser(id: Long, user: User): Post?
     fun findPostById(id: Long): Post?
+    fun fromSubQueryTest()
 }
 
 
@@ -147,14 +140,13 @@ class PostCustomRepositoryImpl(
         fetch.firstResult = pageable.offset.toInt()
         fetch.maxResults = pageable.pageSize
 
-        val count = getCountByQuery(query, em , ctx, renderer)
+        val count = getCountByQuery(query, em, ctx, renderer)
 
 
         return PageableExecutionUtils.getPage(
             fetch.resultList, pageable
         ) { count }
     }
-
 
 
     override fun findPostsByKeyword(keyword: String, pageable: Pageable): Page<Post> {
@@ -189,13 +181,60 @@ class PostCustomRepositoryImpl(
         fetch.firstResult = pageable.offset.toInt()
         fetch.maxResults = pageable.pageSize
 
-        val count = getCountByQuery(query, em , ctx, renderer)
+        val count = getCountByQuery(query, em, ctx, renderer)
 
         return PageableExecutionUtils.getPage(
             fetch.resultList, pageable
         ) { count ?: 0L }
 
     }
+
+    data class DerivedEntity(
+        val id: Long,
+        //val count: Long,
+    )
+
+    override fun fromSubQueryTest() {
+
+        val query = jpql {
+
+            val subQuery = select<DerivedEntity>(
+                path(Post::id).`as`(expression("id")),
+                //count(Post::id).`as`(expression("count")),
+            ).from(
+                entity(Post::class),
+                //join(Post::class).on(path(HashTag::id).equal(path(Comment::id)))
+            )
+
+            select(
+                entity(DerivedEntity::class),
+            ).from(
+                subQuery.asEntity()
+            )
+        }
+
+
+        val render = renderer.render(query = query, ctx)
+
+        val fetch = em.createQuery(render.query, Long::class.java).apply {
+            render.params.forEach { name, value ->
+                setParameter(name, value)
+            }
+        }.resultList
+
+        println(fetch)
+
+
+//        var jpql =
+//            "SELECT sub.id FROM (SELECT p.id FROM Post p) sub"
+//
+//        val singleResult = em.createQuery(jpql, Long::class.java).resultList
+//
+//        println(singleResult)
+
+    }
+
+
 
 
 }

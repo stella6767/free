@@ -41,15 +41,18 @@ class ExceptionHandler(
 
 
     @ExceptionHandler(AppException::class)
-    fun handleMyAppException(exception: AppException): ResponseEntity<String> {
+    fun handleMyAppException(exception: AppException): String {
 
         log.error(exception.localizedMessage)
 
-        val status = HttpStatus.UNAUTHORIZED
+        val status = HttpStatus.INTERNAL_SERVER_ERROR
         val pd = ProblemDetail.forStatus(status.value())
         pd.detail = exception.localizedMessage
 
-        return ResponseEntity(objectMapper.writeValueAsString(pd), status)
+        //ResponseEntity(objectMapper.writeValueAsString(pd), status)
+
+        return ScriptUtil.alertErrorAndHistoryBack(objectMapper.writeValueAsString(pd.detail!!))
+
     }
 
 
@@ -88,6 +91,9 @@ class ExceptionHandler(
 
         return objectMapper.writeValueAsString(detail)
     }
+
+
+
 
 
     private fun createProblemDetail(status: HttpStatus, message:String): ProblemDetail {

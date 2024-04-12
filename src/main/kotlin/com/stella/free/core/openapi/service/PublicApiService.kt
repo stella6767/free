@@ -2,6 +2,7 @@ package com.stella.free.core.openapi.service
 
 import com.stella.free.core.openapi.dto.*
 import com.stella.free.core.openapi.type.PublicApiEndPoints
+import com.stella.free.global.exception.OpenApiException
 import com.stella.free.global.util.logger
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
@@ -26,7 +27,7 @@ class PublicApiService(
             .accept(MediaType.ALL)
             .retrieve()
             .bodyToMono<PublicApiCategoriesDto>()
-            .block() ?: throw RuntimeException("cant get public api category")
+            .block() ?: throw OpenApiException("cant get public api category")
 
         return publicApiCategoriesDto
     }
@@ -47,7 +48,7 @@ class PublicApiService(
             .accept(MediaType.ALL)
             .retrieve()
             .bodyToMono<EntryListDto>()
-            .block() ?: throw RuntimeException("cant get public api category")
+            .block() ?: throw OpenApiException("cant get public api category")
     }
 
 

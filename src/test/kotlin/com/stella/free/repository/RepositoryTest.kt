@@ -34,11 +34,12 @@ class RepositoryTest(
     @Test
     fun getTagsTest(){
 
-//        val post = postRepository.findPostById(96)
-//
+        //val post = postRepository.findPostById(96)
+
+        //todo from 절 subQuery test
+        postRepository.fromSubQueryTest()
 //        val tags =
 //            post.map { it.postTags }.map { it.map { it.hashTag.name } }.orElse(listOf())
-//
 //        println(tags)
 
     }

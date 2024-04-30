@@ -91,7 +91,6 @@ class CommentService(
 
 
     private fun createCommentTree(parent: CommentCardDto, commentClosures: List<CommentCardDto>): CommentCardDto {
-
         for (commentClosure in commentClosures) {
             if (commentClosure.idAncestor == parent.commentId) {
                 if (commentClosure.depth == 1) {
@@ -100,7 +99,9 @@ class CommentService(
                 }
             }
         }
-
         return parent
     }
+
+
+
 }

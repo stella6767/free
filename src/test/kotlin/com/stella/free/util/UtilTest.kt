@@ -64,6 +64,10 @@ class UtilTest {
             println("doing something")
         }
 
+        Thread.ofVirtual().start {
+            println("virtual thread start!")
+        }
+
         println("main thread ")
         thread.join()
     }

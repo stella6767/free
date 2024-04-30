@@ -9,18 +9,18 @@ plugins {
     id("io.spring.dependency-management") version "1.1.3"
     id("gg.jte.gradle") version "2.3.2"
 
-    kotlin("kapt") version "1.8.22"
-    kotlin("jvm") version "1.8.22"
-    kotlin("plugin.spring") version "1.8.22"
-    kotlin("plugin.jpa") version "1.8.22"
-    kotlin("plugin.allopen") version "1.8.22"
+    kotlin("kapt") version "1.9.22"
+    kotlin("jvm") version "1.9.22"
+    kotlin("plugin.spring") version "1.9.22"
+    kotlin("plugin.jpa") version "1.9.22"
+    kotlin("plugin.allopen") version "1.9.22"
     idea
 }
 
 
 group = "com.stella"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_21
 
 configurations {
     compileOnly {
@@ -99,7 +99,10 @@ dependencies {
     implementation("com.vladsch.flexmark:flexmark-html2md-converter:0.64.0")
     // html 파싱
     implementation("org.jsoup:jsoup:1.16.1")
-    //implementation("org.seleniumhq.selenium:selenium-java:4.11.0")
+    implementation("org.seleniumhq.selenium:selenium-java:4.11.0")
+// https://mvnrepository.com/artifact/net.lightbody.bmp/browsermob-core
+    implementation("net.lightbody.bmp:browsermob-core:2.1.5")
+
 
 
     //sql query logging
@@ -156,7 +159,7 @@ tasks.jar {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "17"
+        jvmTarget = "21"
     }
 }
 

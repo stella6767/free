@@ -92,10 +92,6 @@ data class VelogReadPostDto(
 
     }
 
-
-
-
-
 }
 
 

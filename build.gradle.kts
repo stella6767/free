@@ -65,6 +65,7 @@ dependencies {
     implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.0.1"))
     implementation("io.awspring.cloud:spring-cloud-aws-starter-s3")
 
+
     implementation("org.dhatim:fastexcel:0.16.4")
     implementation("org.dhatim:fastexcel-reader:0.16.4")
 
@@ -76,9 +77,7 @@ dependencies {
     if (isMacOS && architecture == "aarch64") {
         developmentOnly("io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64")
     }
-
     implementation("org.springframework.boot:spring-boot-starter-graphql")
-
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     //https://kotlinworld.com/381
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
@@ -97,10 +96,10 @@ dependencies {
 
     // html to 마크다운
     implementation("com.vladsch.flexmark:flexmark-html2md-converter:0.64.0")
-    // html 파싱
+
+    // 파싱, cralwer
     implementation("org.jsoup:jsoup:1.16.1")
     implementation("org.seleniumhq.selenium:selenium-java:4.11.0")
-// https://mvnrepository.com/artifact/net.lightbody.bmp/browsermob-core
     implementation("net.lightbody.bmp:browsermob-core:2.1.5")
 
 
@@ -112,6 +111,7 @@ dependencies {
 
     //common utilities
     implementation("org.apache.commons:commons-lang3:3.12.0")
+    implementation("commons-io:commons-io:2.16.1")
 
     // jte template engine
     implementation("gg.jte:jte-spring-boot-starter-3:$jteVersion")

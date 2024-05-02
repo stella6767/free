@@ -57,15 +57,9 @@ class SeleniumBMPInterceptor {
         proxy.start()
 
         val seleniumProxy = ClientUtil.createSeleniumProxy(proxy)
-
-        try {
-            val hostIp = Inet4Address.getLocalHost().hostAddress
-            seleniumProxy.setHttpProxy(hostIp + ":" + proxy.port)
-            seleniumProxy.setSslProxy(hostIp + ":" + proxy.port)
-        } catch (e: UnknownHostException) {
-            log.error(e.stackTraceToString())
-        }
-
+        val hostIp = Inet4Address.getLocalHost().hostAddress
+        seleniumProxy.setHttpProxy(hostIp + ":" + proxy.port)
+        seleniumProxy.setSslProxy(hostIp + ":" + proxy.port)
         val seleniumCapabilities = DesiredCapabilities()
         seleniumCapabilities.setCapability(CapabilityType.PROXY, seleniumProxy)
 
@@ -73,6 +67,8 @@ class SeleniumBMPInterceptor {
         options.addArguments("--ignore-certificate-errors")
         options.merge(seleniumCapabilities)
 
+
+        //todo driver bean 으로 등록
         val driver: WebDriver = ChromeDriver(options)
 
         // Capture all event types
@@ -96,27 +92,23 @@ class SeleniumBMPInterceptor {
         driver.quit()
         proxy.stop()
 
-        val storeHAR = Paths.get(".").toAbsolutePath().toUri().normalize()
-            .rawPath + "HttpArchiveOutput/" + "trace-website-http-requests.har"
+        val storeHAR =
+            Paths.get(".").toAbsolutePath().toUri().normalize().rawPath +
+                    "HttpArchiveOutput/" + "trace-website-http-requests.har"
 
-        val saveHarRequestFile = if (storeHAR.startsWith("\\") || storeHAR.startsWith("/")) {
-            storeHAR.substring(1)
-        } else {
-            storeHAR
-        }
+        val saveHarRequestFile =
+            if (storeHAR.startsWith("\\") || storeHAR.startsWith("/")) {
+                storeHAR.substring(1)
+            } else {
+                storeHAR
+            }
 
         val harFile = File(saveHarRequestFile)
-
-        try {
-            har.writeTo(harFile)
-        } catch (e: IOException) {
-            log.error(e.stackTraceToString())
-        }
+        har.writeTo(harFile)
 
         // Collect all m3u8 http requests in this list
         val m3u8FilesList: MutableList<String> = ArrayList()
-        val entries: List<HarEntry> = proxy.har.log.entries
-
+        val entries = proxy.har.log.entries
         var counter = 1
 
         for (entry in entries) {
@@ -130,10 +122,9 @@ class SeleniumBMPInterceptor {
 
         log.info("HAR file created at >> $saveHarRequestFile")
         log.info("List of m3u8 http URLs found")
-        val stream = m3u8FilesList.stream()
-        stream.forEach(System.out::println)
+        m3u8FilesList.stream().forEach(System.out::println)
 
         return m3u8FilesList
     }
-    
+
 }

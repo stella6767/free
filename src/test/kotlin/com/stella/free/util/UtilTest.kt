@@ -6,12 +6,11 @@ import com.stella.free.core.openapi.service.PublicApiService
 import com.stella.free.core.scrap.dto.AsyncType
 import com.stella.free.core.scrap.service.DummyDataJenService
 import com.stella.free.core.scrap.service.SeleniumBMPInterceptor
-import com.stella.free.core.scrap.service.userTagsQuery
+import com.stella.free.core.scrap.service.VideoDownloaderUtil
 import com.stella.free.global.config.TemplateConfiguration
 import com.stella.free.global.config.WebClientConfig
 import com.stella.free.global.util.TimeUtil
 import com.stella.free.global.util.removeSpecialCharacters
-import com.stella.free.web.component.common.ToastViewComponent
 import com.stella.free.web.component.todo.TodoViewComponent
 import de.tschuehly.spring.viewcomponent.core.IViewContext
 import gg.jte.output.StringOutput
@@ -25,10 +24,9 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
 import org.junit.jupiter.api.Test
 import org.springframework.core.io.ClassPathResource
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-
+import org.springframework.util.StringUtils
 import java.time.LocalDateTime
 import java.util.*
-import java.util.concurrent.Callable
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executors
 import java.util.function.Supplier
@@ -55,30 +53,48 @@ class UtilTest {
     }
 
 
-    @Test
-    fun getDriverTest(){
 
-        val url =
-            "https://www.munute.com/master/output/plan/U2FsdGVkX180FUGN5YvTEER8i+QGgdGUne81EvKv0tC1iTfk7DKv9wA3G4HFURpF"
-
-        val seleniumBMPInterceptor = SeleniumBMPInterceptor()
-
-        seleniumBMPInterceptor.getDriver(url)
-    }
 
 
     @Test
     fun seleniumBMPInterceptorTest(){
 
-        val url = "https://www.munute.com"
-///master/output/plan/U2FsdGVkX180FUGN5YvTEER8i+QGgdGUne81EvKv0tC1iTfk7DKv9wA3G4HFURpF
+        val url =
+            "https://www.munute.com/master/output/plan/U2FsdGVkX18H3PG0AahIgGNCFeVR7clvoDBCdO74EkLYGeskR%2FDhPq6IlVAEV9Wh"
 
         val seleniumBMPInterceptor = SeleniumBMPInterceptor()
+        val videoDownloaderUtil = VideoDownloaderUtil()
+
         val m3U8requestFiles =
             seleniumBMPInterceptor.retrieveM3U8requestFiles(url)
 
         println(m3U8requestFiles)
 
+        if (m3U8requestFiles.isEmpty()){
+            System.err.println("\nERROR! No http requests for m3u8 files were found while searching website --> " + m3U8requestFiles +
+                    "\nPlease provide the direct m3u8 URL.")
+            return
+        }
+
+        val masterM3U = videoDownloaderUtil.findMasterM3U(m3U8requestFiles)
+
+        val directM3U8fileURL  = if (!StringUtils.hasLength(masterM3U)){
+            println("WARNING!! WARNING!! Did not find a master playlist\n" +
+                    "The first m3u8 url file found will be used to attempt video download --> " + m3U8requestFiles)
+            m3U8requestFiles.first()
+        }else {
+            val highestBitRateVariant = videoDownloaderUtil.getM3U8variantWithHighestBitrate(masterM3U)
+            println("FOUND HIGHEST BIT RATE URL = $highestBitRateVariant")
+            highestBitRateVariant
+        }
+
+
+        if (!StringUtils.hasLength(directM3U8fileURL)){
+            System.err.println("ERROR!!!ERROR!!! No M3U8 file url was provide/found")
+            return
+        }
+
+        videoDownloaderUtil.downloaderUtil(directM3U8fileURL)
     }
 
 

@@ -5,6 +5,7 @@ import com.stella.free.core.openapi.dto.Entry
 import com.stella.free.core.openapi.service.PublicApiService
 import com.stella.free.core.scrap.dto.AsyncType
 import com.stella.free.core.scrap.service.DummyDataJenService
+import com.stella.free.core.scrap.service.SeleniumBMPInterceptor
 import com.stella.free.core.scrap.service.userTagsQuery
 import com.stella.free.global.config.TemplateConfiguration
 import com.stella.free.global.config.WebClientConfig
@@ -22,6 +23,7 @@ import net.datafaker.transformations.Schema
 import org.aspectj.lang.ProceedingJoinPoint
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
 import org.junit.jupiter.api.Test
+import org.springframework.core.io.ClassPathResource
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 import java.time.LocalDateTime
@@ -39,6 +41,45 @@ import kotlin.system.measureTimeMillis
 class UtilTest {
 
     //val faker = Faker(Locale("ko"))
+
+
+    @Test
+    fun resourcePathTest(){
+
+        //val resource = this::class.java.getResource("/test.txt")
+        //println(resource.path)
+
+        val path = ClassPathResource("static").url.path
+        println(path)
+
+    }
+
+
+    @Test
+    fun getDriverTest(){
+        val url = "https://www.munute.com"
+
+        val seleniumBMPInterceptor = SeleniumBMPInterceptor()
+
+        seleniumBMPInterceptor.getDriver(url)
+
+
+    }
+
+    @Test
+    fun seleniumBMPInterceptorTest(){
+
+        val url = "https://www.munute.com"
+///master/output/plan/U2FsdGVkX180FUGN5YvTEER8i+QGgdGUne81EvKv0tC1iTfk7DKv9wA3G4HFURpF
+
+        val seleniumBMPInterceptor = SeleniumBMPInterceptor()
+        val m3U8requestFiles =
+            seleniumBMPInterceptor.retrieveM3U8requestFiles(url)
+
+        println(m3U8requestFiles)
+
+    }
+
 
 
     @Test

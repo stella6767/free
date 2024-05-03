@@ -9,9 +9,6 @@ class TestSeleniumService {
     private val log = logger()
     fun test(url: String) {
 
-        val seleniumBMPInterceptor = SeleniumBMPInterceptor()
-        val m3U8requestFiles =
-            seleniumBMPInterceptor.retrieveM3U8requestFiles(url)
 
 
 

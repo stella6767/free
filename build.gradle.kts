@@ -28,6 +28,9 @@ configurations {
     }
 }
 
+
+ext["selenium.version"] = "4.20.0"
+
 val querydslVersion = "5.0.0"
 val jteVersion = "3.1.10"
 
@@ -100,10 +103,11 @@ dependencies {
     // 파싱, cralwer
     implementation("org.jsoup:jsoup:1.16.1")
     implementation("org.seleniumhq.selenium:selenium-java:4.20.0")
-    implementation("net.lightbody.bmp:browsermob-core:2.1.5")
-//    implementation("org.seleniumhq.selenium:selenium-devtools-v86:4.8.3")
-    implementation("io.github.bonigarcia:webdrivermanager:5.8.0")
-    implementation("com.github.blibli-badak:selenium-har-util:1.0.9")
+    //implementation("org.seleniumhq.selenium:selenium-devtools-v124:4.20.0")
+
+    implementation("com.browserup:browserup-proxy-core:2.1.2")
+//    implementation("io.github.bonigarcia:webdrivermanager:5.8.0")
+
 
     //sql query logging
     implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0")

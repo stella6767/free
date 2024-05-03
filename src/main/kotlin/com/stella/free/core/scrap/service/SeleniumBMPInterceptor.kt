@@ -2,23 +2,23 @@ package com.stella.free.core.scrap.service
 
 
 
+
+import com.browserup.bup.BrowserUpProxyServer
+import com.browserup.bup.client.ClientUtil
+import com.browserup.bup.proxy.CaptureType
 import com.stella.free.global.util.logger
-import net.lightbody.bmp.BrowserMobProxyServer
-import net.lightbody.bmp.client.ClientUtil
-import net.lightbody.bmp.proxy.CaptureType
-import org.openqa.selenium.By
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.devtools.Command
-
 import org.openqa.selenium.devtools.v124.network.Network
-import org.openqa.selenium.devtools.v85.log.Log
 import org.openqa.selenium.remote.CapabilityType
 import org.openqa.selenium.remote.DesiredCapabilities
 import java.io.File
 import java.net.Inet4Address
 import java.time.Duration
 import java.util.*
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 import java.util.function.Consumer
 
 
@@ -29,34 +29,74 @@ class SeleniumBMPInterceptor {
 
 
     fun getDriver(url:String){
-        val driver: ChromeDriver = ChromeDriver()
+
+        System.setProperty(
+            "webdriver.chrome.driver",
+            "/Users/stella6767/IdeaProjects/free/src/main/resources/static/drivers/chromedriver"
+        )
+
+        val latch = CountDownLatch(1)
+        val m3u8FilesList: MutableList<String> = ArrayList()
+
+        val options = ChromeOptions()
+        val driver: ChromeDriver = ChromeDriver(options)
+        val devTools = driver.devTools
+        devTools.createSession()
+
+
+        // Enable network tracking
+        devTools.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty()))
+        devTools.send(Command<Any>("Network.enable", mapOf()))
+
+
+        // Add listener for network requests
+        devTools.addListener(Network.requestWillBeSent(), Consumer { request ->
+            val req = request.request
+            println("URL: " + req.url)
+            println("Method: " + req.method)
+
+            if (req.url.contains(".m3u8")) {
+                println("Found target URL, releasing latch");
+                m3u8FilesList.add(req.url)
+                latch.countDown();  // URL을 찾았을 때 래치 해제
+            }
+        })
+
+
+//        devTools.addListener(Network.responseReceived()) { l: ResponseReceived ->
+//            print("Response URL: ")
+//            println(l.response.url)
+//        }
+
+
+
 
         driver.get(url)
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10))
-
-        val elements = driver.findElements(By.tagName("div"))
-        for (element in elements) {
-            System.out.println("----------------------------");
-            System.out.println(element.text);
+        val found = latch.await(5, TimeUnit.SECONDS)
+        if (found) {
+            println("Target URL encountered, proceeding with further steps")
+            // 추가 작업을 수행
+        } else {
+            println("Timeout reached, target URL not encountered")
+            // 타임아웃 처리
         }
 
-        val devTools = driver.devTools
-        devTools.createSession()
-//        devTools.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty()));
-//
-//
-//
-//        devTools.addListener(Network.responseReceived(), Consumer { l ->
-//            print("Response URL: ")
-//            System.out.println(l.getResponse().getUrl())
-//        })
-//        devTools.addListener(Network.requestWillBeSent(), Consumer { l ->
-//            print("Request URL: ")
-//            System.out.println(l.getRequest().getUrl())
-//        })
+
+//        webDriverWait.until(
+//            ExpectedConditions.presenceOfElementLocated(By.)
+//        )
 
 
+//        val elements = driver.findElements(By.tagName("div"))
+//        for (element in elements) {
+//            System.out.println("----------------------------");
+//            System.out.println(element.text);
+//        }
+
+        //Thread.sleep(5000)
+
+        m3u8FilesList.forEach { println("확인==>$it") }
 
 
         driver.quit()
@@ -80,7 +120,7 @@ class SeleniumBMPInterceptor {
          * 1. proxy 서버 초기화 및 시작
          */
 
-        val proxy = BrowserMobProxyServer()
+        val proxy = BrowserUpProxyServer()
         // Does your website request require custom headers?
         // (Cookies, User-agent, jwt, etc) Add them here
         proxy.addRequestFilter { request, contents, messageInfo ->

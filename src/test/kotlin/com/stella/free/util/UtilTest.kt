@@ -57,14 +57,15 @@ class UtilTest {
 
     @Test
     fun getDriverTest(){
-        val url = "https://www.munute.com"
+
+        val url =
+            "https://www.munute.com/master/output/plan/U2FsdGVkX180FUGN5YvTEER8i+QGgdGUne81EvKv0tC1iTfk7DKv9wA3G4HFURpF"
 
         val seleniumBMPInterceptor = SeleniumBMPInterceptor()
 
         seleniumBMPInterceptor.getDriver(url)
-
-
     }
+
 
     @Test
     fun seleniumBMPInterceptorTest(){

@@ -12,6 +12,7 @@ import java.net.HttpURLConnection
 import java.net.URI
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
+import java.nio.file.Paths
 import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicInteger
@@ -22,7 +23,7 @@ class VideoDownloaderUtil() {
 
     private val log = logger()
 
-    fun downloaderUtil(m3u8FileURL: String) {
+    fun downloaderUtil(m3u8FileURL: String, downloadDirectory:String) {
 
         // Download m3u8 description file and return a list of its .ts url contents
         var m3u8TsFilesList = this.processM3U8urlFile(m3u8FileURL)
@@ -52,27 +53,15 @@ class VideoDownloaderUtil() {
         filesToDownloadCount = m3u8TsFilesList.size
 
         // Video files will be downloaded to  this directory
-        val download = "output/"
-        //Paths.get(".").toAbsolutePath().toUri().normalize().rawPath + "output/"
-
-        val downloadDirectory = if (download.startsWith("\\") || download.startsWith("/")) {
-            download.substring(1)
-        } else {
-            download
-        }
-
         println("\nWARNING!! WARNING!! Will overwrite existing Full_Video.ts\n")
-        println("Download videos to directory >> $downloadDirectory\n")
+        println("Download videos to directory >> $downloadDirectory")
 
-        // The ffmpeg tool requires the input string formatted as:  "filename_1|filename_2|filename_3|filename_n"
-        // TsFile names must remain in the same natural order present in .m3u8 file
-        // WARNING: Maximum command length is 8191 characters for a Windows OS Command prompt (Cmd.exe)
-        // Break up command string in multiple parts if command were to exceed char limit
-        val ffmpegCommandBuilderList: Queue<StringBuilder> = LinkedList()
+
         var tsFileNamesBuilder = StringBuilder()
         val tsLinkVsPathHashmap: HashMap<String, String> = hashMapOf()
 
         for (tsLink: String in m3u8TsFilesList) {
+
             val p = Pattern.compile("[^\\/]+(?=\\.ts).ts") // the pattern to search for
             val m = p.matcher(tsLink)
 
@@ -82,23 +71,9 @@ class VideoDownloaderUtil() {
 
             val tsFilePath = downloadDirectory + videoName
             tsLinkVsPathHashmap[tsLink] = tsFilePath
-            tsFileNamesBuilder.append(tsFilePath).append("|")
-
-            if (tsFileNamesBuilder.length > 7900) { // Don't exceed 8191 cmd limit
-                println("WARNING: Exceeded character length >> " + tsFileNamesBuilder.length)
-                ffmpegCommandBuilderList.add(tsFileNamesBuilder)
-                tsFileNamesBuilder = StringBuilder()
-            }
             log.info("Ts file path appended: $tsFilePath")
         }
         // Add last or first part of builder depending on builder string length
-        ffmpegCommandBuilderList.add(tsFileNamesBuilder)
-
-        log.info("Total number of command ts pieces " + ffmpegCommandBuilderList.size)
-        // remove the last trailing pipe "|" character in the input string
-        for (builder: StringBuilder in ffmpegCommandBuilderList) {
-            builder.deleteCharAt(builder.length - 1)
-        }
 
 
         // Download and save all 'ts' files. 'NULL' is returned if ALL files were successfully downloaded.
@@ -121,19 +96,15 @@ class VideoDownloaderUtil() {
             do {
                 val newResultVOS =
                     downloadAndStoreFiles(m3u8TsFilesList, mapOf(), retryTaskList)
-
                 successDownloadsList.union(newResultVOS.filter { it.isSuccess })
-
                 if (newResultVOS.any { !it.isSuccess }) {
                     retryTaskList = getDownloaderTaskRetryList(newResultVOS)
                 }
-
                 retryCounter++
 
             } while ((newResultVOS.any { !it.isSuccess }) && retryCounter != 3)
 
             if (retryCounter == 3) {
-
                 log.error(
                     "ERROR!!! ERROR!!! ERROR!!!! - After more than 3 attempts some files did NOT successfully download. \n" +
                             "ERROR!!! ERROR!!! ERROR!!!! - Your video may NOT yield the expected result or ffmpeg tool can fail"
@@ -142,11 +113,11 @@ class VideoDownloaderUtil() {
         }
 
 
-        val file = java.io.File("output/list.txt")
+        val combineFile = java.io.File(downloadDirectory + "list.txt")
 
-        file.bufferedWriter().use { writer ->
+        combineFile.bufferedWriter().use { writer ->
             for (result in successDownloadsList) {
-                if (result.isSuccess){
+                if (result.isSuccess) {
                     writer.write("file " + "'${result.tsFileAbsoluteUrl}'")
                     writer.newLine()
                 }
@@ -154,32 +125,11 @@ class VideoDownloaderUtil() {
         }
 
         // Prepare and execute ts video concatenation
-        var pieceCount = 0
+        val outputFilePath = downloadDirectory + "Full_Video.ts"
+        executeFFMPEG(outputFilePath, combineFile)
 
-        while (!ffmpegCommandBuilderList.isEmpty()) {
-
-            var outputFilePath = downloadDirectory + "piece_" + pieceCount + ".ts"
-
-            println("????")
-
-            if (ffmpegCommandBuilderList.size === 1) {
-                outputFilePath = downloadDirectory + "Full_Video.ts"
-                val fullVideo = outputFilePath
-                println("Full output video name = $outputFilePath")
-                println("================== Full Video @ $fullVideo ==================")
-            }
-
-            executeFFMPEG(outputFilePath, ffmpegCommandBuilderList.poll().toString(), file)
-
-            if (null != ffmpegCommandBuilderList.peek()) {
-                val nextCommandStr = ffmpegCommandBuilderList.peek()
-                val tmpOutputFilePath = "$outputFilePath|"
-                nextCommandStr.insert(0, tmpOutputFilePath)
-                println("Modified command next iteration to be >> $nextCommandStr")
-                pieceCount++
-            }
-        }
-
+        println("Full output video name = $outputFilePath")
+        //println("================== Full Video @ $fullVideo ==================")
 
         println("\n================== Video download finished for $m3u8FileURL ==================")
 
@@ -188,48 +138,49 @@ class VideoDownloaderUtil() {
         downloadCounter.set(1)
     }
 
-    private fun executeFFMPEG(outputFilePath: String, ffmpegInputFileNames: String, file: java.io.File) {
-
+    private fun executeFFMPEG(
+        outputFilePath: String,
+        file: java.io.File
+    ) {
+        //https://trac.ffmpeg.org/wiki/Concatenate
         println("Executing ffmpeg with output path = $outputFilePath\n")
-        println("Input ffmpegInputFileNames character length >> " + ffmpegInputFileNames.length)
+
         // Build ffmpeg tool command and execute
         // ffmpeg will concat all our *.ts files and produce a single output video file
         val processBuilder = ProcessBuilder()
-        val commandStr = "ffmpeg -i \"concat:$ffmpegInputFileNames\" -c copy $outputFilePath"
+        //processBuilder.directory(java.io.File(System.getProperty("user.home")))
+
+
+
+        //"ffmpeg -f concat -safe 0 -i list.txt -c copy output.mp4"
+        val commandStr = arrayOf(
+            "ffmpeg",
+            "-f",
+            "concat",
+            "-safe",
+            "0",
+            "-i",
+            file.canonicalPath,
+            "-c",
+            "copy",
+            outputFilePath
+        ).joinToString(" ")
 
         // Run this on Windows, cmd, /c = terminate after this run
-        processBuilder.command(commandStr)
+        //processBuilder.command(commandStr)
+        processBuilder.command("sh", "-c", commandStr)
+
         processBuilder.redirectErrorStream(true)
 
-
-        try {
-            println("Executing command - $commandStr")
-            val process = processBuilder.start()
-            // Let's read and print the ffmpeg's output
-            val r = BufferedReader(InputStreamReader(process.inputStream))
-            while (true) {
-                val line = r.readLine() ?: break
-                println(line)
-            }
-        } catch (e: IOException) {
-
-            e.printStackTrace()
-
-            println("다른 방법으로")
-            //https://trac.ffmpeg.org/wiki/Concatenate
-
-            processBuilder.command(arrayOf("ffmpeg", "-f", "concat", "-safe", "0", "-i", file.canonicalPath, "-c", "copy", outputFilePath).joinToString(" "))
-            processBuilder.redirectErrorStream(true)
-
-            val process = processBuilder.start()
-            // Let's read and print the ffmpeg's output
-            val r = BufferedReader(InputStreamReader(process.inputStream))
-            while (true) {
-                val line = r.readLine() ?: break
-                println(line)
-            }
-            //"ffmpeg -f concat -safe 0 -i list.txt -c copy output.mp4"
+        println("Executing command - $commandStr")
+        val process = processBuilder.start()
+        // Let's read and print the ffmpeg's output
+        val r = BufferedReader(InputStreamReader(process.inputStream))
+        while (true) {
+            val line = r.readLine() ?: break
+            println(line)
         }
+
     }
 
     /*
@@ -243,12 +194,14 @@ class VideoDownloaderUtil() {
         val url = URI(m3u8Url).toURL()
         val m3u8List = mutableListOf<String>()
 
-
-        println("한글 url 403 issue 있음. 아직 해결 못함")
-        val pathSegments = url.toString().split(File.separator).toMutableList()
+        log.info("한글 포함 url 403 issue 있음. 아직 해결 못함")
+        val pathSegments =
+            url.toString().split(File.separator).toMutableList()
         println(pathSegments.last())
 
-        val encodedFileName = URLEncoder.encode(pathSegments.last(), StandardCharsets.UTF_8.toString())
+        val encodedFileName =
+            URLEncoder.encode(pathSegments.last(), StandardCharsets.UTF_8.toString())
+
         pathSegments[pathSegments.size - 1] = encodedFileName
 
         val newPath = pathSegments.joinToString(File.separator)
@@ -257,6 +210,7 @@ class VideoDownloaderUtil() {
         println(fullURL.toString())
 
         val httpCon = fullURL.openConnection() as HttpURLConnection
+
         httpCon.setRequestProperty(
             "User-Agent",
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.91 Safari/537.36"
@@ -267,18 +221,15 @@ class VideoDownloaderUtil() {
 
         inputStream.use { `is` ->
             val m3u8File: String = IOUtils.toString(`is`, StandardCharsets.UTF_8)
-
             // Find and get all *.ts file names in m3u8 file
             val m =
                 Pattern.compile(".*\\.ts.*", Pattern.MULTILINE).matcher(m3u8File)
-
-            val isRelativePath = false
-
             while (m.find()) {
                 val tsVideoUrl = m.group()
                 m3u8List.add(tsVideoUrl)
             }
         }
+
         println("Total ts files to be downloaded ${m3u8List.size}")
         return m3u8List
     }

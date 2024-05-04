@@ -3,9 +3,7 @@ package com.stella.free.core.scrap.service
 
 
 
-import com.browserup.bup.BrowserUpProxyServer
-import com.browserup.bup.client.ClientUtil
-import com.browserup.bup.proxy.CaptureType
+
 import com.stella.free.global.util.logger
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
@@ -31,8 +29,9 @@ class SeleniumBMPInterceptor {
 
     fun retrieveM3U8requestFiles(url:String): List<String> {
 
-        System.setProperty(
-            "webdriver.chrome.driver",
+        if (url.contains(".m3u8")) return listOf(url)
+
+        System.setProperty("webdriver.chrome.driver",
             "/Users/stella6767/IdeaProjects/free/src/main/resources/static/drivers/chromedriver"
         )
 
@@ -58,7 +57,7 @@ class SeleniumBMPInterceptor {
             //println("URL: " + req.url)
             //println("Method: " + req.method)
             if (req.url.contains(".m3u8")) {
-                println("Found target URL, releasing latch");
+                log.info("Found target URL, releasing latch");
                 m3u8FilesList.add(req.url)
                 latch.countDown();  // URL을 찾았을 때 래치 해제
             }
@@ -72,13 +71,13 @@ class SeleniumBMPInterceptor {
         driver.get(url)
 
         val found = latch.await(5, TimeUnit.SECONDS) //찾을 때까지 대기
+
         if (found) {
-            println("Target URL encountered, proceeding with further steps")
+            log.info("Target URL encountered, proceeding with further steps")
         } else {
-            println("Timeout reached, target URL not encountered")
+            log.info("Timeout reached, target URL not encountered")
         }
 
-        m3u8FilesList.forEach { println("확인==>$it") }
         driver.quit()
 
         return m3u8FilesList

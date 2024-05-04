@@ -52,15 +52,19 @@ class UtilTest {
         //val path = ClassPathResource("static").url.path
         //println(path)
 
+//        val downloadDirectory =
+//            Paths.get(".").toAbsolutePath().toUri().normalize().rawPath + "output/"
+//
+//        println(downloadDirectory)
 
-        val downloadDirectory =
-            Paths.get(".").toAbsolutePath().toUri().normalize().rawPath + "output/"
-
-        println(downloadDirectory)
 
         val seleniumService = TestSeleniumService()
 
-        seleniumService.cleanUpOutputDirectory()
+        val url =
+            "https://www.munute.com/master/output/plan/U2FsdGVkX18H3PG0AahIgGNCFeVR7clvoDBCdO74EkLYGeskR%2FDhPq6IlVAEV9Wh"
+
+        seleniumService.test(url)
+
 
 
     }
@@ -83,32 +87,6 @@ class UtilTest {
 
         println(m3U8requestFiles)
 
-        if (m3U8requestFiles.isEmpty()){
-            System.err.println(
-                "ERROR! No http requests for m3u8 files were found while searching website --> " + m3U8requestFiles +
-                    "\nPlease provide the direct m3u8 URL.")
-            return
-        }
-
-        val masterM3U = videoDownloaderUtil.findMasterM3U(m3U8requestFiles)
-
-        val directM3U8fileURL  = if (!StringUtils.hasLength(masterM3U)){
-            println("WARNING!! WARNING!! Did not find a master playlist\n" +
-                    "The first m3u8 url file found will be used to attempt video download --> " + m3U8requestFiles)
-            m3U8requestFiles.first()
-        }else {
-            val highestBitRateVariant = videoDownloaderUtil.getM3U8variantWithHighestBitrate(masterM3U)
-            println("FOUND HIGHEST BIT RATE URL = $highestBitRateVariant")
-            highestBitRateVariant
-        }
-
-
-        if (!StringUtils.hasLength(directM3U8fileURL)){
-            System.err.println("ERROR!!!ERROR!!! No M3U8 file url was provide/found")
-            return
-        }
-
-        videoDownloaderUtil.downloaderUtil(directM3U8fileURL)
     }
 
 

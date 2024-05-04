@@ -7,28 +7,14 @@
 ## Velog의 GraphQl API를 이용해 사용자의 정보를 수집합니다.
 
 
-웹 사이트의 url을 입력하면, Selenium을 이용해서, 네트워크 url을 트래킹 해, 마스터 .m3u8 파일을 찾고 
-그걸 이용해 TS File List를 다운받은 뒤 FFMPEG을 이용해 하나의 파일로 합쳐서 다운받게 해주는 프로그램
 
-## System Requirements
-
-- JDK 21
-- FFMPEG 
-- Chrome Driver
+![](https://free-stella.s3.ap-northeast-2.amazonaws.com/171151e6-5793-4be1-91b4-7c5791b17c2e_velog-introduction1.png)
 
 
-## 문제
+## Velog Username 을 입력합니다
 
-- 아래 참고 글을 이용했는데, browerMob
-- 한글 및 특수문자가 포함된 url은 다운로드시 403 권한 거부 발생함
-- 
-
-![background](img/background.jpg)
-
-
-## 참고
-
-[Java TS Video Downloader](https://medium.com/geekculture/java-ts-video-downloader-a0fcf23ab84a)
+input username 창에 내기 다운받고 싶은 velog posts들의 주인장 이름을 입력해주세요. 그리고 가쟈오기 버튼을 누르면, ZIP 파일 형태로 입력한 유저네임의 Velog 글들을 마크다운파일 형식으로 가져올 수 있습니다.
+시간 여유 있으면, 추후 몇가지 기능 개발 여부 생각중..
 
 
 

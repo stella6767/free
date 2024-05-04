@@ -57,12 +57,15 @@ class ScrapController(
 
     @PostMapping("/ts/url")
     @ResponseBody
-    fun dummyPersonGen(urlReqDto: UrlReqDto): ResponseEntity<UrlResource> {
+    fun downloadTsByUrl(urlReqDto: UrlReqDto): ResponseEntity<UrlResource> {
 
         val downloadedFile =
             testSeleniumService.downloadTsByUrl(urlReqDto.url)
 
         val resource = UrlResource(Paths.get(downloadedFile.canonicalPath).toUri())
+
+        //todo 가상스레드 톰캣 적용 및 이메일 템플릿 중복 코드 컴포넌트화..
+
 
         //인코딩 이슈
         val sanitizedName =
@@ -76,7 +79,7 @@ class ScrapController(
             .contentType(MediaType.APPLICATION_OCTET_STREAM)
             .contentLength(resource.contentLength())
             .cacheControl(CacheControl.noCache())
-            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"${sanitizedName}\"")
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=${sanitizedName}")
             .header("tmpName", URLEncoder.encode(downloadedFile.canonicalPath, StandardCharsets.UTF_8.toString()))
             .body(resource)
     }

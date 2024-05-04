@@ -33,7 +33,7 @@ jte-classes/
 secret.yml
 secrets.tar.gz
 secrets_base64.txt
-
+*.ts
 
 ### NetBeans ###
 /nbproject/private/

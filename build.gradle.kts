@@ -99,6 +99,8 @@ dependencies {
 
     // html to 마크다운
     implementation("com.vladsch.flexmark:flexmark-html2md-converter:0.64.0")
+    implementation("org.commonmark:commonmark:0.22.0")
+
 
     // 파싱, cralwer
     implementation("org.jsoup:jsoup:1.16.1")

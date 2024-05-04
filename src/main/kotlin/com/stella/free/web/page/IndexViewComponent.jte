@@ -13,7 +13,7 @@
 
 <div>
 
-    <div class="hero min-h-screen " style="background-image: url(/img/cover.jpg);">
+    <div class="hero min-h-screen " style="background-image: url(/img/background.jpg);">
         <div class="hero-overlay bg-opacity-60"></div>
         <div class="hero-content text-center text-neutral-content">
             <div class="max-w-md">

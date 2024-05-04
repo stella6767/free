@@ -59,32 +59,33 @@
                 </p>
 
 
-<%--                <h2 class="text-xl font-bold mt-6 mb-4">Experience</h2>--%>
-<%--                <div class="mb-6">--%>
-<%--                    <div class="flex justify-between">--%>
-<%--                        <span class="text-gray-600 font-bold">Server Developer</span>--%>
-<%--                        <p>--%>
-<%--                            <span class="text-gray-600 mr-2">at SP Company</span>--%>
-<%--                            <span class="text-gray-600">2022 - ..</span>--%>
-<%--                        </p>--%>
-<%--                    </div>--%>
-<%--                    <ul class="mt-2">--%>
-<%--                        <li class="text-sm">기밀</li>--%>
-<%--                    </ul>--%>
-<%--                </div>--%>
+                <%--                <h2 class="text-xl font-bold mt-6 mb-4">Experience</h2>--%>
+                <%--                <div class="mb-6">--%>
+                <%--                    <div class="flex justify-between">--%>
+                <%--                        <span class="text-gray-600 font-bold">Server Developer</span>--%>
+                <%--                        <p>--%>
+                <%--                            <span class="text-gray-600 mr-2">at SP Company</span>--%>
+                <%--                            <span class="text-gray-600">2022 - ..</span>--%>
+                <%--                        </p>--%>
+                <%--                    </div>--%>
+                <%--                    <ul class="mt-2">--%>
+                <%--                        <li class="text-sm">기밀</li>--%>
+                <%--                    </ul>--%>
+                <%--                </div>--%>
 
-<%--                <div class="mb-6">--%>
-<%--                    <div class="flex justify-between">--%>
-<%--                        <span class="text-gray-600 font-bold">Server Developer</span>--%>
-<%--                        <p>--%>
-<%--                            <span class="text-gray-600 mr-2">at Lunalabs Company</span>--%>
-<%--                            <span class="text-gray-600">2021 - 2022</span>--%>
-<%--                        </p>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
+                <%--                <div class="mb-6">--%>
+                <%--                    <div class="flex justify-between">--%>
+                <%--                        <span class="text-gray-600 font-bold">Server Developer</span>--%>
+                <%--                        <p>--%>
+                <%--                            <span class="text-gray-600 mr-2">at Lunalabs Company</span>--%>
+                <%--                            <span class="text-gray-600">2021 - 2022</span>--%>
+                <%--                        </p>--%>
+                <%--                    </div>--%>
+                <%--                </div>--%>
 
                 <div class="pt-12 pb-8">
-                    <button class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='https://www.notion.so/b3537e6cfe1947a880bf4c70eb5de7af?pvs=4'">
+                    <button class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full"
+                            onclick="location.href='https://www.notion.so/b3537e6cfe1947a880bf4c70eb5de7af?pvs=4'">
                         Get In Touch
                     </button>
                 </div>
@@ -100,12 +101,26 @@
                         </svg>
                     </a>
 
-                    <a class="link" href="https://www.youtube.com/channel/UCg19zd5p7T_YkjpHp-h0YkQ" data-tippy-content="@youtube_handle">
+                    <a class="link" href="https://www.youtube.com/channel/UCg19zd5p7T_YkjpHp-h0YkQ"
+                       data-tippy-content="@youtube_handle">
                         <svg class="h-6 fill-current text-gray-600 hover:text-green-700" role="img"
                              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <title>YouTube</title>
                             <path
                                     d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/>
+                        </svg>
+                    </a>
+
+                    <a class="link" href="https://velog.io/@stella6767"
+                       data-tippy-content="@velog_handle">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                             x="0px" y="0px"
+                             viewBox="0 0 192 192" enable-background="new 0 0 28 28" xml:space="preserve" width="28">
+                                            <title>Velog</title>
+
+                            <path id="Website" fill="#D1CECC" fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M24 0H168C181.255 0 192 10.7451 192 24V168C192 181.255 181.255 192 168 192H24C10.7451 192 0 181.255 0 168V24C0 10.7451 10.7451 0 24 0ZM49 57.9199V65.48H67L80.6799 142.52L98.5 141.26C116.02 119.06 127.84 102.44 133.96 91.3999C140.2 80.24 143.32 70.9399 143.32 63.5C143.32 59.0601 142 55.7 139.36 53.4199C136.84 51.1399 133.66 50 129.82 50C122.62 50 116.62 53.0601 111.82 59.1799C116.5 62.3 119.68 64.8799 121.36 66.9199C123.16 68.8401 124.06 71.4199 124.06 74.6599C124.06 80.0601 122.44 86.1799 119.2 93.02C116.08 99.8601 112.66 105.92 108.94 111.2C106.54 114.56 103.48 118.7 99.76 123.62L88.0601 57.2C87.1001 52.3999 84.1001 50 79.0601 50C76.78 50 72.3999 50.96 65.9199 52.8799C59.4399 54.6799 53.8 56.3601 49 57.9199Z"/>
+
                         </svg>
                     </a>
                 </div>

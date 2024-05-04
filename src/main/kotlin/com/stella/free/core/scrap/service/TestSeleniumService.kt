@@ -1,10 +1,18 @@
 package com.stella.free.core.scrap.service
 
 import com.stella.free.global.util.logger
+import org.apache.commons.io.FilenameUtils
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.core.io.UrlResource
+import org.springframework.http.CacheControl
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.util.StringUtils
 import java.io.File
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 import java.nio.file.Paths
 
 
@@ -16,13 +24,12 @@ class TestSeleniumService {
     private val seleniumBMPInterceptor = SeleniumBMPInterceptor()
     private val videoDownloaderUtil = VideoDownloaderUtil()
 
-    @Value("\${chrome.driver}")
-    private val driverPath: String = ""
-
-    @Value("\${outputPath}")
-    private val outputPath: String = "/Users/stella6767/Downloads/images/Engineer-Mail-01/Received/"
-
     fun test(url: String) {
+
+        val outputPath =
+            Paths.get(".").toAbsolutePath().toUri().normalize().rawPath + "output/"
+
+        println(outputPath)
 
         if (!cleanUpOutputDirectory(outputPath)) {
             log.error("Failed to clean up files in VideoOutputDirectory");
@@ -59,7 +66,35 @@ class TestSeleniumService {
             return
         }
 
-        videoDownloaderUtil.downloaderUtil(directM3U8fileURL, outputPath)
+        val downloadedFile =
+            videoDownloaderUtil.downloaderUtil(directM3U8fileURL, outputPath)
+
+
+
+        println("!!!!!! end !!!!!")
+        println(downloadedFile.canonicalPath)
+
+
+//        val resource = UrlResource("downloadFile.toURI()")
+//
+//        //인코딩 이슈
+//        val sanitizedName =
+//            URLEncoder.encode(
+//                FilenameUtils.getBaseName("userMastering.originalFilename"),
+//                StandardCharsets.UTF_8.toString()
+//            )
+//
+//
+//
+//        ResponseEntity
+//            .ok()
+//            .contentType(MediaType.APPLICATION_OCTET_STREAM)
+//            .contentLength(resource.contentLength())
+//            .cacheControl(CacheControl.noCache())
+//            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"${sanitizedName}.${fileType.name}\"")
+//            .header("tmpName", URLEncoder.encode(downloadFile.canonicalPath, StandardCharsets.UTF_8.toString()))
+//            .body(resource)
+
     }
 
 

@@ -11,6 +11,7 @@ import com.stella.free.web.page.post.PostsByTagViewComponent
 import com.stella.free.web.page.post.PostsViewComponent
 
 import com.stella.free.web.page.aboutme.AboutMeViewComponent
+import com.stella.free.web.page.scraper.TSDownloaderViewComponent
 import com.stella.free.web.page.scraper.VelogCrawlerViewComponent
 import com.stella.free.web.page.todo.TodoListViewComponent
 import de.tschuehly.spring.viewcomponent.jte.ViewContext
@@ -35,7 +36,7 @@ class PageController(
     private val chatViewComponent: ChatViewComponent,
     private val postsByTagViewComponent: PostsByTagViewComponent,
     private val velogCrawlerViewComponent: VelogCrawlerViewComponent,
-
+    private val tsDownloaderViewComponent: TSDownloaderViewComponent,
     ) {
 
     private val log = logger()
@@ -112,6 +113,13 @@ class PageController(
     fun velogCrawlerViewComponentPage(): ViewContext {
 
         return layoutViewComponent.render(velogCrawlerViewComponent.render())
+    }
+
+
+    @GetMapping("/ts/downloader")
+    fun tsDownloaderViewComponentPage(): ViewContext {
+
+        return layoutViewComponent.render(tsDownloaderViewComponent.render())
     }
 
 

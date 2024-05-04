@@ -105,8 +105,7 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-java:4.20.0")
 
     //ffmpeg wrapper
-    implementation("net.bramp.ffmpeg:ffmpeg:0.7.0")
-
+    //implementation("net.bramp.ffmpeg:ffmpeg:0.7.0")
     //implementation("org.seleniumhq.selenium:selenium-devtools-v124:4.20.0")
 //    implementation("com.browserup:browserup-proxy-core:2.1.2")
 //    implementation("io.github.bonigarcia:webdrivermanager:5.8.0")

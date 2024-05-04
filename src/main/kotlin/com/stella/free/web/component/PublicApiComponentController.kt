@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable
 
 @Controller
 class PublicApiComponentController(
-    private val publicApiService: PublicApiService,
     private val tableViewComponent: PublicApiTableViewComponent,
 ) {
 

@@ -20,12 +20,15 @@ import net.datafaker.Faker
 import net.datafaker.transformations.Field.field
 import net.datafaker.transformations.JavaObjectTransformer
 import net.datafaker.transformations.Schema
+import org.apache.commons.exec.OS
+import org.apache.commons.io.FilenameUtils
 import org.aspectj.lang.ProceedingJoinPoint
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
 import org.junit.jupiter.api.Test
 import org.springframework.core.io.ClassPathResource
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.util.StringUtils
+import java.io.File
 import java.nio.file.Paths
 import java.time.LocalDateTime
 import java.util.*
@@ -52,10 +55,10 @@ class UtilTest {
         //val path = ClassPathResource("static").url.path
         //println(path)
 
-//        val downloadDirectory =
-//            Paths.get(".").toAbsolutePath().toUri().normalize().rawPath + "output/"
-//
-//        println(downloadDirectory)
+        val downloadDirectory =
+            Paths.get(".").toAbsolutePath().toUri().normalize().rawPath + "output/"
+
+        println(downloadDirectory)
 
 
         val seleniumService = TestSeleniumService()
@@ -65,6 +68,13 @@ class UtilTest {
 
         seleniumService.test(url)
 
+        //println(OS.isFamilyUnix())
+        //println(OS.isFamilyWindows())
+
+
+//        val canonicalPath = File("/output/test.txt").canonicalPath
+//
+//        println(canonicalPath)
 
 
     }
@@ -86,6 +96,9 @@ class UtilTest {
             seleniumBMPInterceptor.retrieveM3U8requestFiles(url)
 
         println(m3U8requestFiles)
+
+        val baseName = FilenameUtils.getBaseName(m3U8requestFiles.first())
+        println(baseName)
 
     }
 

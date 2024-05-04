@@ -20,7 +20,6 @@ import java.util.zip.ZipOutputStream
 @Component
 class VelogCrawler(
     private val velogClient: WebClient,
-    private val basicClient: WebClient
 ) {
 
     private val graphQlClient =

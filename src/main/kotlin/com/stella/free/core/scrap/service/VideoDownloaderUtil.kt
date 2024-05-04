@@ -3,6 +3,7 @@ package com.stella.free.core.scrap.service
 import com.stella.free.core.scrap.dto.DownloaderTask
 import com.stella.free.core.scrap.dto.ResultVO
 import com.stella.free.global.util.logger
+import org.apache.commons.io.FilenameUtils
 import org.apache.commons.io.IOUtils
 import org.jetbrains.kotlin.konan.file.File
 import java.io.BufferedReader
@@ -23,14 +24,15 @@ class VideoDownloaderUtil() {
 
     private val log = logger()
 
-    fun downloaderUtil(m3u8FileURL: String, downloadDirectory:String) {
+    fun downloaderUtil(m3u8FileURL: String, downloadDirectory:String): File {
 
         // Download m3u8 description file and return a list of its .ts url contents
         var m3u8TsFilesList = this.processM3U8urlFile(m3u8FileURL)
 
         if (m3u8TsFilesList.isEmpty()) {
             log.error("ERROR!!!ERROR!!! - No TS files... Exiting >>>$m3u8FileURL")
-            return
+            throw IllegalArgumentException("No TS files... Exiting >>>$m3u8FileURL")
+
         } else {
             // Check if the extracted urls are relative or absolute paths
             val tsVideoUrl = m3u8TsFilesList.first()
@@ -57,7 +59,6 @@ class VideoDownloaderUtil() {
         println("Download videos to directory >> $downloadDirectory")
 
 
-        var tsFileNamesBuilder = StringBuilder()
         val tsLinkVsPathHashmap: HashMap<String, String> = hashMapOf()
 
         for (tsLink: String in m3u8TsFilesList) {
@@ -125,17 +126,33 @@ class VideoDownloaderUtil() {
         }
 
         // Prepare and execute ts video concatenation
-        val outputFilePath = downloadDirectory + "Full_Video.ts"
+        val outputFilePath =
+            downloadDirectory + UUID.randomUUID().toString().replace("-", "").substring(0, 8) + "_" + FilenameUtils.getBaseName(m3u8FileURL) + ".ts"
+
+
         executeFFMPEG(outputFilePath, combineFile)
+
 
         println("Full output video name = $outputFilePath")
         //println("================== Full Video @ $fullVideo ==================")
-
         println("\n================== Video download finished for $m3u8FileURL ==================")
+
+
+        for (result in successDownloadsList) {
+            val currentFile = java.io.File(result.tsFileAbsoluteUrl)
+            log.info("Deleting file " + currentFile.absolutePath)
+            if (!currentFile.delete()) {
+                log.info("Failed to delete file ${result.tsFileAbsoluteUrl}")
+            }
+        }
+        combineFile.delete()
+
 
         // reset counter
         totalDownloadCounter.getAndAdd(downloadCounter.decrementAndGet())
         downloadCounter.set(1)
+
+        return File(outputFilePath)
     }
 
     private fun executeFFMPEG(
@@ -149,7 +166,6 @@ class VideoDownloaderUtil() {
         // ffmpeg will concat all our *.ts files and produce a single output video file
         val processBuilder = ProcessBuilder()
         //processBuilder.directory(java.io.File(System.getProperty("user.home")))
-
 
 
         //"ffmpeg -f concat -safe 0 -i list.txt -c copy output.mp4"

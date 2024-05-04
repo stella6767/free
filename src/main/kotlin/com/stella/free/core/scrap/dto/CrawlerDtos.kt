@@ -10,6 +10,10 @@ import java.net.HttpURLConnection
 import java.net.URI
 import java.util.concurrent.Callable
 
+data class UrlReqDto(
+    val url:String,
+)
+
 
 data class ResultVO(
     val tsFileUrl: String,

@@ -142,11 +142,11 @@ class VideoDownloaderUtil() {
             val currentFile = java.io.File(result.tsFileAbsoluteUrl)
             log.info("Deleting file " + currentFile.absolutePath)
             if (!currentFile.delete()) {
-                log.info("Failed to delete file ${result.tsFileAbsoluteUrl}")
+                log.warn("Failed to delete file ${result.tsFileAbsoluteUrl}")
             }
         }
-        combineFile.delete()
 
+        combineFile.delete()
 
         // reset counter
         totalDownloadCounter.getAndAdd(downloadCounter.decrementAndGet())

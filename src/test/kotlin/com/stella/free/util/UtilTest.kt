@@ -20,15 +20,11 @@ import net.datafaker.Faker
 import net.datafaker.transformations.Field.field
 import net.datafaker.transformations.JavaObjectTransformer
 import net.datafaker.transformations.Schema
-import org.apache.commons.exec.OS
 import org.apache.commons.io.FilenameUtils
 import org.aspectj.lang.ProceedingJoinPoint
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
 import org.junit.jupiter.api.Test
-import org.springframework.core.io.ClassPathResource
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.util.StringUtils
-import java.io.File
 import java.nio.file.Paths
 import java.time.LocalDateTime
 import java.util.*
@@ -66,7 +62,7 @@ class UtilTest {
         val url =
             "https://www.munute.com/master/output/plan/U2FsdGVkX18H3PG0AahIgGNCFeVR7clvoDBCdO74EkLYGeskR%2FDhPq6IlVAEV9Wh"
 
-        seleniumService.test(url)
+        seleniumService.downloadTsByUrl(url)
 
         //println(OS.isFamilyUnix())
         //println(OS.isFamilyWindows())

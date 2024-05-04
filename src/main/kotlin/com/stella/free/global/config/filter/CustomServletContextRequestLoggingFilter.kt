@@ -45,7 +45,7 @@ class CustomServletContextRequestLoggingFilter(
             requestURI
         }else request.requestURI
 
-        println("????${request.queryString}")
+        println("request.queryString=>${request.queryString}")
 
         val headers = if (isIncludeHeaders) {
             val httpHeaders = ServletServerHttpRequest(request).getHeaders()

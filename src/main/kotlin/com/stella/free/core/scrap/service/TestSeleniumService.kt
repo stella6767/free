@@ -14,10 +14,10 @@ class TestSeleniumService {
 
     }
 
-    fun cleanUpVideoOutputDirectory(): Boolean {
+    fun cleanUpOutputDirectory(): Boolean {
 
         val downloadDirectory =
-            Paths.get(".").toAbsolutePath().toUri().normalize().rawPath + "VideoOutputDirectory/"
+            Paths.get(".").toAbsolutePath().toUri().normalize().rawPath + "output/"
 
         val files = File(downloadDirectory)
         val fileNames = files.list()

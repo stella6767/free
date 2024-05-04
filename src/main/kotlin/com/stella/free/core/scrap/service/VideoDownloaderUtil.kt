@@ -5,7 +5,6 @@ import com.stella.free.core.scrap.dto.ResultVO
 import com.stella.free.global.util.logger
 import org.apache.commons.io.IOUtils
 import org.jetbrains.kotlin.konan.file.File
-import org.springframework.util.CollectionUtils
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -13,7 +12,6 @@ import java.net.HttpURLConnection
 import java.net.URI
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
-import java.nio.file.Paths
 import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicInteger
@@ -35,7 +33,6 @@ class VideoDownloaderUtil() {
         } else {
             // Check if the extracted urls are relative or absolute paths
             val tsVideoUrl = m3u8TsFilesList.first()
-
             if (!tsVideoUrl.startsWith("http:") && !tsVideoUrl.startsWith("https:")) {
                 log.warn(
                     "WARN! WARN! The following file location is not an absolute path URL!\n" +
@@ -56,7 +53,7 @@ class VideoDownloaderUtil() {
 
         // Video files will be downloaded to  this directory
         val download = "output/"
-            //Paths.get(".").toAbsolutePath().toUri().normalize().rawPath + "output/"
+        //Paths.get(".").toAbsolutePath().toUri().normalize().rawPath + "output/"
 
         val downloadDirectory = if (download.startsWith("\\") || download.startsWith("/")) {
             download.substring(1)
@@ -106,31 +103,53 @@ class VideoDownloaderUtil() {
 
         // Download and save all 'ts' files. 'NULL' is returned if ALL files were successfully downloaded.
         // Else, failed files will be retried.
-        var retryDownloadsList =
+        val resultVOS =
             downloadAndStoreFiles(m3u8TsFilesList, tsLinkVsPathHashmap)
 
+        val successDownloadsList = resultVOS.filter { it.isSuccess }
 
         // Failed files will be retired 3 times.
-        if (CollectionUtils.isEmpty(retryDownloadsList)) {
+        if (resultVOS.all { it.isSuccess }) {
             println("All files successfully downloaded no need to retry any! :)")
         } else {
-            log.error("ERROR!!! ERROR!!! Some files were NOT successfully downloaded. Will retry for " + retryDownloadsList!!.size + " file(s)")
-            var retryTaskList =
-                getDownloaderTaskRetryList(retryDownloadsList)
+
+            var retryTaskList = getDownloaderTaskRetryList(resultVOS)
             var retryCounter = 0
+
+            log.error("ERROR!!! ERROR!!! Some files were NOT successfully downloaded. Will retry for " + retryTaskList.size + " file(s)")
+
             do {
-                retryDownloadsList = downloadAndStoreFiles(m3u8TsFilesList, mapOf(), retryTaskList)
-                if (!CollectionUtils.isEmpty(retryDownloadsList)) {
-                    retryTaskList = getDownloaderTaskRetryList(retryDownloadsList)
+                val newResultVOS =
+                    downloadAndStoreFiles(m3u8TsFilesList, mapOf(), retryTaskList)
+
+                successDownloadsList.union(newResultVOS.filter { it.isSuccess })
+
+                if (newResultVOS.any { !it.isSuccess }) {
+                    retryTaskList = getDownloaderTaskRetryList(newResultVOS)
                 }
+
                 retryCounter++
-            } while ((!CollectionUtils.isEmpty(retryDownloadsList)) && retryCounter != 3)
+
+            } while ((newResultVOS.any { !it.isSuccess }) && retryCounter != 3)
 
             if (retryCounter == 3) {
+
                 log.error(
                     "ERROR!!! ERROR!!! ERROR!!!! - After more than 3 attempts some files did NOT successfully download. \n" +
                             "ERROR!!! ERROR!!! ERROR!!!! - Your video may NOT yield the expected result or ffmpeg tool can fail"
                 )
+            }
+        }
+
+
+        val file = java.io.File("output/list.txt")
+
+        file.bufferedWriter().use { writer ->
+            for (result in successDownloadsList) {
+                if (result.isSuccess){
+                    writer.write("file " + "'${result.tsFileAbsoluteUrl}'")
+                    writer.newLine()
+                }
             }
         }
 
@@ -147,10 +166,10 @@ class VideoDownloaderUtil() {
                 outputFilePath = downloadDirectory + "Full_Video.ts"
                 val fullVideo = outputFilePath
                 println("Full output video name = $outputFilePath")
-                println("\n================== Full Video @ $fullVideo ==================")
+                println("================== Full Video @ $fullVideo ==================")
             }
 
-            executeFFMPEG(outputFilePath, ffmpegCommandBuilderList.poll().toString())
+            executeFFMPEG(outputFilePath, ffmpegCommandBuilderList.poll().toString(), file)
 
             if (null != ffmpegCommandBuilderList.peek()) {
                 val nextCommandStr = ffmpegCommandBuilderList.peek()
@@ -169,7 +188,7 @@ class VideoDownloaderUtil() {
         downloadCounter.set(1)
     }
 
-    private fun executeFFMPEG(outputFilePath: String, ffmpegInputFileNames: String) {
+    private fun executeFFMPEG(outputFilePath: String, ffmpegInputFileNames: String, file: java.io.File) {
 
         println("Executing ffmpeg with output path = $outputFilePath\n")
         println("Input ffmpegInputFileNames character length >> " + ffmpegInputFileNames.length)
@@ -177,9 +196,6 @@ class VideoDownloaderUtil() {
         // ffmpeg will concat all our *.ts files and produce a single output video file
         val processBuilder = ProcessBuilder()
         val commandStr = "ffmpeg -i \"concat:$ffmpegInputFileNames\" -c copy $outputFilePath"
-
-        arrayOf("ffmpeg", "-f", "concat", "-safe", "0", "-i", ffmpegInputFileNames, "-c", "copy", outputFilePath)
-
 
         // Run this on Windows, cmd, /c = terminate after this run
         processBuilder.command(commandStr)
@@ -196,7 +212,23 @@ class VideoDownloaderUtil() {
                 println(line)
             }
         } catch (e: IOException) {
+
             e.printStackTrace()
+
+            println("다른 방법으로")
+            //https://trac.ffmpeg.org/wiki/Concatenate
+
+            processBuilder.command(arrayOf("ffmpeg", "-f", "concat", "-safe", "0", "-i", file.canonicalPath, "-c", "copy", outputFilePath).joinToString(" "))
+            processBuilder.redirectErrorStream(true)
+
+            val process = processBuilder.start()
+            // Let's read and print the ffmpeg's output
+            val r = BufferedReader(InputStreamReader(process.inputStream))
+            while (true) {
+                val line = r.readLine() ?: break
+                println(line)
+            }
+            //"ffmpeg -f concat -safe 0 -i list.txt -c copy output.mp4"
         }
     }
 
@@ -264,7 +296,7 @@ class VideoDownloaderUtil() {
         val executor = Executors.newVirtualThreadPerTaskExecutor()
 
         // Check if this is a retry download task
-        val taskList = if (!CollectionUtils.isEmpty(retryTaskList)) {
+        val taskList = if (retryTaskList.isNotEmpty()) {
             retryTaskList
         } else {
             val newTaskList = mutableListOf<DownloaderTask>()
@@ -277,22 +309,23 @@ class VideoDownloaderUtil() {
         }
 
         // Execute all downloader tasks and get reference to Future objects
-        val failures =
-            executor.invokeAll(taskList).map { it.get() }.filter { !it.isSuccess }
+        val results =
+            executor.invokeAll(taskList).map { it.get() }
 
+        val failures = results.filter { !it.isSuccess }
         println("===================== A total of " + failures.size + " failed to download =====================")
 
-        return failures
+        return results
     }
 
     /*
      * Create and get the Retry tasks for previously unsuccessful downloads
      */
-    private fun getDownloaderTaskRetryList(retryDownloadsList: List<ResultVO>): MutableList<DownloaderTask> {
+    private fun getDownloaderTaskRetryList(resultVos: List<ResultVO>): MutableList<DownloaderTask> {
         println("===================== Retrying the following file links =====================")
         var fileCounter = 1
 
-        return retryDownloadsList.map {
+        return resultVos.filter { !it.isSuccess }.map {
             println(fileCounter.toString() + ". " + it.tsFileUrl)
             fileCounter++
             DownloaderTask(it.tsFileUrl, it.tsFilePath)

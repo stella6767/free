@@ -6,6 +6,7 @@ import com.stella.free.core.openapi.service.PublicApiService
 import com.stella.free.core.scrap.dto.AsyncType
 import com.stella.free.core.scrap.service.DummyDataJenService
 import com.stella.free.core.scrap.service.SeleniumBMPInterceptor
+import com.stella.free.core.scrap.service.TestSeleniumService
 import com.stella.free.core.scrap.service.VideoDownloaderUtil
 import com.stella.free.global.config.TemplateConfiguration
 import com.stella.free.global.config.WebClientConfig
@@ -25,6 +26,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.core.io.ClassPathResource
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.util.StringUtils
+import java.nio.file.Paths
 import java.time.LocalDateTime
 import java.util.*
 import java.util.concurrent.CompletableFuture
@@ -47,8 +49,19 @@ class UtilTest {
         //val resource = this::class.java.getResource("/test.txt")
         //println(resource.path)
 
-        val path = ClassPathResource("static").url.path
-        println(path)
+        //val path = ClassPathResource("static").url.path
+        //println(path)
+
+
+        val downloadDirectory =
+            Paths.get(".").toAbsolutePath().toUri().normalize().rawPath + "output/"
+
+        println(downloadDirectory)
+
+        val seleniumService = TestSeleniumService()
+
+        seleniumService.cleanUpOutputDirectory()
+
 
     }
 
@@ -71,7 +84,8 @@ class UtilTest {
         println(m3U8requestFiles)
 
         if (m3U8requestFiles.isEmpty()){
-            System.err.println("\nERROR! No http requests for m3u8 files were found while searching website --> " + m3U8requestFiles +
+            System.err.println(
+                "ERROR! No http requests for m3u8 files were found while searching website --> " + m3U8requestFiles +
                     "\nPlease provide the direct m3u8 URL.")
             return
         }

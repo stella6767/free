@@ -10,10 +10,12 @@ import org.springframework.scheduling.annotation.AsyncConfigurer
 import org.springframework.scheduling.annotation.AsyncConfigurerSupport
 import org.springframework.scheduling.annotation.EnableAsync
 import org.springframework.scheduling.annotation.EnableScheduling
+import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler
 import java.lang.reflect.Method
 import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 import java.util.concurrent.ThreadPoolExecutor
 
 
@@ -59,11 +61,15 @@ class AsyncConfig(
      */
     @Bean
     fun schedulerTasks(): TaskScheduler {
-        val threadPoolTaskScheduler = ThreadPoolTaskScheduler()
-        threadPoolTaskScheduler.poolSize = coreSize
-        threadPoolTaskScheduler.setThreadNamePrefix(scheduledPrefix)
-        threadPoolTaskScheduler.initialize()
-        return threadPoolTaskScheduler
+//        val threadPoolTaskScheduler = ThreadPoolTaskScheduler()
+//        threadPoolTaskScheduler.poolSize = coreSize
+//        threadPoolTaskScheduler.setThreadNamePrefix(scheduledPrefix)
+//        threadPoolTaskScheduler.initialize()
+
+        
+        return ConcurrentTaskScheduler(
+            Executors.newScheduledThreadPool(0, Thread.ofVirtual().factory())
+        )
     }
 
 

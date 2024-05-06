@@ -91,11 +91,11 @@ spring:
 ---
 
 server:
-
   config:
     activate:
       on-profile:
         - prod
+  port: 8081
 
 spring:
   cloud:

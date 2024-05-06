@@ -35,6 +35,6 @@ services:
       #dockerfile: /Users/stella6767/IdeaProjects/free/DockerFile
       dockerfile: /home/ubuntu/cicd/DockerFile
     ports:
-      - "8080:8080"
+      - "8081:8081"
     environment:
       - "spring_profiles_active=prod"

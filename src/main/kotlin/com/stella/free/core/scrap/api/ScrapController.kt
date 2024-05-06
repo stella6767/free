@@ -64,7 +64,7 @@ class ScrapController(
 
         val resource = UrlResource(Paths.get(downloadedFile.canonicalPath).toUri())
 
-        //todo 가상스레드 톰캣 적용 및 이메일 템플릿 중복 코드 컴포넌트화..
+        //todo 가상스레드 톰캣 적용 및 이메일 템플릿 중복 코드 컴포넌트화.. 아키텍처 draw.io
 
 
         //인코딩 이슈

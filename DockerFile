@@ -1,21 +1,45 @@
-FROM openjdk:21
+# FROM amd64/ubuntu:latest
+
+FROM amd64/openjdk:21
 
 RUN apt-get -y update
 
-RUN apt -y install wget
+# RUN apt-get install -y openjdk-21-jdk
 
-RUN apt -y install unzip
+RUN apt-get -y install wget
 
-RUN apt -y install curl
+RUN apt-get -y install unzip
 
+RUN apt-get -y install curl
+
+
+RUN apt-get -y install ffmpeg
+
+# RUN wget https://dl.google.com/linux/direct/google-chrome-unstable_114.0.5735.6-1_amd64.deb
+
+# Google Chrome의 최신 .deb 파일 다운로드
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
-RUN apt -y install ./google-chrome-stable_current_amd64.deb
 
-RUN wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/` curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`/chromedriver_linux64.zip
+# RUN dpkg -i google-chrome-stable_current_amd64.deb
+#
+# RUN apt --fix-broken install
 
-RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/bin
+RUN apt-get -y install ./google-chrome-stable_current_amd64.deb
 
+# RUN apt-get -y install -f ./google-chrome-unstable_114.0.5735.6-1_amd64.deb
+
+RUN google-chrome --version
+
+# RUN wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/` curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE/chromedriver_linux64.zip
+
+# RUN unzip chromedriver-linux64.zip chromedriver -d /usr/bin
+
+RUN wget -O /tmp/chromedriver.zip https://storage.googleapis.com/chrome-for-testing-public/124.0.6367.91/linux64/chromedriver-linux64.zip
+
+RUN unzip /tmp/chromedriver.zip -d /usr/bin
+
+# RUN mv chromedriver /usr/bin/chromedriver
 
 ARG JAR_FILE=/build/libs/*.jar
 

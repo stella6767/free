@@ -31,15 +31,24 @@ class SeleniumBMPInterceptor {
 
         if (url.contains(".m3u8")) return listOf(url)
 
-        System.setProperty("webdriver.chrome.driver",
-            "src/main/resources/static/drivers/chromedriver"
-        )
-
+//        System.setProperty("webdriver.chrome.driver",
+//            "src/main/resources/static/drivers/chromedriver"
+//        )
+        //System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver")
         val latch = CountDownLatch(1)
         val m3u8FilesList = CopyOnWriteArrayList<String>()
 
         val options = ChromeOptions()
         options.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.91 Safari/537.36");
+        options.addArguments("--no-sandbox")
+        options.addArguments("--headless") //브라우저 안띄움
+        options.addArguments("--single-process")
+        options.addArguments("--disable-dev-shm-usage")
+        options.addArguments("--disable-gpu")
+        options.addArguments("--remote-debugging-port=9222")
+        options.addArguments("--blink-settings=imagesEnabled=false"); //이미지 다운 안받음
+        //options.setCapability("ignoreProtectedModeSettings", true)
+        //options.setBrowserVersion("116.0.5845.111")
 
         val driver: ChromeDriver = ChromeDriver(options)
         val devTools = driver.devTools
@@ -56,6 +65,11 @@ class SeleniumBMPInterceptor {
             val req = request.request
             //println("URL: " + req.url)
             //println("Method: " + req.method)
+
+            val referer = req.headers.get("Referer")
+            println("referer:: $referer")
+
+
             if (req.url.contains(".m3u8")) {
                 log.info("Found target URL, releasing latch");
                 m3u8FilesList.add(req.url)

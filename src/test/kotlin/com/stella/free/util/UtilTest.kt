@@ -4,6 +4,7 @@ import com.stella.free.core.blog.entity.Post
 import com.stella.free.core.openapi.dto.Entry
 import com.stella.free.core.openapi.service.PublicApiService
 import com.stella.free.core.scrap.dto.AsyncType
+import com.stella.free.core.scrap.dto.ResultVO
 import com.stella.free.core.scrap.service.DummyDataJenService
 import com.stella.free.core.scrap.service.SeleniumBMPInterceptor
 import com.stella.free.core.scrap.service.TestSeleniumService
@@ -20,11 +21,16 @@ import net.datafaker.Faker
 import net.datafaker.transformations.Field.field
 import net.datafaker.transformations.JavaObjectTransformer
 import net.datafaker.transformations.Schema
+import org.apache.commons.io.FileUtils
 import org.apache.commons.io.FilenameUtils
+import org.apache.commons.io.IOUtils
 import org.aspectj.lang.ProceedingJoinPoint
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
 import org.junit.jupiter.api.Test
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import java.io.File
+import java.net.HttpURLConnection
+import java.net.URI
 import java.nio.file.Paths
 import java.time.LocalDateTime
 import java.util.*
@@ -40,6 +46,30 @@ import kotlin.system.measureTimeMillis
 class UtilTest {
 
     //val faker = Faker(Locale("ko"))
+
+
+    @Test
+    fun mp4Test(){
+
+        val url = "https://google.com"
+
+        val tsUrl = URI(url).toURL()
+        val connection = tsUrl.openConnection() as HttpURLConnection
+
+        connection.addRequestProperty("User-Agent", "Mozilla")
+        connection.addRequestProperty("Referer", "https://google.com")
+        connection.connect()
+
+        connection.inputStream.use {
+
+            val m3u8Bytes = IOUtils.toByteArray(it)
+            //val downloadedByteLength = m3u8Bytes.size
+
+            val file = File("/Users/stella6767/IdeaProjects/free/output/test.mp4")
+            FileUtils.writeByteArrayToFile(file, m3u8Bytes)
+
+        }
+    }
 
 
     @Test
@@ -60,7 +90,7 @@ class UtilTest {
         val seleniumService = TestSeleniumService()
 
         val url =
-            "https://www.munute.com/master/output/plan/U2FsdGVkX18H3PG0AahIgGNCFeVR7clvoDBCdO74EkLYGeskR%2FDhPq6IlVAEV9Wh"
+            "https://vod.inflearn.com/videos/a46b98e3-02ef-43c0-9947-8bd1d25a77a2/encrypted/1.m3u8"
 
         seleniumService.downloadTsByUrl(url)
 
@@ -83,7 +113,7 @@ class UtilTest {
     fun seleniumBMPInterceptorTest(){
 
         val url =
-            "https://www.munute.com/master/output/plan/U2FsdGVkX18H3PG0AahIgGNCFeVR7clvoDBCdO74EkLYGeskR%2FDhPq6IlVAEV9Wh"
+            "https://www.munute.com/master/output/plan/U2FsdGVkX18vMpKBIjg+aE5C6jwlpmE89X94YBM3dI3ftdKZRE8VY7mF0gaNKw6t"
 
         val seleniumBMPInterceptor = SeleniumBMPInterceptor()
         val videoDownloaderUtil = VideoDownloaderUtil()
@@ -177,7 +207,9 @@ class UtilTest {
 
 
     suspend fun doSomeWithSuspend(prev: Int): Int {
-        delay(1000)
+
+        //delay(1000)
+        Thread.sleep(1000)
         println(Thread.currentThread().name + " ::: $prev")
 
         return prev

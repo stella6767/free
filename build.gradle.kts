@@ -1,11 +1,13 @@
+import gg.jte.gradle.GenerateJteTask
 import org.jetbrains.kotlin.cli.jvm.main
+import org.jetbrains.kotlin.gradle.internal.KaptGenerateStubsTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.nio.file.Path
 
 
 
 plugins {
-    id("org.springframework.boot") version "3.1.5"
+    id("org.springframework.boot") version "3.2.5"
     id("io.spring.dependency-management") version "1.1.3"
     id("gg.jte.gradle") version "2.3.2"
 
@@ -175,6 +177,22 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+
+//tasks.withType<GenerateJteTask> {
+//    // 'kaptGenerateStubsKotlin'이 이 태스크를 완료된 후에 실행되도록 설정
+//
+//}
+
+tasks.withType<KaptGenerateStubsTask> {
+    // 'kaptGenerateStubsKotlin'이 이 태스크를 완료된 후에 실행되도록 설정
+    dependsOn(tasks.generateJte)
+}
+
+
+
+
+
 
 sourceSets {
     test {

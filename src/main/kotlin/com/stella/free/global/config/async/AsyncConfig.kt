@@ -66,7 +66,7 @@ class AsyncConfig(
 //        threadPoolTaskScheduler.setThreadNamePrefix(scheduledPrefix)
 //        threadPoolTaskScheduler.initialize()
 
-        
+
         return ConcurrentTaskScheduler(
             Executors.newScheduledThreadPool(0, Thread.ofVirtual().factory())
         )

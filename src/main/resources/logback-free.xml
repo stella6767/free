@@ -12,7 +12,7 @@
     </springProfile>
 
     <springProfile name="prod">
-        <property name="LOGS_PATH" value="./logs"/>
+        <property name="LOGS_PATH" value="/logs"/>
     </springProfile>
 
 
@@ -50,9 +50,9 @@
             <appender-ref ref="STDOUT"/>
             <!--            <appender-ref ref="FILE"/>-->
         </springProfile>
-<!--        <springProfile name="prod">-->
-<!--            <appender-ref ref="FILE"/>-->
-<!--        </springProfile>-->
+        <springProfile name="prod">
+            <appender-ref ref="FILE"/>
+        </springProfile>
     </root>
 
 

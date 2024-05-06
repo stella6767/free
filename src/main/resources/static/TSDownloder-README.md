@@ -122,8 +122,11 @@ docker buildx ls
 2024-05-06T15:21:19.211473388Z   (The process started from chrome location /usr/bin/google-chrome is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
 ```
 
-아 스트레스.. 일단 포기
+[okky 관련 링크](https://okky.kr/questions/1459395)
 
+여기서 나랑 비슷한 고민을 하는 사람의 글을 발견하긴 했는데, 딱히 해결책은 없드라.
+
+아 스트레스.. 일단 포기
 
 ## 참고
 

@@ -91,11 +91,11 @@ spring:
 ---
 
 server:
+  port: 8081
   config:
     activate:
       on-profile:
         - prod
-  port: 8081
 
 spring:
   cloud:
@@ -105,7 +105,7 @@ spring:
   config:
     activate:
       on-profile:
-        - local
+        - prod
     import:
       - classpath:secret.yml
 

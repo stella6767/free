@@ -32,8 +32,8 @@ services:
     restart: always
     build:
       # context: .
-      dockerfile: /Users/stella6767/IdeaProjects/free/DockerFile
-      #dockerfile: /home/ubuntu/cicd/DockerFile
+      #dockerfile: /Users/stella6767/IdeaProjects/free/DockerFile
+      dockerfile: /home/ubuntu/cicd/DockerFile
     ports:
       - "8080:8080"
     environment:

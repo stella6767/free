@@ -35,6 +35,8 @@ secrets.tar.gz
 secrets_base64.txt
 *.ts
 *.mp4
+*.log
+
 
 ### NetBeans ###
 /nbproject/private/

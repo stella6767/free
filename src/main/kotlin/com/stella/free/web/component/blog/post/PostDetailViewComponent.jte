@@ -54,7 +54,7 @@
 </div>
 
 
-<div id="viewer" class="bg-white"></div>
+<div id="viewer" class="bg-white p-3"></div>
 
 ${commentSectionViewComponent.render(post)}
 

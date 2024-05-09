@@ -34,11 +34,11 @@ services:
 #      - linux/amd64
     build:
       # context: .
-      dockerfile: /Users/stella6767/IdeaProjects/free/DockerFile
-      #dockerfile: /home/ubuntu/cicd/DockerFile
+      #dockerfile: /Users/stella6767/IdeaProjects/free/DockerFile
+      dockerfile: /home/ubuntu/cicd/DockerFile
     ports:
       - "8081:8081"
     volumes:
-      - ./logs:/logs
+      - /logs:/logs
     environment:
       - "spring_profiles_active=prod"

@@ -30,13 +30,12 @@ services:
   web:
     container_name: web
     restart: always
-    platform: linux/arm64/v8      
-      - linux/amd64
+    #platform: linux/arm64/v8
+#      - linux/amd64
     build:
       # context: .
       #dockerfile: /Users/stella6767/IdeaProjects/free/DockerFile
       dockerfile: /home/ubuntu/cicd/DockerFile
-
     ports:
       - "8080:8080"
     volumes:

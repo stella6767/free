@@ -4,10 +4,9 @@ import com.stella.free.core.blog.entity.Post
 import com.stella.free.core.openapi.dto.Entry
 import com.stella.free.core.openapi.service.PublicApiService
 import com.stella.free.core.scrap.dto.AsyncType
-import com.stella.free.core.scrap.dto.ResultVO
 import com.stella.free.core.scrap.service.DummyDataJenService
 import com.stella.free.core.scrap.service.SeleniumBMPInterceptor
-import com.stella.free.core.scrap.service.TestSeleniumService
+import com.stella.free.core.scrap.service.TSDownloaderService
 import com.stella.free.core.scrap.service.VideoDownloaderUtil
 import com.stella.free.global.config.TemplateConfiguration
 import com.stella.free.global.config.WebClientConfig
@@ -87,7 +86,7 @@ class UtilTest {
         println(downloadDirectory)
 
 
-        val seleniumService = TestSeleniumService()
+        val seleniumService = TSDownloaderService()
 
         val url =
             "https://vod.inflearn.com/videos/a46b98e3-02ef-43c0-9947-8bd1d25a77a2/encrypted/1.m3u8"

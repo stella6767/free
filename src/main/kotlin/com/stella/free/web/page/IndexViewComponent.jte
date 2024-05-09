@@ -19,7 +19,13 @@
             <div class="max-w-md">
                 <h1 class="mb-5 text-3xl font-bold">Hello everyone!
                     <br/>My Simple Web Introduction</h1>
-                <div id="viewer"></div>
+
+                <div class="toastui-editor-contents" style="overflow-wrap: break-word;">
+                    <div data-nodeid="1">
+                        $unsafe{introduction}
+                    </div>
+                </div>
+
                 <p class="mb-5">Provide by stella6767</p>
 
             </div>
@@ -32,13 +38,13 @@
 
 <script>
 
-    let introduction = '${introduction}';
+    <%--let introduction = '${introduction}';--%>
 
-    const viewer = toastui.Editor.factory({
-        el: document.querySelector('#viewer'),
-        viewer: true,
-        initialValue: introduction
-    });
+    <%--const viewer = toastui.Editor.factory({--%>
+    <%--    el: document.querySelector('#viewer'),--%>
+    <%--    viewer: true,--%>
+    <%--    initialValue: introduction--%>
+    <%--});--%>
 
 </script>
 

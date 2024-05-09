@@ -1,5 +1,6 @@
 package com.stella.free.web.page
 
+import com.stella.free.global.util.getMarkdownValueFormLocal
 import com.stella.free.global.util.logger
 import de.tschuehly.spring.viewcomponent.core.ViewComponent
 import de.tschuehly.spring.viewcomponent.core.toProperty
@@ -19,16 +20,12 @@ class IndexViewComponent(
 
     fun render(): ViewContext {
 
-        val resource =
-            ClassPathResource("static/README.md").getInputStream()
+        val markdownValue =
+            ClassPathResource("static/README.md").getMarkdownValueFormLocal()
 
-        val introduction =
-            BufferedReader(InputStreamReader(resource)).use { reader ->
-                reader.lines().collect(Collectors.joining("\n"))
-            }
 
         return ViewContext(
-            "introduction" toProperty introduction,
+            "introduction" toProperty markdownValue,
         )
 
     }

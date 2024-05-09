@@ -31,10 +31,6 @@ class SeleniumBMPInterceptor {
 
         if (url.contains(".m3u8")) return listOf(url)
 
-//        System.setProperty("webdriver.chrome.driver",
-//            "src/main/resources/static/drivers/chromedriver"
-//        )
-        //System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver")
         val latch = CountDownLatch(1)
         val m3u8FilesList = CopyOnWriteArrayList<String>()
 

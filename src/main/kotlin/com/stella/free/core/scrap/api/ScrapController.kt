@@ -4,7 +4,7 @@ import com.stella.free.core.scrap.dto.AsyncType
 import com.stella.free.core.scrap.dto.UrlReqDto
 import com.stella.free.core.scrap.dto.VelogCrawlerReqDto
 import com.stella.free.core.scrap.service.DummyDataJenService
-import com.stella.free.core.scrap.service.TestSeleniumService
+import com.stella.free.core.scrap.service.TSDownloaderService
 import com.stella.free.core.scrap.service.VelogCrawler
 import jakarta.servlet.http.HttpServletResponse
 import jakarta.validation.Valid
@@ -26,7 +26,7 @@ import java.nio.file.Paths
 class ScrapController(
     private val dummyDataJenService: DummyDataJenService,
     private val velogCrawler: VelogCrawler,
-    private val testSeleniumService: TestSeleniumService,
+    private val TSDownloaderService: TSDownloaderService,
 ) {
 
 
@@ -59,13 +59,13 @@ class ScrapController(
     @ResponseBody
     fun downloadTsByUrl(urlReqDto: UrlReqDto): ResponseEntity<UrlResource> {
 
+
+        throw IllegalArgumentException("I removed the feature due to lack of support for the Chrome browser on ARM architecture.")
+
         val downloadedFile =
-            testSeleniumService.downloadTsByUrl(urlReqDto.url)
+            TSDownloaderService.downloadTsByUrl(urlReqDto.url)
 
         val resource = UrlResource(Paths.get(downloadedFile.canonicalPath).toUri())
-
-        //todo 가상스레드 톰캣 적용 및 이메일 템플릿 중복 코드 컴포넌트화.. 아키텍처 draw.io
-
 
         //인코딩 이슈
         val sanitizedName =

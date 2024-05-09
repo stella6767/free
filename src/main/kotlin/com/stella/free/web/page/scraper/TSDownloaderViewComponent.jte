@@ -47,13 +47,11 @@
 
     let isProcess = false
 
-
-    function arrayBufferToString(buffer) {
+    const arrayBufferToString = (buffer) => {
         return decodeURIComponent(String.fromCharCode.apply(null, Array.from(new Uint8Array(buffer))));
     }
 
     document.getElementById("downloader-ts").addEventListener("click", function (event) {
-
 
         document.getElementById('loading-spinner').style.display = 'inline';
         console.log("클릭됨")
@@ -62,7 +60,6 @@
             console.log("진행중이라 just return")
             return
         }
-
 
         // Get values from the select and input elements
         //const type = document.getElementById('type').value;
@@ -83,7 +80,8 @@
         req.onreadystatechange = function () {
             if (req.status != 200) {
                 console.error(req)
-                alert(arrayBufferToString(req.response))
+                let parse = JSON.parse(arrayBufferToString(req.response));
+                alert(parse.message)
                 document.getElementById('loading-spinner').style.display = 'none';
                 isProcess = false
             }

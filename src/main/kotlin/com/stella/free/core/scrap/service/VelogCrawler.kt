@@ -38,8 +38,18 @@ class VelogCrawler(
 //            this.getPost(username, it.url_slug!!)
 //        }.filterNotNull()
 
+        val posts =
+            getPostsByUsername(username)
 
-        val posts2 = Flux.fromIterable(this.getAllPosts(username))
+        responseZipFromAttachments(outputStream, posts)
+    }
+
+
+
+
+    fun getPostsByUsername(username: String): MutableList<VelogReadPostDto> {
+
+        val posts = Flux.fromIterable(this.getAllPosts(username))
             .parallel()
             .runOn(Schedulers.parallel())
             .flatMap { dto ->
@@ -49,13 +59,7 @@ class VelogCrawler(
             .collectList()
             .block() ?: mutableListOf()
 
-
-        responseZipFromAttachments(outputStream, posts2)
-    }
-
-
-    fun getPostByType(){
-
+        return posts
     }
 
 
@@ -67,7 +71,6 @@ class VelogCrawler(
             .variables(mapOf("username" to username, "url_slug" to url_slug))
             .retrieve("post")
             .toEntity(VelogReadPostDto::class.java)
-
     }
 
 
@@ -75,7 +78,7 @@ class VelogCrawler(
         var cursor: String? = null
         val allPosts = mutableListOf<VelogPostDto>()
         while (true) {
-            val posts = getPosts(username, cursor)
+            val posts = getPostsByUsername(username, cursor)
             if (posts.size >= 20) {
                 cursor = posts.last().id
             } else {
@@ -90,7 +93,7 @@ class VelogCrawler(
     }
 
 
-    private fun getPosts(username: String, cursor: String?): MutableList<VelogPostDto> {
+    private fun getPostsByUsername(username: String, cursor: String?): MutableList<VelogPostDto> {
 
         return graphQlClient
             .document(velogPostsQuery)

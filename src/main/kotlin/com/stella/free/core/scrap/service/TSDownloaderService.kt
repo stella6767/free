@@ -1,29 +1,22 @@
 package com.stella.free.core.scrap.service
 
 import com.stella.free.global.util.logger
-import org.apache.commons.io.FilenameUtils
-import org.springframework.core.io.UrlResource
-import org.springframework.http.CacheControl
-import org.springframework.http.HttpHeaders
-import org.springframework.http.MediaType
-import org.springframework.http.ResponseEntity
+import org.jetbrains.kotlin.konan.file.File
 import org.springframework.stereotype.Service
 import org.springframework.util.StringUtils
-import java.io.File
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 import java.nio.file.Paths
 
 
 @Service
-class TestSeleniumService {
+class TSDownloaderService {
 
     private val log = logger()
 
     private val seleniumBMPInterceptor = SeleniumBMPInterceptor()
+
     private val videoDownloaderUtil = VideoDownloaderUtil()
 
-    fun downloadTsByUrl(url: String): org.jetbrains.kotlin.konan.file.File {
+    fun downloadTsByUrl(url: String): File {
 
         val outputPath =
             Paths.get(".").toAbsolutePath().toUri().normalize().rawPath + "output/"
@@ -34,11 +27,10 @@ class TestSeleniumService {
             seleniumBMPInterceptor.retrieveM3U8requestFiles(url)
 
         if (m3U8requestFiles.isEmpty()) {
-            throw  IllegalArgumentException(
+            throw IllegalArgumentException(
                 "ERROR! No http requests for m3u8 files were found while searching website --> " + m3U8requestFiles +
                         "\nPlease provide the direct m3u8 URL."
             )
-
         }
 
         val masterM3U = videoDownloaderUtil.findMasterM3U(m3U8requestFiles)

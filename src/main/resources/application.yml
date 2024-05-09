@@ -16,7 +16,9 @@ server:
       enabled: true
 
 spring:
-
+  threads:
+    virtual:
+      enabled: true
   config:
     import:
       - classpath:secret.yml

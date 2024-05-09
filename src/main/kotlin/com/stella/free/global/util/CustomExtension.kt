@@ -10,9 +10,15 @@ import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderer
 import jakarta.persistence.EntityManager
 import jakarta.persistence.NoResultException
 import jakarta.persistence.TypedQuery
+import org.commonmark.parser.Parser
+import org.commonmark.renderer.html.HtmlRenderer
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.core.io.ClassPathResource
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.util.regex.Pattern
+import java.util.stream.Collectors
 
 
 //inline fun <reified T> SpringDataQueryFactory.singleOrNullQuery(
@@ -68,4 +74,19 @@ fun getCountByQuery(
     return count.toLong()
 }
 
+
+fun ClassPathResource.getMarkdownValueFormLocal(): String {
+
+    val resource = this.inputStream
+    val introduction =
+        BufferedReader(InputStreamReader(resource)).use { reader ->
+            reader.lines().collect(Collectors.joining("\n"))
+        }
+
+    val parser = Parser.builder().build()
+    val document = parser.parse(introduction)
+    val renderer = HtmlRenderer.builder().build()
+
+    return renderer.render(document)
+}
 

@@ -20,7 +20,7 @@ class MDCLoggingFilter(
 
         val uuid = UUID.randomUUID()
         MDC.put("request_id", uuid.toString());
-        response.characterEncoding = "utf-8"
+        response.characterEncoding = Charsets.UTF_8.name()
         chain.doFilter(request, response)
         MDC.clear()
     }

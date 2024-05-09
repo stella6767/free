@@ -10,6 +10,7 @@ import com.stella.free.core.blog.entity.Post
 import com.stella.free.core.blog.entity.PostTag
 import com.stella.free.core.blog.repo.HashTagRepository
 import com.stella.free.core.blog.repo.PostRepository
+import com.stella.free.core.scrap.service.VelogCrawler
 import com.stella.free.global.config.security.UserPrincipal
 import com.stella.free.global.exception.PostNotFoundException
 import com.stella.free.global.service.FileUploader
@@ -23,6 +24,8 @@ import net.datafaker.providers.base.Lorem
 import net.datafaker.transformations.Field
 import net.datafaker.transformations.JavaObjectTransformer
 import net.datafaker.transformations.Schema
+import org.commonmark.parser.Parser
+import org.commonmark.renderer.html.HtmlRenderer
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.springframework.data.domain.Page
@@ -40,6 +43,7 @@ class PostService(
     private val userRepository: UserRepository,
     private val fileUploader: FileUploader,
     private val hashTagRepository: HashTagRepository,
+    private val velogCrawler: VelogCrawler,
     private val mapper: ObjectMapper
 ) {
 
@@ -51,18 +55,37 @@ class PostService(
         if (posts.isEmpty()) {
             generateDummyPosts(100)
         }
+        //generateDummyPosts(100)
     }
 
 
     fun generateDummyPosts(size: Int) {
-        val posts = mutableListOf<Post>()
-        for (i in 0 until size) {
-            generateDummyPost((i + 1).toLong())
-            //println(post)
-            //posts.add(post)
+        //val posts = mutableListOf<Post>()
+        val username = "stella6767"
+        val user = userRepository.getReferenceById(1)
+        val parser = Parser.builder().build()
+        val posts = velogCrawler.getPostsByUsername(username).map {
+            val document = parser.parse(it.body)
+            val renderer = HtmlRenderer.builder().build()
+            val content = renderer.render(document)
+            Post(
+                title = it.title ?: "",
+                content = content,
+                thumbnail = createThumbnail(content),
+                username = username,
+                user = user
+            )
         }
+
+        postRepository.saveAll(posts)
+//        for (i in 0 until size) {
+//            generateDummyPost((i + 1).toLong())
+//            //println(post)
+//            //posts.add(post)
+//        }
 //        log.info("data initialized post: ${posts.size}")
 //        postRepository.saveAll(posts)
+
     }
 
 
@@ -87,6 +110,9 @@ class PostService(
 
         return post
     }
+
+
+
 
 
     private fun generateDummyPostContent(lorem: Lorem, img: String): String {
@@ -136,6 +162,7 @@ class PostService(
         val thumbnail =
             Jsoup.parseBodyFragment(content).getElementsByTag("img")
                 .firstOrNull()?.attr("src")
+
         return thumbnail
     }
 

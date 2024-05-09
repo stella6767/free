@@ -38,28 +38,37 @@ class ExceptionHandler(
 //        )
 //    }
 
-
-
     @ExceptionHandler(AppException::class)
     fun handleMyAppException(exception: AppException): String {
 
-        log.error(exception.localizedMessage)
+        log.error("handle:::" + exception.localizedMessage)
 
         val status = HttpStatus.INTERNAL_SERVER_ERROR
         val pd = ProblemDetail.forStatus(status.value())
         pd.detail = exception.localizedMessage
-
         //ResponseEntity(objectMapper.writeValueAsString(pd), status)
-
         return ScriptUtil.alertErrorAndHistoryBack(objectMapper.writeValueAsString(pd.detail!!))
-
     }
+
+
+//    @ExceptionHandler(IllegalArgumentException::class)
+//    fun handleIllegalArgumentException(exception: IllegalArgumentException): String {
+//
+//        log.error("handle:::" + exception.localizedMessage)
+//
+//        val status = HttpStatus.INTERNAL_SERVER_ERROR
+//        val pd = ProblemDetail.forStatus(status.value())
+//        pd.detail = exception.localizedMessage
+//
+//        //ResponseEntity(objectMapper.writeValueAsString(pd), status)
+//        return ScriptUtil.alertError(objectMapper.writeValueAsString(pd.detail!!))
+//    }
 
 
     @ExceptionHandler(*arrayOf(AuthenticationException::class, AccessDeniedException::class, EntityNotFoundException::class))
     fun handleAuthException(exception: Exception): String {
 
-        log.error(exception.message)
+        log.error("handle:::" + exception.message)
 
         val pd = ProblemDetail.forStatus(HttpStatus.UNAUTHORIZED.value())
         pd.detail = exception.localizedMessage
@@ -84,26 +93,16 @@ class ExceptionHandler(
 
     @ExceptionHandler(HttpMessageNotReadableException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun httpMessageNotReadableExceptionHandler(e: HttpMessageNotReadableException): String? {
-
+    fun httpMessageNotReadableExceptionHandler(e: HttpMessageNotReadableException): String {
         val detail =
             createProblemDetail(HttpStatus.BAD_REQUEST, e.localizedMessage)
-
         return objectMapper.writeValueAsString(detail)
     }
-
-
-
-
 
     private fun createProblemDetail(status: HttpStatus, message:String): ProblemDetail {
         val pd = ProblemDetail.forStatus(status.value())
         pd.detail = message
         return pd
     }
-
-
-
-
 
 }

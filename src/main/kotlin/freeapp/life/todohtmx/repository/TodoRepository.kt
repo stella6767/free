@@ -42,7 +42,6 @@ class TodoQueryRepositoryImpl(
         val render = renderer.render(query = query, ctx)
 
         val fetch = em.getDatasWithPagination(render, Todo::class.java, pageable)
-
         val count = em.getCountByQuery(query, ctx, renderer)
 
         return PageableExecutionUtils.getPage(

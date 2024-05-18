@@ -5,7 +5,7 @@ import freeapp.life.todohtmx.entity.Todo
 import kotlinx.html.*
 import org.springframework.data.domain.Page
 
-fun DIV.todoComponent(todo: Todo)  {
+fun DIV.todoComponent(todo: Todo) {
 
     div {
         id = "todo-container-${todo.id}"
@@ -35,44 +35,55 @@ fun DIV.todoComponent(todo: Todo)  {
 }
 
 
-fun BODY.todos(todos: Page<Todo>) {
+fun BODY.defaultBody(div: DIV.() -> Unit) {
 
     div {
         id = "content-body"
-        div("h-100 w-full flex items-center justify-center bg-teal-lightest font-sans") {
-            div("bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg") {
-                div("mb-4") {
-                    h1("text-5xl font-bold text-primary") { +"Todo List" }
-                    div("flex mt-4") {
-                        input(classes = "shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker") {
-                            attributes["autofocus"] = "autofocus"
-                            id = "new-todo"
-                            name = "newTodo"
-                            placeholder = "To do..."
-                            required = true
-                            type = InputType.text
-                        }
-                        button(classes = "flex-no-shrink p-2 border-2 rounded text-info-content border-teal hover:text-white hover:bg-teal") {
-                            attributes["hx-include"] = "#new-todo"
-                            attributes["hx-trigger"] = "click"
-                            attributes["hx-post"] = "/todo"
-                            attributes["hx-target"] = "#todo-list"
-                            attributes["hx-swap"] = "afterbegin"
-                            +"""Add"""
-                        }
+        div()
+    }
+
+}
+
+fun DIV.todosViewWithPage(todos: Page<Todo>) {
+    div("h-100 w-full flex items-center justify-center bg-teal-lightest font-sans") {
+        id = "todos-with-page"
+
+        div("bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg") {
+            div("mb-4") {
+                h1("text-5xl font-bold text-primary") { +"Todo List" }
+                div("flex mt-4") {
+                    input(classes = "shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker") {
+                        attributes["autofocus"] = "autofocus"
+                        id = "new-todo"
+                        name = "newTodo"
+                        placeholder = "To do..."
+                        required = true
+                        type = InputType.text
                     }
-                }
-                div {
-                    id = "todo-list"
-                    for (todo in todos) {
-                        todoComponent(todo)
+                    button(classes = "flex-no-shrink p-2 border-2 rounded text-info-content border-teal hover:text-white hover:bg-teal") {
+                        attributes["hx-include"] = "#new-todo"
+                        attributes["hx-trigger"] = "click"
+                        attributes["hx-post"] = "/todo"
+                        attributes["hx-target"] = "#todo-list"
+                        attributes["hx-swap"] = "afterbegin"
+                        +"""Add"""
                     }
                 }
             }
+            div {
+                id = "todo-list"
+                for (todo in todos) {
+                    todoComponent(todo)
+                }
+            }
         }
-
-        paginationViewComponent(todos, "todos")
     }
 
-
+    paginationViewComponent(todos, "todos")
 }
+
+
+//attributes["hx-trigger"] = "load"
+//attributes["hx-get"] = "/todos"
+//attributes["hx-target"] = "#todo-list"
+//attributes["hx-swap"] = "afterbegin"

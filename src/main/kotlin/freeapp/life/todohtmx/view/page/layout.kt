@@ -7,7 +7,6 @@ import kotlinx.html.stream.createHTML
 
 
 fun renderComponent(div: DIV.() -> Unit): String {
-
     return createHTML().div {
         div()
     }
@@ -38,6 +37,9 @@ private fun HTML.defaultHeader() {
             attributes["crossorigin"] = "anonymous"
         }
         script {
+            src = "https://unpkg.com/htmx.org@1.9.12/dist/ext/multi-swap.js"
+        }
+        script {
             src = "https://cdn.tailwindcss.com"
         }
         script {
@@ -47,6 +49,7 @@ private fun HTML.defaultHeader() {
         script {
             src = "https://cdn.tailwindcss.com"
         }
+
 
         link(rel = "stylesheet", href = "https://cdn.simplecss.org/simple.min.css")
         link(rel = "stylesheet", href = "/styles.css", type = "text/css")
@@ -60,7 +63,7 @@ private fun HTML.defaultHeader() {
             content = "text/html; charset=UTF-8"
         }
         meta { charset = "UTF-8" }
-        meta(name = "author", content = "stella")
+        meta(name = "author", content = "stella6767")
         meta(name = "keywords", content = arrayOf("Kotlin", "htmx").joinToString(","))
         meta(name = "viewport", content = "width=device-width, initial-scale=1.0")
     }

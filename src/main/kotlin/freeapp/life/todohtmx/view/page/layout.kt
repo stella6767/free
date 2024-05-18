@@ -1,13 +1,19 @@
-package freeapp.life.todohtmx.view.component
+package freeapp.life.todohtmx.view.page
 
 import kotlinx.html.*
 import kotlinx.html.dom.createHTMLDocument
 import kotlinx.html.dom.serialize
+import kotlinx.html.stream.createHTML
 
 
+fun renderComponent(div: DIV.() -> Unit): String {
+
+    return createHTML().div {
+        div()
+    }
+}
 
 fun renderPageWithLayout(body: BODY.() -> Unit): String {
-
     return writePage {
         defaultHeader()
         body {
@@ -17,19 +23,11 @@ fun renderPageWithLayout(body: BODY.() -> Unit): String {
     }
 }
 
-
 inline fun writePage(crossinline block : HTML.() -> Unit): String {
     return createHTMLDocument().html {
         visit(block)
     }.serialize()
 }
-
-
-
-
-
-
-
 
 
 private fun HTML.defaultHeader() {

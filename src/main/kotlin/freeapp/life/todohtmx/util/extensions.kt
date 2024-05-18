@@ -8,7 +8,7 @@ import freeapp.life.todohtmx.entity.Todo
 import jakarta.persistence.EntityManager
 import org.springframework.data.domain.Pageable
 
-fun EntityManager.getCountByQuery(
+inline fun EntityManager.getCountByQuery(
     countQuery: SelectQuery<*>,
     ctx: JpqlRenderContext,
     renderer: JpqlRenderer
@@ -26,7 +26,7 @@ fun EntityManager.getCountByQuery(
 }
 
 
-fun <T : Any> EntityManager.getDatasWithPagination(
+inline fun <reified T : Any> EntityManager.getDatasWithPagination(
     render: JpqlRendered,
     type: Class<T>,
     pageable: Pageable

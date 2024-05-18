@@ -12,12 +12,12 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.support.PageableExecutionUtils
 
-interface TodoRepository : JpaRepository<Todo, Long> {
+interface TodoRepository : JpaRepository<Todo, Long>, TodoQueryRepository {
 }
 
 
 interface TodoQueryRepository {
-    fun findTodos(pageable: Pageable): Page<Todo>
+    fun findTodosWithPage(pageable: Pageable): Page<Todo>
 }
 
 
@@ -27,7 +27,7 @@ class TodoQueryRepositoryImpl(
     private val em: EntityManager,
 ) : TodoQueryRepository {
 
-    override fun findTodos(pageable: Pageable): Page<Todo> {
+    override fun findTodosWithPage(pageable: Pageable): Page<Todo> {
 
         val query = jpql {
             select(

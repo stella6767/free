@@ -52,6 +52,7 @@ fun DIV.todosViewWithPage(todos: Page<Todo>) {
             div("mb-4") {
                 h1("text-5xl font-bold text-primary") { +"Todo List" }
                 div("flex mt-4") {
+                    //attributes["hx-ext"] = "multi-swap"
                     input(classes = "shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker") {
                         attributes["autofocus"] = "autofocus"
                         id = "new-todo"
@@ -66,6 +67,9 @@ fun DIV.todosViewWithPage(todos: Page<Todo>) {
                         attributes["hx-post"] = "/todo"
                         attributes["hx-target"] = "#todo-list"
                         attributes["hx-swap"] = "afterbegin"
+                        //https://stackoverflow.com/questions/77739567/proper-way-to-clear-the-input-field-after-form-submission-with-htmx?rq=2
+                        attributes["hx-on--after-request"] = "javascript:document.getElementById('new-todo').value='';"
+
                         +"""Add"""
                     }
                 }
@@ -78,8 +82,8 @@ fun DIV.todosViewWithPage(todos: Page<Todo>) {
             }
         }
     }
-
-    paginationViewComponent(todos, "todos")
+    
+    paginationViewComponent(todos, "todos", "todo-list")
 }
 
 

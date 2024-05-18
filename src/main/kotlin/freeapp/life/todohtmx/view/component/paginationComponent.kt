@@ -35,17 +35,12 @@ fun <T : Any> DIV.paginationViewComponent(page: Page<T>, endPoint:String) {
 
             for (i in start.toInt().. end.toInt()) {
 
-                input{
-                    classes =  setOf("join-item btn btn-square")
-                    type = InputType.radio
-                    name = "options"
-                    attributes["aria-label"] = "$i"
+                button(classes = "join-item btn btn-square"){
                     onClick = "window.location.href='/todos?page=${i-1}'"
-
                     if (i == page.number + 1){
-                        checked = true
+                        classes += "btn-active  bg-accent"
                     }
-
+                    +"$i"
                 }
             }
 

@@ -21,7 +21,7 @@ class TodoService(
 
     @PostConstruct
     fun init() {
-        todoRepository.saveAll(createDummyTodos(20))
+        todoRepository.saveAll(createDummyTodos(100))
     }
 
     fun createDummyTodos(size: Int): MutableList<Todo> {

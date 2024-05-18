@@ -82,12 +82,8 @@ fun DIV.todosViewWithPage(todos: Page<Todo>) {
             }
         }
     }
-    
+
     paginationViewComponent(todos, "todos", "todo-list")
 }
 
 
-//attributes["hx-trigger"] = "load"
-//attributes["hx-get"] = "/todos"
-//attributes["hx-target"] = "#todo-list"
-//attributes["hx-swap"] = "afterbegin"

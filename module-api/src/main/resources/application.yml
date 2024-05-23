@@ -1,0 +1,66 @@
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: utf-8
+      enabled: true
+
+spring:
+  threads:
+    virtual:
+      enabled: true
+  config:
+    import:
+      - secret.yml
+  devtools:
+    livereload:
+      enabled: true
+
+  profiles:
+    active:
+      - local
+  application:
+    name: todo-htmx-app
+
+#logging:
+#  config: classpath:logback-free.xml
+
+
+---
+
+server:
+  config:
+    activate:
+      on-profile:
+        - local
+
+spring:
+  config:
+    activate:
+      on-profile:
+        - local
+    import:
+      - secret.yml
+
+---
+
+server:
+  port: 8081
+  config:
+    activate:
+      on-profile:
+        - prod
+
+spring:
+  cloud:
+    config:
+      enabled: false
+
+  config:
+    activate:
+      on-profile:
+        - prod
+    import:
+      - secret.yml

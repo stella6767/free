@@ -84,7 +84,8 @@ class ApiExceptionHandler(
 
     @ExceptionHandler(Exception::class)
     protected fun handleException(e: Exception): ResponseEntity<ErrorResponse> {
-        log.error("handleEntityNotFoundException", e)
+        log.error("handleException", e)
+
         val response: ErrorResponse = ErrorResponse.of(e.localizedMessage, null)
         return ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR)
     }

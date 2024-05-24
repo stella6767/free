@@ -41,17 +41,16 @@ data class PostDetailDto(
     val userId: Long?,
     val title: String,
     val content: String,
-    val markDownContent: String,
     val username: String,
-    //val userIp:String,
     val thumbnail: String?,
-    val tagNames: String,
+    //val tagNames: String,
+    val postTags: List<String>,
     val createdAt: String,
     val deletedAt: LocalDateTime?,
 ) {
 
     companion object {
-        fun fromEntity(post: Post, postMarkDown: String, tagNames: String = ""): PostDetailDto {
+        fun fromEntity(post: Post): PostDetailDto {
 
             return PostDetailDto(
                 id = post.id,
@@ -59,8 +58,7 @@ data class PostDetailDto(
                 title = post.title,
                 thumbnail = post.thumbnail,
                 content = post.content,
-                tagNames = tagNames,
-                markDownContent = postMarkDown,
+                postTags = post.postTags.map { it.hashTag.name } ,
                 username = post.username,
                 createdAt = post.createdAt.toString("YYYY-MM-dd E HH:mm"),
                 deletedAt = post.deletedAt

@@ -1,8 +1,6 @@
 package freeapp.life.stella.api.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.vladsch.flexmark.html2md.converter.FlexmarkHtmlConverter
-import com.vladsch.flexmark.util.data.MutableDataSet
 import freeapp.life.stella.api.config.security.UserPrincipal
 import freeapp.life.stella.api.dto.PostCardDto
 import freeapp.life.stella.api.dto.PostDetailDto
@@ -20,13 +18,13 @@ import mu.KotlinLogging
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.util.StringUtils
 import org.springframework.web.multipart.MultipartFile
-import java.util.*
 
 
 @Service
@@ -39,7 +37,7 @@ class PostService(
     private val mapper: ObjectMapper
 ) {
 
-    private val log = KotlinLogging.logger {  }
+    private val log = KotlinLogging.logger { }
 
     @PostConstruct
     fun init() {
@@ -83,7 +81,7 @@ class PostService(
 
 
     @Transactional
-    fun savePost(postSaveDto: PostSaveDto, principal: UserPrincipal) {
+    fun savePost(postSaveDto: PostSaveDto, principal: UserPrincipal): Long {
 
         val thumbnail =
             createThumbnail(postSaveDto.content)
@@ -96,6 +94,8 @@ class PostService(
                 hashTagRepository.findByName(it) ?: hashTagRepository.save(HashTag(name = it))
             hashTagRepository.savePostTag(PostTag(post, hashTag))
         }
+
+        return post.id
     }
 
     private fun createThumbnail(content: String): String? {
@@ -109,7 +109,7 @@ class PostService(
 
 
     @Transactional
-    fun updatePost(dto: PostUpdateDto, principal: UserPrincipal) {
+    fun updatePost(dto: PostUpdateDto, principal: UserPrincipal): Long {
 
         val post =
             postRepository.findPostById(dto.id) ?: throw EntityNotFoundException()
@@ -124,9 +124,12 @@ class PostService(
             dto.title,
             dto.content,
             dto.username,
-            createThumbnail(dto.content), postTags
+            createThumbnail(dto.content),
+            postTags
         )
 
+
+        return post.id
     }
 
 
@@ -137,18 +140,14 @@ class PostService(
 
 
     @Transactional
-    fun findPostDetailById(id: Long): PostDetailDto {
+    fun findPostDetailById(id: Long): PostDetailDto? {
 
-        val post = postRepository.findById(id)
-            .orElseThrow { throw EntityNotFoundException() }
+        val post = postRepository.findByIdOrNull(id)
 
-        post.count++
-
-        val options = MutableDataSet()
-        val postMarkDown =
-            FlexmarkHtmlConverter.builder(options).build().convert(post.content)
-
-        return PostDetailDto.fromEntity(post, postMarkDown)
+        return if (post != null) {
+            post.count++
+            PostDetailDto.fromEntity(post)
+        } else null
     }
 
 
@@ -162,10 +161,16 @@ class PostService(
 
 
     @Transactional(readOnly = true)
-    fun findPostsByTagName(tagName: String, pageable: Pageable): Page<Post> {
+    fun findPostsByTagName(tagName: String, pageable: Pageable): Page<PostCardDto> {
 
         val posts =
-            hashTagRepository.findPostsByTagName(tagName, pageable).map { it.post }
+            hashTagRepository
+                .findPostsByTagName(tagName, pageable)
+                .map { it.post }.map {
+                    val text =
+                        Jsoup.parse(it.content).text()
+                    PostCardDto.fromEntity(it, text)
+                }
 
         return posts
     }
@@ -184,7 +189,6 @@ class PostService(
 
     @Transactional(readOnly = true)
     fun findPostsByKeyword(keyword: String, pageable: Pageable): Page<PostCardDto> {
-
         return postRepository.findPostsByKeyword(keyword, pageable).map {
             val text =
                 Jsoup.parse(it.content).text()
@@ -194,18 +198,15 @@ class PostService(
 
 
     @Transactional(readOnly = true)
-    fun findPostById(id: Long): PostDetailDto? {
-        val post = postRepository.findPostById(id)
+    fun findPostCardDtos(keyword: String, pageable: Pageable): Page<PostCardDto> {
 
-        val tagNames =
-            post?.postTags?.map { it.hashTag.name } ?: listOf()
+        val posts = if (StringUtils.hasLength(keyword)) {
+            findPostsByKeyword(keyword, pageable)
+        } else findPostsByPage(pageable)
 
-        log.debug("tagNames?  $tagNames")
-
-        return if (post != null) {
-            PostDetailDto.fromEntity(post, "", mapper.writeValueAsString(tagNames))
-        } else null
+        return posts
     }
+
 
     fun savePostImg(file: MultipartFile): String {
 

@@ -24,17 +24,14 @@ class TodoService(
         todoRepository.saveAll(createDummyTodos(100))
     }
 
+    
     fun createDummyTodos(size: Int): MutableList<Todo> {
-
         val todos = mutableListOf<Todo>()
-
         for (i:Int in 1.. size) {
             todos.add(Todo(content = "todo$i"))
         }
         return todos
     }
-
-
 
     @Transactional(readOnly = true)
     fun findTodosByPage(pageable: Pageable): Page<Todo> {
@@ -54,14 +51,11 @@ class TodoService(
 
     @Transactional
     fun updateStatusTodo(id: Long): Todo {
-
         val todo =
             todoRepository.findById(id).orElseThrow {
                 throw EntityNotFoundException()
             }
-
         todo.status = !todo.status
-
         return todo
     }
 

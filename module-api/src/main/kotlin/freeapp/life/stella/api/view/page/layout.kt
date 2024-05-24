@@ -55,11 +55,19 @@ private fun HTML.defaultHeader() {
             src = "https://unpkg.com/htmx.org@1.9.12/dist/ext/multi-swap.js"
         }
         script {
+            src = "https://unpkg.com/htmx.org/dist/ext/loading-states.js"
+        }
+        script {
             src = "https://cdn.tailwindcss.com"
         }
         script {
             //defer
             src = "https://cdn.jsdelivr.net/npm/alpinejs@3.12.1/dist/cdn.min.js"
+        }
+
+        script {
+            src = "/js/client.js"
+            defer = true
         }
         link {
             href = "https://cdn.jsdelivr.net/npm/daisyui@3.0.3/dist/full.css"
@@ -299,6 +307,10 @@ fun BODY.navbar() {
                                 }
                                 li {
                                     a {
+                                        attributes["hx-trigger"] = "click"
+                                        attributes["hx-get"] = "/post/editor"
+                                        attributes["hx-target"] = "#content-body"
+
                                         href = "/post/editor"
                                         +"새글쓰기"
                                     }

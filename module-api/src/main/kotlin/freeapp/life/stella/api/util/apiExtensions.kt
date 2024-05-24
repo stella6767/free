@@ -1,5 +1,6 @@
 package freeapp.life.stella.api.util
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
 import org.springframework.core.io.ClassPathResource
@@ -22,3 +23,8 @@ fun ClassPathResource.getMarkdownValueFormLocal(): String {
     return renderer.render(document)
 }
 
+
+fun List<String>.toJson(): String {
+
+    return if (this.isEmpty() || this == null) "[]" else ObjectMapper().writeValueAsString(this)
+}

@@ -30,13 +30,15 @@ fun DIV.indexView(value: String) {
 
 }
 
-fun DIV.htmlViewer(value: String) {
+fun DIV.htmlViewer(value: String, isCenter: Boolean = true) {
     div {
-        classes = setOf("toastui-editor-contents text-center text-neutral-content")
+        classes = setOf("toastui-editor-contents text-neutral-content")
+        if (isCenter){
+            classes += "text-center"
+        }
         attributes["style"] = "overflow-wrap: break-word;"
         div {
             attributes["data-nodeid"] = "1"
-
             unsafe {
                 raw(
                     "$value"

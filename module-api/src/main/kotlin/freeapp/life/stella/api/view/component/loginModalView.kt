@@ -67,7 +67,6 @@ fun DIV.loginModalView() {
                                     }
                                 }
                             }
-                            +"@endfor"
                         }
                     }
 

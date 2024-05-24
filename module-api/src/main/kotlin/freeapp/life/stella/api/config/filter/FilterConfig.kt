@@ -36,5 +36,15 @@ class FilterConfig(
         return CustomServletContextRequestLoggingFilter()
     }
 
+    @Bean
+    fun mdcLoggingFilterRegister(): FilterRegistrationBean<MDCLoggingFilter> {
+        val bean: FilterRegistrationBean<MDCLoggingFilter> =
+            FilterRegistrationBean(MDCLoggingFilter())
+        bean.addUrlPatterns("/*")
+        bean.order = Ordered.HIGHEST_PRECEDENCE //필터 순서.. 낮은 숫자가 먼저 실행됨
+        return bean
+    }
+
+
 
 }

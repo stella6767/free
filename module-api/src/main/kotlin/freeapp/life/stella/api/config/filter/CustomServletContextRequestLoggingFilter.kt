@@ -1,10 +1,7 @@
 package freeapp.life.stella.api.config.filter
 
 import jakarta.servlet.http.HttpServletRequest
-import org.springframework.http.server.ServletServerHttpRequest
-import org.springframework.util.StringUtils
 import org.springframework.web.filter.ServletContextRequestLoggingFilter
-import java.util.*
 
 class CustomServletContextRequestLoggingFilter(
 
@@ -47,34 +44,34 @@ class CustomServletContextRequestLoggingFilter(
 
         println("request.queryString=>${request.queryString}")
 
-        val headers = if (isIncludeHeaders) {
-            val httpHeaders = ServletServerHttpRequest(request).getHeaders()
-            if (headerPredicate != null) {
-                val names = request.headerNames
-                while (names.hasMoreElements()) {
-                    val header = names.nextElement()
-                    if (!headerPredicate!!.test(header)) {
-                        httpHeaders[header] = "masked"
-                    }
-                }
-            }
-            httpHeaders.toString()
-        }else ""
-
-
-        val clientInfoTotal = if (isIncludeClientInfo) {
-            var clientInfo = ""
-            if (StringUtils.hasLength(request.remoteAddr)) {
-                clientInfo += " , client=${request.remoteAddr} "
-            }
-            if (request.getSession(false) != null) {
-                clientInfo += " , session=${request.getSession(false).id} "
-            }
-            if (request.remoteUser != null) {
-                clientInfo += " , user=${request.remoteUser} "
-            }
-            clientInfo
-        }else ""
+//        val headers = if (isIncludeHeaders) {
+//            val httpHeaders = ServletServerHttpRequest(request).getHeaders()
+//            if (headerPredicate != null) {
+//                val names = request.headerNames
+//                while (names.hasMoreElements()) {
+//                    val header = names.nextElement()
+//                    if (!headerPredicate!!.test(header)) {
+//                        httpHeaders[header] = "masked"
+//                    }
+//                }
+//            }
+//            httpHeaders.toString()
+//        }else ""
+//
+//
+//        val clientInfoTotal = if (isIncludeClientInfo) {
+//            var clientInfo = ""
+//            if (StringUtils.hasLength(request.remoteAddr)) {
+//                clientInfo += " , client=${request.remoteAddr} "
+//            }
+//            if (request.getSession(false) != null) {
+//                clientInfo += " , session=${request.getSession(false).id} "
+//            }
+//            if (request.remoteUser != null) {
+//                clientInfo += " , user=${request.remoteUser} "
+//            }
+//            clientInfo
+//        }else ""
 
 
         val payload = if (isIncludePayload) {
@@ -83,12 +80,13 @@ class CustomServletContextRequestLoggingFilter(
         }else ""
 
 
+//        clientInfo: ${clientInfoTotal}
+//        headers: ${headers}
+
         return  """
             
             HTTP Method: ${request.method}
             url: ${url} 
-            clientInfo: ${clientInfoTotal}
-            headers: ${headers}
             payload: $payload
                       
         """.trimIndent()

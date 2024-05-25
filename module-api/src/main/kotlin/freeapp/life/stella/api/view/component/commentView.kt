@@ -50,11 +50,11 @@ fun DIV.commentCardView(
             div {
                 classes =
                     setOf("flex-1", "border", "rounded-lg", "px-4", "py-2", "sm:px-6", "sm:py-4", "leading-relaxed")
-                strong {
+                strong("text-black") {
                     +"${comment.username}"
                 }
                 span {
-                    classes = setOf("text-xs", "text-black")
+                    classes = setOf("text-xs", "text-black", "ml-2")
                     +"${comment.createdAt}"
                 }
                 p {
@@ -84,12 +84,15 @@ fun DIV.commentCardView(
                         if (comment.userId == userId) {
                             button {
                                 classes = setOf("btn", "btn-link", "delete-comment")
-                                attributes["onclick"] = "comment_delete_modal.showModal()"
+                                attributes["hx-delete"] = "/comment/${comment.commentId}"
+                                attributes["hx-confirm"] = "Are you sure you wish to delete your comment?"
+                                //attributes["hx-include"] = "#commentPassword-${comment.commentId}"
+                                attributes["hx-trigger"] = "click"
+                                attributes["hx-target"] = "#comment-card-${comment.commentId}"
+                                attributes["hx-swap"] = "delete"
                                 +"X"
                             }
                         }
-
-                        commentDeleteModal(userId, comment)
                     }
                 }
             }
@@ -100,88 +103,12 @@ fun DIV.commentCardView(
             commentFormView(userId, comment.postId)
         }
 
+
     }
 }
 
 
 
-private fun DIV.commentDeleteModal(userId: Long?, comment: CommentCardDto) {
-
-    dialog {
-        id = "comment_delete_modal"
-        classes = setOf("modal")
-        form {
-            attributes["method"] = "dialog"
-            classes = setOf("modal-box")
-            div {
-                classes = setOf("bg-white", "shadow", "w-full", "rounded-lg", "divide-y", "divide-gray-200")
-                div {
-                    classes = setOf("p-5")
-                    div {
-                        classes = setOf("mt-3", "space-x-2", "flex", "justify-around")
-                        div {
-                            attributes["hx-delete"] = "/comment/${comment.commentId}"
-                            attributes["hx-swap"] = "none"
-                            attributes["hx-include"] = "#commentPassword-${comment.commentId}"
-                            attributes["hx-trigger"] = "click"
-                            attributes["hx-target"] = "#comment-content-${comment.commentId}"
-                            //attributes["onclick"] = "comment_delete_modal.close()"
-                            classes = setOf("btn", "modal-action")
-                            id = "comment-delete-btn"
-                            +"정말로 삭제하시겠습니까?"
-                        }
-                    }
-                }
-            }
-//            div {
-//                classes = setOf("modal-action")
-//                button {
-//                    classes = setOf("btn")
-//                    +"Close"
-//                }
-//            }
-        }
-    }
-
-
-
-//    div {
-//        classes = setOf("flex")
-//        if (userId != 0L && comment.userId == userId) {
-//            input {
-//                type = InputType.hidden
-//                id = "commentPassword-${comment.commentId}"
-//                attributes["name"] = "test"
-//                attributes["value"] = ""
-//            }
-//        } else {
-//            input {
-//                type = InputType.text
-//                attributes["placeholder"] = "input password"
-//                attributes["name"] = "commentPassword"
-//                id = "commentPassword-${comment.commentId}"
-//                attributes["required"] = ""
-//                classes = setOf("input", "input-bordered", "input-xs", "w-full", "max-w-xs")
-//            }
-//        }
-//
-//        button {
-//            classes = setOf("btn", "btn-link", "delete-comment")
-//            attributes["x-on:click"] = "deleteOpen = ! deleteOpen"
-//            attributes["hx-delete"] = "/comment/${comment.commentId}"
-//            attributes["hx-include"] = "#commentPassword-${comment.commentId}"
-//            attributes["hx-trigger"] = "click"
-//            attributes["hx-target"] = "#comment-content-${comment.commentId}"
-//            +"제출"
-//        }
-//
-//        button {
-//            classes = setOf("btn", "btn-link", "delete-comment")
-//            attributes["x-on:click"] = "deleteOpen = ! deleteOpen"
-//            +"닫기"
-//        }
-//    }
-}
 
 
 fun DIV.commentFormView(
@@ -189,8 +116,6 @@ fun DIV.commentFormView(
     postId: Long,
     idAncestor: Long = 0,
 ) {
-
-
     form {
         classes = setOf("bg-white", "rounded-lg", "border", "p-2", "mx-auto", "")
         id = "comment-form-${idAncestor}"
@@ -203,10 +128,10 @@ fun DIV.commentFormView(
         }
         attributes["hx-on"] = "htmx:afterRequest: document.getElementById('comment-form-${idAncestor}').reset()"
 
-
-
         div {
+
             classes = setOf("px-3", "mb-2", "mt-2")
+
             input {
                 type = InputType.text
                 required = true
@@ -215,21 +140,14 @@ fun DIV.commentFormView(
                 classes = setOf("input", "input-bordered")
             }
 
-            if (userId == null) {
-                input {
-                    type = InputType.text
-                    required = true
-                    attributes["name"] = "password"
-                    attributes["placeholder"] = "input your password"
-                    classes = setOf("input", "input-bordered", "ml-3")
-                }
-            } else {
+            if (userId != null) {
                 input {
                     type = InputType.hidden
                     attributes["name"] = "userId"
                     attributes["value"] = "$userId"
                 }
             }
+
         }
 
 
@@ -238,6 +156,13 @@ fun DIV.commentFormView(
             attributes["name"] = "postId"
             attributes["value"] = "$postId"
         }
+
+        input {
+            type = InputType.hidden
+            attributes["name"] = "idAncestor"
+            attributes["value"] = "$idAncestor"
+        }
+
 
         div {
             classes = setOf("px-3", "mb-2", "mt-2")

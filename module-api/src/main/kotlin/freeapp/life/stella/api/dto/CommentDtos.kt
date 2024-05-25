@@ -8,16 +8,12 @@ import freeapp.life.stella.storage.util.toString
 
 
 data class CommentSaveDto(
-    val userId:Long?,
+    val userId:Long? = null,
     val nickName: String,
     val content:String,
     val postId: Long,
     val idAncestor:Long,
-    var paddingLeft:Int,
 ){
-    fun calculatePaddingLeft(){
-        if (paddingLeft != 0) this.paddingLeft = this.paddingLeft + 3
-    }
     fun toEntity(post: Post, user: User?): Comment {
 
         return Comment(

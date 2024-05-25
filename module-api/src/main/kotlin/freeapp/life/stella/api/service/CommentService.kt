@@ -33,7 +33,6 @@ class CommentService(
         val comment =
             commentRepository.saveComment(dto.toEntity(post = post, user = user))
 
-        dto.calculatePaddingLeft()
         commentRepository.saveCommentClosure(comment.id, dto.idAncestor)
 
         return comment
@@ -41,15 +40,14 @@ class CommentService(
 
 
     @Transactional
-    fun deleteComment(id: Long, password: String?): String {
+    fun deleteComment(id: Long): Long {
 
-        val comment = if (password != null){
-            commentRepository.findCommentByIdAndPassword(id, password)
-        }else{
-            commentRepository.findCommentById(id)
-        } ?: throw EntityNotFoundException("comment $id not found")
+        val comment =
+            commentRepository.findCommentById(id) ?: throw EntityNotFoundException("comment $id not found")
 
-        return comment.deleteByUser()
+        comment.deleteByUser()
+
+        return comment.id
     }
 
 

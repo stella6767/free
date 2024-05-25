@@ -1,6 +1,7 @@
 package freeapp.life.stella.storage.entity
 
 import jakarta.persistence.*
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "comment")
@@ -28,14 +29,13 @@ class Comment(
     @JoinColumn(name = "user_id")
     var user = user
         protected set
+    @Column(name = "deleted_at")
+    var deletedAt: LocalDateTime? = null
+        protected set
 
-
-    fun deleteByUser(): String {
-        val deletedComment = "deleted By User"
-        this.content = deletedComment
-        return deletedComment
+    fun deleteByUser() {
+        this.deletedAt = LocalDateTime.now()
     }
-
 
     override fun toString(): String {
         return "Comment(id= $id, content='$content')"

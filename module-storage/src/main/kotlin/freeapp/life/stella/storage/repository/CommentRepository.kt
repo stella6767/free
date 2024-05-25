@@ -25,7 +25,6 @@ interface CommentRepository {
     fun findCommentsByBottomUp(commentId: Long, depth: Int): List<Comment>
     fun findCommentClosuresByBottomUp(commentId: Long, depth: Int? = null): List<CommentClosure>
     fun findCommentById(id: Long): Comment?
-    fun findCommentByIdAndPassword(id: Long, password: String): Comment?
 }
 
 
@@ -50,26 +49,6 @@ class CommentRepositoryImpl(
 //    }
 
 
-    override fun findCommentByIdAndPassword(id: Long, password:String): Comment? {
-
-        val query = jpql {
-            select(
-                entity(Comment::class),
-            ).from(
-                entity(Comment::class)
-            ).where(
-                and(
-                    path(Comment::id).equal(id),
-                    path(Comment::password).equal(password),
-                )
-            )
-        }
-
-        val render =
-            renderer.render(query = query, ctx)
-
-        return em.getSingleResultOrNull(render, Comment::class.java)
-    }
 
 
     override fun findCommentById(id: Long): Comment? {
@@ -100,7 +79,10 @@ class CommentRepositoryImpl(
                 leftFetchJoin(Comment::user),
                 fetchJoin(Comment::post),
             ).where(
-                path(Post::id).equal(id)
+                and(
+                    path(Post::id).equal(id),
+                    path(Comment::deletedAt).isNull()
+                )
             )
         }
 

@@ -20,11 +20,11 @@ class CommentController(
 
 
     @DeleteMapping("/comment/{id}")
-    fun deleteCommentById(@PathVariable id:Long,
-                          @RequestParam(required = false) commentPassword:String?
-    ): String {
+    fun deleteCommentById(
+        @PathVariable id:Long,
+    ): Long {
 
-        return commentService.deleteComment(id, commentPassword)
+        return commentService.deleteComment(id)
     }
 
     @PostMapping("/comment")

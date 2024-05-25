@@ -63,20 +63,33 @@ fun DIV.commentCardView(
                     if (comment.parentCommentUsername.isNotEmpty()) {
                         span {
                             classes = setOf("truncate", "text-sm", "text-gray")
-                            +"@${comment.parentCommentUsername}"
+                            +"@${comment.parentCommentUsername}  "
                         }
                     }
                     +"${comment.content}"
                 }
                 div {
                     classes = setOf("mt-4", "flex", "items-center", "justify-between")
+
                     div {
                         classes = setOf("flex", "-space-x-2", "mr-2")
+
                         button {
-                            classes = setOf("text-right", "text-blue-500")
+                            classes = setOf("text-right", "text-blue-500", "mr-10")
                             attributes["hx-on:click"] =
                                 "htmx.toggleClass('#comment-reply-form-${comment.commentId}', 'hidden')"
                             +"Reply"
+                        }
+
+
+                        if (comment.childComments.isNotEmpty()){
+                            button {
+                                attributes["hx-on:click"] =
+                                    "htmx.toggleClass('#reply-comment-card-${comment.commentId}', 'hidden')"
+                                classes = setOf("text-right", "text-blue-500", "ml-5")
+                                +"show reply"
+                            }
+
                         }
 
                     }
@@ -100,10 +113,18 @@ fun DIV.commentCardView(
 
         div("hidden") {
             id = "comment-reply-form-${comment.commentId}"
-            commentFormView(userId, comment.postId)
+            commentFormView(userId, comment.postId, comment.commentId)
         }
 
 
+    }
+
+
+    for (childComment in comment.childComments) {
+        div("hidden") {
+            id = "reply-comment-card-${comment.commentId}"
+            commentCardView(childComment, userId)
+        }
     }
 }
 

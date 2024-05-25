@@ -82,6 +82,10 @@ fun DIV.postCardView(post: PostCardDto) {
         attributes["hx-swap"] = "innerHTML"
         attributes["hx-target"] = "#content-body"
 
+        //onClick = "location.href='/page/post/${post.id}'"
+
+
+
         figure {
             classes = setOf("bg-slate-300")
             div {

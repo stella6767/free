@@ -44,9 +44,11 @@ class PostController(
         @AuthenticationPrincipal userPrincipal: UserPrincipal?,
         @PathVariable id: Long,
     ): String {
+
         return renderPageWithLayout {
             val post =
                 postService.findPostDetailById(id) ?: throw EntityNotFoundException()
+
             postDetailView(userPrincipal?.user?.id, post)
         }
     }

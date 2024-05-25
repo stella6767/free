@@ -21,6 +21,7 @@ fun renderPageWithLayout(bodyContent: DIV.() -> Unit): String {
     return writePage {
         defaultHeader()
         body {
+            attributes["xmlns:hx-on"] = "http://www.w3.org/1999/xhtml"
             navbar()
             defaultBody { bodyContent() }
             defaultFooter()
@@ -52,12 +53,15 @@ private fun HTML.defaultHeader() {
             src = "https://unpkg.com/htmx.org@1.9.10"
             integrity = "sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
             attributes["crossorigin"] = "anonymous"
+            defer = true
         }
         script {
             src = "https://unpkg.com/htmx.org@1.9.12/dist/ext/multi-swap.js"
+            defer = true
         }
         script {
             src = "https://unpkg.com/htmx.org/dist/ext/loading-states.js"
+            defer = true
         }
         script {
             src = "https://cdn.tailwindcss.com"

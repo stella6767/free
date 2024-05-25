@@ -18,7 +18,6 @@ class CommentController(
 
     private val log = KotlinLogging.logger {  }
 
-
     @DeleteMapping("/comment/{id}")
     fun deleteCommentById(
         @PathVariable id:Long,

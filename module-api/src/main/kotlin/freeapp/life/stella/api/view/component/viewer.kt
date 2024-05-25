@@ -33,6 +33,9 @@ fun DIV.htmlViewer(value: String, isCenter: Boolean = true) {
         href = "https://uicdn.toast.com/editor/latest/toastui-editor.min.css"
     }
 
+    println("????")
+    println(value)
+
     div {
         classes = setOf("toastui-editor-contents text-neutral-content")
         if (isCenter){

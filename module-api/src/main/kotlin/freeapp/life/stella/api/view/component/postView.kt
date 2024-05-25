@@ -77,26 +77,19 @@ fun DIV.postCardView(post: PostCardDto) {
         classes = setOf("card", "mt-5", "bg-base-100", "shadow-xl", "hover:bg-cyan-600", "cursor-pointer")
         id = "post-card-${post.id}"
 
-        attributes["hx-trigger"] = "click"
-        attributes["hx-get"] = "/post/${post.id}"
-        attributes["hx-swap"] = "innerHTML"
-        attributes["hx-target"] = "#content-body"
+//        attributes["hx-trigger"] = "click"
+//        attributes["hx-get"] = "/post/${post.id}"
+//        attributes["hx-swap"] = "innerHTML"
+//        attributes["hx-target"] = "#content-body"
 
-        //onClick = "location.href='/page/post/${post.id}'"
-
-
+        onClick = "location.href='/page/post/${post.id}'"
 
         figure {
             classes = setOf("bg-slate-300")
             div {
-                attributes["x-data"] = "{ loading: false }"
+
                 img {
-                    attributes["x-show"] = "loading"
-                    alt = "Result loading..."
-                    src = "/img/spinner.svg"
-                }
-                img {
-                    attributes["x-show"] = "!loading"
+                    //attributes["x-show"] = "!loading"
                     src = "${post.thumbnail}"
                     alt = "post-thumbnail"
                     attributes["x-on-load"] = "loading = false"

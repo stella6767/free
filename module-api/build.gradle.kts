@@ -21,6 +21,11 @@ dependencies {
     //implementation("org.dhatim:fastexcel-reader:0.16.4")
 
 
+    //aws
+    implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.0.1"))
+    implementation("io.awspring.cloud:spring-cloud-aws-starter-s3")
+
+
     // html to 마크다운
     implementation("com.vladsch.flexmark:flexmark-html2md-converter:0.64.0")
     implementation("org.commonmark:commonmark:0.22.0")

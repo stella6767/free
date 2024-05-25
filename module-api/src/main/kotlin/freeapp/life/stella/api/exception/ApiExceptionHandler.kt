@@ -1,5 +1,6 @@
 package freeapp.life.stella.api.exception
 
+import freeapp.life.stella.api.util.ServletUtil
 import mu.KotlinLogging
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -85,6 +86,11 @@ class ApiExceptionHandler(
     @ExceptionHandler(Exception::class)
     protected fun handleException(e: Exception): ResponseEntity<ErrorResponse> {
         log.error("handleException", e)
+
+        val requestHeader = ServletUtil.getRequestHeader("Hx-Request")
+
+        println("!!!!")
+        println(requestHeader)
 
         val response: ErrorResponse = ErrorResponse.of(e.localizedMessage, null)
         return ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR)

@@ -27,7 +27,6 @@ class Post(
     @Column(nullable = true, length = 1000)
     var thumbnail = thumbnail
 
-    //todo 조회수
     @ColumnDefault("0")
     var count = 0
 

@@ -104,9 +104,7 @@ class PostController(
         @PathVariable id: Long,
         @AuthenticationPrincipal principal: UserPrincipal
     ): String {
-
         postService.deleteById(id, principal)
-
         return "ok"
     }
 

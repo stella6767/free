@@ -1,11 +1,14 @@
 package freeapp.life.stella.api.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.vladsch.flexmark.html2md.converter.FlexmarkHtmlConverter
+import com.vladsch.flexmark.util.data.MutableDataSet
 import freeapp.life.stella.api.config.security.UserPrincipal
 import freeapp.life.stella.api.dto.PostCardDto
 import freeapp.life.stella.api.dto.PostDetailDto
 import freeapp.life.stella.api.dto.PostSaveDto
 import freeapp.life.stella.api.dto.PostUpdateDto
+import freeapp.life.stella.api.service.file.FileUploader
 import freeapp.life.stella.storage.entity.HashTag
 import freeapp.life.stella.storage.entity.Post
 import freeapp.life.stella.storage.entity.PostTag
@@ -31,7 +34,7 @@ import org.springframework.web.multipart.MultipartFile
 class PostService(
     private val postRepository: PostRepository,
     private val userRepository: UserRepository,
-    private val fileUploader: LocalFileUploaderImpl,
+    private val fileUploader: FileUploader,
     private val hashTagRepository: HashTagRepository,
     private val velogCrawler: VelogCrawler,
     private val commentService: CommentService,
@@ -147,8 +150,10 @@ class PostService(
 
         return if (post != null) {
             post.count++
+
             val comments =
                 commentService.findCommentsByPostId(post.id)
+
             PostDetailDto.fromEntity(post, comments)
         } else null
     }

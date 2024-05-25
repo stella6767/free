@@ -1,5 +1,6 @@
-package freeapp.life.stella.api.service
+package freeapp.life.stella.api.service.file
 
+import jakarta.annotation.PostConstruct
 import mu.KotlinLogging
 import org.springframework.stereotype.Component
 import org.springframework.util.ResourceUtils
@@ -10,18 +11,18 @@ import java.nio.file.Paths
 import java.util.*
 
 
-@Component
+
 class LocalFileUploaderImpl(
 
-)  {
+) : FileUploader {
 
     private val log = KotlinLogging.logger {  }
 
 
-    val localImgFolderPath = "/src/main/resources/static/post"
+    val localImgFolderPath =
+        Paths.get(".").toAbsolutePath().toUri().normalize().rawPath + "post/"
 
-
-    //@PostConstruct
+    @PostConstruct
     fun init() {
 
         val directory = File(localImgFolderPath)
@@ -34,7 +35,7 @@ class LocalFileUploaderImpl(
 
 
 
-    fun upload(file: MultipartFile): String {
+    override fun upload(file: MultipartFile): String {
 
         val uuid = UUID.randomUUID().toString()
         val fileName = uuid + "_" +  file.originalFilename

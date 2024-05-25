@@ -4,7 +4,7 @@ import freeapp.life.stella.api.dto.CommentCardDto
 import freeapp.life.stella.api.dto.PostDetailDto
 import kotlinx.html.*
 
-//todo post 글 마크다운으로 변환, 알파인 js 제거 및, loading image
+//loading image
 
 fun DIV.commentSectionView(
     //comments: List<CommentCardDto>,

@@ -3,7 +3,7 @@ package freeapp.life.stella.api.view.component
 import freeapp.life.stella.api.view.page.path
 import kotlinx.html.*
 
-fun DIV.alertView(){
+fun DIV.alertView() {
 
     div("alert alert-error") {
         role = "alert"
@@ -22,3 +22,38 @@ fun DIV.alertView(){
     }
 
 }
+
+fun DIV.progressView() {
+
+
+    div {
+        id = "loading-spinner"
+        classes = setOf(
+            "my-indicator",
+            "absolute",
+            "right-1/2",
+            "bottom-1/2",
+            "",
+            "transform",
+            "translate-x-1/2",
+            "translate-y-1/2",
+            "z-20"
+        )
+        div {
+            classes = setOf(
+                "border-t-transparent",
+                "border-solid",
+                "animate-spin",
+                "",
+                "rounded-full",
+                "border-blue-400",
+                "border-8",
+                "h-64",
+                "w-64"
+            )
+        }
+    }
+
+}
+
+

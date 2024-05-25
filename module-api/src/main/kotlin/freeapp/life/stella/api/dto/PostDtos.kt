@@ -47,10 +47,11 @@ data class PostDetailDto(
     val postTags: List<String>,
     val createdAt: String,
     val deletedAt: LocalDateTime?,
+    val comments: List<CommentCardDto>
 ) {
 
     companion object {
-        fun fromEntity(post: Post): PostDetailDto {
+        fun fromEntity(post: Post, comments: List<CommentCardDto>): PostDetailDto {
 
             return PostDetailDto(
                 id = post.id,
@@ -61,7 +62,8 @@ data class PostDetailDto(
                 postTags = post.postTags.map { it.hashTag.name } ,
                 username = post.username,
                 createdAt = post.createdAt.toString("YYYY-MM-dd E HH:mm"),
-                deletedAt = post.deletedAt
+                deletedAt = post.deletedAt,
+                comments = comments,
             )
         }
 

@@ -79,8 +79,8 @@ fun DIV.postCardView(post: PostCardDto) {
 
         attributes["hx-trigger"] = "click"
         attributes["hx-get"] = "/post/${post.id}"
-        attributes["hx-swap"] = "outerHTML"
-        attributes["hx-target"] = "#posts-container"
+        attributes["hx-swap"] = "innerHTML"
+        attributes["hx-target"] = "#content-body"
 
         figure {
             classes = setOf("bg-slate-300")
@@ -177,10 +177,9 @@ fun DIV.postDetailView(
 
         postModalView(post)
         htmlViewer(post.content, false)
-//        +"${commentSectionViewComponent.render(post)}"
-
     }
 
+    commentSectionView(post, userId)
 }
 
 
@@ -341,6 +340,9 @@ fun DIV.postModalView(post: PostDetailDto) {
 }
 
 
+
+
+
 fun DIV.postByTagView(
     tagName: String,
     posts: Page<PostCardDto>
@@ -349,19 +351,19 @@ fun DIV.postByTagView(
     if (StringUtils.hasText(tagName)) {
 
         div {
-            classes = setOf("container", "m-auto")
+            classes = setOf("container", "m-auto" , "py-5")
             div {
                 classes = setOf("flex", "justify-center")
                 h1 {
-                    classes = setOf("text-xl", "font-bold")
+                    classes = setOf("text-xl", "font-bold", "text-black")
                     +"${tagName} 의 검색결과"
                 }
             }
             div {
-                classes = setOf("flex", "justify-center")
+                classes = setOf("flex", "justify-center", "text-black")
                 +"총"
                 span {
-                    classes = setOf("italic")
+                    classes = setOf("italic", "text-black")
                     +"${posts.totalElements}"
                 }
                 +"개의 포스트를 찾았습니다."

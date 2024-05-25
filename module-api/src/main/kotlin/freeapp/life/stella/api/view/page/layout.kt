@@ -2,6 +2,7 @@ package freeapp.life.stella.api.view.page
 
 
 import freeapp.life.stella.api.view.component.loginModalView
+import freeapp.life.stella.api.view.component.progressView
 import kotlinx.html.*
 import kotlinx.html.dom.createHTMLDocument
 import kotlinx.html.dom.serialize
@@ -37,8 +38,9 @@ inline fun writePage(crossinline block: HTML.() -> Unit): String {
 fun BODY.defaultBody(content: DIV.() -> Unit) {
     div {
         id = "content-body"
+        classes = setOf("py-3")
+        progressView()
         content()
-
         loginModalView()
     }
 }
@@ -69,11 +71,19 @@ private fun HTML.defaultHeader() {
             src = "/js/client.js"
             defer = true
         }
+
+
         link {
             href = "https://cdn.jsdelivr.net/npm/daisyui@3.0.3/dist/full.css"
             rel = "stylesheet"
             type = "text/css"
         }
+        link {
+            href = "/css/loading.css"
+            rel = "stylesheet"
+            type = "text/css"
+        }
+
         meta {
             httpEquiv = "Content-Type"
             content = "text/html; charset=UTF-8"

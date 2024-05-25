@@ -10,7 +10,6 @@ import freeapp.life.stella.storage.util.toString
 data class CommentSaveDto(
     val userId:Long?,
     val nickName: String,
-    val password:String?,
     val content:String,
     val postId: Long,
     val idAncestor:Long,
@@ -23,7 +22,6 @@ data class CommentSaveDto(
 
         return Comment(
             nickName = nickName,
-            password = password,
             content = content,
             post = post,
             user = user

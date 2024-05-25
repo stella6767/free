@@ -34,6 +34,7 @@ class PostService(
     private val fileUploader: LocalFileUploaderImpl,
     private val hashTagRepository: HashTagRepository,
     private val velogCrawler: VelogCrawler,
+    private val commentService: CommentService,
     private val mapper: ObjectMapper
 ) {
 
@@ -146,7 +147,9 @@ class PostService(
 
         return if (post != null) {
             post.count++
-            PostDetailDto.fromEntity(post)
+            val comments =
+                commentService.findCommentsByPostId(post.id)
+            PostDetailDto.fromEntity(post, comments)
         } else null
     }
 

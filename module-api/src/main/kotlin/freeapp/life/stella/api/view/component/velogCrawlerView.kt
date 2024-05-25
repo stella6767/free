@@ -4,8 +4,11 @@ import kotlinx.html.*
 
 fun DIV.velogCrawlerView(html:String){
 
+
+
     div {
-        classes = setOf("container", "mx-auto", "px-4", "bg-white")
+        classes = setOf("container", "mx-auto", "px-4")
+
         div {
             classes = setOf("flex", "justify-between", "mb-5")
             input {
@@ -19,14 +22,18 @@ fun DIV.velogCrawlerView(html:String){
                 a {
                     id = "downloader"
                     href = "#"
-                    classes = setOf("font-extrabold")
+                    classes = setOf("font-extrabold", "text-black")
                     +"가져오기"
                 }
             }
         }
 
         htmlViewer(html)
+    }
 
+    script {
+        src = "/js/velog.js"
+        defer = true
     }
 
 

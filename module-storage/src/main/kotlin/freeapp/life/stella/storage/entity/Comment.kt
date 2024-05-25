@@ -7,7 +7,6 @@ import jakarta.persistence.*
 class Comment(
     id: Long = 0,
     nickName:String,
-    password: String?,
     content: String,
     post: Post,
     user: User?,
@@ -17,12 +16,8 @@ class Comment(
     var content: String = content
         protected set
 
-    @Column(name = "password")
-    var password = if (user != null) null else password
-
     @Column(name = "nickName")
     var nickName: String = nickName
-
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Post::class)
     @JoinColumn(name = "post_id")

@@ -1,6 +1,8 @@
 package freeapp.life.stella.api.exception
 
 import freeapp.life.stella.api.util.ServletUtil
+import freeapp.life.stella.api.view.component.alertToastView
+import freeapp.life.stella.api.view.page.renderComponent
 import mu.KotlinLogging
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -84,16 +86,31 @@ class ApiExceptionHandler(
 //    }
 
     @ExceptionHandler(Exception::class)
-    protected fun handleException(e: Exception): ResponseEntity<ErrorResponse> {
+    protected fun handleException(e: Exception): Any {
         log.error("handleException", e)
 
         val requestHeader = ServletUtil.getRequestHeader("Hx-Request")
-
-        println("!!!!")
         println(requestHeader)
 
+        if (requestHeader == "true"){
+            println("확인")
+
+            val response = ServletUtil.getCurrentResponse()
+            response?.addHeader("HX-Retarget", "#toast")
+            response?.addHeader("HX-Reswap", "innerHTML")
+
+            return ResponseEntity(renderComponent {
+                alertToastView(e.localizedMessage)
+            }, HttpStatus.INTERNAL_SERVER_ERROR)
+
+//            return renderComponent {
+//                alertToastView(e.localizedMessage)
+//            }
+        }
+
+
         val response: ErrorResponse = ErrorResponse.of(e.localizedMessage, null)
-        return ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR)
+        return "ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR)"
     }
 
 }

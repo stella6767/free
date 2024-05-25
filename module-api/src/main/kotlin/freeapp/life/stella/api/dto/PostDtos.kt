@@ -38,8 +38,6 @@ data class PostSaveDto(
                 convertToSelfClosing(element)
             }
         }
-
-
         val cleanedHtml: String = document.body().html().replace("&lt;", "<")
             .replace("&gt;", ">")
 

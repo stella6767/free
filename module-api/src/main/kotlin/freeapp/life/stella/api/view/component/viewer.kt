@@ -2,6 +2,25 @@ package freeapp.life.stella.api.view.component
 
 import kotlinx.html.*
 
+fun DIV.testView() {
+
+
+    div {
+
+        button(classes = "btn") {
+            attributes["hx-trigger"] = "click"
+            attributes["hx-get"] = "/alert"
+            +"""htmx alert"""
+        }
+        button(classes = "btn") {
+            onClick = "location.href='/blogasda'"
+            +"""without htmx alert"""
+        }
+
+    }
+
+
+}
 
 fun DIV.indexView(value: String) {
 

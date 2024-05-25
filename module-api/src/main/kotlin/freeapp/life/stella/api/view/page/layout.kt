@@ -69,6 +69,7 @@ private fun HTML.defaultHeader() {
         script {
             //defer
             src = "https://cdn.jsdelivr.net/npm/alpinejs@3.12.1/dist/cdn.min.js"
+            defer = true
         }
 
         script {
@@ -120,6 +121,9 @@ private fun HTML.defaultHeader() {
 fun BODY.defaultFooter() {
     footer("footer footer-center p-4 bg-base-300 text-base-content ") {
         id = "footer"
+        div {
+            id = "toast"
+        }
         div {
             p { +"""Created by Stella6767""" }
             p { +"""📞 alsrb9434@gmail.com""" }
@@ -210,6 +214,12 @@ fun BODY.navbar() {
                         a {
                             href = "/converter"
                             +"html to kotlin"
+                        }
+                    }
+                    li {
+                        a {
+                            href = "/test"
+                            +"test"
                         }
                     }
                 }

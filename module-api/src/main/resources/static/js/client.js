@@ -30,3 +30,14 @@ function client(endpoint, {body, ...customConfig} = {}) {
             }
         })
 }
+
+
+
+
+document.addEventListener('htmx:afterRequest', e => {
+    if (!e.detail.xhr.status.toString().startsWith('2')) {
+        let errorBanner = document.getElementById("toast");
+        errorBanner.innerHTML = e.detail.xhr.responseText;
+        errorBanner.style.display = 'block';
+    }
+});

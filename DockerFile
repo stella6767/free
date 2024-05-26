@@ -1,6 +1,6 @@
 FROM arm64v8/openjdk:21
 
-ARG JAR_FILE=/build/libs/*.jar
+ARG JAR_FILE=/module-api/build/libs/*.jar
 
 #https://bgpark.tistory.com/132
 

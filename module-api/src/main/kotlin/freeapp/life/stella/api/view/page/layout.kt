@@ -77,17 +77,14 @@ private fun HTML.defaultHeader() {
             src = "https://cdn.tailwindcss.com"
         }
         script {
-            //defer
-            src = "https://cdn.jsdelivr.net/npm/alpinejs@3.12.1/dist/cdn.min.js"
-            defer = true
-        }
+            type = "module"
+            src = "https://md-block.verou.me/md-block.js"
 
+        }
         script {
             src = "/js/client.js"
             defer = true
         }
-
-
         link {
             href = "https://cdn.jsdelivr.net/npm/daisyui@3.0.3/dist/full.css"
             rel = "stylesheet"

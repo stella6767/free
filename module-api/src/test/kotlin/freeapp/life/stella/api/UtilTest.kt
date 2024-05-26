@@ -1,15 +1,50 @@
 package freeapp.life.stella.api
 
+import freeapp.life.stella.api.util.getMarkdownValueFormLocal
+import freeapp.life.stella.api.view.component.indexView
+import freeapp.life.stella.api.view.component.markDownViewer
+import freeapp.life.stella.api.view.page.renderPageWithLayout
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.nodes.TextNode
 import org.junit.jupiter.api.Test
+import org.springframework.core.io.ClassPathResource
 import java.util.*
 import kotlin.collections.ArrayList
 
 
 class UtilTest {
 
+
+    @Test
+    fun mdBlockTest(){
+
+        val md = """
+            # Heading
+        
+            Text **bold text** *italic text* ~strike~
+        
+            ```js
+            test.foo();
+            ```
+        
+            ```html
+            &lt;foo>
+            ```
+        
+            * List item 1
+            * List item 2
+   
+   
+            	
+        """.trimIndent()
+
+        val page = renderPageWithLayout {
+            markDownViewer(md)
+        }
+
+        println(page)
+    }
 
 
     @Test

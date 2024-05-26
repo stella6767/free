@@ -183,7 +183,11 @@ fun DIV.postDetailView(
         }
 
         postModalView(post)
-        htmlViewer(post.content, false)
+
+        //htmlViewer(post.content, false)
+        postDetailViewer(post.id)
+
+
     }
 
     commentSectionView(post, userId)

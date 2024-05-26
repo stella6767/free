@@ -1,53 +1,50 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.0.3/dist/full.css" rel="stylesheet" type="text/css">
+    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script crossorigin="anonymous" defer
+            integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+            src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script defer src="https://unpkg.com/htmx.org@1.9.12/dist/ext/multi-swap.js"></script>
+    <script defer src="https://unpkg.com/htmx.org/dist/ext/loading-states.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script defer src="/js/client.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.0.3/dist/full.css" rel="stylesheet" type="text/css">
+    <link href="/css/loading.css" rel="stylesheet" type="text/css">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta charset="UTF-8">
+    <meta content="stella6767" name="author">
+    <meta content="Kotlin,htmx" name="keywords">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <style>
+        /*@media (prefers-color-scheme: dark) {*/
+        /*    body {*/
+        /*        color: white;*/
+        /*        background: white;*/
+        /*    }*/
+        /*}*/
+    </style>
 </head>
-<body>
-<div id="myElement" onload="console.log('I\'m being initialized!');"></div>
+<body xmlns:hx-on="http://www.w3.org/1999/xhtml">
 
-<!--th:attr="x-init='setTimeout(() => $el.style.display = \'none\',' + ${duration} + ')'"-->
-
-<div role="alert" class="alert alert-error" id="toast" onload="test()">
-    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-    </svg>
-    <span>Error! Task failed successfully.</span>
-</div>
+        <div id="content">
 
 
-<script>
-    function initializeElement(element) {
-        console.log('I\'m being initialized!');
-
-        //alert('sddf');
-    }
-
-    function test(){
-        setTimeout(() => {
-            document.getElementById('toast').style.display = 'none'
-        }, 5000);
-    }
 
 
-    // DOMContentLoaded 이벤트를 사용하여 모든 요소의 onload 이벤트를 트리거
-    document.addEventListener('DOMContentLoaded', function () {
-        const elements = document.querySelectorAll('[onload]');
-        elements.forEach(function (element) {
-            const onload = element.getAttribute('onload');
-            if (onload) {
-                new Function('element', onload).call(element, element);
-            }
-        });
-    });
-</script>
+        </div>
+
+
+        <script>
+            document.getElementById('content').innerHTML =
+                marked.parse('# Marked in browser\n\nRendered by **marked**.');
+        </script>
 </body>
+
 </html>
+</html>
+
+

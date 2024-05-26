@@ -79,6 +79,17 @@ class PostController(
     }
 
 
+    @GetMapping("/post/content/{id}")
+    fun findPostDetailContent(
+        @PathVariable id: Long,
+    ): String {
+        val post =
+            postService.findPostDetailById(id) ?: throw EntityNotFoundException()
+
+        return post.content
+    }
+
+
     @PostMapping("/post")
     fun savePost(
         @RequestBody postSaveDto: PostSaveDto,

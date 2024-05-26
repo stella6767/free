@@ -24,8 +24,14 @@ spring:
   application:
     name: todo-htmx-app
 
-#logging:
-#  config: classpath:logback-free.xml
+logging:
+  config: classpath:logback-free.xml
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 
 ---

@@ -26,6 +26,9 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 secret.yml
+secrets.tar.gz
+secrets_base64.txt
+
 
 ### NetBeans ###
 /nbproject/private/

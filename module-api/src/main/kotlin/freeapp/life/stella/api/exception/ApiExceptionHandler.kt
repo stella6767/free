@@ -1,7 +1,7 @@
 package freeapp.life.stella.api.exception
 
 import freeapp.life.stella.api.util.ServletUtil
-import freeapp.life.stella.api.view.component.alertToastView
+import freeapp.life.stella.api.view.component.alertView
 import freeapp.life.stella.api.view.page.renderComponent
 import mu.KotlinLogging
 import org.springframework.http.HttpStatus
@@ -20,7 +20,7 @@ class ApiExceptionHandler(
 ) {
 
 
-    private val log = KotlinLogging.logger {  }
+    private val log = KotlinLogging.logger { }
 
     /**
      * javax.validation.Valid or @Validated 으로 binding error 발생시 발생한다.
@@ -30,7 +30,7 @@ class ApiExceptionHandler(
     @ExceptionHandler(MethodArgumentNotValidException::class)
     protected fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException): ResponseEntity<ErrorResponse> {
         log.error("handleMethodArgumentNotValidException", e)
-        val response: ErrorResponse = ErrorResponse.of(e.localizedMessage , e.getBindingResult())
+        val response: ErrorResponse = ErrorResponse.of(e.localizedMessage, e.getBindingResult())
         return ResponseEntity(response, HttpStatus.BAD_REQUEST)
     }
 
@@ -86,31 +86,31 @@ class ApiExceptionHandler(
 //    }
 
     @ExceptionHandler(Exception::class)
-    protected fun handleException(e: Exception): Any {
+    protected fun handleException(e: Exception): String {
+
         log.error("handleException", e)
 
-        val requestHeader = ServletUtil.getRequestHeader("Hx-Request")
-        println(requestHeader)
+        val requestHeader =
+            ServletUtil.getRequestHeader("Hx-Request")
 
-        if (requestHeader == "true"){
-            println("확인")
+        if (requestHeader == "true") {
 
             val response = ServletUtil.getCurrentResponse()
             response?.addHeader("HX-Retarget", "#toast")
             response?.addHeader("HX-Reswap", "innerHTML")
 
-            return ResponseEntity(renderComponent {
-                alertToastView(e.localizedMessage)
-            }, HttpStatus.INTERNAL_SERVER_ERROR)
-
-//            return renderComponent {
-//                alertToastView(e.localizedMessage)
-//            }
+            return renderComponent {
+                alertView(e.localizedMessage)
+            }
         }
 
+//        val response = ServletUtil.getCurrentResponse()
+//        response?.addHeader("HX-Retarget", "#alert")
+//        response?.addHeader("HX-Reswap", "innerHTML")
 
-        val response: ErrorResponse = ErrorResponse.of(e.localizedMessage, null)
-        return "ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR)"
+        return renderComponent {
+            alertView(e.localizedMessage)
+        }
     }
 
 }

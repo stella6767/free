@@ -5,20 +5,43 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.0.3/dist/full.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Document</title>
 </head>
-<body >
-<div id="myElement" onload="initializeElement(this)"></div>
+<body>
+<div id="myElement" onload="console.log('I\'m being initialized!');"></div>
+
+<!--th:attr="x-init='setTimeout(() => $el.style.display = \'none\',' + ${duration} + ')'"-->
+
+<div role="alert" class="alert alert-error" id="toast" onload="test()">
+    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    </svg>
+    <span>Error! Task failed successfully.</span>
+</div>
+
 
 <script>
     function initializeElement(element) {
         console.log('I\'m being initialized!');
+
+        //alert('sddf');
     }
 
+    function test(){
+        setTimeout(() => {
+            document.getElementById('toast').style.display = 'none'
+        }, 5000);
+    }
+
+
     // DOMContentLoaded 이벤트를 사용하여 모든 요소의 onload 이벤트를 트리거
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const elements = document.querySelectorAll('[onload]');
-        elements.forEach(function(element) {
+        elements.forEach(function (element) {
             const onload = element.getAttribute('onload');
             if (onload) {
                 new Function('element', onload).call(element, element);

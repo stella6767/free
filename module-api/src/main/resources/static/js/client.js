@@ -31,13 +31,21 @@ function client(endpoint, {body, ...customConfig} = {}) {
         })
 }
 
-
-
-
-document.addEventListener('htmx:afterRequest', e => {
-    if (!e.detail.xhr.status.toString().startsWith('2')) {
-        let errorBanner = document.getElementById("toast");
-        errorBanner.innerHTML = e.detail.xhr.responseText;
-        errorBanner.style.display = 'block';
-    }
+document.addEventListener('DOMContentLoaded', function () {
+    const elements = document.querySelectorAll('[onload]');
+    elements.forEach(function (element) {
+        const onload = element.getAttribute('onload');
+        if (onload) {
+            new Function('element', onload).call(element, element);
+        }
+    });
 });
+
+
+// document.addEventListener('htmx:afterRequest', e => {
+//     if (!e.detail.xhr.status.toString().startsWith('2')) {
+//         let errorBanner = document.getElementById("toast");
+//         errorBanner.innerHTML = e.detail.xhr.responseText;
+//         errorBanner.style.display = 'block';
+//     }
+// });

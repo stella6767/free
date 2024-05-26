@@ -3,13 +3,17 @@ package freeapp.life.stella.api.view.component
 import freeapp.life.stella.api.view.page.path
 import kotlinx.html.*
 
-fun DIV.alertToastView(msg:String) {
+fun DIV.alertView(msg:String, duration:Int = 5000) {
 
-    div("alert alert-error") {
+    div("alert alert-error fixed bottom-10 z-40 left-1/2 -translate-x-1/2") {
+        id = "alert-toast"
+        //setTimeout(() => { document.getElementById('alert-toast').style.display='none' }, $duration );
+        //onLoad = "console.log('????????')"
         role = "alert"
-        svg("stroke-current shrink-0 h-6 w-6") {
+        svg("stroke-current shrink-0 h-6 w-6 cursor-pointer") {
             attributes["fill"] = "none"
             attributes["viewbox"] = "0 0 24 24"
+            onClick = "document.getElementById('alert-toast').style.display='none'"
             path {
                 attributes["stroke-linecap"] = "round"
                 attributes["stroke-linejoin"] = "round"
@@ -18,6 +22,17 @@ fun DIV.alertToastView(msg:String) {
             }
         }
         span { +"""$msg""" }
+    }
+
+    script {
+        unsafe {
+            raw("""
+                    setTimeout(() => {
+                        document.getElementById('alert-toast').style.display = 'none'
+                    }, 4000);
+                
+            """.trimIndent())
+        }
     }
 
 }

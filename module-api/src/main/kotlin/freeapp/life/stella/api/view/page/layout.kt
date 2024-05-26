@@ -24,6 +24,9 @@ fun renderPageWithLayout(bodyContent: DIV.() -> Unit): String {
             attributes["xmlns:hx-on"] = "http://www.w3.org/1999/xhtml"
             navbar()
             defaultBody { bodyContent() }
+            div {
+                id = "toast"
+            }
             defaultFooter()
         }
     }
@@ -37,6 +40,7 @@ inline fun writePage(crossinline block: HTML.() -> Unit): String {
 
 
 fun BODY.defaultBody(content: DIV.() -> Unit) {
+
     div {
         id = "content-body"
         classes = setOf("py-3")
@@ -119,11 +123,10 @@ private fun HTML.defaultHeader() {
 
 
 fun BODY.defaultFooter() {
+
     footer("footer footer-center p-4 bg-base-300 text-base-content ") {
         id = "footer"
-        div {
-            id = "toast"
-        }
+
         div {
             p { +"""Created by Stella6767""" }
             p { +"""📞 alsrb9434@gmail.com""" }

@@ -1,6 +1,7 @@
 package freeapp.life.stella.api.dto
 
-import freeapp.life.stella.api.util.convertToSelfClosing
+
+import freeapp.life.stella.api.util.toClosedTagHtml
 import freeapp.life.stella.storage.entity.Post
 import freeapp.life.stella.storage.entity.User
 import freeapp.life.stella.storage.util.toString
@@ -32,20 +33,11 @@ data class PostSaveDto(
         val document =
             Jsoup.parse(this.content)
 
-        // 모든 img 태그와 br 태그를 찾아서 <img>를 <img/>로, <br>을 <br/>로 변환
-        for (element in document.select("img, br")) {
-            if (element.tagName() == "img" || element.tagName() == "br") {
-                convertToSelfClosing(element)
-            }
-        }
-        val cleanedHtml: String = document.body().html().replace("&lt;", "<")
-            .replace("&gt;", ">")
-
 
         return Post(
             user = user,
             title = this.title,
-            content = cleanedHtml,
+            content = document.toClosedTagHtml(),
             thumbnail = thumbnail,
             username = if (StringUtils.hasLength(this.username)) this.username else "Anonymous",
         )
@@ -75,25 +67,13 @@ data class PostDetailDto(
             val document =
                 Jsoup.parse(post.content)
 
-            // 모든 img 태그와 br 태그를 찾아서 <img>를 <img/>로, <br>을 <br/>로 변환
-            for (element in document.select("img, br")) {
-                if (element.tagName() == "img" || element.tagName() == "br") {
-                    convertToSelfClosing(element)
-                }
-            }
-
-
-            val cleanedContent: String = document.body().html().replace("&lt;", "<")
-                .replace("&gt;", ">")
-
-
 
             return PostDetailDto(
                 id = post.id,
                 userId = post.user.id,
                 title = post.title,
                 thumbnail = post.thumbnail,
-                content = cleanedContent,
+                content = document.toClosedTagHtml(),
                 postTags = post.postTags.map { it.hashTag.name } ,
                 username = post.username,
                 createdAt = post.createdAt.toString("YYYY-MM-dd E HH:mm"),

@@ -28,10 +28,10 @@ class ApiExceptionHandler(
      * 주로 @RequestBody, @RequestPart 어노테이션에서 발생
      */
     @ExceptionHandler(MethodArgumentNotValidException::class)
-    protected fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException): ResponseEntity<ErrorResponse> {
+    protected fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException): String {
         log.error("handleMethodArgumentNotValidException", e)
         val response: ErrorResponse = ErrorResponse.of(e.localizedMessage, e.getBindingResult())
-        return ResponseEntity(response, HttpStatus.BAD_REQUEST)
+        return handleErrorByHtmxOrNormal(response)
     }
 
     /**
@@ -39,10 +39,10 @@ class ApiExceptionHandler(
      * ref https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-modelattrib-method-args
      */
     @ExceptionHandler(BindException::class)
-    protected fun handleBindException(e: BindException): ResponseEntity<ErrorResponse> {
+    protected fun handleBindException(e: BindException): String {
         log.error("handleBindException", e)
         val response: ErrorResponse = ErrorResponse.of(e.localizedMessage, e.getBindingResult())
-        return ResponseEntity(response, HttpStatus.BAD_REQUEST)
+        return handleErrorByHtmxOrNormal(response)
     }
 
     /**
@@ -50,30 +50,30 @@ class ApiExceptionHandler(
      * 주로 @RequestParam enum으로 binding 못했을 경우 발생
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException::class)
-    protected fun handleMethodArgumentTypeMismatchException(e: MethodArgumentTypeMismatchException): ResponseEntity<ErrorResponse> {
+    protected fun handleMethodArgumentTypeMismatchException(e: MethodArgumentTypeMismatchException): String {
         log.error("handleMethodArgumentTypeMismatchException", e)
         val response: ErrorResponse = ErrorResponse.of(e.localizedMessage, null)
-        return ResponseEntity(response, HttpStatus.BAD_REQUEST)
+        return handleErrorByHtmxOrNormal(response)
     }
 
     /**
      * 지원하지 않은 HTTP method 호출 할 경우 발생
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException::class)
-    protected fun handleHttpRequestMethodNotSupportedException(e: HttpRequestMethodNotSupportedException): ResponseEntity<ErrorResponse> {
+    protected fun handleHttpRequestMethodNotSupportedException(e: HttpRequestMethodNotSupportedException): String {
         log.error("handleHttpRequestMethodNotSupportedException", e)
         val response: ErrorResponse = ErrorResponse.of(e.localizedMessage, null)
-        return ResponseEntity(response, HttpStatus.METHOD_NOT_ALLOWED)
+        return handleErrorByHtmxOrNormal(response)
     }
 
     /**
      * Authentication 객체가 필요한 권한을 보유하지 않은 경우 발생합
      */
     @ExceptionHandler(AccessDeniedException::class)
-    protected fun handleAccessDeniedException(e: AccessDeniedException): ResponseEntity<ErrorResponse?> {
+    protected fun handleAccessDeniedException(e: AccessDeniedException): String {
         log.error("handleAccessDeniedException", e)
         val response: ErrorResponse = ErrorResponse.of(e.localizedMessage, null)
-        return ResponseEntity(response, HttpStatus.NOT_ACCEPTABLE)
+        return handleErrorByHtmxOrNormal(response)
     }
 
 
@@ -82,35 +82,42 @@ class ApiExceptionHandler(
 //        log.error("handleEntityNotFoundException", e)
 //        val errorCode: ErrorCode = e.getErrorCode()
 //        val response: ErrorResponse = ErrorResponse.of(errorCode)
-//        return ResponseEntity<Any?>(response, HttpStatus.valueOf(errorCode.getStatus()))
+//        return handleErrorByHtmxOrNormal(response)valueOf(errorCode.getStatus()))
 //    }
 
     @ExceptionHandler(Exception::class)
     protected fun handleException(e: Exception): String {
-
         log.error("handleException", e)
+        return handleErrorByHtmxOrNormal(ErrorResponse.of(e.localizedMessage,null))
+    }
+
+    private fun handleErrorByHtmxOrNormal(e: ErrorResponse): String {
 
         val requestHeader =
             ServletUtil.getRequestHeader("Hx-Request")
-
         if (requestHeader == "true") {
-
             val response = ServletUtil.getCurrentResponse()
             response?.addHeader("HX-Retarget", "#toast")
             response?.addHeader("HX-Reswap", "innerHTML")
-
             return renderComponent {
-                alertView(e.localizedMessage)
+                alertView(e.message)
             }
         }
-
-//        val response = ServletUtil.getCurrentResponse()
-//        response?.addHeader("HX-Retarget", "#alert")
-//        response?.addHeader("HX-Reswap", "innerHTML")
-
-        return renderComponent {
-            alertView(e.localizedMessage)
-        }
+        return alertErrorAndHistoryBack(e.message)
     }
+
+
+    fun alertErrorAndHistoryBack(msg: String): String {
+
+        val script = """
+            <script>
+            alert('$msg');
+            history.back();
+            </script>
+        """.trimIndent()
+
+        return script
+    }
+
 
 }

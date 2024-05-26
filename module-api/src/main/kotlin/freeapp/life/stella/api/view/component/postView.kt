@@ -87,13 +87,23 @@ fun DIV.postCardView(post: PostCardDto) {
         figure {
             classes = setOf("bg-slate-300")
             div {
-
                 img {
                     //attributes["x-show"] = "!loading"
                     src = "${post.thumbnail}"
                     alt = "post-thumbnail"
-                    attributes["x-on-load"] = "loading = false"
                 }
+
+//                img(classes = "block") {
+//                    id = "img-spinner"
+//                    alt = "Result loading..."
+//                    src = "/img/spinner.svg"
+//                }
+//                img(classes = "hidden") {
+//                    id = "thumbnail"
+//                    src = "${post.thumbnail}"
+//                    alt = "post-thumbnail"
+//                    onLoad = "document.getElementById('img-spinner').classList.add('hidden'); document.getElementById('thumbnail').classList.remove('hidden');"
+//                }
             }
         }
         div {

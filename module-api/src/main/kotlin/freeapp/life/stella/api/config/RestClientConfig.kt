@@ -7,17 +7,27 @@ import mu.KotlinLogging
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpRequest
 import org.springframework.http.MediaType
+import org.springframework.http.client.ClientHttpRequestExecution
+import org.springframework.http.client.ClientHttpRequestInterceptor
+import org.springframework.http.client.ClientHttpResponse
+import org.springframework.http.client.JdkClientHttpRequestFactory
 import org.springframework.http.client.reactive.ReactorClientHttpConnector
+import org.springframework.web.client.ResponseErrorHandler
+import org.springframework.web.client.RestClient
 import org.springframework.web.reactive.function.client.*
 import reactor.core.publisher.Mono
 import reactor.netty.http.client.HttpClient
 import reactor.netty.resources.ConnectionProvider
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.time.Duration
+import java.util.concurrent.Executors
 
 
 @Configuration
-class WebClientConfig(
+class RestClientConfig(
 
 ) {
 
@@ -25,6 +35,25 @@ class WebClientConfig(
 
     private val velogUrl = "https://v2cdn.velog.io/graphql"
     private val publicApisUrl = "https://api.publicapis.org/"
+    private val githubUrl = "https://api.github.com"
+
+
+
+    @Bean
+    fun gitHubClient(): RestClient {
+
+        val requestFactory = getRequestFactory()
+
+        return RestClient
+            .builder()
+            .baseUrl(githubUrl)
+            .requestFactory(requestFactory)
+            .defaultStatusHandler(RestClientErrorHandler())
+            .requestInterceptor(RestTemplateLoggingInterceptor())
+            .build()
+
+    }
+
 
     @Bean
     fun basicClient(): WebClient {
@@ -167,5 +196,73 @@ class WebClientConfig(
             }
     }
 
+
+    private fun getRequestFactory(): JdkClientHttpRequestFactory {
+        val requestFactory =
+            JdkClientHttpRequestFactory(
+                java.net.http.HttpClient.newBuilder().executor(Executors.newVirtualThreadPerTaskExecutor()).build()
+            )
+
+        requestFactory.setReadTimeout(Duration.ofSeconds(5))
+        return requestFactory
+    }
+
+
+    class RestTemplateLoggingInterceptor : ClientHttpRequestInterceptor {
+
+
+        val log = KotlinLogging.logger{}
+
+        override fun intercept(request: HttpRequest, body: ByteArray, execution: ClientHttpRequestExecution): ClientHttpResponse {
+
+            log.info {
+                """
+                    
+            =====Request======
+            Headers: ${request.headers}    
+            Request Method:${request.method}
+            Request URI: ${request.uri}            
+            =====Request======
+            """.trimIndent()
+            }
+
+            return execution.execute(request, body)
+        }
+
+    }
+
+
+    class RestClientErrorHandler : ResponseErrorHandler {
+
+        private val log = KotlinLogging.logger {}
+
+        override fun hasError(response: ClientHttpResponse): Boolean {
+
+            val statusCode = response.statusCode
+            //    response.getBody() 넘겨 받은 body 값으로 적절한 예외 상태 확인 이후 boolean return
+            return !statusCode.is2xxSuccessful
+        }
+
+        override fun handleError(response: ClientHttpResponse) {
+            val error = getErrorAsString(response)
+
+            log.error {
+                """
+                                        
+                ================
+                Headers: ${response.headers}    
+                Response Status: ${response.statusCode}           
+                error: ${error}
+                ================
+            """.trimIndent()
+            }
+
+            //error: ${error}
+        }
+
+        private fun getErrorAsString(response: ClientHttpResponse): String {
+            BufferedReader(InputStreamReader(response.body)).use { br -> return br.readLine() }
+        }
+    }
 
 }

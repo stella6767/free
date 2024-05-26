@@ -28,7 +28,6 @@
             change: function () {
                 console.log(editor.getMarkdown());
                 // console.log(editor.getHTML());
-
             }
         },
         hooks: {

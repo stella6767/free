@@ -6,9 +6,11 @@ import freeapp.life.stella.api.view.component.progressView
 import kotlinx.html.*
 import kotlinx.html.dom.createHTMLDocument
 import kotlinx.html.dom.serialize
+import kotlinx.html.stream.appendHTML
 import kotlinx.html.stream.createHTML
 import org.springframework.security.authentication.AnonymousAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
+import java.io.StringWriter
 
 
 fun renderComponent(div: DIV.() -> Unit): String {
@@ -23,10 +25,11 @@ fun renderPageWithLayout(bodyContent: DIV.() -> Unit): String {
         body {
             attributes["xmlns:hx-on"] = "http://www.w3.org/1999/xhtml"
             navbar()
-            defaultBody { bodyContent() }
-            div {
-                id = "toast"
+
+            defaultBody {
+                bodyContent()
             }
+
             defaultFooter()
         }
     }
@@ -45,6 +48,9 @@ fun BODY.defaultBody(content: DIV.() -> Unit) {
         id = "content-body"
         classes = setOf("py-3")
         progressView()
+        div {
+            id = "toast"
+        }
         content()
         loginModalView()
     }
@@ -199,6 +205,12 @@ fun BODY.navbar() {
                         a {
                             href = "/blog"
                             +"blog"
+                        }
+                    }
+                    li {
+                        a {
+                            href = "/publicApis"
+                            +"public api list"
                         }
                     }
                     li {

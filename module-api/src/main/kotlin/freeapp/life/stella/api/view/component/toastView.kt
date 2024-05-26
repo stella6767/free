@@ -5,7 +5,7 @@ import kotlinx.html.*
 
 fun DIV.alertView(msg:String, duration:Int = 5000) {
 
-    div("alert alert-error fixed bottom-10 z-40 left-1/2 -translate-x-1/2") {
+    div("alert alert-error fixed top-10 z-40 w-2/5 left-1/2 -translate-x-1/2") {
         id = "alert-toast"
         //setTimeout(() => { document.getElementById('alert-toast').style.display='none' }, $duration );
         //onLoad = "console.log('????????')"

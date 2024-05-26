@@ -16,7 +16,7 @@ fun DIV.velogCrawlerView(html:String){
                 attributes["name"] = "username"
                 attributes["placeholder"] = "input username"
                 classes = setOf("input", "input-bordered", "w-full", "max-w-xs", "mt-3")
-                attributes["required"] = ""
+                required = true
             }
             button {
                 a {

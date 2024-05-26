@@ -21,7 +21,7 @@ class TodoService(
 
     @PostConstruct
     fun init() {
-        todoRepository.saveAll(createDummyTodos(100))
+        //todoRepository.saveAll(createDummyTodos(100))
     }
 
     

@@ -22,7 +22,7 @@ fun DIV.testView() {
 
 }
 
-fun DIV.indexView(value: String) {
+fun DIV.indexView(value: String, isCenter: Boolean = true) {
 
 
     div("hero min-h-screen ") {
@@ -32,7 +32,7 @@ fun DIV.indexView(value: String) {
                 classes = setOf("container", "mx-auto", "px-4")
                 div {
                     classes = setOf("flex", "justify-between", "mb-5")
-                    htmlViewer(value)
+                    htmlViewer(value, isCenter)
                 }
             }
         }

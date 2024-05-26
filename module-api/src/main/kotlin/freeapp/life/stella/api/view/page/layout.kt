@@ -355,6 +355,14 @@ fun BODY.navbar() {
                                     }
                                 }
                             }
+
+                            li {
+                                a {
+                                    href = "/readme"
+                                    +"빌드 설명"
+                                }
+                            }
+
                         }
                     }
                 }

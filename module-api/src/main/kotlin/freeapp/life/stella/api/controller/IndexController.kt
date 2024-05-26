@@ -21,7 +21,6 @@ class IndexController(
 
     @GetMapping("/")
     fun index(
-        @PageableDefault(size = 10) pageable: Pageable
     ): String {
 
         return renderPageWithLayout {
@@ -29,7 +28,13 @@ class IndexController(
         }
     }
 
-
+    @GetMapping("/readme")
+    fun readme(
+    ): String {
+        return renderPageWithLayout {
+            indexView(ClassPathResource("static/README-korea2.md").getMarkdownValueFormLocal(), false)
+        }
+    }
     @GetMapping("/about/me")
     fun aboutMe(): String {
 

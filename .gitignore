@@ -28,7 +28,7 @@ out/
 secret.yml
 secrets.tar.gz
 secrets_base64.txt
-
+./logs
 
 ### NetBeans ###
 /nbproject/private/

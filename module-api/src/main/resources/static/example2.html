@@ -1,194 +1,38 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Whatever</title>
-
-    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
-
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.0.3/dist/full.css" rel="stylesheet" type="text/css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="/js/client.js" defer=""></script>
-
-
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" crossorigin="anonymous">
-    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-    <script defer="" src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.1/dist/cdn.min.js"></script>
-
-
-    <style>/* ! tailwindcss v3.4.3 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]{display:none}*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-y-0{top:0px;bottom:0px}.top-0{top:0px}.bottom-1\/2{bottom:50%}.left-0{left:0px}.right-1\/2{right:50%}.z-30{z-index:30}.z-10{z-index:10}.z-20{z-index:20}.mx-auto{margin-left:auto;margin-right:auto}.my-auto{margin-top:auto;margin-bottom:auto}.mb-5{margin-bottom:1.25rem}.ml-5{margin-left:1.25rem}.mr-5{margin-right:1.25rem}.mt-3{margin-top:0.75rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.grid{display:grid}.h-12{height:3rem}.h-5{height:1.25rem}.h-64{height:16rem}.h-8{height:2rem}.h-full{height:100%}.min-h-screen{min-height:100vh}.w-12{width:3rem}.w-5{width:1.25rem}.w-64{width:16rem}.w-80{width:20rem}.w-full{width:100%}.w-max{width:max-content}.max-w-md{max-width:28rem}.translate-x-1\/2{--tw-translate-x:50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.translate-y-1\/2{--tw-translate-y:50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes spin{to{transform:rotate(360deg)}}.animate-spin{animation:spin 1s linear infinite}.cursor-pointer{cursor:pointer}.items-center{align-items:center}.justify-center{justify-content:center}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.divide-gray-200 > :not([hidden]) ~ :not([hidden]){--tw-divide-opacity:1;border-color:rgb(229 231 235 / var(--tw-divide-opacity))}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.border{border-width:1px}.border-2{border-width:2px}.border-8{border-width:8px}.border-r{border-right-width:1px}.border-solid{border-style:solid}.border-blue-400{--tw-border-opacity:1;border-color:rgb(96 165 250 / var(--tw-border-opacity))}.border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity))}.border-transparent{border-color:transparent}.border-t-transparent{border-top-color:transparent}.bg-transparent{background-color:transparent}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity))}.bg-opacity-60{--tw-bg-opacity:0.6}.stroke-current{stroke:currentColor}.stroke-gray-500{stroke:#6b7280}.p-2{padding:0.5rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.pl-12{padding-left:3rem}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.font-bold{font-weight:700}.font-semibold{font-weight:600}.normal-case{text-transform:none}.tracking-wide{letter-spacing:0.025em}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity))}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.outline-none{outline:2px solid transparent;outline-offset:2px}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.hover\:border-blue-400:hover{--tw-border-opacity:1;border-color:rgb(96 165 250 / var(--tw-border-opacity))}.focus\:w-full:focus{width:100%}.focus\:cursor-text:focus{cursor:text}.focus\:border-lime-300:focus{--tw-border-opacity:1;border-color:rgb(190 242 100 / var(--tw-border-opacity))}.focus\:bg-blue-50:focus{--tw-bg-opacity:1;background-color:rgb(239 246 255 / var(--tw-bg-opacity))}.focus\:pl-16:focus{padding-left:4rem}.focus\:pr-4:focus{padding-right:1rem}.active\:bg-blue-100:active{--tw-bg-opacity:1;background-color:rgb(219 234 254 / var(--tw-bg-opacity))}.group:hover .group-hover\:text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity))}.peer:focus ~ .peer-focus\:border-lime-300{--tw-border-opacity:1;border-color:rgb(190 242 100 / var(--tw-border-opacity))}.peer:focus ~ .peer-focus\:stroke-lime-500{stroke:#84cc16}@media (min-width: 640px){.sm\:text-base{font-size:1rem;line-height:1.5rem}}</style><style>                      .htmx-indicator{opacity:0;transition: opacity 200ms ease-in;}                      .htmx-request .htmx-indicator{opacity:1}                      .htmx-request.htmx-indicator{opacity:1}                    </style><style data-emotion="css" data-s=""></style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT UI (Dark Theme)</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body cz-shortcut-listen="true">
 
-
-
-
-<div class="navbar bg-base-100 sticky top-0 z-30">
-    <div class="drawer navbar-start">
-        <input class="drawer-toggle" id="my-drawer" type="checkbox">
-        <div class="drawer-content ml-5">
-            <label class="drawer-button" for="my-drawer">
-                <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24">
-                    <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                </svg>
-            </label>
-        </div>
-        <div class="drawer-side z-10">
-            <label class="drawer-overlay" for="my-drawer"></label>
-            <ul class="menu p-4 w-80 h-full bg-base-200 text-base-content">
-                <li>
-                    <a href="/resume">about me</a>
-                </li>
-                <li>
-                    <a href="/todos">todos</a>
-                </li>
-                <li>
-                    <a href="/blog">blog</a>
-                </li>
-                <li>
-                    <a href="/publicApis">public Api List</a>
-                </li>
-                <li>
-                    <a href="/chat">Chat Lab</a>
-                </li>
-                <li>
-                    <a href="/velog/crawler">velog crawler</a>
-                </li>
-                <li>
-                    <a href="/ts/downloader">TS File downloader</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="navbar-center">
-        <a class="btn btn-ghost normal-case text-xl mt-3" href="/">Whatever</a>
-    </div>
-    <div class="navbar-end">
-        <div class="max-w-md">
-            <form action="/blog" class="relative mx-auto w-max" method="get">
-                <input class="peer cursor-pointer relative z-10 h-12 w-12 rounded-full border bg-transparent pl-12 outline-none focus:w-full focus:cursor-text focus:border-lime-300 focus:pl-16 focus:pr-4" name="keyword" type="search">
-                <svg class="absolute inset-y-0 my-auto h-8 w-12 border-r border-transparent stroke-gray-500 px-3.5 peer-focus:border-lime-300 peer-focus:stroke-lime-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round"></path>
-                </svg>
-            </form>
-        </div>
-        <ul class="menu menu-horizontal px-1 mr-5">
-            <li>
-                <details>
-                    <summary>
-                        <svg class="inline-block w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24">
-                            <path d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                        </svg>
-                    </summary>
-                    <ul class="p-2 bg-base-100">
-                        @if(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)
-                        <li>
-                            <a onclick="login_modal.showModal()">Login</a>
-                        </li>
-                        @else
-                        <li>
-                            <a href="/logout">LogOut</a>
-                        </li>
-                        <li>
-                            <a href="/json/editor">새글쓰기</a>
-                        </li>
-                        @endif
-                    </ul>
-                </details>
-            </li>
-        </ul>
-    </div>
-</div>
-<div id="content-body">
-    <div class="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans" id="todos-with-page">
-        <div class="bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg">
-            <div class="mb-4">
-                <h1 class="text-5xl font-bold text-primary">Todo List</h1>
-                <div class="flex mt-4">
-                    <input autofocus="autofocus" class="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker" id="new-todo" name="newTodo" placeholder="To do..." required="required" type="text"><button class="flex-no-shrink p-2 border-2 rounded text-info-content border-teal hover:text-white hover:bg-teal" hx-include="#new-todo" hx-on--after-request="javascript:document.getElementById('new-todo').value='';" hx-post="/todo" hx-swap="afterbegin" hx-target="#todo-list" hx-trigger="click">Add</button>
-                </div>
+<body class="bg-gray-900 text-white flex flex-col h-screen justify-between items-center">
+<div class="max-w-lg w-full mx-auto p-6 flex-1">
+    <!-- Chat messages -->
+    <div class="flex flex-col gap-4">
+        <!-- Sample user message -->
+        <div class="flex items-start justify-start">
+            <div class="bg-gray-800 rounded-lg p-4 max-w-md">
+                <p class="text-sm font-medium mb-1">User</p>
+                <p>Hello! How can I help you today?</p>
             </div>
-            <div id="todo-list">
-                <div id="todo-container-100">
-                    <div class="flex mb-4 items-center" id="todo-box">
-                        <p class="w-full text-info-content ">todo100</p>
-                        <button class="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-info-content border-green hover:bg-green" hx-put="/todo/100" hx-swap="innerHTML" hx-target="#todo-container-100" hx-trigger="click">Done</button><button class="flex-no-shrink p-2 ml-2 border-2 rounded text-info-content border-red hover:text-white hover:bg-red" hx-confirm="Are you sure?" hx-delete="/todo/100" hx-swap="outerHTML swap:1s" hx-target="closest div" hx-trigger="click">Remove</button>
-                    </div>
-                </div>
-                <div id="todo-container-99">
-                    <div class="flex mb-4 items-center" id="todo-box">
-                        <p class="w-full text-info-content ">todo99</p>
-                        <button class="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-info-content border-green hover:bg-green" hx-put="/todo/99" hx-swap="innerHTML" hx-target="#todo-container-99" hx-trigger="click">Done</button><button class="flex-no-shrink p-2 ml-2 border-2 rounded text-info-content border-red hover:text-white hover:bg-red" hx-confirm="Are you sure?" hx-delete="/todo/99" hx-swap="outerHTML swap:1s" hx-target="closest div" hx-trigger="click">Remove</button>
-                    </div>
-                </div>
-                <div id="todo-container-98">
-                    <div class="flex mb-4 items-center" id="todo-box">
-                        <p class="w-full text-info-content ">todo98</p>
-                        <button class="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-info-content border-green hover:bg-green" hx-put="/todo/98" hx-swap="innerHTML" hx-target="#todo-container-98" hx-trigger="click">Done</button><button class="flex-no-shrink p-2 ml-2 border-2 rounded text-info-content border-red hover:text-white hover:bg-red" hx-confirm="Are you sure?" hx-delete="/todo/98" hx-swap="outerHTML swap:1s" hx-target="closest div" hx-trigger="click">Remove</button>
-                    </div>
-                </div>
-                <div id="todo-container-97">
-                    <div class="flex mb-4 items-center" id="todo-box">
-                        <p class="w-full text-info-content ">todo97</p>
-                        <button class="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-info-content border-green hover:bg-green" hx-put="/todo/97" hx-swap="innerHTML" hx-target="#todo-container-97" hx-trigger="click">Done</button><button class="flex-no-shrink p-2 ml-2 border-2 rounded text-info-content border-red hover:text-white hover:bg-red" hx-confirm="Are you sure?" hx-delete="/todo/97" hx-swap="outerHTML swap:1s" hx-target="closest div" hx-trigger="click">Remove</button>
-                    </div>
-                </div>
-                <div id="todo-container-96">
-                    <div class="flex mb-4 items-center" id="todo-box">
-                        <p class="w-full text-info-content ">todo96</p>
-                        <button class="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-info-content border-green hover:bg-green" hx-put="/todo/96" hx-swap="innerHTML" hx-target="#todo-container-96" hx-trigger="click">Done</button><button class="flex-no-shrink p-2 ml-2 border-2 rounded text-info-content border-red hover:text-white hover:bg-red" hx-confirm="Are you sure?" hx-delete="/todo/96" hx-swap="outerHTML swap:1s" hx-target="closest div" hx-trigger="click">Remove</button>
-                    </div>
-                </div>
-                <div id="todo-container-95">
-                    <div class="flex mb-4 items-center" id="todo-box">
-                        <p class="w-full text-info-content ">todo95</p>
-                        <button class="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-info-content border-green hover:bg-green" hx-put="/todo/95" hx-swap="innerHTML" hx-target="#todo-container-95" hx-trigger="click">Done</button><button class="flex-no-shrink p-2 ml-2 border-2 rounded text-info-content border-red hover:text-white hover:bg-red" hx-confirm="Are you sure?" hx-delete="/todo/95" hx-swap="outerHTML swap:1s" hx-target="closest div" hx-trigger="click">Remove</button>
-                    </div>
-                </div>
-                <div id="todo-container-94">
-                    <div class="flex mb-4 items-center" id="todo-box">
-                        <p class="w-full text-info-content ">todo94</p>
-                        <button class="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-info-content border-green hover:bg-green" hx-put="/todo/94" hx-swap="innerHTML" hx-target="#todo-container-94" hx-trigger="click">Done</button><button class="flex-no-shrink p-2 ml-2 border-2 rounded text-info-content border-red hover:text-white hover:bg-red" hx-confirm="Are you sure?" hx-delete="/todo/94" hx-swap="outerHTML swap:1s" hx-target="closest div" hx-trigger="click">Remove</button>
-                    </div>
-                </div>
-                <div id="todo-container-93">
-                    <div class="flex mb-4 items-center" id="todo-box">
-                        <p class="w-full text-info-content ">todo93</p>
-                        <button class="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-info-content border-green hover:bg-green" hx-put="/todo/93" hx-swap="innerHTML" hx-target="#todo-container-93" hx-trigger="click">Done</button><button class="flex-no-shrink p-2 ml-2 border-2 rounded text-info-content border-red hover:text-white hover:bg-red" hx-confirm="Are you sure?" hx-delete="/todo/93" hx-swap="outerHTML swap:1s" hx-target="closest div" hx-trigger="click">Remove</button>
-                    </div>
-                </div>
-                <div id="todo-container-92">
-                    <div class="flex mb-4 items-center" id="todo-box">
-                        <p class="w-full text-info-content ">todo92</p>
-                        <button class="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-info-content border-green hover:bg-green" hx-put="/todo/92" hx-swap="innerHTML" hx-target="#todo-container-92" hx-trigger="click">Done</button><button class="flex-no-shrink p-2 ml-2 border-2 rounded text-info-content border-red hover:text-white hover:bg-red" hx-confirm="Are you sure?" hx-delete="/todo/92" hx-swap="outerHTML swap:1s" hx-target="closest div" hx-trigger="click">Remove</button>
-                    </div>
-                </div>
-                <div id="todo-container-91">
-                    <div class="flex mb-4 items-center" id="todo-box">
-                        <p class="w-full text-info-content ">todo91</p>
-                        <button class="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-info-content border-green hover:bg-green" hx-put="/todo/91" hx-swap="innerHTML" hx-target="#todo-container-91" hx-trigger="click">Done</button><button class="flex-no-shrink p-2 ml-2 border-2 rounded text-info-content border-red hover:text-white hover:bg-red" hx-confirm="Are you sure?" hx-delete="/todo/91" hx-swap="outerHTML swap:1s" hx-target="closest div" hx-trigger="click">Remove</button>
-                    </div>
-                </div>
+        </div>
+        <!-- Sample bot message -->
+        <div class="flex items-start justify-end">
+            <div class="bg-gray-800 rounded-lg p-4 max-w-md">
+                <p class="text-sm font-medium mb-1">ChatGPT</p>
+                <p>Hello there! I'm here to assist you.</p>
             </div>
         </div>
     </div>
-    <div class="flex justify-center" id="page-view">
-        <div class="join" hx-ext="multi-swap">
-            <button class="join-item btn" hx-get="/todos?page=0" hx-swap="multi:#todo-list,#page-view" hx-trigger="click">First</button><button class="join-item btn" disabled="">&lt;&lt;</button><button class="join-item btn btn-square btn-active  bg-accent" hx-get="/todos?page=0" hx-swap="multi:#todo-list,#page-view" hx-trigger="click">1</button><button class="join-item btn btn-square" hx-get="/todos?page=1" hx-swap="multi:#todo-list,#page-view" hx-trigger="click">2</button><button class="join-item btn btn-square" hx-get="/todos?page=2" hx-swap="multi:#todo-list,#page-view" hx-trigger="click">3</button><button class="join-item btn btn-square" hx-get="/todos?page=3" hx-swap="multi:#todo-list,#page-view" hx-trigger="click">4</button><button class="join-item btn btn-square" hx-get="/todos?page=4" hx-swap="multi:#todo-list,#page-view" hx-trigger="click">5</button><button class="join-item btn" hx-get="/todos?page=1" hx-swap="multi:#todo-list,#page-view" hx-trigger="click">&gt;&gt;</button><button class="join-item btn" hx-get="/todos?page=9" hx-swap="multi:#todo-list,#page-view" hx-trigger="click">Last</button>
-        </div>
-    </div>
-    <br>
 </div>
-<footer class="footer footer-center p-4 bg-base-300 text-base-content " id="footer">
-    <div>
-        <p>Created by Stella6767</p>
-        <p>📞 alsrb9434@gmail.com</p>
-        <a href="https://github.com/stella6767" style="text-decoration: none;" target="_blank">GitHub</a>
-    </div>
-</footer>
+<!-- Chat input -->
+<div class="w-full px-6 py-4 bg-gray-800">
+    <input type="text" placeholder="Type your message..."
+           class="w-full px-4 py-2 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-900 text-white">
+</div>
+</body>
 
-
-
-<div id="__endic_crx__"><div class="css-diqpy0"></div></div></body></html>
+</html>

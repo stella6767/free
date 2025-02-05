@@ -9,6 +9,8 @@ import freeapp.life.stella.api.view.page.renderPageWithLayout
 import freeapp.life.stella.api.view.component.todosViewWithPage
 
 import freeapp.life.stella.api.view.page.renderComponent
+import freeapp.life.stella.storage.entity.Todo
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.web.bind.annotation.*

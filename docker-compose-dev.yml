@@ -1,6 +1,12 @@
 version: "3"
 
 services:
+  ollama:
+    hostname: ollama
+    container_name: ollama
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
   nginx:
     container_name: nginx
     image: nginx

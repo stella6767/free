@@ -80,7 +80,7 @@ fun DIV.aboutMeView(author:String){
                     }
                     p {
                         classes = setOf("text-sm", "indent-2")
-                        +"HTMX, Go, KMM"
+                        +"HTMX, Flutter, Go"
                     }
                     div {
                         classes = setOf("pt-12", "pb-8")

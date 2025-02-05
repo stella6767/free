@@ -198,6 +198,7 @@ class RestClientConfig(
 
 
     private fun getRequestFactory(): JdkClientHttpRequestFactory {
+
         val requestFactory =
             JdkClientHttpRequestFactory(
                 java.net.http.HttpClient.newBuilder().executor(Executors.newVirtualThreadPerTaskExecutor()).build()
@@ -209,7 +210,6 @@ class RestClientConfig(
 
 
     class RestTemplateLoggingInterceptor : ClientHttpRequestInterceptor {
-
 
         val log = KotlinLogging.logger{}
 

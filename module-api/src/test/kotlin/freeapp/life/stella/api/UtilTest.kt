@@ -1,23 +1,74 @@
 package freeapp.life.stella.api
 
-import freeapp.life.stella.api.util.getMarkdownValueFormLocal
-import freeapp.life.stella.api.view.component.indexView
+import com.microsoft.playwright.Page
+import com.microsoft.playwright.Playwright
+import com.microsoft.playwright.options.LoadState
+import freeapp.life.stella.api.service.PlaywrightInterceptor
 import freeapp.life.stella.api.view.component.markDownViewer
 import freeapp.life.stella.api.view.page.renderPageWithLayout
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.nodes.TextNode
-import org.junit.jupiter.api.Test
-import org.springframework.core.io.ClassPathResource
+
+import org.testng.annotations.Test
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class UtilTest {
 
 
     @Test
-    fun mdBlockTest(){
+    fun downloadStreamingFileTest() {
+        val interceptor = PlaywrightInterceptor()
+
+
+    }
+
+
+    @Test
+    fun m3u8DownloadTest() {
+
+        val url = ""
+
+        val interceptor = PlaywrightInterceptor()
+        val u8requestFiles = interceptor.retrieveM3U8requestFiles(url)
+
+        println(u8requestFiles)
+
+
+    }
+
+    @Test
+    fun playwrightTest() {
+
+        val url = ""
+
+        Playwright.create().use { playwright ->
+            val browser = playwright.chromium().launch()
+
+            val page = browser.newPage() //새로운 페이지 이동
+
+            page.navigate(url) //웹 페이지로 이동
+
+
+            val itemUrls =
+                page.querySelectorAll(".item-subject").mapNotNull { it.getAttribute("href") }
+
+            itemUrls.forEach { url ->
+                page.navigate(url)
+                // 페이지가 로드될 때까지 대기
+                page.waitForLoadState(LoadState.LOAD)
+                val body = page.waitForSelector("article", Page.WaitForSelectorOptions().setTimeout(60000.0))
+                println(body.textContent())
+            }
+        }
+
+
+    }
+
+
+    @Test
+    fun mdBlockTest() {
 
         val md = """
             # Heading
@@ -48,7 +99,7 @@ class UtilTest {
 
 
     @Test
-    fun unclosedTagTest(){
+    fun unclosedTagTest() {
 
 
         val html = """
@@ -154,7 +205,7 @@ class UtilTest {
 
 
     @Test
-    fun closedTagTest(){
+    fun closedTagTest() {
 
         val html = """
             <h1>TEST</h1>

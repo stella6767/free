@@ -1,28 +1,27 @@
-// const chatMessages = document.getElementById('chat-messages');
-// const userInput = document.getElementById('user-input');
-//
-// userInput.addEventListener('keydown', (e) => {
-//     if (e.key === 'Enter' && !e.altKey) {
-//         e.preventDefault(); // 줄바꿈 방지
-//         sendMessage();
-//     }
-//     //if (e.key === 'Enter') sendMessage();
-// });
-//
-// function sendMessage() {
-//     const message = userInput.value.trim();
-//     if (!message) return;
-//
-//     addMessage(message, 'user');
-//     setTimeout(() => addMessage('네, 이해했습니다. 이에 대한 답변을 준비 중입니다...', 'bot'), 800);
-//     userInput.value = '';
-// }
-//
-// function addMessage(text, sender) {
-//     const messageDiv =
-//         document.createElement('div');
-//     messageDiv.className = `p-3 rounded-lg max-w-xs ${sender === 'user' ? 'ml-auto bg-[#414158] text-white' : 'bg-[#525252] border'}`;
-//     messageDiv.textContent = text;
-//     chatMessages.appendChild(messageDiv);
-//     chatMessages.scrollTop = chatMessages.scrollHeight;
-// }
+
+const clientId = generateUUID(); // 고유 UUID 생성
+
+const eventSource =
+    new EventSource(`http://localhost:8080/ai/chat-sse/${clientId}`);
+
+eventSource.onmessage = (event) => {
+    console.log("AI Response:", event.data);
+};
+
+eventSource.onerror = (error) => {
+    console.error("SSE Error:", error);
+    eventSource.close();
+};
+
+
+// 페이지를 떠날 때 연결 종료
+window.addEventListener("beforeunload", () => {
+    eventSource.close();
+});
+
+function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}

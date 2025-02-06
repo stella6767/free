@@ -3,14 +3,6 @@ package freeapp.life.stella.api.view.component
 import kotlinx.html.*
 
 
-fun DIV.chatUserView(
-    msg: String,
-    viewId: Long = 0,
-) {
-    id = "chat-messages-${viewId}"
-    classes = setOf("p-3", "rounded-lg", "max-w-xs", "ml-auto", "bg-[#414158]", "text-white")
-    +msg
-}
 
 
 fun DIV.chatMsgView(
@@ -27,8 +19,12 @@ fun DIV.chatMsgView(
         }
     } else {
         div {
+            id = "ai-response"
             classes = setOf("p-3", "bg-[#525252]", "border", "rounded-lg", "max-w-xs")
-            +msg
+            div {
+                id = "ai-content"
+                +msg
+            }
         }
     }
 
@@ -38,13 +34,6 @@ fun DIV.gptView(
 ) {
 
     classes = setOf("bg-gray-100", "h-screen", "flex", "flex-col", "items-center")
-
-//    input {
-//        id = "chatNum"
-//        name = "viewId"
-//        type = InputType.hidden
-//        value = viewId.toString()
-//    }
 
     div {
         classes = setOf("w-full", "max-w-2xl", "h-screen", "flex", "flex-col", "bg-white", "shadow-lg")
@@ -59,6 +48,8 @@ fun DIV.gptView(
                 classes = setOf("p-3", "bg-[#525252]", "border", "rounded-lg", "max-w-xs")
                 +"안녕하세요! 무엇을 도와드릴까요? 😊"
             }
+
+
 
         }
         form {
@@ -89,8 +80,14 @@ fun DIV.gptView(
                 attributes["placeholder"] = "메시지를 입력하세요..."
             }
             button {
+                id = "user-input-btn"
+                attributes["hx-trigger"] = "click"
+                attributes["hx-post"] = "/ai/chat"
+                attributes["hx-include"] = "#user-input"
+                attributes["hx-target"] = "#chat-messages"
+                attributes["hx-swap"] = "beforeend"
                 //onClick = "sendMessage()"
-                type = ButtonType.submit
+                //type = ButtonType.submit
                 //attributes["onclick"] = "sendMessage()"
                 classes = setOf("px-4", "py-2", "bg-[#525252]", "text-white", "rounded-md", "hover:bg-blue-700")
                 +"전송"

@@ -55,6 +55,12 @@ spring:
         - local
     import:
       - secret.yml
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      poll-interval: 2s
+      enabled: true
 
 ---
 

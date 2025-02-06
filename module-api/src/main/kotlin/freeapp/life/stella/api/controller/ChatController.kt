@@ -21,47 +21,13 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class ChatController(
-    private val builder: ChatClient.Builder,
+
 ) {
 
-    private val chatClient: ChatClient = builder.build()
+
 
     private val log = KotlinLogging.logger {  }
 
-
-    fun dd() {
-
-        val chatProperties = OpenAiChatProperties()
-
-        chatProperties.baseUrl = ""
-        chatProperties.apiKey = ""
-
-        //OpenAiApi(openAiProperties.getBaseUrl(), openAiProperties.getApiKey())
-
-    }
-
-    @GetMapping("/aichat")
-    fun test(): String? {
-
-
-
-
-        val chatProperties = OllamaChatProperties()
-
-        //chatProperties.options.
-
-//        builder.defaultAdvisors()
-//
-//        val build = OllamaOptions.builder().model("").build()
-//
-//
-//        //OllamaChatModel.builder().defaultOptions()
-
-        return chatClient.prompt()
-            .user("hi")
-            .call()
-            .content()
-    }
 
     @GetMapping("/chat")
     fun chatPage(): String {

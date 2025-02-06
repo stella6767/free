@@ -2,38 +2,107 @@ package freeapp.life.stella.api.view.component
 
 import kotlinx.html.*
 
-fun DIV.gptMsgView(author:String){
 
-    div("max-w-lg w-full mx-auto p-6 flex-1") {
-        +"""<!-- Chat messages -->"""
-        div("flex flex-col gap-4") {
-            +"""<!-- Sample user message -->"""
-            div("flex items-start justify-start") {
-                div("bg-gray-800 rounded-lg p-4 max-w-md") {
-                    p("text-sm font-medium mb-1") { +"""User""" }
-                    p { +"""Hello! How can I help you today?""" }
-                }
-            }
-            +"""<!-- Sample bot message -->"""
-            div("flex items-start justify-end") {
-                div("bg-gray-800 rounded-lg p-4 max-w-md") {
-                    p("text-sm font-medium mb-1") { +"""ChatGPT""" }
-                    p { +"""Hello there! I'm here to assist you.""" }
-                }
-            }
+fun DIV.chatUserView(
+    msg: String,
+    viewId: Long = 0,
+) {
+    id = "chat-messages-${viewId}"
+    classes = setOf("p-3", "rounded-lg", "max-w-xs", "ml-auto", "bg-[#414158]", "text-white")
+    +msg
+}
+
+
+fun DIV.chatMsgView(
+    isUser: Boolean = false,
+    msg: String,
+    //viewId: Long = 0,
+) {
+
+    if (isUser) {
+        div {
+            //id = "chat-messages-${viewId}"
+            classes = setOf("p-3", "rounded-lg", "max-w-xs", "ml-auto", "bg-[#414158]", "text-white")
+            +msg
+        }
+    } else {
+        div {
+            classes = setOf("p-3", "bg-[#525252]", "border", "rounded-lg", "max-w-xs")
+            +msg
         }
     }
 
 }
 
+fun DIV.gptView(
+) {
 
-fun DIV.gptInputView(author:String){
+    classes = setOf("bg-gray-100", "h-screen", "flex", "flex-col", "items-center")
 
-    div("w-full px-6 py-4 bg-gray-800") {
-        input(classes = "w-full px-4 py-2 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-900 text-white") {
-            type = InputType.text
-            placeholder = "Type your message..."
+//    input {
+//        id = "chatNum"
+//        name = "viewId"
+//        type = InputType.hidden
+//        value = viewId.toString()
+//    }
+
+    div {
+        classes = setOf("w-full", "max-w-2xl", "h-screen", "flex", "flex-col", "bg-white", "shadow-lg")
+        div {
+            classes = setOf("p-4", "bg-gray-800", "text-white", "text-lg", "font-semibold", "border-b", "text-center")
+            +"AI Assistant"
+        }
+        div {
+            id = "chat-messages"
+            classes = setOf("flex-1", "overflow-y-auto", "p-4", "bg-gray-50", "space-y-4")
+            div {
+                classes = setOf("p-3", "bg-[#525252]", "border", "rounded-lg", "max-w-xs")
+                +"안녕하세요! 무엇을 도와드릴까요? 😊"
+            }
+
+        }
+        form {
+            classes = setOf("p-4", "bg-white", "border-t", "flex", "items-center", "gap-2")
+
+            attributes["hx-post"] = "/ai/chat"
+            //attributes["hx-include"] = "#user-input"
+            attributes["hx-target"] = "#chat-messages"
+            attributes["hx-swap"] = "beforeend"
+            attributes["hx-trigger"] = "keydown[!shiftKey && key=='Enter'] from:#user-input"
+
+            textArea {
+                id = "user-input"
+                name = "msg"
+                classes = setOf(
+                    "flex-1",
+                    "p-2",
+                    "border",
+                    "rounded-md",
+                    "focus:ring-2",
+                    "focus:ring-blue-500",
+                    "outline-none",
+                    "h-100",
+                    "max-h-[300px]"
+                )
+                attributes["hx-on::input"] = "this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px'"
+
+                attributes["placeholder"] = "메시지를 입력하세요..."
+            }
+            button {
+                //onClick = "sendMessage()"
+                type = ButtonType.submit
+                //attributes["onclick"] = "sendMessage()"
+                classes = setOf("px-4", "py-2", "bg-[#525252]", "text-white", "rounded-md", "hover:bg-blue-700")
+                +"전송"
+            }
         }
     }
 
+    script {
+        src = "/js/aichat.js"
+    }
 }
+
+
+
+

@@ -7,14 +7,12 @@ import freeapp.life.stella.api.view.component.gptView
 import freeapp.life.stella.api.view.page.renderComponent
 import freeapp.life.stella.api.view.page.renderPageWithLayout
 import org.springframework.http.MediaType
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Sinks
 import java.time.Duration
+import java.util.concurrent.ConcurrentHashMap
 
 
 @RestController
@@ -23,9 +21,12 @@ class AiChatController(
     private val aiChatService: AiChatService
 ) {
 
-    // SSE로 스트리밍할 메시지를 발행하기 위한 싱글턴 Sink (브로드캐스터)
-    private val chatSink: Sinks.Many<String> =
-        Sinks.many().unicast().onBackpressureError()
+
+    // 하나의 SseEmitter를 공유하면서 클라이언트별 이벤트 이름으로 구분
+    private val emitter = SseEmitter(Long.MAX_VALUE)  // 긴 타임아웃을 설정하여 서버 연결 유지
+
+    // 클라이언트별 이벤트를 구분하기 위해 UUID 저장
+    private val clientEventNames: MutableMap<String, String> = ConcurrentHashMap()
 
 
     @GetMapping("/chat")
@@ -40,10 +41,20 @@ class AiChatController(
         val aiResponse =
             aiChatService.getAIResponse(chatReqDto.msg)
 
+        val clientId = chatReqDto.clientId
+
+        clientEventNames[clientId] = clientId
+
         aiResponse
             .delayElements(Duration.ofMillis(500))
             .doOnNext {
-                chatSink.tryEmitNext(it)
+                // 클라이언트별 이벤트 이름을 기반으로 메시지 전송
+                println("????")
+                emitter.send(SseEmitter.event().name(clientId).data(it))
+            }
+            .doFinally {
+                // 완료 시 클라이언트와 이벤트 이름 제거 (필요 시)
+                clientEventNames.remove(clientId)
             }
             .subscribe()
 
@@ -61,15 +72,26 @@ class AiChatController(
         return userChatView
     }
 
-    @GetMapping(path = ["/chat-sse"], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
+    @GetMapping(path = ["/chat-sse/{clientId}"], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun streamChat(
-        @RequestParam userId:String,
-    ): Flux<String> {
+        @PathVariable clientId:String,
+    ): SseEmitter {
 
-        // Sink에 발행된 메시지를 클라이언트로 스트리밍
+        println(clientId)
+//        val eventName =
+//            clientEventNames[clientId] ?: throw IllegalArgumentException("cant find sse client name")
+        //clientEventNames[clientId] = clientId
 
-        println(userId)
+        emitter.send(SseEmitter.event()
+            .name(clientId)
+            .data("connected!"));
 
-        return chatSink.asFlux()
+        return emitter.apply {
+            onTimeout {
+                // 타임아웃 처리 (연결 종료 시)
+                emitter.complete()
+                clientEventNames.remove(clientId)
+            }
+        }
     }
 }

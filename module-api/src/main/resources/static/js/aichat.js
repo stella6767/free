@@ -1,8 +1,17 @@
 
 const clientId = generateUUID(); // 고유 UUID 생성
+const clientIdInput = document.getElementById('client-id');
+clientIdInput.value = clientId; // Hidden Input에 값 설정
 
 const eventSource =
     new EventSource(`http://localhost:8080/ai/chat-sse/${clientId}`);
+
+eventSource.addEventListener(clientId, e => {
+
+    const { data: receivedCount } = e;
+
+    console.log("count event data",receivedCount);
+});
 
 eventSource.onmessage = (event) => {
     console.log("AI Response:", event.data);

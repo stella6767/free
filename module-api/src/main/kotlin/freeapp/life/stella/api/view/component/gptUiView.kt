@@ -61,6 +61,12 @@ fun DIV.gptView(
             attributes["hx-swap"] = "beforeend"
             attributes["hx-trigger"] = "keydown[!shiftKey && key=='Enter'] from:#user-input"
 
+            input {
+                type = InputType.hidden
+                id = "client-id"
+                name = "clientId"
+            }
+
             textArea {
                 id = "user-input"
                 name = "msg"

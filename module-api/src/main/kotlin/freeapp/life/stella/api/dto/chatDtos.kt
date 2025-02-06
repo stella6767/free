@@ -27,7 +27,7 @@ data class ChatSendDto(
 
 data class AiChatReqDto(
     val msg: String,
-    //val viewId:String,
+    val clientId:String,
 )
 
 

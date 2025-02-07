@@ -49,7 +49,6 @@ class PostService(
 //        if (posts.isEmpty()) {
 //            generateDummyPosts(100)
 //        }
-        //generateDummyPosts(100)
     }
 
 

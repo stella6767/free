@@ -9,6 +9,7 @@ import freeapp.life.stella.api.view.page.renderPageWithLayout
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.nodes.TextNode
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 import org.testng.annotations.Test
 import java.util.*
@@ -19,7 +20,12 @@ class UtilTest {
 
     @Test
     fun downloadStreamingFileTest() {
-        val interceptor = PlaywrightInterceptor()
+        //val interceptor = PlaywrightInterceptor()
+
+        val encoder: BCryptPasswordEncoder =BCryptPasswordEncoder()
+
+        val encode = encoder.encode("stella6767")
+        println(encode)
 
 
     }

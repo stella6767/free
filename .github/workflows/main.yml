@@ -62,7 +62,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
            name: cicdsample
       - name: Setup SSH
@@ -92,6 +92,6 @@ jobs:
             echo "No specific script found for this"
           fi
      # delete-artifact
-      - uses: geekyeggo/delete-artifact@v2
+      - uses: geekyeggo/delete-artifact@v5
         with:
           name: cicdsample

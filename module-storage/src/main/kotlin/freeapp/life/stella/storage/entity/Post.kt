@@ -18,7 +18,7 @@ class Post(
     username:String,
 ) : BaseEntity(id=id) {
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 300)
     var title = title
 
     @Column(nullable = false, length = 100000)

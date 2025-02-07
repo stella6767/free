@@ -230,6 +230,12 @@ fun BODY.navbar() {
                     }
                     li {
                         a {
+                            href = "/ai/chat"
+                            +"AI Assistant"
+                        }
+                    }
+                    li {
+                        a {
                             href = "/test"
                             +"test"
                         }

@@ -28,7 +28,7 @@ spring:
     active:
       - local
   application:
-    name: todo-htmx-app
+    name: htmx-app
 
 logging:
   config: classpath:logback-free.xml
@@ -55,6 +55,7 @@ spring:
         - local
     import:
       - secret.yml
+
   devtools:
     livereload:
       enabled: true

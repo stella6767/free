@@ -8,7 +8,7 @@ import kotlinx.html.*
 fun DIV.chatMsgView(
     isUser: Boolean = false,
     msg: String,
-    //viewId: Long = 0,
+    uniqueId: Long,
 ) {
 
     if (isUser) {
@@ -19,10 +19,10 @@ fun DIV.chatMsgView(
         }
     } else {
         div {
-            id = "ai-response"
+            id = "ai-response-${uniqueId}"
             classes = setOf("p-3", "bg-[#525252]", "border", "rounded-lg", "max-w-xs")
             div {
-                id = "ai-content"
+                id = "ai-content-${uniqueId}"
                 +msg
             }
         }
@@ -44,13 +44,11 @@ fun DIV.gptView(
         div {
             id = "chat-messages"
             classes = setOf("flex-1", "overflow-y-auto", "p-4", "bg-gray-50", "space-y-4")
+            attributes["hx-on"] = "htmx::afterSwap: this.scrollTop = this.scrollHeight"
             div {
                 classes = setOf("p-3", "bg-[#525252]", "border", "rounded-lg", "max-w-xs")
                 +"안녕하세요! 무엇을 도와드릴까요? 😊"
             }
-
-
-
         }
         form {
             classes = setOf("p-4", "bg-white", "border-t", "flex", "items-center", "gap-2")
@@ -59,7 +57,8 @@ fun DIV.gptView(
             //attributes["hx-include"] = "#user-input"
             attributes["hx-target"] = "#chat-messages"
             attributes["hx-swap"] = "beforeend"
-            attributes["hx-trigger"] = "keydown[!shiftKey && key=='Enter'] from:#user-input"
+            attributes["hx-trigger"] = "keydown[!shiftKey && key=='Enter'] from:#user-input, click from:#user-input-btn"
+            attributes["hx-on"] = "htmx:afterRequest: document.getElementById('user-input').value = ''"
 
             input {
                 type = InputType.hidden
@@ -87,14 +86,7 @@ fun DIV.gptView(
             }
             button {
                 id = "user-input-btn"
-                attributes["hx-trigger"] = "click"
-                attributes["hx-post"] = "/ai/chat"
-                attributes["hx-include"] = "#user-input"
-                attributes["hx-target"] = "#chat-messages"
-                attributes["hx-swap"] = "beforeend"
-                //onClick = "sendMessage()"
-                //type = ButtonType.submit
-                //attributes["onclick"] = "sendMessage()"
+                type = ButtonType.submit
                 classes = setOf("px-4", "py-2", "bg-[#525252]", "text-white", "rounded-md", "hover:bg-blue-700")
                 +"전송"
             }

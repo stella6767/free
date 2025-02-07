@@ -1,4 +1,3 @@
-
 const clientId = generateUUID(); // 고유 UUID 생성
 const clientIdInput = document.getElementById('client-id');
 clientIdInput.value = clientId; // Hidden Input에 값 설정
@@ -6,16 +5,22 @@ clientIdInput.value = clientId; // Hidden Input에 값 설정
 const eventSource =
     new EventSource(`http://localhost:8080/ai/chat-sse/${clientId}`);
 
-eventSource.addEventListener(clientId, e => {
+eventSource.addEventListener("ai-response", e => {
+    const {data: responseData} = e;
+    console.log("event data", responseData);
 
-    const { data: receivedCount } = e;
+    const uniqueId = e.lastEventId;
 
-    console.log("count event data",receivedCount);
+    // ai-content div 안에 새로운 메시지를 추가
+    const aiContentDiv =
+        document.getElementById(`ai-content-${uniqueId}`);
+
+    console.log("aicontentDiv", aiContentDiv)
+
+    aiContentDiv.innerHTML += `${responseData} `;  // 새 메시지를 추가 (새로운 <p> 태그로 감싸서)
+
 });
 
-eventSource.onmessage = (event) => {
-    console.log("AI Response:", event.data);
-};
 
 eventSource.onerror = (error) => {
     console.error("SSE Error:", error);
@@ -29,7 +34,7 @@ window.addEventListener("beforeunload", () => {
 });
 
 function generateUUID() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
         var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });

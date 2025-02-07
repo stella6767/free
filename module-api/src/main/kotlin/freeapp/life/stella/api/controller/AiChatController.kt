@@ -9,10 +9,9 @@ import freeapp.life.stella.api.view.page.renderPageWithLayout
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
-import reactor.core.publisher.Flux
-import reactor.core.publisher.Sinks
-import java.time.Duration
-import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.atomic.AtomicLong
+
+
 
 
 @RestController
@@ -21,13 +20,8 @@ class AiChatController(
     private val aiChatService: AiChatService
 ) {
 
-
-    // 하나의 SseEmitter를 공유하면서 클라이언트별 이벤트 이름으로 구분
-    private val emitter = SseEmitter(Long.MAX_VALUE)  // 긴 타임아웃을 설정하여 서버 연결 유지
-
-    // 클라이언트별 이벤트를 구분하기 위해 UUID 저장
-    private val clientEventNames: MutableMap<String, String> = ConcurrentHashMap()
-
+    // 요청마다 증가하는 전역 AtomicLong 변수 (스레드 안전)
+    private val aiResponseDivId = AtomicLong()
 
     @GetMapping("/chat")
     fun chatView(): String? {
@@ -35,37 +29,25 @@ class AiChatController(
             gptView()
         }
     }
+
     @PostMapping("/chat")
-    fun chat(chatReqDto:AiChatReqDto): String {
+    fun chat(chatReqDto: AiChatReqDto): String {
 
-        val aiResponse =
-            aiChatService.getAIResponse(chatReqDto.msg)
+        val uniqueId =
+            aiResponseDivId.incrementAndGet()
 
-        val clientId = chatReqDto.clientId
-
-        clientEventNames[clientId] = clientId
-
-        aiResponse
-            .delayElements(Duration.ofMillis(500))
-            .doOnNext {
-                // 클라이언트별 이벤트 이름을 기반으로 메시지 전송
-                println("????")
-                emitter.send(SseEmitter.event().name(clientId).data(it))
-            }
-            .doFinally {
-                // 완료 시 클라이언트와 이벤트 이름 제거 (필요 시)
-                clientEventNames.remove(clientId)
-            }
-            .subscribe()
+        aiChatService.sendAiResponse(chatReqDto, uniqueId)
 
         val userChatView = renderComponent {
             chatMsgView(
                 true,
                 chatReqDto.msg,
+                uniqueId
             )
             chatMsgView(
                 false,
                 "",
+                uniqueId
             )
         }
 
@@ -74,24 +56,10 @@ class AiChatController(
 
     @GetMapping(path = ["/chat-sse/{clientId}"], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun streamChat(
-        @PathVariable clientId:String,
+        @PathVariable clientId: String,
     ): SseEmitter {
 
-        println(clientId)
-//        val eventName =
-//            clientEventNames[clientId] ?: throw IllegalArgumentException("cant find sse client name")
-        //clientEventNames[clientId] = clientId
-
-        emitter.send(SseEmitter.event()
-            .name(clientId)
-            .data("connected!"));
-
-        return emitter.apply {
-            onTimeout {
-                // 타임아웃 처리 (연결 종료 시)
-                emitter.complete()
-                clientEventNames.remove(clientId)
-            }
-        }
+        return aiChatService.connectSse(clientId)
     }
+
 }

@@ -94,7 +94,8 @@ class HashTagCustomRepositoryImpl(
 
         val render = renderer.render(query = query, ctx)
 
-        val fetch = em.getResultWithPagination(render, PostTag::class.java, pageable)
+        val fetch =
+            em.getResultWithPagination(render, PostTag::class.java, pageable)
         val count = em.getCountByQuery(query, ctx, renderer)
         /**
          * entity를 조회하는 쿼리가 아니라면 ManyToOne 관계라 해도 fetch join X

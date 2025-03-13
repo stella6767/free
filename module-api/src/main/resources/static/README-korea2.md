@@ -201,3 +201,10 @@ jobs:
           name: cicdsample
 
 ```
+
+
+```angular2html
+docker compose build
+./init-letsencrypt.sh
+docker compose up
+```

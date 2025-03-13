@@ -37,10 +37,12 @@ class UtilTest {
         val url = ""
 
         val interceptor = PlaywrightInterceptor()
-        val u8requestFiles = interceptor.retrieveM3U8requestFiles(url)
+        //val u8requestFiles = interceptor.retrieveM3U8requestFiles(url)
 
-        println(u8requestFiles)
+        val m3U8variantWithHighestBitrate = interceptor.getM3U8variantWithHighestBitrate(url)
 
+        println(m3U8variantWithHighestBitrate)
+        //println(u8requestFiles)
 
     }
 

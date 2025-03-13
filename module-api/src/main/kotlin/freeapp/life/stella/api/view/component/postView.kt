@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page
 import org.springframework.util.StringUtils
 
 
-fun DIV.postView(keyword: String, posts: Page<PostCardDto>) {
+fun HtmlBlockTag.postView(keyword: String, posts: Page<PostCardDto>) {
 
 
     div {

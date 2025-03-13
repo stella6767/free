@@ -80,14 +80,14 @@ jobs:
          
       - name: SCP transfer
         run: |
-         scp -r scripts module-api DockerFile docker-compose-dev.yml nginx ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:~/cicd
+         scp -r scripts module-api DockerFile docker-compose-dev.yml nginx ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:~/cicd/me
          
       - name: Execute remote commands
         run: |
          if [[ "${{ inputs.branch }}" == "dev" ]]; then
-             ssh -v ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo sh ~/cicd/scripts/deploy-docker.sh"            
+             ssh -v ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo sh ~/cicd/me/scripts/deploy-docker.sh"            
           elif [[ "${{ inputs.branch }}" == "main" ]]; then
-             ssh -v ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo sh ~/cicd/scripts/deploy-docker.sh"             
+             ssh -v ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo sh ~/cicd/me/scripts/deploy-docker.sh"             
           else
             echo "No specific script found for this"
           fi

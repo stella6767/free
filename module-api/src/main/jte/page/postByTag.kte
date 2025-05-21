@@ -1,0 +1,5 @@
+@template.layout.main(bodyContent = @`
+
+    @template.component.post.postByTagView(tagName = , posts = )
+
+`)

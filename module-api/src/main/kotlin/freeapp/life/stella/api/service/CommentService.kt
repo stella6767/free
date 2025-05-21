@@ -1,8 +1,7 @@
 package freeapp.life.stella.api.service
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import freeapp.life.stella.api.dto.CommentCardDto
-import freeapp.life.stella.api.dto.CommentSaveDto
+import freeapp.life.stella.api.web.dto.CommentCardDto
+import freeapp.life.stella.api.web.dto.CommentSaveDto
 import freeapp.life.stella.storage.entity.Comment
 import freeapp.life.stella.storage.repository.CommentRepository
 import freeapp.life.stella.storage.repository.PostRepository

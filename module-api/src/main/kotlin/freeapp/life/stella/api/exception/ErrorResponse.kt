@@ -2,7 +2,6 @@ package freeapp.life.stella.api.exception
 
 import org.springframework.validation.BindingResult
 import org.springframework.validation.FieldError
-import java.util.stream.Collectors
 
 data class ErrorResponse(
     val message: String,

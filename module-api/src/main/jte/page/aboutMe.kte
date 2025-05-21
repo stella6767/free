@@ -1,6 +1,8 @@
 
+@param author:String
+
 @template.layout.main(bodyContent = @`
 
-    @template.component.me.aboutMeView(author = "Kang Min Kyu")
+    @template.component.me.aboutMeView(author = author)
 
 `)

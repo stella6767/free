@@ -1,4 +1,4 @@
-@param post: freeapp.life.stella.api.dto.PostDetailDto
+@param post: freeapp.life.stella.api.web.dto.PostDetailDto
 
 <dialog id="post_delete_modal" class="modal">
     <form method="dialog" class="modal-box">

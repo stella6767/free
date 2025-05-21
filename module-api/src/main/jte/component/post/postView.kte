@@ -1,5 +1,5 @@
 @import org.springframework.data.domain.Page
-@import freeapp.life.stella.api.dto.PostCardDto
+@import freeapp.life.stella.api.web.dto.PostCardDto
 @import org.springframework.util.StringUtils // Assuming this is for StringUtils.hasText
 
 @param keyword: String

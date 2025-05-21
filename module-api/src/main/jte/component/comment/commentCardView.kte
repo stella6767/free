@@ -1,4 +1,4 @@
-@param comment: freeapp.life.stella.api.dto.CommentCardDto
+@param comment: freeapp.life.stella.api.web.dto.CommentCardDto
 @param userId: Long?
 
 <div id="comment-card-${comment.commentId}">

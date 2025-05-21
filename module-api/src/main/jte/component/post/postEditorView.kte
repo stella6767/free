@@ -1,4 +1,4 @@
-@import freeapp.life.stella.api.dto.PostDetailDto
+@import freeapp.life.stella.api.web.dto.PostDetailDto
 @import freeapp.life.stella.api.util.toJson // Assuming this utility is available
 
 @param post: PostDetailDto?

@@ -2,11 +2,10 @@ package freeapp.life.stella.api.service
 
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import freeapp.life.stella.api.dto.Entry
-import freeapp.life.stella.api.dto.EntryListDto
+import freeapp.life.stella.api.web.dto.Entry
+import freeapp.life.stella.api.web.dto.EntryListDto
 import jakarta.annotation.PostConstruct
 import mu.KotlinLogging
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestClient

@@ -1,4 +1,4 @@
-@import freeapp.life.stella.api.dto.Entry // Assuming Entry DTO
+@import freeapp.life.stella.api.web.dto.Entry // Assuming Entry DTO
 
 @param fieldNames: List<String>
 @param entries: List<Entry>

@@ -1,6 +1,6 @@
 package freeapp.life.stella.api.service
 
-import freeapp.life.stella.api.dto.AiChatReqDto
+import freeapp.life.stella.api.web.dto.AiChatReqDto
 import mu.KotlinLogging
 import org.springframework.ai.chat.client.ChatClient
 import org.springframework.stereotype.Service

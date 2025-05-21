@@ -9,7 +9,6 @@ import org.apache.commons.io.IOUtils
 import java.io.File
 import java.net.URI
 import java.nio.charset.StandardCharsets
-import java.util.ArrayList
 import java.util.concurrent.CountDownLatch
 import java.util.regex.Pattern
 

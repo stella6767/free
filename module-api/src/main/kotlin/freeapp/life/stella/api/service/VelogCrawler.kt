@@ -1,6 +1,6 @@
 package freeapp.life.stella.api.service
 
-import freeapp.life.stella.api.dto.*
+import freeapp.life.stella.api.web.dto.*
 import jakarta.servlet.ServletOutputStream
 import mu.KotlinLogging
 import org.springframework.graphql.client.HttpGraphQlClient

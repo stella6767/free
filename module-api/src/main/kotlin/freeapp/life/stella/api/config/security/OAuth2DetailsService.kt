@@ -1,13 +1,12 @@
 package freeapp.life.stella.api.config.security
 
 
-import freeapp.life.stella.storage.repository.UserRepository
 import com.fasterxml.jackson.databind.ObjectMapper
-
-import freeapp.life.stella.api.dto.GithubAuth2UserInfo
-import freeapp.life.stella.api.dto.OAuth2UserInfo
+import freeapp.life.stella.api.web.dto.GithubAuth2UserInfo
+import freeapp.life.stella.api.web.dto.OAuth2UserInfo
 import freeapp.life.stella.storage.entity.User
 import freeapp.life.stella.storage.entity.type.SignType
+import freeapp.life.stella.storage.repository.UserRepository
 import mu.KotlinLogging
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService

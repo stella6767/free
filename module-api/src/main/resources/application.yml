@@ -68,6 +68,8 @@ gg:
     templateLocation: src/main/jte
     templateSuffix: .kte
     development-mode: true
+    use-precompiled-templates: false
+
 
 ---
 

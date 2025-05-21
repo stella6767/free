@@ -1,11 +1,11 @@
 package freeapp.life.stella.api.exception
 
 import freeapp.life.stella.api.util.ServletUtil
-import freeapp.life.stella.api.view.component.alertView
-import freeapp.life.stella.api.view.page.renderComponent
+import gg.jte.TemplateEngine
+import gg.jte.TemplateOutput
+import gg.jte.output.StringOutput
+
 import mu.KotlinLogging
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.messaging.handler.annotation.support.MethodArgumentNotValidException
 import org.springframework.validation.BindException
 import org.springframework.web.HttpRequestMethodNotSupportedException
@@ -16,7 +16,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 @RestControllerAdvice
 class ApiExceptionHandler(
-
+    private val templateEngine: TemplateEngine
 ) {
 
 
@@ -99,9 +99,10 @@ class ApiExceptionHandler(
             val response = ServletUtil.getCurrentResponse()
             response?.addHeader("HX-Retarget", "#toast")
             response?.addHeader("HX-Reswap", "innerHTML")
-            return renderComponent {
-                alertView(e.message)
-            }
+
+            val output: TemplateOutput = StringOutput()
+            templateEngine.render("component/util/alertView.jte", mapOf("msg" to e.message), output)
+            return output.toString()
         }
         return alertErrorAndHistoryBack(e.message)
     }

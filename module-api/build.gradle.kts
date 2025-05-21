@@ -3,7 +3,7 @@
 plugins {
     id("java")
     kotlin("kapt")
-    id("gg.jte.gradle") version "3.1.16"
+    id("gg.jte.gradle") version "3.1.6"
 }
 
 java {
@@ -53,9 +53,9 @@ dependencies {
     implementation("org.springframework.ai:spring-ai-ollama-spring-boot-starter")
 
 
-    implementation("gg.jte:jte-spring-boot-starter-3:3.2.1")
-    implementation("gg.jte:jte:3.2.1")
-    compileOnly("gg.jte:jte-kotlin:3.2.1")
+    implementation("gg.jte:jte-spring-boot-starter-3:3.1.6")
+//    implementation("gg.jte:jte:3.1.6")
+    compileOnly("gg.jte:jte-kotlin:3.1.6")
 
 
 

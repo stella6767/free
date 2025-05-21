@@ -1,0 +1,9 @@
+@param userId: Long?
+@param post: PostDetailDto
+
+
+@template.layout.main(bodyContent = @`
+
+    @template.component.post.postDetailView(userId = userId, post = post)
+
+`)

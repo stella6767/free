@@ -21,15 +21,15 @@ class IndexController(
         return "page/index"
     }
 
-//    @GetMapping("/readme")
-//    fun readme(
-//        model: Model,
-//    ): String {
-//        val value = ClassPathResource("static/README-korea2.md").getMarkdownValueFormLocal()
-//        model.addAttribute("value", value)
-//        model.addAttribute("isCenter", false)
-//        return "page/index"
-//    }
+    @GetMapping("/readme")
+    fun readme(
+        model: Model,
+    ): String {
+        val value = ClassPathResource("static/README-korea2.md").getMarkdownValueFormLocal()
+        model.addAttribute("value", value)
+        model.addAttribute("isCenter", false)
+        return "page/index"
+    }
 
     @GetMapping("/about/me")
     fun aboutMe(

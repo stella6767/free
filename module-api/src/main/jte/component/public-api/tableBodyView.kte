@@ -13,7 +13,7 @@
     </thead>
     <tbody>
     @for (entry in entries)
-        <tr class="text-black" id="${entry.Link}"> @* ID from a URL might be problematic, ensure it's a valid ID *@
+        <tr class="text-black" id="${entry.Link}">
             <td>${entry.API}</td>
             <td>${entry.Auth}</td>
             <td>${entry.Category}</td>

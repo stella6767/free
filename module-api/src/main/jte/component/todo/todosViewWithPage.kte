@@ -3,8 +3,8 @@
 
 @param todos: Page<Todo>
 
-<div class="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans" id="todos-with-page">
-    <div class="bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg">
+<div class="w-full flex items-center justify-center bg-teal-lightest font-sans" id="todos-with-page">
+    <div class="rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg">
         <div class="mb-4">
             <h1 class="text-5xl font-bold text-primary">Todo List</h1>
             <div class="flex mt-4">
@@ -32,6 +32,7 @@
             @endfor
         </div>
     </div>
+
 </div>
 
 @template.component.util.paginationView(page = todos, endPoint = "todos", targetTagId = "todo-list")

@@ -1,3 +1,4 @@
+@import freeapp.life.stella.api.web.dto.ChatSendDto
 @param chatSendDto: ChatSendDto
 
 <div class="chat-message mt-2">

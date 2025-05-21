@@ -53,7 +53,7 @@ inline fun EntityManager.getCountByQuery(
 
     val countQueryRenderer = renderer.render(query = countQuery, ctx)
 
-    val count = this.createQuery(countQueryRenderer.query, Long::class.java).apply {
+    val count = this.createQuery(countQueryRenderer.query).apply {
         countQueryRenderer.params.forEach { name, value ->
             setParameter(name, value)
         }

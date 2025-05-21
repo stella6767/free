@@ -2,17 +2,21 @@
 
 @param todo: Todo
 
+!{
+    val line = if(todo.status) "line-through" else ""
+ }
+
 <div id="todo-container-${todo.id}">
     <div class="flex mb-4 items-center" id="todo-box-${todo.id}">
-        <p class="w-full text-info-content @if(todo.status)line-through@endif">${todo.content}</p>
-        <button class="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-info-content border-green hover:bg-green"
+        <p class="w-full text-info-content ${line}">${todo.content}</p>
+        <button class="btn flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-info-content border-green hover:bg-green"
                 hx-trigger="click"
                 hx-put="/todo/${todo.id}"
                 hx-target="#todo-container-${todo.id}"
                 hx-swap="innerHTML">
             @if(todo.status)Yet@elseDone@endif
         </button>
-        <button class="flex-no-shrink p-2 ml-2 border-2 rounded text-info-content border-red hover:text-white hover:bg-red"
+        <button class="btn flex-no-shrink p-2 ml-2 border-2 rounded text-info-content border-red hover:text-white hover:bg-red"
                 hx-confirm="Are you sure?"
                 hx-swap="outerHTML swap:1s"
                 hx-trigger="click"

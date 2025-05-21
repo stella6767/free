@@ -15,40 +15,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Whatever</title>
 
-    <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous" defer></script>
+    <script defer src="/js/htmx.min.js"></script>
     <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/multi-swap.js" defer></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/loading-states.js" defer></script>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script type="module" src="https://md-block.verou.me/md-block.js"></script>
     <script src="/js/client.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.0.3/dist/full.css" rel="stylesheet" type="text/css" />
+
+    <link href="/css/main.css" rel="stylesheet">
     <link href="/css/loading.css" rel="stylesheet" type="text/css" />
 
-    <style>
-        @media (prefers-color-scheme:dark){
-            body{
-                /* Default browser dark mode styles might be better than forcing white text on white background */
-                /* Consider your actual dark mode strategy */
-            }
-        }
-    </style>
 </head>
-<body xmlns:hx-on="http://www.w3.org/1999/xhtml">
-
+<body xmlns:hx-on="http://www.w3.org/1999/xhtml" class="flex flex-col min-h-screen">
 
 <div class="navbar bg-base-100 sticky top-0 z-30">
     <div class="drawer navbar-start">
         <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-        <div class="drawer-content ml-5">
-            <label htmlFor="my-drawer" class="drawer-button">
+        <div class="drawer-content">
+            <!-- Page content here -->
+            <label for="my-drawer" class="btn btn-primary drawer-button ">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
             </label>
         </div>
-        <div class="drawer-side z-10">
-            <label htmlFor="my-drawer" class="drawer-overlay"></label>
+        <div class="drawer-side ">
+            <label for="my-drawer" class="drawer-overlay"></label>
             <ul class="menu p-4 w-80 h-full bg-base-200 text-base-content">
                 <li><a href="/about/me">about me</a></li>
                 <li><a href="/page/todos">todos</a></li>
@@ -57,14 +51,14 @@
                 <li><a href="/chat">Chat Lab</a></li>
                 <li><a href="/velog/crawler">velog crawler</a></li>
                 <li><a href="/converter">html to kotlin</a></li>
-                <li><a href="/ai/chat">AI Assistant</a></li>
-                <li><a href="/test">test</a></li>
             </ul>
         </div>
     </div>
+
     <div class="navbar-center">
         <a class="btn btn-ghost normal-case text-xl mt-3" href="/">Whatever</a>
     </div>
+
     <div class="navbar-end">
         <div class="max-w-md">
             <form method="get" action="/blog" class="relative mx-auto w-max">
@@ -99,7 +93,7 @@
     </div>
 </div>
 
-<div id="content-body" class="py-3">
+<div id="content-body" class="py-3 flex-grow">
     @template.component.util.progressView()
     <div id="toast">
     </div>
@@ -111,7 +105,7 @@
 
 
 
-<footer id="footer" class="footer footer-center p-4 bg-base-300 text-base-content">
+<footer class="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
     <div>
         <p>Created by Stella6767</p>
         <p>📞 alsrb9434@gmail.com</p>

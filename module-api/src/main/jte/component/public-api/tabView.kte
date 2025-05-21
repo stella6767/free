@@ -5,8 +5,8 @@
 
 
 !{
-    val categoryTabId = "category-tab-${category.removeSpecialCharacters()}"
-    val activeCategoryTabId = "category-tab-${activeCategory.removeSpecialCharacters()}"
+    val categoryTabId = "category-tab-${removeSpecialCharacters(category)}"
+    val activeCategoryTabId = "category-tab-${removeSpecialCharacters(activeCategory)}"
 }
 
 

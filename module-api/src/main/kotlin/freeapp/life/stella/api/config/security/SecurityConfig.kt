@@ -54,7 +54,7 @@ class SecurityConfig(
             val arrays = arrayOf(
                 AntPathRequestMatcher("/resources/*"),
                 AntPathRequestMatcher("/static/*"), AntPathRequestMatcher("/img/*"),
-                AntPathRequestMatcher("/js/*")
+                AntPathRequestMatcher("/js/*"), AntPathRequestMatcher("/css/*")
             )
 
             web.ignoring()

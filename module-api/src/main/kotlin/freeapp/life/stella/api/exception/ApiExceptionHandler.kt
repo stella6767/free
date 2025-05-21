@@ -112,7 +112,7 @@ class ApiExceptionHandler(
 
         val script = """
             <script>
-            alert('$msg');
+            alert(`$msg`);
             history.back();
             </script>
         """.trimIndent()

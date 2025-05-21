@@ -1,0 +1,40 @@
+@import freeapp.life.stella.api.dto.PostDetailDto
+@import freeapp.life.stella.api.util.toJson // Assuming this utility is available
+
+@param post: PostDetailDto?
+
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+
+<form id="post-form" class="py-4 flex flex-col gap-y-3 mb-3">
+    <h1 class="text-center text-black mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl">
+        TOAST UI Editor
+    </h1>
+    <div class="flex justify-center gap-x-3 w-6/12 mx-auto">
+        <input type="text" value="${post?.username ?: ""}" name="username" placeholder="input your username. if you do not input, default name is Anonymous" class="input input-bordered w-full justify-self-center" />
+    </div>
+    <div class="flex w-6/12 mx-auto justify-center">
+        <input type="text" required value="${post?.title ?: ""}" name="title" placeholder="input your title" class="input input-bordered justify-self-center w-full" />
+    </div>
+    <div class="flex w-6/12 mx-auto justify-center">
+        <input placeholder="태그를 입력하고 Enter 누르면 됩니다." name="hashtag" tabindex="2" class="input input-bordered justify-self-center w-full text-white" value="" type="text" />
+    </div>
+    <div id="editor" class="border-2 w-1/2 mx-auto">
+
+    </div>
+    <br />
+    <div class="flex justify-center gap-x-2">
+        <button id="post-submit-btn" class="btn btn-success">제출</button>
+        <button type="button" hx-on-click="cancelPost()" class="btn btn-warning">취소</button>
+    </div>
+
+    <input type="hidden" value="${post?.id ?: 0L}" name="postId" />
+    <input type="hidden" value="${post?.postTags?.toJson() ?: "[]"}" name="originTags" />
+</form>
+
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script>
+    var contentValue = '${post?.content?.replace("'", "\\'")?.replace("\n", "\\n") ?: "please input content"}';
+</script>
+<script src="/js/post.js" defer></script>

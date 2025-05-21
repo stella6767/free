@@ -1,0 +1,41 @@
+@import freeapp.life.stella.api.dto.PostDetailDto
+
+@param userId: Long?
+@param post: PostDetailDto
+
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+
+<div id="post-detail" class="w-3/6 mx-auto mb-5 py-5">
+    <div class="sm:text-3xl md:text-3xl lg:text-3xl text-black xl:text-4xl font-bold cursor-pointer">
+        ${post.title}
+    </div>
+    <div class="font-light text-gray-600 mt-2 flex justify-between">
+        <h1 class="font-bold text-gray-700 hover:underline">
+            By ${post.username} · ${post.createdAt}
+        </h1>
+        @if (userId != null && (post.userId == userId))
+            <div class="flex gap-x-1">
+                <div hx-get="/post/editor?postId=${post.id}" hx-swap="outerHTML" hx-target="#post-detail" class="btn">
+                    수정
+                </div>
+                <div>
+                    <button class="btn" onclick="post_delete_modal.showModal()">삭제</button>
+                </div>
+            </div>
+        @endif
+    </div>
+    <div class="mt-2">
+        @for (postTag in post.postTags)
+            @template.component.post.tagView(tagName = postTag)
+        @endfor
+    </div>
+
+    @template.component.post.postModalView(post = post) 
+    
+    <%-- ${post.content} --%>
+    <div id="post-detail-viewer-content-${post.id}">
+        ${unsafeRaw(post.content)} 
+    </div>
+</div>
+
+@template.component.comment.commentSectionView(post = post, userId = userId) 

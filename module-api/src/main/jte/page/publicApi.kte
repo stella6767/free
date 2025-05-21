@@ -1,0 +1,7 @@
+@param categories: List<String>
+
+@template.layout.main(bodyContent = @`
+
+    @template.component.public-api.publicApiPageView(categories = categories)
+
+`)

@@ -1,0 +1,4 @@
+
+@template.layout.main(bodyContent = @`
+    @template.component.chat.chatView()
+`)

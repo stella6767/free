@@ -1,0 +1,606 @@
+[startup] [2024-05-09 06:34:43:8183][background-preinit]  INFO o.h.validator.internal.util.Version [36mo.h.v.i.u.Version[0;39m [32m<clinit>[0;39m 
+ HV000001: Hibernate Validator 8.0.1.Final 
+[startup] [2024-05-09 06:34:46:10240][main]  INFO o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor [36mo.s.b.d.e.DevToolsPropertyDefaultsPostProcessor[0;39m [32mlogTo[0;39m 
+ For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG' 
+[startup] [2024-05-09 06:34:50:14683][main]  INFO o.s.d.r.c.RepositoryConfigurationDelegate [36mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m [32mregisterRepositoriesIn[0;39m 
+ Bootstrapping Spring Data JPA repositories in DEFAULT mode. 
+[startup] [2024-05-09 06:34:51:15385][main]  INFO o.s.d.r.c.RepositoryConfigurationDelegate [36mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m [32mregisterRepositoriesIn[0;39m 
+ Finished Spring Data repository scanning in 655 ms. Found 4 JPA repository interfaces. 
+[startup] [2024-05-09 06:34:52:16445][main]  INFO c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor [36mc.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor[0;39m [32mpostProcessBeanFactory[0;39m 
+ Post-processing PropertySource instances 
+[startup] [2024-05-09 06:34:52:16467][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource 
+[startup] [2024-05-09 06:34:52:16472][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource 
+[startup] [2024-05-09 06:34:52:16498][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource 
+[startup] [2024-05-09 06:34:52:16556][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper 
+[startup] [2024-05-09 06:34:52:16569][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper 
+[startup] [2024-05-09 06:34:52:16575][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper 
+[startup] [2024-05-09 06:34:52:16578][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' (document #2) [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper 
+[startup] [2024-05-09 06:34:52:16583][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource Config resource 'class path resource [secret.yml]' via location 'classpath:secret.yml' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper 
+[startup] [2024-05-09 06:34:52:16600][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' (document #0) [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper 
+[startup] [2024-05-09 06:34:55:19689][main]  INFO c.u.j.f.DefaultLazyPropertyFilter [36mc.u.j.f.DefaultLazyPropertyFilter[0;39m [32mlambda$new$2[0;39m 
+ Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter 
+[startup] [2024-05-09 06:34:55:19905][main]  INFO c.u.j.r.DefaultLazyPropertyResolver [36mc.u.j.r.DefaultLazyPropertyResolver[0;39m [32mlambda$new$2[0;39m 
+ Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver 
+[startup] [2024-05-09 06:34:55:19958][main]  INFO c.u.j.d.DefaultLazyPropertyDetector [36mc.u.j.d.DefaultLazyPropertyDetector[0;39m [32mlambda$new$2[0;39m 
+ Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector 
+[startup] [2024-05-09 06:34:57:21192][main]  INFO o.s.b.w.e.tomcat.TomcatWebServer [36mo.s.b.w.e.t.TomcatWebServer[0;39m [32minitialize[0;39m 
+ Tomcat initialized with port 8081 (http) 
+[startup] [2024-05-09 06:34:57:21214][main]  INFO o.a.coyote.http11.Http11NioProtocol [36mo.a.c.h.Http11NioProtocol[0;39m [32mlog[0;39m 
+ Initializing ProtocolHandler ["http-nio-8081"] 
+[startup] [2024-05-09 06:34:57:21219][main]  INFO o.a.catalina.core.StandardService [36mo.a.c.c.StandardService[0;39m [32mlog[0;39m 
+ Starting service [Tomcat] 
+[startup] [2024-05-09 06:34:57:21223][main]  INFO o.a.catalina.core.StandardEngine [36mo.a.c.c.StandardEngine[0;39m [32mlog[0;39m 
+ Starting Servlet engine: [Apache Tomcat/10.1.20] 
+[startup] [2024-05-09 06:34:57:21275][main]  INFO o.a.c.c.C.[Tomcat].[localhost].[/] [36mo.a.c.c.C.[.[.[/][0;39m [32mlog[0;39m 
+ Initializing Spring embedded WebApplicationContext 
+[startup] [2024-05-09 06:34:57:21285][main]  INFO o.s.b.w.s.c.ServletWebServerApplicationContext [36mo.s.b.w.s.c.ServletWebServerApplicationContext[0;39m [32mprepareWebApplicationContext[0;39m 
+ Root WebApplicationContext: initialization completed in 11029 ms 
+[startup] [2024-05-09 06:35:00:24412][main]  INFO o.h.jpa.internal.util.LogHelper [36mo.h.j.i.u.LogHelper[0;39m [32mlogPersistenceUnitInformation[0;39m 
+ HHH000204: Processing PersistenceUnitInfo [name: default] 
+[startup] [2024-05-09 06:35:00:24590][main]  INFO org.hibernate.Version [36mo.h.Version[0;39m [32mlogVersion[0;39m 
+ HHH000412: Hibernate ORM core version 6.4.4.Final 
+[startup] [2024-05-09 06:35:00:24662][main]  INFO o.h.c.i.RegionFactoryInitiator [36mo.h.c.i.RegionFactoryInitiator[0;39m [32minitiateService[0;39m 
+ HHH000026: Second-level cache disabled 
+[startup] [2024-05-09 06:35:01:25630][main]  INFO o.s.o.j.p.SpringPersistenceUnitInfo [36mo.s.o.j.p.SpringPersistenceUnitInfo[0;39m [32maddTransformer[0;39m 
+ No LoadTimeWeaver setup: ignoring JPA class transformer 
+[startup] [2024-05-09 06:35:01:25679][main]  INFO com.zaxxer.hikari.HikariDataSource [36mc.z.h.HikariDataSource[0;39m [32mgetConnection[0;39m 
+ HikariPool-1 - Starting... 
+[startup] [2024-05-09 06:35:02:26349][main]  INFO com.zaxxer.hikari.pool.HikariPool [36mc.z.h.p.HikariPool[0;39m [32mcheckFailFast[0;39m 
+ HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@138d85f8 
+[startup] [2024-05-09 06:35:02:26356][main]  INFO com.zaxxer.hikari.HikariDataSource [36mc.z.h.HikariDataSource[0;39m [32mgetConnection[0;39m 
+ HikariPool-1 - Start completed. 
+[startup] [2024-05-09 06:35:02:26477][main]  WARN org.hibernate.orm.deprecation [36mo.h.o.deprecation[0;39m [32mconstructDialect[0;39m 
+ HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default) 
+[startup] [2024-05-09 06:35:03:28087][main]  INFO o.h.e.t.j.p.i.JtaPlatformInitiator [36mo.h.e.t.j.p.i.JtaPlatformInitiator[0;39m [32minitiateService[0;39m 
+ HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration) 
+[startup] [2024-05-09 06:35:03:28153][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236503965 | took 22ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from information_schema.sequences
+select * from information_schema.sequences; 
+[startup] [2024-05-09 06:35:04:28377][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236504189 | took 12ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."post" where 1=0
+select * from "public"."post" where 1=0; 
+[startup] [2024-05-09 06:35:04:28465][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236504277 | took 10ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."user" where 1=0
+select * from "public"."user" where 1=0; 
+[startup] [2024-05-09 06:35:04:28543][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236504355 | took 10ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."comment" where 1=0
+select * from "public"."comment" where 1=0; 
+[startup] [2024-05-09 06:35:04:28592][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236504404 | took 9ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."comment" where 1=0
+select * from "public"."comment" where 1=0; 
+[startup] [2024-05-09 06:35:04:28650][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236504462 | took 10ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."user" where 1=0
+select * from "public"."user" where 1=0; 
+[startup] [2024-05-09 06:35:04:28710][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236504522 | took 10ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."hashTag" where 1=0
+select * from "public"."hashTag" where 1=0; 
+[startup] [2024-05-09 06:35:04:28762][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236504574 | took 9ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."post" where 1=0
+select * from "public"."post" where 1=0; 
+[startup] [2024-05-09 06:35:04:28817][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236504629 | took 10ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."user" where 1=0
+select * from "public"."user" where 1=0; 
+[startup] [2024-05-09 06:35:04:28824][main]  INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m [32mbuildNativeEntityManagerFactory[0;39m 
+ Initialized JPA EntityManagerFactory for persistence unit 'default' 
+[startup] [2024-05-09 06:35:09:33648][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236509460 | took 678ms | statement | connection 2| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select p1_0."id",p1_0."content",p1_0."count",p1_0."created_at",p1_0."deleted_at",p1_0."thumbnail",p1_0."title",p1_0."updated_at",p1_0."userId",p1_0."username" from "post" p1_0
+select p1_0."id",p1_0."content",p1_0."count",p1_0."created_at",p1_0."deleted_at",p1_0."thumbnail",p1_0."title",p1_0."updated_at",p1_0."userId",p1_0."username" from "post" p1_0; 
+[startup] [2024-05-09 06:35:10:34252][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236510064 | took 23ms | commit | connection 2| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+
+; 
+[startup] [2024-05-09 06:35:15:39709][main]  INFO o.s.b.a.e.web.EndpointLinksResolver [36mo.s.b.a.e.w.EndpointLinksResolver[0;39m [32m<init>[0;39m 
+ Exposing 13 endpoint(s) beneath base path '/actuator' 
+[startup] [2024-05-09 06:35:16:40303][main]  INFO o.s.s.w.DefaultSecurityFilterChain [36mo.s.s.w.DefaultSecurityFilterChain[0;39m [32m<init>[0;39m 
+ Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4e9f4264, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3af18a44, org.springframework.security.web.context.SecurityContextHolderFilter@72c2d699, org.springframework.security.web.header.HeaderWriterFilter@25c8d646, org.springframework.web.filter.CorsFilter@258be1c6, org.springframework.security.web.authentication.logout.LogoutFilter@7bc87d58, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@2554d217, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@318d491, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@766e7a0f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1771700b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@45c20d8f, org.springframework.security.web.access.ExceptionTranslationFilter@71ad307d, org.springframework.security.web.access.intercept.AuthorizationFilter@54a6c0ad] 
+[startup] [2024-05-09 06:35:16:40377][main]  WARN o.s.s.c.a.web.builders.WebSecurity [36mo.s.s.c.a.w.b.WebSecurity[0;39m [32mperformBuild[0;39m 
+ You are asking Spring Security to ignore Ant [pattern='/resources/*']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead. 
+[startup] [2024-05-09 06:35:16:40395][main]  INFO o.s.s.w.DefaultSecurityFilterChain [36mo.s.s.w.DefaultSecurityFilterChain[0;39m [32m<init>[0;39m 
+ Will not secure Ant [pattern='/resources/*'] 
+[startup] [2024-05-09 06:35:16:40407][main]  WARN o.s.s.c.a.web.builders.WebSecurity [36mo.s.s.c.a.w.b.WebSecurity[0;39m [32mperformBuild[0;39m 
+ You are asking Spring Security to ignore Ant [pattern='/static/*']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead. 
+[startup] [2024-05-09 06:35:16:40417][main]  INFO o.s.s.w.DefaultSecurityFilterChain [36mo.s.s.w.DefaultSecurityFilterChain[0;39m [32m<init>[0;39m 
+ Will not secure Ant [pattern='/static/*'] 
+[startup] [2024-05-09 06:35:16:40431][main]  WARN o.s.s.c.a.web.builders.WebSecurity [36mo.s.s.c.a.w.b.WebSecurity[0;39m [32mperformBuild[0;39m 
+ You are asking Spring Security to ignore Ant [pattern='/img/*']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead. 
+[startup] [2024-05-09 06:35:16:40439][main]  INFO o.s.s.w.DefaultSecurityFilterChain [36mo.s.s.w.DefaultSecurityFilterChain[0;39m [32m<init>[0;39m 
+ Will not secure Ant [pattern='/img/*'] 
+[startup] [2024-05-09 06:35:16:40472][main]  WARN o.s.s.c.a.web.builders.WebSecurity [36mo.s.s.c.a.w.b.WebSecurity[0;39m [32mperformBuild[0;39m 
+ You are asking Spring Security to ignore Ant [pattern='/js/*']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead. 
+[startup] [2024-05-09 06:35:16:40489][main]  INFO o.s.s.w.DefaultSecurityFilterChain [36mo.s.s.w.DefaultSecurityFilterChain[0;39m [32m<init>[0;39m 
+ Will not secure Ant [pattern='/js/*'] 
+[startup] [2024-05-09 06:35:18:42817][main]  INFO o.s.b.w.e.tomcat.TomcatWebServer [36mo.s.b.w.e.t.TomcatWebServer[0;39m [32mstart[0;39m 
+ Tomcat started on port 8081 (http) with context path '' 
+[startup] [2024-05-09 06:35:18:42838][main]  INFO c.u.j.c.RefreshScopeRefreshedEventListener [36mc.u.j.c.RefreshScopeRefreshedEventListener[0;39m [32monApplicationEvent[0;39m 
+ Refreshing cached encryptable property sources on ServletWebServerInitializedEvent 
+[startup] [2024-05-09 06:35:18:42848][main]  INFO c.u.j.c.CachingDelegateEncryptablePropertySource [36mc.u.j.c.CachingDelegateEncryptablePropertySource[0;39m [32mrefresh[0;39m 
+ Property Source systemProperties refreshed 
+[startup] [2024-05-09 06:35:18:42889][main]  INFO c.u.j.c.CachingDelegateEncryptablePropertySource [36mc.u.j.c.CachingDelegateEncryptablePropertySource[0;39m [32mrefresh[0;39m 
+ Property Source systemEnvironment refreshed 
+[startup] [2024-05-09 06:35:18:42892][main]  INFO c.u.j.c.CachingDelegateEncryptablePropertySource [36mc.u.j.c.CachingDelegateEncryptablePropertySource[0;39m [32mrefresh[0;39m 
+ Property Source random refreshed 
+[startup] [2024-05-09 06:35:18:42897][main]  INFO c.u.j.c.CachingDelegateEncryptablePropertySource [36mc.u.j.c.CachingDelegateEncryptablePropertySource[0;39m [32mrefresh[0;39m 
+ Property Source Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' (document #2) refreshed 
+[startup] [2024-05-09 06:35:18:42899][main]  INFO c.u.j.c.CachingDelegateEncryptablePropertySource [36mc.u.j.c.CachingDelegateEncryptablePropertySource[0;39m [32mrefresh[0;39m 
+ Property Source Config resource 'class path resource [secret.yml]' via location 'classpath:secret.yml' refreshed 
+[startup] [2024-05-09 06:35:18:42903][main]  INFO c.u.j.c.CachingDelegateEncryptablePropertySource [36mc.u.j.c.CachingDelegateEncryptablePropertySource[0;39m [32mrefresh[0;39m 
+ Property Source Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' (document #0) refreshed 
+[startup] [2024-05-09 06:35:18:42906][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource 
+[startup] [2024-05-09 06:35:18:42951][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource 
+[startup] [2024-05-09 06:35:18:42956][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource servletContextInitParams [org.springframework.web.context.support.ServletContextPropertySource] to EncryptableEnumerablePropertySourceWrapper 
+[startup] [2024-05-09 06:35:18:42963][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource Management Server [org.springframework.boot.actuate.autoconfigure.web.server.ManagementContextAutoConfiguration$SameManagementContextConfiguration$1] to EncryptablePropertySourceWrapper 
+[startup] [2024-05-09 06:35:18:42968][main]  INFO o.s.m.s.b.SimpleBrokerMessageHandler [36mo.s.m.s.b.SimpleBrokerMessageHandler[0;39m [32minfo[0;39m 
+ Starting... 
+[startup] [2024-05-09 06:35:18:42972][main]  INFO o.s.m.s.b.SimpleBrokerMessageHandler [36mo.s.m.s.b.SimpleBrokerMessageHandler[0;39m [32minfo[0;39m 
+ BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@6694bf01]] 
+[startup] [2024-05-09 06:35:18:42975][main]  INFO o.s.m.s.b.SimpleBrokerMessageHandler [36mo.s.m.s.b.SimpleBrokerMessageHandler[0;39m [32minfo[0;39m 
+ Started. 
+[startup] [2024-05-09 06:35:18:43004][SpringApplicationShutdownHook]  INFO o.s.m.s.b.SimpleBrokerMessageHandler [36mo.s.m.s.b.SimpleBrokerMessageHandler[0;39m [32minfo[0;39m 
+ Stopping... 
+[startup] [2024-05-09 06:35:18:43007][SpringApplicationShutdownHook]  INFO o.s.m.s.b.SimpleBrokerMessageHandler [36mo.s.m.s.b.SimpleBrokerMessageHandler[0;39m [32minfo[0;39m 
+ BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@6694bf01]] 
+[startup] [2024-05-09 06:35:18:43010][SpringApplicationShutdownHook]  INFO o.s.m.s.b.SimpleBrokerMessageHandler [36mo.s.m.s.b.SimpleBrokerMessageHandler[0;39m [32minfo[0;39m 
+ Stopped. 
+[startup] [2024-05-09 06:35:18:43142][SpringApplicationShutdownHook]  INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m [32mdestroy[0;39m 
+ Closing JPA EntityManagerFactory for persistence unit 'default' 
+[startup] [2024-05-09 06:35:18:43168][SpringApplicationShutdownHook]  INFO com.zaxxer.hikari.HikariDataSource [36mc.z.h.HikariDataSource[0;39m [32mclose[0;39m 
+ HikariPool-1 - Shutdown initiated... 
+[startup] [2024-05-09 06:35:19:43222][SpringApplicationShutdownHook]  INFO com.zaxxer.hikari.HikariDataSource [36mc.z.h.HikariDataSource[0;39m [32mclose[0;39m 
+ HikariPool-1 - Shutdown completed. 
+[startup] [2024-05-09 06:37:21:3397][background-preinit]  INFO o.h.validator.internal.util.Version [36mo.h.v.i.u.Version[0;39m [32m<clinit>[0;39m 
+ HV000001: Hibernate Validator 8.0.1.Final 
+[startup] [2024-05-09 06:37:21:3636][main]  INFO o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor [36mo.s.b.d.e.DevToolsPropertyDefaultsPostProcessor[0;39m [32mlogTo[0;39m 
+ For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG' 
+[startup] [2024-05-09 06:37:24:6693][main]  INFO o.s.d.r.c.RepositoryConfigurationDelegate [36mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m [32mregisterRepositoriesIn[0;39m 
+ Bootstrapping Spring Data JPA repositories in DEFAULT mode. 
+[startup] [2024-05-09 06:37:24:7120][main]  INFO o.s.d.r.c.RepositoryConfigurationDelegate [36mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m [32mregisterRepositoriesIn[0;39m 
+ Finished Spring Data repository scanning in 407 ms. Found 4 JPA repository interfaces. 
+[startup] [2024-05-09 06:37:25:7667][main]  INFO c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor [36mc.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor[0;39m [32mpostProcessBeanFactory[0;39m 
+ Post-processing PropertySource instances 
+[startup] [2024-05-09 06:37:25:7673][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource 
+[startup] [2024-05-09 06:37:25:7677][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource 
+[startup] [2024-05-09 06:37:25:7680][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource 
+[startup] [2024-05-09 06:37:25:7684][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper 
+[startup] [2024-05-09 06:37:25:7690][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper 
+[startup] [2024-05-09 06:37:25:7693][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper 
+[startup] [2024-05-09 06:37:25:7697][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' (document #2) [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper 
+[startup] [2024-05-09 06:37:25:7710][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource Config resource 'class path resource [secret.yml]' via location 'classpath:secret.yml' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper 
+[startup] [2024-05-09 06:37:25:7718][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' (document #0) [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper 
+[startup] [2024-05-09 06:37:26:8668][main]  INFO c.u.j.f.DefaultLazyPropertyFilter [36mc.u.j.f.DefaultLazyPropertyFilter[0;39m [32mlambda$new$2[0;39m 
+ Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter 
+[startup] [2024-05-09 06:37:26:8700][main]  INFO c.u.j.r.DefaultLazyPropertyResolver [36mc.u.j.r.DefaultLazyPropertyResolver[0;39m [32mlambda$new$2[0;39m 
+ Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver 
+[startup] [2024-05-09 06:37:26:8725][main]  INFO c.u.j.d.DefaultLazyPropertyDetector [36mc.u.j.d.DefaultLazyPropertyDetector[0;39m [32mlambda$new$2[0;39m 
+ Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector 
+[startup] [2024-05-09 06:37:27:9326][main]  INFO o.s.b.w.e.tomcat.TomcatWebServer [36mo.s.b.w.e.t.TomcatWebServer[0;39m [32minitialize[0;39m 
+ Tomcat initialized with port 8081 (http) 
+[startup] [2024-05-09 06:37:27:9346][main]  INFO o.a.coyote.http11.Http11NioProtocol [36mo.a.c.h.Http11NioProtocol[0;39m [32mlog[0;39m 
+ Initializing ProtocolHandler ["http-nio-8081"] 
+[startup] [2024-05-09 06:37:27:9351][main]  INFO o.a.catalina.core.StandardService [36mo.a.c.c.StandardService[0;39m [32mlog[0;39m 
+ Starting service [Tomcat] 
+[startup] [2024-05-09 06:37:27:9354][main]  INFO o.a.catalina.core.StandardEngine [36mo.a.c.c.StandardEngine[0;39m [32mlog[0;39m 
+ Starting Servlet engine: [Apache Tomcat/10.1.20] 
+[startup] [2024-05-09 06:37:27:9410][main]  INFO o.a.c.c.C.[Tomcat].[localhost].[/] [36mo.a.c.c.C.[.[.[/][0;39m [32mlog[0;39m 
+ Initializing Spring embedded WebApplicationContext 
+[startup] [2024-05-09 06:37:27:9412][main]  INFO o.s.b.w.s.c.ServletWebServerApplicationContext [36mo.s.b.w.s.c.ServletWebServerApplicationContext[0;39m [32mprepareWebApplicationContext[0;39m 
+ Root WebApplicationContext: initialization completed in 5769 ms 
+[startup] [2024-05-09 06:37:29:12118][main]  INFO o.h.jpa.internal.util.LogHelper [36mo.h.j.i.u.LogHelper[0;39m [32mlogPersistenceUnitInformation[0;39m 
+ HHH000204: Processing PersistenceUnitInfo [name: default] 
+[startup] [2024-05-09 06:37:30:12613][main]  INFO org.hibernate.Version [36mo.h.Version[0;39m [32mlogVersion[0;39m 
+ HHH000412: Hibernate ORM core version 6.4.4.Final 
+[startup] [2024-05-09 06:37:30:12758][main]  INFO o.h.c.i.RegionFactoryInitiator [36mo.h.c.i.RegionFactoryInitiator[0;39m [32minitiateService[0;39m 
+ HHH000026: Second-level cache disabled 
+[startup] [2024-05-09 06:37:31:13570][main]  INFO o.s.o.j.p.SpringPersistenceUnitInfo [36mo.s.o.j.p.SpringPersistenceUnitInfo[0;39m [32maddTransformer[0;39m 
+ No LoadTimeWeaver setup: ignoring JPA class transformer 
+[startup] [2024-05-09 06:37:31:13606][main]  INFO com.zaxxer.hikari.HikariDataSource [36mc.z.h.HikariDataSource[0;39m [32mgetConnection[0;39m 
+ HikariPool-1 - Starting... 
+[startup] [2024-05-09 06:37:31:14162][main]  INFO com.zaxxer.hikari.pool.HikariPool [36mc.z.h.p.HikariPool[0;39m [32mcheckFailFast[0;39m 
+ HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@695f382c 
+[startup] [2024-05-09 06:37:31:14169][main]  INFO com.zaxxer.hikari.HikariDataSource [36mc.z.h.HikariDataSource[0;39m [32mgetConnection[0;39m 
+ HikariPool-1 - Start completed. 
+[startup] [2024-05-09 06:37:31:14223][main]  WARN org.hibernate.orm.deprecation [36mo.h.o.deprecation[0;39m [32mconstructDialect[0;39m 
+ HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default) 
+[startup] [2024-05-09 06:37:33:15919][main]  INFO o.h.e.t.j.p.i.JtaPlatformInitiator [36mo.h.e.t.j.p.i.JtaPlatformInitiator[0;39m [32minitiateService[0;39m 
+ HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration) 
+[startup] [2024-05-09 06:37:33:16030][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236653765 | took 16ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from information_schema.sequences
+select * from information_schema.sequences; 
+[startup] [2024-05-09 06:37:33:16179][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236653914 | took 9ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."post" where 1=0
+select * from "public"."post" where 1=0; 
+[startup] [2024-05-09 06:37:33:16232][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236653967 | took 9ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."user" where 1=0
+select * from "public"."user" where 1=0; 
+[startup] [2024-05-09 06:37:34:16302][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236654037 | took 8ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."comment" where 1=0
+select * from "public"."comment" where 1=0; 
+[startup] [2024-05-09 06:37:34:16343][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236654078 | took 8ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."comment" where 1=0
+select * from "public"."comment" where 1=0; 
+[startup] [2024-05-09 06:37:34:16394][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236654129 | took 9ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."user" where 1=0
+select * from "public"."user" where 1=0; 
+[startup] [2024-05-09 06:37:34:16444][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236654178 | took 7ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."hashTag" where 1=0
+select * from "public"."hashTag" where 1=0; 
+[startup] [2024-05-09 06:37:34:16499][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236654234 | took 17ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."post" where 1=0
+select * from "public"."post" where 1=0; 
+[startup] [2024-05-09 06:37:34:16604][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236654339 | took 10ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."user" where 1=0
+select * from "public"."user" where 1=0; 
+[startup] [2024-05-09 06:37:34:16621][main]  INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m [32mbuildNativeEntityManagerFactory[0;39m 
+ Initialized JPA EntityManagerFactory for persistence unit 'default' 
+[startup] [2024-05-09 06:37:36:18804][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236656539 | took 277ms | statement | connection 2| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select p1_0."id",p1_0."content",p1_0."count",p1_0."created_at",p1_0."deleted_at",p1_0."thumbnail",p1_0."title",p1_0."updated_at",p1_0."userId",p1_0."username" from "post" p1_0
+select p1_0."id",p1_0."content",p1_0."count",p1_0."created_at",p1_0."deleted_at",p1_0."thumbnail",p1_0."title",p1_0."updated_at",p1_0."userId",p1_0."username" from "post" p1_0; 
+[startup] [2024-05-09 06:37:36:18936][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715236656671 | took 15ms | commit | connection 2| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+
+; 
+[startup] [2024-05-09 06:37:38:20860][main]  INFO o.s.b.a.e.web.EndpointLinksResolver [36mo.s.b.a.e.w.EndpointLinksResolver[0;39m [32m<init>[0;39m 
+ Exposing 13 endpoint(s) beneath base path '/actuator' 
+[startup] [2024-05-09 06:37:38:21056][main]  INFO o.s.s.w.DefaultSecurityFilterChain [36mo.s.s.w.DefaultSecurityFilterChain[0;39m [32m<init>[0;39m 
+ Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@52f7a138, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@342686f4, org.springframework.security.web.context.SecurityContextHolderFilter@14295dca, org.springframework.security.web.header.HeaderWriterFilter@af88ccf, org.springframework.web.filter.CorsFilter@cda6100, org.springframework.security.web.authentication.logout.LogoutFilter@19121e33, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@73edfe51, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@44f61a32, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3d8777ce, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1f4d04be, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2c8eb04e, org.springframework.security.web.access.ExceptionTranslationFilter@25db0f54, org.springframework.security.web.access.intercept.AuthorizationFilter@13a7aec7] 
+[startup] [2024-05-09 06:37:38:21137][main]  WARN o.s.s.c.a.web.builders.WebSecurity [36mo.s.s.c.a.w.b.WebSecurity[0;39m [32mperformBuild[0;39m 
+ You are asking Spring Security to ignore Ant [pattern='/resources/*']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead. 
+[startup] [2024-05-09 06:37:38:21144][main]  INFO o.s.s.w.DefaultSecurityFilterChain [36mo.s.s.w.DefaultSecurityFilterChain[0;39m [32m<init>[0;39m 
+ Will not secure Ant [pattern='/resources/*'] 
+[startup] [2024-05-09 06:37:38:21150][main]  WARN o.s.s.c.a.web.builders.WebSecurity [36mo.s.s.c.a.w.b.WebSecurity[0;39m [32mperformBuild[0;39m 
+ You are asking Spring Security to ignore Ant [pattern='/static/*']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead. 
+[startup] [2024-05-09 06:37:38:21153][main]  INFO o.s.s.w.DefaultSecurityFilterChain [36mo.s.s.w.DefaultSecurityFilterChain[0;39m [32m<init>[0;39m 
+ Will not secure Ant [pattern='/static/*'] 
+[startup] [2024-05-09 06:37:38:21156][main]  WARN o.s.s.c.a.web.builders.WebSecurity [36mo.s.s.c.a.w.b.WebSecurity[0;39m [32mperformBuild[0;39m 
+ You are asking Spring Security to ignore Ant [pattern='/img/*']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead. 
+[startup] [2024-05-09 06:37:38:21162][main]  INFO o.s.s.w.DefaultSecurityFilterChain [36mo.s.s.w.DefaultSecurityFilterChain[0;39m [32m<init>[0;39m 
+ Will not secure Ant [pattern='/img/*'] 
+[startup] [2024-05-09 06:37:38:21166][main]  WARN o.s.s.c.a.web.builders.WebSecurity [36mo.s.s.c.a.w.b.WebSecurity[0;39m [32mperformBuild[0;39m 
+ You are asking Spring Security to ignore Ant [pattern='/js/*']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead. 
+[startup] [2024-05-09 06:37:38:21178][main]  INFO o.s.s.w.DefaultSecurityFilterChain [36mo.s.s.w.DefaultSecurityFilterChain[0;39m [32m<init>[0;39m 
+ Will not secure Ant [pattern='/js/*'] 
+[startup] [2024-05-09 06:37:40:22337][main]  INFO o.a.coyote.http11.Http11NioProtocol [36mo.a.c.h.Http11NioProtocol[0;39m [32mlog[0;39m 
+ Starting ProtocolHandler ["http-nio-8081"] 
+[startup] [2024-05-09 06:37:40:22371][main]  INFO o.s.b.w.e.tomcat.TomcatWebServer [36mo.s.b.w.e.t.TomcatWebServer[0;39m [32mstart[0;39m 
+ Tomcat started on port 8081 (http) with context path '' 
+[startup] [2024-05-09 06:37:40:22376][main]  INFO c.u.j.c.RefreshScopeRefreshedEventListener [36mc.u.j.c.RefreshScopeRefreshedEventListener[0;39m [32monApplicationEvent[0;39m 
+ Refreshing cached encryptable property sources on ServletWebServerInitializedEvent 
+[startup] [2024-05-09 06:37:40:22379][main]  INFO c.u.j.c.CachingDelegateEncryptablePropertySource [36mc.u.j.c.CachingDelegateEncryptablePropertySource[0;39m [32mrefresh[0;39m 
+ Property Source systemProperties refreshed 
+[startup] [2024-05-09 06:37:40:22381][main]  INFO c.u.j.c.CachingDelegateEncryptablePropertySource [36mc.u.j.c.CachingDelegateEncryptablePropertySource[0;39m [32mrefresh[0;39m 
+ Property Source systemEnvironment refreshed 
+[startup] [2024-05-09 06:37:40:22383][main]  INFO c.u.j.c.CachingDelegateEncryptablePropertySource [36mc.u.j.c.CachingDelegateEncryptablePropertySource[0;39m [32mrefresh[0;39m 
+ Property Source random refreshed 
+[startup] [2024-05-09 06:37:40:22384][main]  INFO c.u.j.c.CachingDelegateEncryptablePropertySource [36mc.u.j.c.CachingDelegateEncryptablePropertySource[0;39m [32mrefresh[0;39m 
+ Property Source Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' (document #2) refreshed 
+[startup] [2024-05-09 06:37:40:22386][main]  INFO c.u.j.c.CachingDelegateEncryptablePropertySource [36mc.u.j.c.CachingDelegateEncryptablePropertySource[0;39m [32mrefresh[0;39m 
+ Property Source Config resource 'class path resource [secret.yml]' via location 'classpath:secret.yml' refreshed 
+[startup] [2024-05-09 06:37:40:22388][main]  INFO c.u.j.c.CachingDelegateEncryptablePropertySource [36mc.u.j.c.CachingDelegateEncryptablePropertySource[0;39m [32mrefresh[0;39m 
+ Property Source Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' (document #0) refreshed 
+[startup] [2024-05-09 06:37:40:22390][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource 
+[startup] [2024-05-09 06:37:40:22395][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource 
+[startup] [2024-05-09 06:37:40:22398][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource servletContextInitParams [org.springframework.web.context.support.ServletContextPropertySource] to EncryptableEnumerablePropertySourceWrapper 
+[startup] [2024-05-09 06:37:40:22401][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource Management Server [org.springframework.boot.actuate.autoconfigure.web.server.ManagementContextAutoConfiguration$SameManagementContextConfiguration$1] to EncryptablePropertySourceWrapper 
+[startup] [2024-05-09 06:37:40:22404][main]  INFO o.s.m.s.b.SimpleBrokerMessageHandler [36mo.s.m.s.b.SimpleBrokerMessageHandler[0;39m [32minfo[0;39m 
+ Starting... 
+[startup] [2024-05-09 06:37:40:22406][main]  INFO o.s.m.s.b.SimpleBrokerMessageHandler [36mo.s.m.s.b.SimpleBrokerMessageHandler[0;39m [32minfo[0;39m 
+ BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@41919e19]] 
+[startup] [2024-05-09 06:37:40:22408][main]  INFO o.s.m.s.b.SimpleBrokerMessageHandler [36mo.s.m.s.b.SimpleBrokerMessageHandler[0;39m [32minfo[0;39m 
+ Started. 
+[startup] [2024-05-09 06:37:45:28253][]  INFO o.a.c.c.C.[Tomcat].[localhost].[/] [36mo.a.c.c.C.[.[.[/][0;39m [32mlog[0;39m 
+ Initializing Spring DispatcherServlet 'dispatcherServlet' 
+[startup] [2024-05-09 06:37:46:28334][]  INFO o.s.web.servlet.DispatcherServlet [36mo.s.w.s.DispatcherServlet[0;39m [32minitServletBean[0;39m 
+ Initializing Servlet 'dispatcherServlet' 
+[startup] [2024-05-09 06:37:46:28399][]  INFO o.s.web.servlet.DispatcherServlet [36mo.s.w.s.DispatcherServlet[0;39m [32minitServletBean[0;39m 
+ Completed initialization in 52 ms 
+[d14d0b6f-d5c8-463b-912b-ceb02d414786] [2024-05-09 06:37:46:28824][]  INFO o.a.c.c.C.[Tomcat].[localhost].[/] [36mo.a.c.c.C.[.[.[/][0;39m [32mlog[0;39m 
+ 
+HTTP Method: GET
+url: / 
+clientInfo:  , client=172.29.0.1 
+headers: [host:"localhost:8081", connection:"keep-alive", cache-control:"max-age=0", sec-ch-ua:""Chromium";v="124", "Microsoft Edge";v="124", "Not-A.Brand";v="99"", sec-ch-ua-mobile:"?0", sec-ch-ua-platform:""macOS"", upgrade-insecure-requests:"1", user-agent:"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0", accept:"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7", sec-fetch-site:"none", sec-fetch-mode:"navigate", sec-fetch-user:"?1", sec-fetch-dest:"document", accept-encoding:"gzip, deflate, br, zstd", accept-language:"ko,en;q=0.9,en-US;q=0.8", cookie:"Idea-31453608=d546e977-9b7f-409c-8a70-456b2fe0b4c0; Idea-31453609=afa99e81-b621-40b6-8bd6-e62f22e1e4c8; JSESSIONID=FC3E1A4BE91FD03773911CD14A944168"]
+payload: 
+           
+[d14d0b6f-d5c8-463b-912b-ceb02d414786] [2024-05-09 06:37:46:29164][]  INFO o.a.c.c.C.[Tomcat].[localhost].[/] [36mo.a.c.c.C.[.[.[/][0;39m [32mlog[0;39m 
+ 
+HTTP Method: GET
+url: / 
+clientInfo:  , client=172.29.0.1 
+headers: [host:"localhost:8081", connection:"keep-alive", cache-control:"max-age=0", sec-ch-ua:""Chromium";v="124", "Microsoft Edge";v="124", "Not-A.Brand";v="99"", sec-ch-ua-mobile:"?0", sec-ch-ua-platform:""macOS"", upgrade-insecure-requests:"1", user-agent:"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0", accept:"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7", sec-fetch-site:"none", sec-fetch-mode:"navigate", sec-fetch-user:"?1", sec-fetch-dest:"document", accept-encoding:"gzip, deflate, br, zstd", accept-language:"ko,en;q=0.9,en-US;q=0.8", cookie:"Idea-31453608=d546e977-9b7f-409c-8a70-456b2fe0b4c0; Idea-31453609=afa99e81-b621-40b6-8bd6-e62f22e1e4c8; JSESSIONID=FC3E1A4BE91FD03773911CD14A944168"]
+payload: 
+           
+[adedc41e-b64e-4a08-b32d-23bc1d0b52d4] [2024-05-09 06:37:47:29625][]  INFO o.a.c.c.C.[Tomcat].[localhost].[/] [36mo.a.c.c.C.[.[.[/][0;39m [32mlog[0;39m 
+ 
+HTTP Method: GET
+url: /img/github-mark.png 
+clientInfo:  , client=172.29.0.1 
+headers: [host:"localhost:8081", connection:"keep-alive", sec-ch-ua:""Chromium";v="124", "Microsoft Edge";v="124", "Not-A.Brand";v="99"", sec-ch-ua-mobile:"?0", user-agent:"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0", sec-ch-ua-platform:""macOS"", accept:"image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8", sec-fetch-site:"same-origin", sec-fetch-mode:"no-cors", sec-fetch-dest:"image", referer:"http://localhost:8081/", accept-encoding:"gzip, deflate, br, zstd", accept-language:"ko,en;q=0.9,en-US;q=0.8", cookie:"Idea-31453608=d546e977-9b7f-409c-8a70-456b2fe0b4c0; Idea-31453609=afa99e81-b621-40b6-8bd6-e62f22e1e4c8; JSESSIONID=FC3E1A4BE91FD03773911CD14A944168"]
+payload: 
+           
+[adedc41e-b64e-4a08-b32d-23bc1d0b52d4] [2024-05-09 06:37:47:29739][]  INFO o.a.c.c.C.[Tomcat].[localhost].[/] [36mo.a.c.c.C.[.[.[/][0;39m [32mlog[0;39m 
+ 
+HTTP Method: GET
+url: /img/github-mark.png 
+clientInfo:  , client=172.29.0.1 
+headers: [host:"localhost:8081", connection:"keep-alive", sec-ch-ua:""Chromium";v="124", "Microsoft Edge";v="124", "Not-A.Brand";v="99"", sec-ch-ua-mobile:"?0", user-agent:"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0", sec-ch-ua-platform:""macOS"", accept:"image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8", sec-fetch-site:"same-origin", sec-fetch-mode:"no-cors", sec-fetch-dest:"image", referer:"http://localhost:8081/", accept-encoding:"gzip, deflate, br, zstd", accept-language:"ko,en;q=0.9,en-US;q=0.8", cookie:"Idea-31453608=d546e977-9b7f-409c-8a70-456b2fe0b4c0; Idea-31453609=afa99e81-b621-40b6-8bd6-e62f22e1e4c8; JSESSIONID=FC3E1A4BE91FD03773911CD14A944168"]
+payload: 
+           
+[f6c5960e-b5b4-46b3-85e3-bde337acff47] [2024-05-09 06:37:47:29799][]  INFO o.a.c.c.C.[Tomcat].[localhost].[/] [36mo.a.c.c.C.[.[.[/][0;39m [32mlog[0;39m 
+ 
+HTTP Method: GET
+url: /js/client.js 
+clientInfo:  , client=172.29.0.1 
+headers: [host:"localhost:8081", connection:"keep-alive", sec-ch-ua:""Chromium";v="124", "Microsoft Edge";v="124", "Not-A.Brand";v="99"", sec-ch-ua-mobile:"?0", user-agent:"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0", sec-ch-ua-platform:""macOS"", accept:"*/*", sec-fetch-site:"same-origin", sec-fetch-mode:"no-cors", sec-fetch-dest:"script", referer:"http://localhost:8081/", accept-encoding:"gzip, deflate, br, zstd", accept-language:"ko,en;q=0.9,en-US;q=0.8", cookie:"Idea-31453608=d546e977-9b7f-409c-8a70-456b2fe0b4c0; Idea-31453609=afa99e81-b621-40b6-8bd6-e62f22e1e4c8; JSESSIONID=FC3E1A4BE91FD03773911CD14A944168"]
+payload: 
+           
+[f6c5960e-b5b4-46b3-85e3-bde337acff47] [2024-05-09 06:37:47:29811][]  INFO o.a.c.c.C.[Tomcat].[localhost].[/] [36mo.a.c.c.C.[.[.[/][0;39m [32mlog[0;39m 
+ 
+HTTP Method: GET
+url: /js/client.js 
+clientInfo:  , client=172.29.0.1 
+headers: [host:"localhost:8081", connection:"keep-alive", sec-ch-ua:""Chromium";v="124", "Microsoft Edge";v="124", "Not-A.Brand";v="99"", sec-ch-ua-mobile:"?0", user-agent:"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0", sec-ch-ua-platform:""macOS"", accept:"*/*", sec-fetch-site:"same-origin", sec-fetch-mode:"no-cors", sec-fetch-dest:"script", referer:"http://localhost:8081/", accept-encoding:"gzip, deflate, br, zstd", accept-language:"ko,en;q=0.9,en-US;q=0.8", cookie:"Idea-31453608=d546e977-9b7f-409c-8a70-456b2fe0b4c0; Idea-31453609=afa99e81-b621-40b6-8bd6-e62f22e1e4c8; JSESSIONID=FC3E1A4BE91FD03773911CD14A944168"]
+payload: 
+           
+[b3c01829-5a13-4697-8e9c-1666fdadd08d] [2024-05-09 06:37:47:30073][]  INFO o.a.c.c.C.[Tomcat].[localhost].[/] [36mo.a.c.c.C.[.[.[/][0;39m [32mlog[0;39m 
+ 
+HTTP Method: GET
+url: /img/background.jpg 
+clientInfo:  , client=172.29.0.1 
+headers: [host:"localhost:8081", connection:"keep-alive", sec-ch-ua:""Chromium";v="124", "Microsoft Edge";v="124", "Not-A.Brand";v="99"", sec-ch-ua-mobile:"?0", user-agent:"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0", sec-ch-ua-platform:""macOS"", accept:"image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8", sec-fetch-site:"same-origin", sec-fetch-mode:"no-cors", sec-fetch-dest:"image", referer:"http://localhost:8081/", accept-encoding:"gzip, deflate, br, zstd", accept-language:"ko,en;q=0.9,en-US;q=0.8", cookie:"Idea-31453608=d546e977-9b7f-409c-8a70-456b2fe0b4c0; Idea-31453609=afa99e81-b621-40b6-8bd6-e62f22e1e4c8; JSESSIONID=FC3E1A4BE91FD03773911CD14A944168"]
+payload: 
+           
+[b3c01829-5a13-4697-8e9c-1666fdadd08d] [2024-05-09 06:37:47:30149][]  INFO o.a.c.c.C.[Tomcat].[localhost].[/] [36mo.a.c.c.C.[.[.[/][0;39m [32mlog[0;39m 
+ 
+HTTP Method: GET
+url: /img/background.jpg 
+clientInfo:  , client=172.29.0.1 
+headers: [host:"localhost:8081", connection:"keep-alive", sec-ch-ua:""Chromium";v="124", "Microsoft Edge";v="124", "Not-A.Brand";v="99"", sec-ch-ua-mobile:"?0", user-agent:"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0", sec-ch-ua-platform:""macOS"", accept:"image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8", sec-fetch-site:"same-origin", sec-fetch-mode:"no-cors", sec-fetch-dest:"image", referer:"http://localhost:8081/", accept-encoding:"gzip, deflate, br, zstd", accept-language:"ko,en;q=0.9,en-US;q=0.8", cookie:"Idea-31453608=d546e977-9b7f-409c-8a70-456b2fe0b4c0; Idea-31453609=afa99e81-b621-40b6-8bd6-e62f22e1e4c8; JSESSIONID=FC3E1A4BE91FD03773911CD14A944168"]
+payload: 
+           
+[82b83161-bc1b-4b4e-b388-7e2b79b17ead] [2024-05-09 06:37:48:30352][]  INFO o.a.c.c.C.[Tomcat].[localhost].[/] [36mo.a.c.c.C.[.[.[/][0;39m [32mlog[0;39m 
+ 
+HTTP Method: GET
+url: /favicon.ico 
+clientInfo:  , client=172.29.0.1 
+headers: [host:"localhost:8081", connection:"keep-alive", sec-ch-ua:""Chromium";v="124", "Microsoft Edge";v="124", "Not-A.Brand";v="99"", sec-ch-ua-mobile:"?0", user-agent:"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0", sec-ch-ua-platform:""macOS"", accept:"image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8", sec-fetch-site:"same-origin", sec-fetch-mode:"no-cors", sec-fetch-dest:"image", referer:"http://localhost:8081/", accept-encoding:"gzip, deflate, br, zstd", accept-language:"ko,en;q=0.9,en-US;q=0.8", cookie:"Idea-31453608=d546e977-9b7f-409c-8a70-456b2fe0b4c0; Idea-31453609=afa99e81-b621-40b6-8bd6-e62f22e1e4c8; JSESSIONID=FC3E1A4BE91FD03773911CD14A944168"]
+payload: 
+           
+[82b83161-bc1b-4b4e-b388-7e2b79b17ead] [2024-05-09 06:37:48:30366][]  INFO o.a.c.c.C.[Tomcat].[localhost].[/] [36mo.a.c.c.C.[.[.[/][0;39m [32mlog[0;39m 
+ 
+HTTP Method: GET
+url: /favicon.ico 
+clientInfo:  , client=172.29.0.1 
+headers: [host:"localhost:8081", connection:"keep-alive", sec-ch-ua:""Chromium";v="124", "Microsoft Edge";v="124", "Not-A.Brand";v="99"", sec-ch-ua-mobile:"?0", user-agent:"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0", sec-ch-ua-platform:""macOS"", accept:"image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8", sec-fetch-site:"same-origin", sec-fetch-mode:"no-cors", sec-fetch-dest:"image", referer:"http://localhost:8081/", accept-encoding:"gzip, deflate, br, zstd", accept-language:"ko,en;q=0.9,en-US;q=0.8", cookie:"Idea-31453608=d546e977-9b7f-409c-8a70-456b2fe0b4c0; Idea-31453609=afa99e81-b621-40b6-8bd6-e62f22e1e4c8; JSESSIONID=FC3E1A4BE91FD03773911CD14A944168"]
+payload: 
+           
+[startup] [2024-05-09 06:37:58:40566][SpringApplicationShutdownHook]  INFO o.s.m.s.b.SimpleBrokerMessageHandler [36mo.s.m.s.b.SimpleBrokerMessageHandler[0;39m [32minfo[0;39m 
+ Stopping... 
+[startup] [2024-05-09 06:37:58:40648][SpringApplicationShutdownHook]  INFO o.s.m.s.b.SimpleBrokerMessageHandler [36mo.s.m.s.b.SimpleBrokerMessageHandler[0;39m [32minfo[0;39m 
+ BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@41919e19]] 
+[startup] [2024-05-09 06:37:58:40689][SpringApplicationShutdownHook]  INFO o.s.m.s.b.SimpleBrokerMessageHandler [36mo.s.m.s.b.SimpleBrokerMessageHandler[0;39m [32minfo[0;39m 
+ Stopped. 
+[startup] [2024-05-09 06:37:58:41093][SpringApplicationShutdownHook]  INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m [32mdestroy[0;39m 
+ Closing JPA EntityManagerFactory for persistence unit 'default' 
+[startup] [2024-05-09 06:37:58:41119][SpringApplicationShutdownHook]  INFO com.zaxxer.hikari.HikariDataSource [36mc.z.h.HikariDataSource[0;39m [32mclose[0;39m 
+ HikariPool-1 - Shutdown initiated... 
+[startup] [2024-05-09 06:37:58:41255][SpringApplicationShutdownHook]  INFO com.zaxxer.hikari.HikariDataSource [36mc.z.h.HikariDataSource[0;39m [32mclose[0;39m 
+ HikariPool-1 - Shutdown completed. 
+[startup] [2024-05-09 09:11:57:1289][background-preinit]  INFO o.h.validator.internal.util.Version [36mo.h.v.i.u.Version[0;39m [32m<clinit>[0;39m 
+ HV000001: Hibernate Validator 8.0.1.Final 
+[startup] [2024-05-09 09:11:57:1505][main]  INFO o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor [36mo.s.b.d.e.DevToolsPropertyDefaultsPostProcessor[0;39m [32mlogTo[0;39m 
+ For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG' 
+[startup] [2024-05-09 09:11:59:3586][main]  INFO o.s.d.r.c.RepositoryConfigurationDelegate [36mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m [32mregisterRepositoriesIn[0;39m 
+ Bootstrapping Spring Data JPA repositories in DEFAULT mode. 
+[startup] [2024-05-09 09:11:59:3761][main]  INFO o.s.d.r.c.RepositoryConfigurationDelegate [36mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m [32mregisterRepositoriesIn[0;39m 
+ Finished Spring Data repository scanning in 164 ms. Found 4 JPA repository interfaces. 
+[startup] [2024-05-09 09:12:00:4236][main]  INFO c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor [36mc.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor[0;39m [32mpostProcessBeanFactory[0;39m 
+ Post-processing PropertySource instances 
+[startup] [2024-05-09 09:12:00:4241][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource 
+[startup] [2024-05-09 09:12:00:4248][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource 
+[startup] [2024-05-09 09:12:00:4250][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource 
+[startup] [2024-05-09 09:12:00:4255][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper 
+[startup] [2024-05-09 09:12:00:4259][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper 
+[startup] [2024-05-09 09:12:00:4261][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper 
+[startup] [2024-05-09 09:12:00:4262][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' (document #2) [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper 
+[startup] [2024-05-09 09:12:00:4266][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource Config resource 'class path resource [secret.yml]' via location 'classpath:secret.yml' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper 
+[startup] [2024-05-09 09:12:00:4268][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' (document #0) [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper 
+[startup] [2024-05-09 09:12:00:4873][main]  INFO c.u.j.f.DefaultLazyPropertyFilter [36mc.u.j.f.DefaultLazyPropertyFilter[0;39m [32mlambda$new$2[0;39m 
+ Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter 
+[startup] [2024-05-09 09:12:00:4893][main]  INFO c.u.j.r.DefaultLazyPropertyResolver [36mc.u.j.r.DefaultLazyPropertyResolver[0;39m [32mlambda$new$2[0;39m 
+ Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver 
+[startup] [2024-05-09 09:12:00:4903][main]  INFO c.u.j.d.DefaultLazyPropertyDetector [36mc.u.j.d.DefaultLazyPropertyDetector[0;39m [32mlambda$new$2[0;39m 
+ Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector 
+[startup] [2024-05-09 09:12:01:5345][main]  INFO o.s.b.w.e.tomcat.TomcatWebServer [36mo.s.b.w.e.t.TomcatWebServer[0;39m [32minitialize[0;39m 
+ Tomcat initialized with port 8080 (http) 
+[startup] [2024-05-09 09:12:01:5368][main]  INFO o.a.coyote.http11.Http11NioProtocol [36mo.a.c.h.Http11NioProtocol[0;39m [32mlog[0;39m 
+ Initializing ProtocolHandler ["http-nio-8080"] 
+[startup] [2024-05-09 09:12:01:5373][main]  INFO o.a.catalina.core.StandardService [36mo.a.c.c.StandardService[0;39m [32mlog[0;39m 
+ Starting service [Tomcat] 
+[startup] [2024-05-09 09:12:01:5375][main]  INFO o.a.catalina.core.StandardEngine [36mo.a.c.c.StandardEngine[0;39m [32mlog[0;39m 
+ Starting Servlet engine: [Apache Tomcat/10.1.20] 
+[startup] [2024-05-09 09:12:01:5421][main]  INFO o.a.c.c.C.[Tomcat].[localhost].[/] [36mo.a.c.c.C.[.[.[/][0;39m [32mlog[0;39m 
+ Initializing Spring embedded WebApplicationContext 
+[startup] [2024-05-09 09:12:01:5424][main]  INFO o.s.b.w.s.c.ServletWebServerApplicationContext [36mo.s.b.w.s.c.ServletWebServerApplicationContext[0;39m [32mprepareWebApplicationContext[0;39m 
+ Root WebApplicationContext: initialization completed in 3915 ms 
+[startup] [2024-05-09 09:12:03:7327][main]  INFO o.h.jpa.internal.util.LogHelper [36mo.h.j.i.u.LogHelper[0;39m [32mlogPersistenceUnitInformation[0;39m 
+ HHH000204: Processing PersistenceUnitInfo [name: default] 
+[startup] [2024-05-09 09:12:03:7412][main]  INFO org.hibernate.Version [36mo.h.Version[0;39m [32mlogVersion[0;39m 
+ HHH000412: Hibernate ORM core version 6.4.4.Final 
+[startup] [2024-05-09 09:12:03:7457][main]  INFO o.h.c.i.RegionFactoryInitiator [36mo.h.c.i.RegionFactoryInitiator[0;39m [32minitiateService[0;39m 
+ HHH000026: Second-level cache disabled 
+[startup] [2024-05-09 09:12:03:7855][main]  INFO o.s.o.j.p.SpringPersistenceUnitInfo [36mo.s.o.j.p.SpringPersistenceUnitInfo[0;39m [32maddTransformer[0;39m 
+ No LoadTimeWeaver setup: ignoring JPA class transformer 
+[startup] [2024-05-09 09:12:03:7891][main]  INFO com.zaxxer.hikari.HikariDataSource [36mc.z.h.HikariDataSource[0;39m [32mgetConnection[0;39m 
+ HikariPool-1 - Starting... 
+[startup] [2024-05-09 09:12:04:8340][main]  INFO com.zaxxer.hikari.pool.HikariPool [36mc.z.h.p.HikariPool[0;39m [32mcheckFailFast[0;39m 
+ HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7a174e4b 
+[startup] [2024-05-09 09:12:04:8345][main]  INFO com.zaxxer.hikari.HikariDataSource [36mc.z.h.HikariDataSource[0;39m [32mgetConnection[0;39m 
+ HikariPool-1 - Start completed. 
+[startup] [2024-05-09 09:12:04:8394][main]  WARN org.hibernate.orm.deprecation [36mo.h.o.deprecation[0;39m [32mconstructDialect[0;39m 
+ HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default) 
+[startup] [2024-05-09 09:12:05:9690][main]  INFO o.h.e.t.j.p.i.JtaPlatformInitiator [36mo.h.e.t.j.p.i.JtaPlatformInitiator[0;39m [32minitiateService[0;39m 
+ HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration) 
+[startup] [2024-05-09 09:12:05:9749][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715245925820 | took 16ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from information_schema.sequences
+select * from information_schema.sequences; 
+[startup] [2024-05-09 09:12:05:9926][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715245925997 | took 47ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."post" where 1=0
+select * from "public"."post" where 1=0; 
+[startup] [2024-05-09 09:12:06:9969][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715245926040 | took 9ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."user" where 1=0
+select * from "public"."user" where 1=0; 
+[startup] [2024-05-09 09:12:06:10038][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715245926109 | took 9ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."comment" where 1=0
+select * from "public"."comment" where 1=0; 
+[startup] [2024-05-09 09:12:06:10078][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715245926149 | took 9ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."comment" where 1=0
+select * from "public"."comment" where 1=0; 
+[startup] [2024-05-09 09:12:06:10131][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715245926202 | took 8ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."user" where 1=0
+select * from "public"."user" where 1=0; 
+[startup] [2024-05-09 09:12:06:10193][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715245926264 | took 11ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."hashTag" where 1=0
+select * from "public"."hashTag" where 1=0; 
+[startup] [2024-05-09 09:12:06:10263][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715245926334 | took 15ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."post" where 1=0
+select * from "public"."post" where 1=0; 
+[startup] [2024-05-09 09:12:06:10338][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715245926409 | took 18ms | statement | connection 1| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select * from "public"."user" where 1=0
+select * from "public"."user" where 1=0; 
+[startup] [2024-05-09 09:12:06:10344][main]  INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m [32mbuildNativeEntityManagerFactory[0;39m 
+ Initialized JPA EntityManagerFactory for persistence unit 'default' 
+[startup] [2024-05-09 09:12:08:12227][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715245928298 | took 159ms | statement | connection 2| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+select p1_0."id",p1_0."content",p1_0."count",p1_0."created_at",p1_0."deleted_at",p1_0."thumbnail",p1_0."title",p1_0."updated_at",p1_0."userId",p1_0."username" from "post" p1_0
+select p1_0."id",p1_0."content",p1_0."count",p1_0."created_at",p1_0."deleted_at",p1_0."thumbnail",p1_0."title",p1_0."updated_at",p1_0."userId",p1_0."username" from "post" p1_0; 
+[startup] [2024-05-09 09:12:08:12364][main]  INFO p6spy [36mp6spy[0;39m [32mlogSQL[0;39m 
+ #1715245928435 | took 12ms | commit | connection 2| url jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
+
+; 
+[startup] [2024-05-09 09:12:09:13741][main]  INFO o.s.b.a.e.web.EndpointLinksResolver [36mo.s.b.a.e.w.EndpointLinksResolver[0;39m [32m<init>[0;39m 
+ Exposing 13 endpoint(s) beneath base path '/actuator' 
+[startup] [2024-05-09 09:12:09:13904][main]  INFO o.s.s.w.DefaultSecurityFilterChain [36mo.s.s.w.DefaultSecurityFilterChain[0;39m [32m<init>[0;39m 
+ Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2c8eb04e, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@431f2a86, org.springframework.security.web.context.SecurityContextHolderFilter@3c0b82f3, org.springframework.security.web.header.HeaderWriterFilter@20e0becd, org.springframework.web.filter.CorsFilter@438e1537, org.springframework.security.web.authentication.logout.LogoutFilter@3e680b29, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@55a690be, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@4694835b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@35f38f90, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7105c023, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1c03be27, org.springframework.security.web.access.ExceptionTranslationFilter@7a612530, org.springframework.security.web.access.intercept.AuthorizationFilter@60600939] 
+[startup] [2024-05-09 09:12:10:13932][main]  WARN o.s.s.c.a.web.builders.WebSecurity [36mo.s.s.c.a.w.b.WebSecurity[0;39m [32mperformBuild[0;39m 
+ You are asking Spring Security to ignore Ant [pattern='/resources/*']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead. 
+[startup] [2024-05-09 09:12:10:13935][main]  INFO o.s.s.w.DefaultSecurityFilterChain [36mo.s.s.w.DefaultSecurityFilterChain[0;39m [32m<init>[0;39m 
+ Will not secure Ant [pattern='/resources/*'] 
+[startup] [2024-05-09 09:12:10:13944][main]  WARN o.s.s.c.a.web.builders.WebSecurity [36mo.s.s.c.a.w.b.WebSecurity[0;39m [32mperformBuild[0;39m 
+ You are asking Spring Security to ignore Ant [pattern='/static/*']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead. 
+[startup] [2024-05-09 09:12:10:13950][main]  INFO o.s.s.w.DefaultSecurityFilterChain [36mo.s.s.w.DefaultSecurityFilterChain[0;39m [32m<init>[0;39m 
+ Will not secure Ant [pattern='/static/*'] 
+[startup] [2024-05-09 09:12:10:13953][main]  WARN o.s.s.c.a.web.builders.WebSecurity [36mo.s.s.c.a.w.b.WebSecurity[0;39m [32mperformBuild[0;39m 
+ You are asking Spring Security to ignore Ant [pattern='/img/*']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead. 
+[startup] [2024-05-09 09:12:10:13956][main]  INFO o.s.s.w.DefaultSecurityFilterChain [36mo.s.s.w.DefaultSecurityFilterChain[0;39m [32m<init>[0;39m 
+ Will not secure Ant [pattern='/img/*'] 
+[startup] [2024-05-09 09:12:10:13957][main]  WARN o.s.s.c.a.web.builders.WebSecurity [36mo.s.s.c.a.w.b.WebSecurity[0;39m [32mperformBuild[0;39m 
+ You are asking Spring Security to ignore Ant [pattern='/js/*']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead. 
+[startup] [2024-05-09 09:12:10:14002][main]  INFO o.s.s.w.DefaultSecurityFilterChain [36mo.s.s.w.DefaultSecurityFilterChain[0;39m [32m<init>[0;39m 
+ Will not secure Ant [pattern='/js/*'] 
+[startup] [2024-05-09 09:12:16:20593][main]  INFO o.a.coyote.http11.Http11NioProtocol [36mo.a.c.h.Http11NioProtocol[0;39m [32mlog[0;39m 
+ Starting ProtocolHandler ["http-nio-8080"] 
+[startup] [2024-05-09 09:12:16:20673][main]  INFO o.s.b.w.e.tomcat.TomcatWebServer [36mo.s.b.w.e.t.TomcatWebServer[0;39m [32mstart[0;39m 
+ Tomcat started on port 8080 (http) with context path '' 
+[startup] [2024-05-09 09:12:16:20719][main]  INFO c.u.j.c.RefreshScopeRefreshedEventListener [36mc.u.j.c.RefreshScopeRefreshedEventListener[0;39m [32monApplicationEvent[0;39m 
+ Refreshing cached encryptable property sources on ServletWebServerInitializedEvent 
+[startup] [2024-05-09 09:12:16:20754][main]  INFO c.u.j.c.CachingDelegateEncryptablePropertySource [36mc.u.j.c.CachingDelegateEncryptablePropertySource[0;39m [32mrefresh[0;39m 
+ Property Source systemProperties refreshed 
+[startup] [2024-05-09 09:12:16:20764][main]  INFO c.u.j.c.CachingDelegateEncryptablePropertySource [36mc.u.j.c.CachingDelegateEncryptablePropertySource[0;39m [32mrefresh[0;39m 
+ Property Source systemEnvironment refreshed 
+[startup] [2024-05-09 09:12:16:20779][main]  INFO c.u.j.c.CachingDelegateEncryptablePropertySource [36mc.u.j.c.CachingDelegateEncryptablePropertySource[0;39m [32mrefresh[0;39m 
+ Property Source random refreshed 
+[startup] [2024-05-09 09:12:16:20793][main]  INFO c.u.j.c.CachingDelegateEncryptablePropertySource [36mc.u.j.c.CachingDelegateEncryptablePropertySource[0;39m [32mrefresh[0;39m 
+ Property Source Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' (document #2) refreshed 
+[startup] [2024-05-09 09:12:16:20808][main]  INFO c.u.j.c.CachingDelegateEncryptablePropertySource [36mc.u.j.c.CachingDelegateEncryptablePropertySource[0;39m [32mrefresh[0;39m 
+ Property Source Config resource 'class path resource [secret.yml]' via location 'classpath:secret.yml' refreshed 
+[startup] [2024-05-09 09:12:16:20832][main]  INFO c.u.j.c.CachingDelegateEncryptablePropertySource [36mc.u.j.c.CachingDelegateEncryptablePropertySource[0;39m [32mrefresh[0;39m 
+ Property Source Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' (document #0) refreshed 
+[startup] [2024-05-09 09:12:16:20837][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource 
+[startup] [2024-05-09 09:12:16:20863][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource 
+[startup] [2024-05-09 09:12:16:20877][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource servletContextInitParams [org.springframework.web.context.support.ServletContextPropertySource] to EncryptableEnumerablePropertySourceWrapper 
+[startup] [2024-05-09 09:12:16:20889][main]  INFO c.u.j.EncryptablePropertySourceConverter [36mc.u.j.EncryptablePropertySourceConverter[0;39m [32mmakeEncryptable[0;39m 
+ Converting PropertySource Management Server [org.springframework.boot.actuate.autoconfigure.web.server.ManagementContextAutoConfiguration$SameManagementContextConfiguration$1] to EncryptablePropertySourceWrapper 
+[startup] [2024-05-09 09:12:17:20939][main]  INFO o.s.m.s.b.SimpleBrokerMessageHandler [36mo.s.m.s.b.SimpleBrokerMessageHandler[0;39m [32minfo[0;39m 
+ Starting... 
+[startup] [2024-05-09 09:12:17:20954][main]  INFO o.s.m.s.b.SimpleBrokerMessageHandler [36mo.s.m.s.b.SimpleBrokerMessageHandler[0;39m [32minfo[0;39m 
+ BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@1ebec10c]] 
+[startup] [2024-05-09 09:12:17:20964][main]  INFO o.s.m.s.b.SimpleBrokerMessageHandler [36mo.s.m.s.b.SimpleBrokerMessageHandler[0;39m [32minfo[0;39m 
+ Started. 
+[startup] [2024-05-09 09:13:02:66636][SpringApplicationShutdownHook]  INFO o.s.m.s.b.SimpleBrokerMessageHandler [36mo.s.m.s.b.SimpleBrokerMessageHandler[0;39m [32minfo[0;39m 
+ Stopping... 
+[startup] [2024-05-09 09:13:02:66680][SpringApplicationShutdownHook]  INFO o.s.m.s.b.SimpleBrokerMessageHandler [36mo.s.m.s.b.SimpleBrokerMessageHandler[0;39m [32minfo[0;39m 
+ BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@1ebec10c]] 
+[startup] [2024-05-09 09:13:02:66691][SpringApplicationShutdownHook]  INFO o.s.m.s.b.SimpleBrokerMessageHandler [36mo.s.m.s.b.SimpleBrokerMessageHandler[0;39m [32minfo[0;39m 
+ Stopped. 
+[startup] [2024-05-09 09:13:03:67203][SpringApplicationShutdownHook]  INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m [32mdestroy[0;39m 
+ Closing JPA EntityManagerFactory for persistence unit 'default' 
+[startup] [2024-05-09 09:13:03:67257][SpringApplicationShutdownHook]  INFO com.zaxxer.hikari.HikariDataSource [36mc.z.h.HikariDataSource[0;39m [32mclose[0;39m 
+ HikariPool-1 - Shutdown initiated... 
+[startup] [2024-05-09 09:13:03:67418][SpringApplicationShutdownHook]  INFO com.zaxxer.hikari.HikariDataSource [36mc.z.h.HikariDataSource[0;39m [32mclose[0;39m 
+ HikariPool-1 - Shutdown completed. 

@@ -1,0 +1,27 @@
+@import freeapp.life.stella.api.util.removeSpecialCharacters
+
+@param category: String
+@param activeCategory: String
+
+
+!{
+    val categoryTabId = "category-tab-${category.removeSpecialCharacters()}"
+    val activeCategoryTabId = "category-tab-${activeCategory.removeSpecialCharacters()}"
+}
+
+
+<div>
+    <a id="${categoryTabId}"
+       class="cursor-pointer tab tab-lifted m-tab @if(categoryTabId == activeCategoryTabId) tab-active @endif"
+       hx-get="/table/${category}"
+       hx-target="#category-table"
+       hx-on--after-on-load="
+               let currentTab = document.querySelector('.tab.tab-active');
+               if (currentTab) { currentTab.classList.remove('tab-active'); }
+               let newTab = event.target;
+               if(newTab.tagName === 'SPAN') { newTab = newTab.parentElement; } /* Adjust if target is child */
+               newTab.classList.add('tab-active');
+            ">
+        ${category}
+    </a>
+</div>

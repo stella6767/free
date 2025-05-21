@@ -1,0 +1,17 @@
+<form class="px-5 py-5"
+      hx-post="/convert/html"
+      hx-target="#converter-output"
+      hx-on--after-request="javascript:document.getElementById('converter-input').value='';">
+
+    <div>
+        <label for="input" class="block text-sm font-medium leading-6 text-gray-900">HTML</label>
+        <textarea id="converter-input" name="input" placeholder="HTML" class="textarea textarea-bordered textarea-lg w-full min-h-80"></textarea>
+    </div>
+    <button id="convert-button" type="submit" class="rounded-md w-full bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+        Convert
+    </button>
+    <div>
+        <label for="output" class="block text-sm font-medium leading-6 text-gray-900">Kotlin</label>
+        <textarea id="converter-output" name="output" readonly class="textarea textarea-bordered textarea-lg w-full min-h-80"></textarea>
+    </div>
+</form>

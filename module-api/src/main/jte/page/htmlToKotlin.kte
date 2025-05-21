@@ -1,0 +1,6 @@
+
+@template.layout.main(bodyContent = @`
+
+    @template.component.converter.converterView()
+
+`)

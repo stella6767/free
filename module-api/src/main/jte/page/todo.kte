@@ -1,0 +1,9 @@
+@import freeapp.life.stella.storage.entity.Todo
+@import org.springframework.data.domain.Page
+
+@param todos: Page<Todo>
+
+
+@template.layout.main(bodyContent = @`
+    @template.component.todo.todosViewWithPage(todos = todos)
+`)

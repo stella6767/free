@@ -1,0 +1,54 @@
+@import org.springframework.data.domain.Page
+@import kotlin.math.floor
+
+@param page: Page<T>
+@param endPoint: String
+@param targetTagId: String
+
+
+!{
+    var maxPageItems = 5
+    var start = floor((page.number / maxPageItems).toDouble()) * maxPageItems + 1
+    var end = if ((start + maxPageItems - 1) < page.totalPages) start + maxPageItems - 1 else page.totalPages.toDouble()
+}
+
+
+
+
+<div class="flex justify-center" id="page-view">
+    <div class="join" hx-ext="multi-swap">
+        <button class="join-item btn text-white bg-black"
+                hx-trigger="click"
+                hx-get="/${endPoint}?page=0"
+                hx-swap="multi:#${targetTagId},#page-view">
+            First
+        </button>
+
+        <button class="join-item btn text-white bg-black @if(page.isFirst) disabled:bg-slate-50 disabled:text-slate-500 @endif"
+                @if(page.isFirst) disabled @else hx-trigger="click" hx-get="/${endPoint}?page=${page.number - 1}" hx-swap="multi:#${targetTagId},#page-view" @endif>
+            &lt;&lt;
+        </button>
+
+        @for (i in start.toInt()..end.toInt())
+            <button class="join-item btn btn-square text-white bg-black @if(i == page.number + 1) btn-active text-block bg-accent @endif"
+                    hx-trigger="click"
+                    hx-get="/${endPoint}?page=${i - 1}"
+                    hx-swap="multi:#${targetTagId},#page-view">
+                ${i}
+            </button>
+        @endfor
+
+        <button class="join-item btn text-white bg-black"
+                @if(page.isLast) disabled @else hx-trigger="click" hx-get="/${endPoint}?page=${page.number + 1}" hx-swap="multi:#${targetTagId},#page-view" @endif>
+            &gt;&gt;
+        </button>
+
+        <button class="join-item btn text-white bg-black"
+                hx-trigger="click"
+                hx-get="/${endPoint}?page=${page.totalPages - 1}"
+                hx-swap="multi:#${targetTagId},#page-view">
+            Last
+        </button>
+    </div>
+</div>
+<br />

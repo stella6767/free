@@ -1,0 +1,54 @@
+@param comment: freeapp.life.stella.api.dto.CommentCardDto
+@param userId: Long?
+
+<div id="comment-card-${comment.commentId}">
+    <div class="flex mt-3" id="comment-card-${comment.commentId}">
+        <div class="text-black font-bold">
+
+        </div>
+        <div class="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+            <strong class="text-black">${comment.username}</strong>
+            <span class="text-xs text-black ml-2">${comment.createdAt}</span>
+            <p class="text-sm text-black" id="comment-content-${comment.commentId}">
+                @if (comment.parentCommentUsername.isNotEmpty())
+                    <span class="truncate text-sm text-gray">@${comment.parentCommentUsername}  </span>
+                @endif
+                ${comment.content}
+            </p>
+            <div class="mt-4 flex items-center justify-between">
+                <div class="flex -space-x-2 mr-2">
+                    <button class="text-right text-blue-500 mr-10" hx-on--click="htmx.toggleClass('#comment-reply-form-${comment.commentId}', 'hidden')">
+                        Reply
+                    </button>
+                    @if (comment.childComments.isNotEmpty())
+                        <button hx-on--click="htmx.toggleClass('#reply-comment-card-${comment.commentId}', 'hidden')" class="text-right text-blue-500 ml-5">
+                            show reply
+                        </button>
+                    @endif
+                </div>
+                <div>
+                    @if (comment.userId == userId)
+                        <button class="btn btn-link delete-comment"
+                                hx-delete="/comment/${comment.commentId}"
+                                hx-confirm="Are you sure you wish to delete your comment?"
+                                hx-trigger="click"
+                                hx-target="#comment-card-${comment.commentId}"
+                                hx-swap="delete">
+                            X
+                        </button>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hidden" id="comment-reply-form-${comment.commentId}">
+        @template.component.comment.commentFormView(userId = userId, postId = comment.postId, idAncestor = comment.commentId)
+    </div>
+</div>
+
+@for (childComment in comment.childComments)
+    <div class="hidden" id="reply-comment-card-${comment.commentId}">
+        @template.component.comment.commentCardView(comment = childComment, userId = userId)
+    </div>
+@endfor

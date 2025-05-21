@@ -1,0 +1,27 @@
+@import freeapp.life.stella.api.dto.Entry // Assuming Entry DTO
+
+@param fieldNames: List<String>
+@param entries: List<Entry>
+
+<table class="table">
+    <thead>
+    <tr>
+        @for (name in fieldNames)
+            <th class="text-black">${name}</th>
+        @endfor
+    </tr>
+    </thead>
+    <tbody>
+    @for (entry in entries)
+        <tr class="text-black" id="${entry.Link}"> @* ID from a URL might be problematic, ensure it's a valid ID *@
+            <td>${entry.API}</td>
+            <td>${entry.Auth}</td>
+            <td>${entry.Category}</td>
+            <td>${entry.Cors}</td>
+            <td>${entry.Description}</td>
+            <td>${entry.HTTPS}</td>
+            <td><a href="${entry.Link}">${entry.Link}</a></td>
+        </tr>
+    @endfor
+    </tbody>
+</table>

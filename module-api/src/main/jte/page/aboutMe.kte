@@ -1,0 +1,6 @@
+
+@template.layout.main(bodyContent = @`
+
+    @template.component.me.aboutMeView(author = "Kang Min Kyu")
+
+`)

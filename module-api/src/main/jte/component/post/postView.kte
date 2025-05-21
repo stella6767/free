@@ -1,0 +1,41 @@
+@import org.springframework.data.domain.Page
+@import freeapp.life.stella.api.dto.PostCardDto
+@import org.springframework.util.StringUtils // Assuming this is for StringUtils.hasText
+
+@param keyword: String
+@param posts: Page<PostCardDto>
+
+<div id="posts-container" class="py-5">
+    @if (StringUtils.hasText(keyword))
+        <div class="container m-auto">
+            <div class="flex justify-center">
+                <h1 class="text-xl font-bold">${keyword}의 검색결과</h1>
+            </div>
+            <div class="flex justify-center">
+                총 <span class="italic">${posts.totalElements}</span> 개의 포스트를 찾았습니다.
+            </div>
+            <div class="flex justify-center mt-3">
+                <button class="btn btn-wide" onclick="location.href='/blog'">
+                    전체보기
+                </button>
+            </div>
+        </div>
+    @endif
+
+    @if (!posts.isLast)
+        <div class="container m-auto grid grid-cols-4 gap-4"
+             hx-get="/posts?page=${posts.pageable.pageNumber + 1}&keyword=${keyword}"
+             hx-trigger="revealed"
+             hx-swap="afterend">
+            @for (post in posts.content)
+                @template.component.post.postCardView(post = post)
+            @endfor
+        </div>
+    @else
+        <div class="container m-auto grid grid-cols-4 gap-4">
+            @for (post in posts.content)
+                @template.component.post.postCardView(post = post)
+            @endfor
+        </div>
+    @endif
+</div>

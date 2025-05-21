@@ -1,0 +1,8 @@
+@param htmlContent: String
+
+
+@template.layout.main(bodyContent = @`
+
+    @template.component.velog.velogCrawlerView(htmlContent = htmlContent)
+
+`)

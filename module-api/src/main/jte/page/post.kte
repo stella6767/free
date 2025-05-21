@@ -1,0 +1,13 @@
+
+@import org.springframework.data.domain.Page
+@import freeapp.life.stella.api.dto.PostCardDto
+@import org.springframework.util.StringUtils // Assuming this is for StringUtils.hasText
+
+@param keyword: String
+@param posts: Page<PostCardDto>
+
+@template.layout.main(bodyContent = @`
+
+    @template.component.post.postView(keyword = keyword, posts = posts)
+
+`)

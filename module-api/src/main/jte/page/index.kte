@@ -1,0 +1,8 @@
+@param value:String
+
+
+@template.layout.main(bodyContent = @`
+
+    @template.component.index.indexView(value = value)
+
+`)

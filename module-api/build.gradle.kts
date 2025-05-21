@@ -3,7 +3,7 @@
 plugins {
     id("java")
     kotlin("kapt")
-    id("gg.jte.gradle") version "3.1.6"
+    id("gg.jte.gradle") version "3.1.12"
 }
 
 java {
@@ -53,10 +53,12 @@ dependencies {
     implementation("org.springframework.ai:spring-ai-ollama-spring-boot-starter")
 
 
-    implementation("gg.jte:jte-spring-boot-starter-3:3.1.6")
-//    implementation("gg.jte:jte:3.1.6")
-    compileOnly("gg.jte:jte-kotlin:3.1.6")
+    implementation("gg.jte:jte-spring-boot-starter-3:3.1.12")
+    implementation("gg.jte:jte:3.1.12")
+    implementation("gg.jte:jte-kotlin:3.1.12")
+    testImplementation("gg.jte:jte-kotlin:3.1.12")
 
+    //implementation("net.sf.trove4j:trove4j:3.0.3")
 
 
     implementation("org.springframework.boot:spring-boot-starter-aop")

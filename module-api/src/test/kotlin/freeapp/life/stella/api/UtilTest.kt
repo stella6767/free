@@ -4,8 +4,7 @@ import com.microsoft.playwright.Page
 import com.microsoft.playwright.Playwright
 import com.microsoft.playwright.options.LoadState
 import freeapp.life.stella.api.service.PlaywrightInterceptor
-import freeapp.life.stella.api.view.component.markDownViewer
-import freeapp.life.stella.api.view.page.renderPageWithLayout
+
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.nodes.TextNode
@@ -98,11 +97,7 @@ class UtilTest {
             	
         """.trimIndent()
 
-        val page = renderPageWithLayout {
-            markDownViewer(md)
-        }
 
-        println(page)
     }
 
 

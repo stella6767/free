@@ -1,6 +1,7 @@
 @import freeapp.life.stella.storage.entity.type.SignType
 
-@val signTypes = SignType.values()
+!{val signTypes = SignType.values()
+}
 
 <dialog id="login_modal" class="modal">
     <form method="dialog" class="modal-box">

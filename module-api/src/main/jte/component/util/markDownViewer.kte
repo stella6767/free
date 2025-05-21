@@ -3,7 +3,7 @@
 
 <div class="toastui-editor-contents text-neutral-content @if(isCenter)text-center@endif" style="overflow-wrap: break-word;">
         <mark-down data-nodeid="1">
-            ${unsafeRaw(value)}
+            $unsafe{value}
         </mark-down>
 <%--        <div data-nodeid="1" class="markdown-body">--%>
 <%--            ${unsafeRaw(value)}--%>

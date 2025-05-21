@@ -65,10 +65,16 @@ spring:
 
 gg:
   jte:
-    templateLocation: src/main/jte
+    templateLocation: module-api/src/main/jte
     templateSuffix: .kte
     development-mode: true
     use-precompiled-templates: false
+
+logging:
+  level:
+    gg.jte: DEBUG
+    org.springframework.boot.autoconfigure.jte: DEBUG
+    org.springframework.web.servlet: DEBUG # ViewResolver 동작 확인
 
 
 ---

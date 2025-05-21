@@ -34,7 +34,7 @@
     
     <%-- ${post.content} --%>
     <div id="post-detail-viewer-content-${post.id}">
-        ${unsafeRaw(post.content)} 
+        $unsafe{post.content}
     </div>
 </div>
 

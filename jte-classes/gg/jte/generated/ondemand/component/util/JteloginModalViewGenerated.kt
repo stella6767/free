@@ -5,9 +5,12 @@ import freeapp.life.stella.storage.entity.type.SignType
 class JteloginModalViewGenerated {
 companion object {
 	@JvmField val JTE_NAME = "component/util/loginModalView.kte"
-	@JvmField val JTE_LINE_INFO = intArrayOf(0,0,0,10,10,10,10,10,10,10,10,13,13,13,13,15,15,15,15,15,15,15,15,15,17,17,17,21,21,30,30,30,30,30,30,30)
+	@JvmField val JTE_LINE_INFO = intArrayOf(0,0,0,2,2,2,2,2,2,2,3,3,11,11,14,14,14,14,16,16,16,16,16,16,16,16,16,18,18,18,22,22,31,31,31,31,31,31,31)
 	@JvmStatic fun render(jteOutput:gg.jte.html.HtmlTemplateOutput, jteHtmlInterceptor:gg.jte.html.HtmlInterceptor?) {
-		jteOutput.writeContent("\n@val signTypes = SignType.values()\n\n<dialog id=\"login_modal\" class=\"modal\">\n    <form method=\"dialog\" class=\"modal-box\">\n        <h1 class=\"font-bold text-center text-2xl mb-5\">Social Login</h1>\n        <div class=\"bg-white shadow w-full rounded-lg divide-y divide-gray-200\">\n            <div class=\"p-5\">\n                <div class=\"mt-3 grid space-y-4\">\n                    ")
+		jteOutput.writeContent("\n")
+		val signTypes = SignType.values()
+
+		jteOutput.writeContent("\n\n<dialog id=\"login_modal\" class=\"modal\">\n    <form method=\"dialog\" class=\"modal-box\">\n        <h1 class=\"font-bold text-center text-2xl mb-5\">Social Login</h1>\n        <div class=\"bg-white shadow w-full rounded-lg divide-y divide-gray-200\">\n            <div class=\"p-5\">\n                <div class=\"mt-3 grid space-y-4\">\n                    ")
 		for (signType in signTypes) {
 			jteOutput.writeContent("\n                        <button type=\"button\"\n                        class=\"group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100\"\n                        onclick=\"location.href='")
 			jteOutput.setContext("button", "onclick")

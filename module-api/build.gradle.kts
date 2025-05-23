@@ -88,6 +88,17 @@ jte {
     binaryStaticContent = true
 }
 
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KaptGenerateStubs::class.java).configureEach {
+    // kaptGenerateStubsKotlin 태스크가 generateJte 태스크 이후에 실행되도록 설정
+    dependsOn(tasks.named("generateJte"))
+
+    // 만약 generateJte의 출력물을 kaptGenerateStubsKotlin의 소스로 명시적으로 추가해야 한다면
+    // (일반적으로 JTE 플러그인이 자동으로 소스셋에 추가하지만, 문제가 지속될 경우 고려)
+    // 예를 들어, JTE가 Java 파일을 생성하고 이를 Kotlin 스텁 생성 시 참조해야 하는 경우:
+    // source(tasks.named("generateJte").map { it.outputs.files })
+}
+
+
 tasks.jar {
     enabled = false
 }

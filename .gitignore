@@ -17,6 +17,7 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 node-modules/
+jte-classes/
 
 ### IntelliJ IDEA ###
 .idea

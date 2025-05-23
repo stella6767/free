@@ -1,12 +1,16 @@
 @import freeapp.life.stella.api.web.dto.ChatSendDto
 @param chatSendDto: ChatSendDto
 
-<div class="chat-message mt-2">
+
+
+
+<div class="chat-message mt-2 ">
+    <input id="chat-sender" type="hidden" value="${chatSendDto.sender}">
     <div id="chat-box-comment" class="flex">
         <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1">
-            <div>
+            <div class="bg-gray-800">
                 <span id="chat-message-box"
-                      class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
+                      class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-white">
                     ${chatSendDto.message}
                 </span>
             </div>

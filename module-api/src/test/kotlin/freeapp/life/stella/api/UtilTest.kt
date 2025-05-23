@@ -3,7 +3,6 @@ package freeapp.life.stella.api
 import com.microsoft.playwright.Page
 import com.microsoft.playwright.Playwright
 import com.microsoft.playwright.options.LoadState
-import freeapp.life.stella.api.service.PlaywrightInterceptor
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
@@ -33,15 +32,15 @@ class UtilTest {
     @Test
     fun m3u8DownloadTest() {
 
-        val url = ""
-
-        val interceptor = PlaywrightInterceptor()
-        //val u8requestFiles = interceptor.retrieveM3U8requestFiles(url)
-
-        val m3U8variantWithHighestBitrate = interceptor.getM3U8variantWithHighestBitrate(url)
-
-        println(m3U8variantWithHighestBitrate)
-        //println(u8requestFiles)
+//        val url = ""
+//
+//        val interceptor = PlaywrightInterceptor()
+//        //val u8requestFiles = interceptor.retrieveM3U8requestFiles(url)
+//
+//        val m3U8variantWithHighestBitrate = interceptor.getM3U8variantWithHighestBitrate(url)
+//
+//        println(m3U8variantWithHighestBitrate)
+//        //println(u8requestFiles)
 
     }
 

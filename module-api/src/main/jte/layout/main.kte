@@ -1,8 +1,9 @@
+@import freeapp.life.stella.api.util.isLoggedIn
 @import org.springframework.security.core.Authentication
 @import org.springframework.security.authentication.AnonymousAuthenticationToken
 
 
-@param isUserLoggedIn: Boolean = false
+@param isUserLoggedIn: Boolean = freeapp.life.stella.api.util.isLoggedIn ()
 @param bodyContent: gg.jte.Content
 
 <!DOCTYPE html>

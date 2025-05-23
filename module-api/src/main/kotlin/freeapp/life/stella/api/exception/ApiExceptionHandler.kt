@@ -101,7 +101,7 @@ class ApiExceptionHandler(
             response?.addHeader("HX-Reswap", "innerHTML")
 
             val output: TemplateOutput = StringOutput()
-            templateEngine.render("component/util/alertView.jte", mapOf("msg" to e.message), output)
+            templateEngine.render("component/util/alertView.kte", mapOf("msg" to e.message), output)
             return output.toString()
         }
         return alertErrorAndHistoryBack(e.message)

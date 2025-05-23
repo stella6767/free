@@ -4,7 +4,7 @@
      id="post-card-${post.id}"
      onclick="location.href='/page/post/${post.id}'">
     <figure class="bg-slate-300">
-        <div> @* Removed original image loading JS, simplified to direct src. Consider lazy loading if needed. *@
+        <div>
             <img src="${post.thumbnail}" alt="post-thumbnail" />
         </div>
     </figure>

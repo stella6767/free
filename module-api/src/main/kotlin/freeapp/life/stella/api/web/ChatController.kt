@@ -29,7 +29,7 @@ class ChatController(
     }
 
 
-    
+
     @MessageMapping("/chat.sendMessage")
     @SendTo("/topic/public")
     fun sendMessage(
@@ -51,10 +51,8 @@ class ChatController(
         headerAccessor: SimpMessageHeaderAccessor
     ): String {
         log.info("요청옴: $chatSendDto ,  $headerAccessor")
-
         val output = StringOutput()
         templateEngine.render("component/chat/chatBoxTemplate.kte", chatSendDto, output)
-
 
         return output.toString()
     }

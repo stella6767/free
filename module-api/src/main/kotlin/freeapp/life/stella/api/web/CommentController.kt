@@ -18,10 +18,12 @@ class CommentController(
 
     private val log = KotlinLogging.logger {  }
 
+
+    @ResponseBody
     @DeleteMapping("/comment/{id}")
     fun deleteCommentById(
         @PathVariable id:Long,
-    ): Long {
+    ) {
 
         return commentService.deleteComment(id)
     }
@@ -40,16 +42,10 @@ class CommentController(
             commentService.findCommentsByBottomUp(comment.id)
 
         model.addAttribute("comment", childComment)
+        model.addAttribute("userId", userPrincipal?.user?.id ?: 0)
 
         return "component/comment/commentCardView"
     }
-
-
-//    @GetMapping("/comment/form/{postId}")
-//    fun getCommentForm(@PathVariable postId: Long): ViewContext {
-//        return commentFormViewComponent.render(postId)
-//    }
-
 
 
 }

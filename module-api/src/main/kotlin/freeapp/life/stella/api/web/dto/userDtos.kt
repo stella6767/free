@@ -1,6 +1,22 @@
 package freeapp.life.stella.api.web.dto
 
+import freeapp.life.stella.storage.entity.User
 import freeapp.life.stella.storage.entity.type.SignType
+
+
+data class UserResponseDto(
+    val username: String,
+) {
+    companion object {
+
+        fun fromEntity(user: User): UserResponseDto {
+            return UserResponseDto(
+                user.username,
+            )
+        }
+    }
+
+}
 
 
 interface OAuth2UserInfo {

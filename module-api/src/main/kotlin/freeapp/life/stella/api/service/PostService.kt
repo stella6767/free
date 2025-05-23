@@ -43,10 +43,10 @@ class PostService(
 
     @PostConstruct
     fun init() {
-//        val posts = findAll()
-//        if (posts.isEmpty()) {
-//            generateDummyPosts(100)
-//        }
+        val posts = findAll()
+        if (posts.isEmpty()) {
+            generateDummyPosts(100)
+        }
     }
 
 

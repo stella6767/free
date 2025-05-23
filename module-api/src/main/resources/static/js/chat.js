@@ -67,17 +67,18 @@ const sendMessage = (event) => {
 
 const onMessageReceived = (payload) => {
     console.log("arrived", payload)
-    let response = JSON.parse(payload.body);
-    console.log("response", response);
+    //let response = JSON.parse(payload.body);
+    console.log("response", payload.body);
 
     const chatDom =
-        new DOMParser().parseFromString(response.html, 'text/html').body.childNodes[0];
+        new DOMParser().parseFromString(payload.body, 'text/html').body.childNodes[0];
 
     console.log("chatDom", chatDom)
-
     //messageArea.insertAdjacentHTML("beforeend", response.html)
+    let sender = chatDom.querySelector("#chat-sender").value;
+    console.log("sender", sender)
 
-    if (username == response.sender){
+    if (username == sender){
         console.log("username", username)
         chatDom.querySelector("#chat-box-comment").classList.add('items-end', 'justify-end');
         chatDom.querySelector("#chat-message-box").classList.add('bg-blue-600', 'text-white');

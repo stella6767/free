@@ -39,14 +39,13 @@ class CommentService(
 
 
     @Transactional
-    fun deleteComment(id: Long): Long {
+    fun deleteComment(id: Long) {
 
         val comment =
             commentRepository.findCommentById(id) ?: throw EntityNotFoundException("comment $id not found")
 
         comment.deleteByUser()
 
-        return comment.id
     }
 
 

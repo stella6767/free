@@ -17,9 +17,9 @@
             </p>
             <div class="mt-4 flex items-center justify-between">
                 <div class="flex -space-x-2 mr-2">
-                    <button class="text-right text-blue-500 mr-10" hx-on--click="htmx.toggleClass('#comment-reply-form-${comment.commentId}', 'hidden')">
-                        Reply
-                    </button>
+<%--                    <button class="text-right text-blue-500 mr-10" hx-on--click="htmx.toggleClass('#comment-reply-form-${comment.commentId}', 'hidden')">--%>
+<%--                        Reply--%>
+<%--                    </button>--%>
                     @if (comment.childComments.isNotEmpty())
                         <button hx-on--click="htmx.toggleClass('#reply-comment-card-${comment.commentId}', 'hidden')" class="text-right text-blue-500 ml-5">
                             show reply

@@ -90,7 +90,7 @@ jobs:
           elif [[ "${{ inputs.branch }}" == "main" ]]; then
              ssh -v ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo sh ~/cicd/me/scripts/deploy-docker.sh"             
           else
-            echo "No specific script found for this"
+            echo "No specific script found for this"            
           fi
      # delete-artifact
       - uses: geekyeggo/delete-artifact@v5

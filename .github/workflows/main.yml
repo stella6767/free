@@ -79,8 +79,9 @@ jobs:
          ls -al    
          
       - name: SCP transfer
-        run: |
-         scp -r scripts module-api DockerFile docker-compose-dev.yml nginx ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:~/cicd/me
+        run: |          
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "mkdir -p ~/cicd/me"          
+          scp -r scripts module-api DockerFile docker-compose-dev.yml nginx ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:~/cicd/me
          
       - name: Execute remote commands
         run: |

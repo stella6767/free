@@ -42,15 +42,10 @@ dependencies {
     // 파싱, cralwer
     //implementation("org.jsoup:jsoup:1.16.1")
     implementation("com.mohamedrejeb.ksoup:ksoup-html:0.3.1")
-    implementation("com.microsoft.playwright:playwright:1.44.0")
-
 
     //common utilities
     implementation("org.apache.commons:commons-lang3:3.12.0")
     implementation("commons-io:commons-io:2.16.1")
-
-
-    implementation("org.springframework.ai:spring-ai-ollama-spring-boot-starter")
 
 
     implementation("gg.jte:jte-spring-boot-starter-3:3.1.12")

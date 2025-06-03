@@ -70,6 +70,7 @@ class SecurityConfig(
         http.csrf { csrf -> csrf.disable() }
 
 
+
         http
             .authorizeHttpRequests { authorizeHttpRequests ->
                 authorizeHttpRequests

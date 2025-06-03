@@ -1,9 +1,5 @@
 package freeapp.life.stella.api
 
-import com.microsoft.playwright.Page
-import com.microsoft.playwright.Playwright
-import com.microsoft.playwright.options.LoadState
-
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.nodes.TextNode
@@ -48,27 +44,6 @@ class UtilTest {
     fun playwrightTest() {
 
         val url = ""
-
-        Playwright.create().use { playwright ->
-            val browser = playwright.chromium().launch()
-
-            val page = browser.newPage() //새로운 페이지 이동
-
-            page.navigate(url) //웹 페이지로 이동
-
-
-            val itemUrls =
-                page.querySelectorAll(".item-subject").mapNotNull { it.getAttribute("href") }
-
-            itemUrls.forEach { url ->
-                page.navigate(url)
-                // 페이지가 로드될 때까지 대기
-                page.waitForLoadState(LoadState.LOAD)
-                val body = page.waitForSelector("article", Page.WaitForSelectorOptions().setTimeout(60000.0))
-                println(body.textContent())
-            }
-        }
-
 
     }
 

@@ -47,7 +47,7 @@
         <div class="drawer-side ">
             <label for="my-drawer" class="drawer-overlay"></label>
             <ul class="menu p-4 w-80 h-full bg-base-200 text-base-content">
-                <li><a href="/about/me">about me</a></li>
+                <li><a href="/about/this">about this</a></li>
                 <li><a href="/page/todos">todos</a></li>
                 <li><a href="/blog">blog</a></li>
                 <li><a href="/publicApis">public api list</a></li>

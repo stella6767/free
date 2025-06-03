@@ -1,0 +1,8 @@
+@param value:String
+@param isCenter: Boolean = true
+
+@template.layout.main(bodyContent = @`
+
+    @template.component.index.aboutThisView(value = value, isCenter = isCenter)
+
+`)

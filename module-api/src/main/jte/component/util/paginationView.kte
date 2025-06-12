@@ -16,12 +16,14 @@
 
 
 <div class="flex justify-center" id="page-view">
-    <div class="join" hx-ext="multi-swap">
+    <div class="join">
 
         <button class="join-item btn text-white bg-black"
                 hx-trigger="click"
                 hx-get="/${endPoint}?page=0"
-                hx-swap="multi:#${targetTagId},#page-view">
+                hx-swap="multi:#${targetTagId},#page-view"
+                hx-include="#size-select"
+        >
             First
         </button>
 
@@ -35,7 +37,9 @@
             <button class="join-item btn text-white bg-black"
                     hx-trigger="click"
                     hx-get="/${endPoint}?page=${page.number - 1}"
-                    hx-swap="multi:#${targetTagId},#page-view">
+                    hx-swap="multi:#${targetTagId},#page-view"
+                    hx-include="#size-select"
+            >
                 &lt;&lt;
             </button>
         @endif
@@ -46,14 +50,18 @@
                 <button class="join-item btn btn-square btn-active btn-primary text-block bg-accent"
                         hx-trigger="click"
                         hx-get="/${endPoint}?page=${i - 1}"
-                        hx-swap="multi:#${targetTagId},#page-view">
+                        hx-swap="multi:#${targetTagId},#page-view"
+                        hx-include="#size-select"
+                >
                     ${i}
                 </button>
             @else
                 <button class="join-item btn btn-square "
                         hx-trigger="click"
                         hx-get="/${endPoint}?page=${i - 1}"
-                        hx-swap="multi:#${targetTagId},#page-view">
+                        hx-swap="multi:#${targetTagId},#page-view"
+                        hx-include="#size-select"
+                >
                     ${i}
                 </button>
             @endif
@@ -69,7 +77,9 @@
             <button class="join-item btn text-white bg-black"
                     hx-trigger="click"
                     hx-get="/${endPoint}?page=${page.number + 1}"
-                    hx-swap="multi:#${targetTagId},#page-view">
+                    hx-swap="multi:#${targetTagId},#page-view"
+                    hx-include="#size-select"
+            >
                 &gt;&gt;
             </button>
         @endif
@@ -78,7 +88,9 @@
         <button class="join-item btn text-white bg-black"
                 hx-trigger="click"
                 hx-get="/${endPoint}?page=${page.totalPages - 1}"
-                hx-swap="multi:#${targetTagId},#page-view">
+                hx-swap="multi:#${targetTagId},#page-view"
+                hx-include="#size-select"
+        >
             Last
         </button>
     </div>

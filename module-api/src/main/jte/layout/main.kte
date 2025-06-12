@@ -96,7 +96,7 @@
     </div>
 </div>
 
-<div id="content-body" class="py-3 flex-grow">
+<div id="content-body" class="py-3 flex-grow" hx-ext="multi-swap">
     @template.component.util.progressView()
     <div id="toast">
     </div>

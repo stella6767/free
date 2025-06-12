@@ -26,6 +26,23 @@
                 </button>
             </div>
         </div>
+
+        <div class="mb-4 flex items-center">
+            <label for="size-select" class="mr-2 text-info-content">항목 수:</label>
+            <select id="size-select"
+                    name="size"
+                    class="p-2 rounded"
+                    hx-get="/todos"
+                    hx-trigger="change"
+                    hx-swap="multi:#todo-list,#page-view"
+            >
+                <option value="10" selected>10개씩 보기</option>
+                <option value="20">20개씩 보기</option>
+                <option value="100">100개씩 보기</option>
+            </select>
+        </div>
+
+
         <div id="todo-list">
             @for (todo in todos)
                 @template.component.todo.todoComponent(todo = todo)

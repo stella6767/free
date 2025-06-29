@@ -3,6 +3,7 @@ package freeapp.life.stella.api.config.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import freeapp.life.stella.api.web.dto.GithubAuth2UserInfo
+import freeapp.life.stella.api.web.dto.GoogleAuth2UserInfo
 import freeapp.life.stella.api.web.dto.OAuth2UserInfo
 import freeapp.life.stella.storage.entity.User
 import freeapp.life.stella.storage.entity.type.SignType
@@ -89,12 +90,9 @@ class OAuth2DetailsService(
         log.info("머로 로그인 됐지? $clientName")
 
         return when (clientName) {
-//            SignType.GOOGLE.clientName -> {
-//                GoogleAuth2UserInfo(oAuth2User.attributes)
-//            }
-//            SignType.FACEBOOK.clientName -> {
-//                FaceBookAuth2UserInfo(oAuth2User.attributes)
-//            }
+            SignType.GOOGLE.clientName -> {
+                GoogleAuth2UserInfo(oAuth2User.attributes)
+            }
             SignType.GITHUB.clientName -> {
                 GithubAuth2UserInfo(oAuth2User.attributes)
             }

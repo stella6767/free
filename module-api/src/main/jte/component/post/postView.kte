@@ -26,7 +26,8 @@
         <div class="container m-auto grid grid-cols-4 gap-4"
              hx-get="/posts?page=${posts.pageable.pageNumber + 1}&keyword=${keyword}"
              hx-trigger="revealed"
-             hx-swap="afterend">
+             hx-swap="afterend"
+        >
             @for (post in posts.content)
                 @template.component.post.postCardView(post = post)
             @endfor

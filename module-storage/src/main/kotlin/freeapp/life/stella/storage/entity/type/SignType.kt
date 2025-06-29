@@ -12,9 +12,10 @@ enum class SignType(
 //    FACEBOOK("Facebook",
 //        "/oauth2/authorization/facebook", "" +
 //                "https://upload.wikimedia.org/wikipedia/en/0/04/Facebook_f_logo_%282021%29.svg"),
-//    GOOGLE("Google",
-//        "/oauth2/authorization/google",
-//        "https://tailus.io/sources/blocks/social/preview/images/google.svg"),
+
+    GOOGLE("Google",
+        "/oauth2/authorization/google",
+        "/img/google-mark.svg"),
 
     GITHUB("GitHub",
         "/oauth2/authorization/github",

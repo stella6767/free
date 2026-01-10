@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  free-app:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    build: .
+    container_name: free-app
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    restart: unless-stopped
+    networks:
+      - nginx-ssl_default  # NGINX 네트워크 연결
+
+networks:
+  nginx-ssl_default:
+    external: true

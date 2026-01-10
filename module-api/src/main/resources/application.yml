@@ -8,6 +8,10 @@ server:
       enabled: true
 
 spring:
+  cloud:
+    aws:
+      region:
+        static: ap-northeast-2
   ai:
     ollama:
       base-url: http://localhost:11434/

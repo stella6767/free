@@ -31,7 +31,7 @@ import org.springframework.web.multipart.MultipartFile
 @Service
 class PostService(
     private val postRepository: PostRepository,
-    private val userRepository: UserRepository,
+    private val userService: UserService,
     private val fileUploader: FileUploader,
     private val hashTagRepository: HashTagRepository,
     private val velogCrawler: VelogCrawler,
@@ -53,7 +53,7 @@ class PostService(
     fun generateDummyPosts(size: Int) {
         //val posts = mutableListOf<Post>()
         val username = "stella6767"
-        val user = userRepository.getReferenceById(1)
+        val user = userService.createDummyUser()
         val parser = Parser.builder().build()
         val posts = velogCrawler.getPostsByUsername(username).map {
             val document = parser.parse(it.body)

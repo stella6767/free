@@ -16,6 +16,7 @@ class MDCLoggingFilter(
 ) : Filter {
 
     private val log = KotlinLogging.logger {  }
+
     override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
         //log.debug { "MDC가 제일 먼저 실행됨 " }
 

@@ -1,15 +1,16 @@
 package freeapp.life.stella.api.config.security
 
 
-
+import freeapp.life.stella.api.service.sign.OAuth2SignService
+import freeapp.life.stella.storage.entity.User
+import freeapp.life.stella.storage.repository.UserRepository
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import mu.KotlinLogging
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
+import org.springframework.security.access.AccessDeniedException
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -17,6 +18,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.access.AccessDeniedHandler
@@ -31,88 +34,86 @@ import org.springframework.web.servlet.HandlerExceptionResolver
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 class SecurityConfig(
-    private val configuration: AuthenticationConfiguration,
-    private val oAuth2DetailsService: OAuth2DetailsService,
-    @Suppress("SpringJavaInjectionPointsAutowiringInspection")
-    @Qualifier("handlerExceptionResolver")
-    private val resolver: HandlerExceptionResolver
+    private val userRepository: UserRepository,
 ) {
 
 
-
     @Bean
-    fun authenticationManager(): AuthenticationManager {
-        return configuration.authenticationManager
+    fun passwordEncoder(): PasswordEncoder {
+        return BCryptPasswordEncoder()
     }
 
 
     @Bean
     fun webSecurityCustomizer(): WebSecurityCustomizer {
         return WebSecurityCustomizer { web: WebSecurity ->
-
             val arrays = arrayOf(
-                AntPathRequestMatcher("/resources/*"),
-                AntPathRequestMatcher("/static/*"), AntPathRequestMatcher("/img/*"),
-                AntPathRequestMatcher("/js/*"), AntPathRequestMatcher("/css/*")
+                AntPathRequestMatcher("/resources/**"),
+                AntPathRequestMatcher("/static/**"),
+                AntPathRequestMatcher("/img/**"),
+                AntPathRequestMatcher("/css/**"),
+                AntPathRequestMatcher("/js/**")
             )
-
             web.ignoring()
                 .requestMatchers(*arrays)
-
         }
     }
 
 
     @Bean
-    fun filterChain(http: HttpSecurity): SecurityFilterChain {
-        // @formatter:off
+    fun filterChain(
+        http: HttpSecurity,
+        encoder: PasswordEncoder,
+    ): SecurityFilterChain {
+
+        val authorizePattern =
+            arrayOf("/asdasdsad")
+
+
         http.csrf { csrf -> csrf.disable() }
-
-
-
-        http
-            .authorizeHttpRequests { authorizeHttpRequests ->
-                authorizeHttpRequests
-                    .requestMatchers(*AUTH_CHECK_LIST)
-                    .authenticated()
-                    .anyRequest()
-                    .permitAll()
-            }
-            .exceptionHandling {
-                it.accessDeniedHandler(WebAccessDeniedHandler()) // 권한이 없는 사용자 접근 시
-                it.authenticationEntryPoint(WebAuthenticationEntryPoint(resolver)) //인증되지 않는 사용자 접근 시
-            }
-            .logout{
-                it.logoutUrl("/logout")
-                it.logoutSuccessHandler(OauthLogoutSuccessHandler())
-                it.invalidateHttpSession(true)
-                it.deleteCookies("JSESSIONID")
-            }	// 로그아웃은 기본설정으로 (/logout으로 인증해제)
+            .formLogin { it.disable() }
+            .httpBasic { it.disable() }
             .headers {
-                it.frameOptions {config ->
+                it.frameOptions { config ->
                     config.sameOrigin()
                 }
             }
             .cors {
                 it.configurationSource(corsConfigurationSource())
             }
-            .oauth2Login { oauth ->
-                oauth
+
+
+        http
+            .authorizeHttpRequests { authorizeHttpRequests ->
+                authorizeHttpRequests
+                    .requestMatchers(*authorizePattern)
+                    .authenticated()
+                    .anyRequest()
+                    .permitAll()
+            }
+            .oauth2Login { oauth2 ->
+                oauth2
                     .authorizationEndpoint {
                         it.baseUri("/oauth2/authorization")
-                            //.authorizationRequestRepository(authorizationRequestRepository()) //default session repository
+                        //.authorizationRequestRepository(authorizationRequestRepository()) //default session repository
                     }
-//                    .redirectionEndpoint {
-//                        it.baseUri("/oauth2/callback/*")
-//                    }
-                    .userInfoEndpoint{
-                        it.userService(oAuth2DetailsService)
+                    .userInfoEndpoint { endpoint ->
+                        endpoint.userService(OAuth2SignService(userRepository, encoder))
                     }
-                    //.defaultSuccessUrl("/")
-                    .successHandler(OauthLoginSuccessHandler())
-                    //.failureHandler()
+                    .successHandler(CustomLoginSuccessHandler(userRepository))
                     .permitAll()
+            }
+            .logout {
+                it.logoutRequestMatcher(AntPathRequestMatcher("/logout", "GET"))
+                it.logoutSuccessHandler(CustomLogoutSuccessHandler())
+                it.invalidateHttpSession(true)
+                it.deleteCookies("JSESSIONID").permitAll()
+            }
+            .exceptionHandling {
+                it.accessDeniedHandler(WebAccessDeniedHandler()) // 권한이 없는 사용자 접근 시
+                it.authenticationEntryPoint(WebAuthenticationEntryPoint()) //인증되지 않는 사용자 접근 시
             }
 
         return http.build()
@@ -123,7 +124,7 @@ class SecurityConfig(
         override fun handle(
             request: HttpServletRequest,
             response: HttpServletResponse,
-            accessDeniedException: org.springframework.security.access.AccessDeniedException
+            accessDeniedException: AccessDeniedException
         ) {
             throw accessDeniedException
         }
@@ -131,24 +132,27 @@ class SecurityConfig(
 
 
     class WebAuthenticationEntryPoint(
-        val resolver: HandlerExceptionResolver
     ) : AuthenticationEntryPoint {
+
+        private val log = KotlinLogging.logger { }
+
         override fun commence(
             request: HttpServletRequest, response: HttpServletResponse,
             authException: AuthenticationException
         ) {
+
+            log.debug("Access denied, redirecting to index page")
             // 인증되지 않은 경우 페이지 이동 시 사용
-            //response.sendRedirect("error/error403.html")
+            response.sendRedirect("/")
             // 인증되지 않은 경우 에러코드 반환 시 사용
             //response.sendError(HttpServletResponse.SC_UNAUTHORIZED)
-
-            resolver.resolveException(request, response, null, authException)
         }
     }
 
-    class OauthLogoutSuccessHandler : LogoutSuccessHandler {
+    class CustomLogoutSuccessHandler : LogoutSuccessHandler {
 
-        private val log = KotlinLogging.logger {  }
+        private val log = KotlinLogging.logger { }
+
         override fun onLogoutSuccess(
             request: HttpServletRequest,
             response: HttpServletResponse,
@@ -161,15 +165,46 @@ class SecurityConfig(
             context.authentication = null
             SecurityContextHolder.clearContext()
 
-
             response.sendRedirect("/")
         }
 
     }
 
+
+    class CustomLoginSuccessHandler(
+        private val userRepository: UserRepository,
+    ) : AuthenticationSuccessHandler {
+
+        private val log = KotlinLogging.logger { }
+
+        override fun onAuthenticationSuccess(
+            request: HttpServletRequest,
+            response: HttpServletResponse,
+            authentication: Authentication
+        ) {
+
+
+            val principal = authentication.principal as UserPrincipal
+//            val SESSION_TIMEOUT_IN_SECONDS = 60 * 120 //단위는 초, 2시간 간격으로 세션만료
+//            request.session.maxInactiveInterval = SESSION_TIMEOUT_IN_SECONDS //세션만료시간.
+            SecurityContextHolder.getContext().authentication = authentication
+
+            principal.user.updateLastLoginDate()
+            userRepository.save(principal.user)
+
+            log.info("login success, ${request.requestURI} ")
+
+            if (principal.user.role == User.Role.USER) {
+                response.sendRedirect("/")
+            }
+
+        }
+    }
+
+
     class OauthLoginSuccessHandler : AuthenticationSuccessHandler {
 
-        private val log = KotlinLogging.logger {  }
+        private val log = KotlinLogging.logger { }
 
         override fun onAuthenticationSuccess(
             request: HttpServletRequest, response: HttpServletResponse,
@@ -189,8 +224,6 @@ class SecurityConfig(
 
 
 
-
-    //@Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val configuration = CorsConfiguration()
         configuration.allowedOrigins = listOf("*")
@@ -201,46 +234,6 @@ class SecurityConfig(
         source.registerCorsConfiguration("/**", configuration)
         return source
     }
-
-
-    companion object {
-
-        val AUTH_CHECK_LIST =
-            arrayOf(AntPathRequestMatcher("/asdasdads"))
-
-
-        val AUTH_PASS_LIST = arrayOf(
-            "/public/*",
-            "/webjars/*",
-            "/",
-            "/blog",
-            "/logout",
-            "/api/**",
-            "/login",
-            "/h2-console/*",
-            "/error",
-            "/post",
-            "/posts",
-            "/post/*",
-            "/posts/*",
-            "/posts/*/*",
-            "/logout",
-            "/login/*",
-            "/oauth2/authorization/*",
-            "/favicon.ico",
-            "/*/*.png",
-            "/*/*.gif",
-            "/*/*.svg",
-            "/*/*.jpg",
-            "/*/*.html",
-            "/*/*.css",
-            "/*/*.js", "/resume",
-
-        )
-
-    }
-
-
 
 
 }

@@ -32,12 +32,12 @@ class AsyncConfig(
     @Bean
     fun taskExecutor(): AsyncTaskExecutor {
         val executorAdapter = TaskExecutorAdapter(asyncExecutor)
-        executorAdapter.setTaskDecorator(freeapp.life.stella.api.config.AsyncConfig.LoggingTaskDecorator())
+        executorAdapter.setTaskDecorator(LoggingTaskDecorator())
         return executorAdapter
     }
 
     override fun getAsyncUncaughtExceptionHandler(): AsyncUncaughtExceptionHandler {
-        return freeapp.life.stella.api.config.AsyncConfig.CustomAsyncExceptionHandler()
+        return CustomAsyncExceptionHandler()
     }
 
     class LoggingTaskDecorator : TaskDecorator {

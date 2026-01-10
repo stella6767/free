@@ -82,6 +82,21 @@ inline fun <reified T : Any> EntityManager.getResultWithPagination(
 }
 
 
+fun <T : Any> EntityManager.getRecentSingleResultOrNull(
+    render: JpqlRendered,
+    classType: Class<T>
+): T? {
+
+    val typedQuery = this.createQuery(render.query, classType).apply {
+        render.params.forEach { name, value ->
+            setParameter(name, value)
+        }
+        maxResults = 1
+    }
+
+    return typedQuery.resultList.firstOrNull()
+}
+
 
 fun LocalDateTime.toString(pattern: String): String {
     val dateTimeFormatter =

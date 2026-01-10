@@ -7,19 +7,18 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.oauth2.core.user.OAuth2User
 import java.util.*
+import kotlin.toString
 
 
 class UserPrincipal(
     val user: User,
-    val customAuthorities: MutableCollection<out GrantedAuthority> =
-        Collections.singletonList(SimpleGrantedAuthority("ROLE_USER")),
+    private val authorities: MutableCollection<out GrantedAuthority> =
+        Collections.singletonList(SimpleGrantedAuthority(user.role.value)),
 ) : OAuth2User, UserDetails {
 
-//    var authorities: List<GrantedAuthority> =
-//        Collections.singletonList(SimpleGrantedAuthority("ROLE_USER"))
-
     override fun getName(): String {
-        return user.username
+        //OAuth2 인증 과정에서 사용자를 고유하게 식별하는 데 사용
+        return user.socialId ?: user.id.toString()
     }
 
     override fun getAttributes(): Map<String, Any?> {
@@ -27,8 +26,7 @@ class UserPrincipal(
     }
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-
-        return customAuthorities
+        return authorities
     }
 
     override fun getPassword(): String {
@@ -36,7 +34,8 @@ class UserPrincipal(
     }
 
     override fun getUsername(): String? {
-        return user.username
+        //OAuth2 인증 과정에서 사용자를 고유하게 식별하는 데 사용, 이게 진짜
+        return user.id.toString()
     }
 
     override fun isAccountNonExpired(): Boolean {
@@ -55,9 +54,11 @@ class UserPrincipal(
         return true
     }
 
+
     override fun toString(): String {
-        return "UserPrincipal(user=$user, customAuthorities=$customAuthorities)"
+        return "UserPrincipal(user=$user, authorities=$authorities)"
     }
+
 
 
 }

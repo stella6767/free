@@ -48,10 +48,14 @@ dependencies {
     implementation("commons-io:commons-io:2.16.1")
 
 
-    implementation("gg.jte:jte-spring-boot-starter-3:3.1.12")
-    implementation("gg.jte:jte:3.1.12")
-    implementation("gg.jte:jte-kotlin:3.1.12")
-    testImplementation("gg.jte:jte-kotlin:3.1.12")
+    implementation("org.springframework.boot:spring-boot-starter-mail")
+
+
+    //jte
+    implementation("gg.jte:jte-spring-boot-starter-3:3.1.16")
+    implementation("gg.jte:jte-kotlin:3.1.16")
+    testImplementation("gg.jte:jte-kotlin:3.1.16")
+
 
     //implementation("net.sf.trove4j:trove4j:3.0.3")
 

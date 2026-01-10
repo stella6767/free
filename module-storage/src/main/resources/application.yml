@@ -2,4 +2,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+    properties:
+      hibernate:
+#        globally_quoted_identifiers: true
+        default_batch_fetch_size: 1000
+    database-platform: org.hibernate.dialect.PostgreSQLDialect

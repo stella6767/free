@@ -1,8 +1,8 @@
 {
   "dependencies": {
-    "@tailwindcss/cli": "^4.1.7",
-    "daisyui": "^5.0.35",
-    "tailwindcss": "^4.1.7"
+    "@tailwindcss/cli": "^4.1.18",
+    "daisyui": "^5.5.14",
+    "tailwindcss": "^4.1.18"
   },
   "scripts": {
     "build": "npx @tailwindcss/cli -i ./style.css -o ../resources/static/css/main.css --minify",

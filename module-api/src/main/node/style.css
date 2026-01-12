@@ -1,5 +1,20 @@
 @import "tailwindcss";
+
 @source "../jte/**";
+@source "../resources/static/*.html";
+@source "../resources/static/**/*.html";
+
 @plugin "daisyui" {
     themes: light --default;
+}
+
+
+@layer utilities {
+    /* 배경 이미지 유틸리티 클래스 */
+    .bg-index {
+        background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+        url('/img/resumeBackground.png');
+    }
+
+
 }

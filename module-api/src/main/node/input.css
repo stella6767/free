@@ -1,4 +1,6 @@
+@import url('https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.css');
 @import "tailwindcss";
+
 
 @source "../jte/**";
 @source "../resources/static/*.html";
@@ -8,6 +10,11 @@
     themes: light --default;
 }
 
+
+@theme {
+    --font-pretendard: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+
+}
 
 @layer utilities {
     /* 배경 이미지 유틸리티 클래스 */

@@ -32,6 +32,7 @@ secrets.tar.gz
 secrets_base64.txt
 ./logs
 /node_modules
+module-api/src/main/node/node_modules/
 
 ### NetBeans ###
 /nbproject/private/

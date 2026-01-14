@@ -2,7 +2,7 @@ package freeapp.life.stella.api.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import freeapp.life.stella.api.config.security.UserPrincipal
-import freeapp.life.stella.api.service.file.FileUploader
+import freeapp.life.stella.api.service.file.S3Service
 import freeapp.life.stella.api.web.dto.PostCardDto
 import freeapp.life.stella.api.web.dto.PostDetailDto
 import freeapp.life.stella.api.web.dto.PostSaveDto
@@ -12,7 +12,6 @@ import freeapp.life.stella.storage.entity.Post
 import freeapp.life.stella.storage.entity.PostTag
 import freeapp.life.stella.storage.repository.HashTagRepository
 import freeapp.life.stella.storage.repository.PostRepository
-import freeapp.life.stella.storage.repository.UserRepository
 import jakarta.annotation.PostConstruct
 import jakarta.persistence.EntityNotFoundException
 import mu.KotlinLogging
@@ -32,7 +31,7 @@ import org.springframework.web.multipart.MultipartFile
 class PostService(
     private val postRepository: PostRepository,
     private val userService: UserService,
-    private val fileUploader: FileUploader,
+    private val s3Service: S3Service,
     private val hashTagRepository: HashTagRepository,
     private val velogCrawler: VelogCrawler,
     private val commentService: CommentService,
@@ -216,7 +215,7 @@ class PostService(
 
     fun savePostImg(file: MultipartFile): String {
 
-        return fileUploader.upload(file)
+        return s3Service.putObject(file)
     }
 
 

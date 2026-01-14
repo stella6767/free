@@ -12,7 +12,7 @@ import java.util.*
 
 class LocalFileUploaderImpl(
 
-) : FileUploader {
+)  {
 
     private val log = KotlinLogging.logger {  }
 
@@ -33,7 +33,7 @@ class LocalFileUploaderImpl(
 
 
 
-    override fun upload(file: MultipartFile): String {
+     fun upload(file: MultipartFile): String {
 
         val uuid = UUID.randomUUID().toString()
         val fileName = uuid + "_" +  file.originalFilename

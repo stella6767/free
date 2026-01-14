@@ -30,6 +30,11 @@ dependencies {
     //implementation("org.dhatim:fastexcel-reader:0.16.4")
 
 
+    //qr
+    implementation("com.google.zxing:javase:3.5.3")
+    implementation("com.google.zxing:core:3.5.3")
+
+
     //aws
     implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.0.1"))
     implementation("io.awspring.cloud:spring-cloud-aws-starter-s3")

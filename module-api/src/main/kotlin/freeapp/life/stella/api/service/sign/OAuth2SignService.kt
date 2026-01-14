@@ -26,12 +26,12 @@ class OAuth2SignService(
 
     override fun loadUser(userRequest: OAuth2UserRequest): OAuth2User {
 
-        log.info("OAuth 로그인 진행중................ ${userRequest.accessToken.tokenValue}")
+        log.debug("OAuth 로그인 진행중................ ${userRequest.accessToken.tokenValue}")
 
         val oAuth2User =
             super.loadUser(userRequest)
 
-        log.info(
+        log.debug(
             """
             ${oAuth2User.attributes}
             """.trimIndent()
@@ -61,7 +61,7 @@ class OAuth2SignService(
 
         if (user == null) {
 
-            log.info("최초 사용자입니다. 자동 회원가입을 진행합니다.")
+            log.debug("최초 사용자입니다. 자동 회원가입을 진행합니다.")
 
             val newUser =
                 User(
@@ -71,12 +71,13 @@ class OAuth2SignService(
                     email = oAuth2UserInfo.getEmail() ?: "",
                     password = encPassword,
                     signType = oAuth2UserInfo.signType,
-                    rawData = oAuth2UserInfo.attributes.toString()
+                    rawData = oAuth2UserInfo.attributes.toString(),
+                    profileImg = oAuth2UserInfo.getSocialPictureUrl() ?: ""
                 )
             return UserPrincipal(userRepository.save(newUser))
         } else {
             //이미 회원가입이 완료됐다는 뜻(원래는 구글 정보가 변경될 수 있기 떄문에 update 해야되는데 지금은 안하겠음)
-            log.info("회원정보가 있습니다. 바로 로그인합니다.")
+            log.debug("회원정보가 있습니다. 바로 로그인합니다.")
             return UserPrincipal(user)
         }
 
@@ -87,17 +88,15 @@ class OAuth2SignService(
         oAuth2User: OAuth2User
     ): OAuth2UserInfo {
 
-        log.info("머로 로그인 됐지? $clientName")
+        log.debug("머로 로그인 됐지? $clientName")
 
         return when (clientName) {
             SignType.GOOGLE.clientName -> {
                 GoogleAuth2UserInfo(oAuth2User.attributes)
             }
-
             SignType.GITHUB.clientName -> {
                 GithubAuth2UserInfo(oAuth2User.attributes)
             }
-
             else -> {
                 throw IllegalArgumentException("Unknown client name: $clientName")
             }

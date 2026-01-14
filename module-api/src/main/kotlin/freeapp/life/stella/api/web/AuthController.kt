@@ -57,9 +57,6 @@ class AuthController(
             userService.findUserById(principal.user.id)
         )
 
-        log.debug { "???" }
-
-
         return "page/profile"
     }
 
@@ -92,7 +89,7 @@ class AuthController(
         model.addAttribute("token", dto.token)
         model.addAttribute("expireMinute", dto.expireMinute)
 
-        return "components/auth/verifyCode"
+        return "component/auth/verifyCode"
     }
 
     @HxRequest

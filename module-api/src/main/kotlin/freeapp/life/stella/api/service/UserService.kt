@@ -1,7 +1,6 @@
 package freeapp.life.stella.api.service
 
 
-import freeapp.life.stella.api.config.security.UserPrincipal
 import freeapp.life.stella.api.util.clearSecurityContext
 import freeapp.life.stella.api.web.dto.UpdateProfileDto
 import freeapp.life.stella.api.web.dto.UserDeleteRequestDto
@@ -9,15 +8,13 @@ import freeapp.life.stella.api.web.dto.UserResponseDto
 import freeapp.life.stella.storage.entity.User
 import freeapp.life.stella.storage.entity.type.SignType
 import freeapp.life.stella.storage.repository.UserRepository
-import jakarta.annotation.PostConstruct
 import jakarta.persistence.EntityNotFoundException
 import mu.KotlinLogging
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.LocalDateTime
+import org.springframework.web.multipart.MultipartFile
 
 @Service
 class UserService(
@@ -80,8 +77,12 @@ class UserService(
     @Transactional
     fun updateUser(
         userId: Long,
-        profileDto: UpdateProfileDto
+        profileDto: UpdateProfileDto,
+        file: MultipartFile?
     ): UserResponseDto {
+
+
+        log.debug { "Update user $profileDto ${file?.originalFilename}" }
 
         val user =
             userRepository.findByIdOrNull(userId)

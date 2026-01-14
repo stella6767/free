@@ -1,0 +1,39 @@
+@param profileImg:String
+
+
+<div class="mb-6">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="profile-image">
+        프로필 사진 *
+    </label>
+    <div class="flex items-center space-x-4">
+        <label class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded cursor-pointer">
+            파일 선택
+            <input
+                    type="file"
+                    id="profile-image"
+                    name="profileImage"
+                    accept=".jpg,.jpeg,.png,.bmp"
+                    class="hidden"
+                    onchange="updateFilePreview(event)"
+            >
+        </label>
+        <span id="file-name" class="text-gray-600 text-sm">
+                    선택된 파일 없음
+                </span>
+    </div>
+    <div class="mt-2 text-xs text-gray-600">
+        <p>- 해상도: 2000px*2000px 이하</p>
+        <p>- 파일 형식: jpg(jpeg), png, bmp</p>
+        <p>- 파일 용량: 10MB</p>
+    </div>
+    <div
+            id="image-preview"
+            class="mt-4 w-40 h-40 bg-gray-200 rounded-full flex items-center justify-center"
+    >
+        @if(profileImg.isEmpty())
+            <span class="text-gray-500">프로필 이미지</span>
+        @else
+            <img class="w-full h-full object-cover rounded-full" src="${profileImg}">
+        @endif
+    </div>
+</div>

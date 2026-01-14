@@ -42,6 +42,17 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+htmx.defineExtension('hx-dataset-include', {
+    encodeParameters: function (xhr, parameters, elt) {
+        Object
+            .keys(elt.dataset)
+            .forEach(k => parameters
+                .append(k, elt.dataset[k]))
+    }
+})
+
+
+
 // document.addEventListener('htmx:afterRequest', e => {
 //     if (!e.detail.xhr.status.toString().startsWith('2')) {
 //         let errorBanner = document.getElementById("toast");

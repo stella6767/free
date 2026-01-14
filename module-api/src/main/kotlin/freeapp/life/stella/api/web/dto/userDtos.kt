@@ -5,7 +5,7 @@ import freeapp.life.stella.storage.entity.User
 import freeapp.life.stella.storage.entity.type.SignType
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
-
+import org.springframework.web.multipart.MultipartFile
 
 
 data class SignUpDto(
@@ -62,6 +62,7 @@ data class UserResponseDto(
     val role: User.Role,
     val status: User.Status,
     val signType: SignType,
+    val profileImg: String
 ) {
     companion object {
 
@@ -71,7 +72,8 @@ data class UserResponseDto(
                 user.email ?: "",
                 user.role,
                 user.status,
-                user.signType
+                user.signType,
+                user.profileImg
             )
         }
     }

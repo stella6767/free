@@ -19,7 +19,7 @@ enum class EmailTemplate(
 
     VERIFICATION(
         "mail/verification.kte",
-        "freeapp verification Code",
+        "freeApp verification Code",
         "인증 코드",
     ),
 

@@ -26,7 +26,7 @@ class PostController(
     @GetMapping("/blog")
     fun homeBlog(
         model: Model,
-        @PageableDefault(size = 16) pageable: Pageable,
+        @PageableDefault(size = 16, sort = ["createAt", "asc"]) pageable: Pageable,
         @RequestParam(required = false, defaultValue = "") keyword: String
     ): String {
 
@@ -34,6 +34,7 @@ class PostController(
 
         model.addAttribute("keyword", keyword)
         model.addAttribute("posts", posts)
+        model.addAttribute("currentSort", pageable.sort.first().direction.name)
 
         return "page/post"
     }
@@ -59,7 +60,7 @@ class PostController(
     @GetMapping("/posts")
     fun posts(
         model: Model,
-        @PageableDefault(size = 16) pageable: Pageable,
+        @PageableDefault(size = 16, sort = ["createAt", "asc"]) pageable: Pageable,
         @RequestParam(required = false, defaultValue = "") keyword: String
     ): String {
 
@@ -67,6 +68,7 @@ class PostController(
 
         model.addAttribute("posts", posts)
         model.addAttribute("keyword", keyword)
+        model.addAttribute("currentSort", pageable.sort.first().direction.name)
 
 
         return "component/post/postView"

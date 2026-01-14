@@ -205,6 +205,7 @@ class PostService(
     @Transactional(readOnly = true)
     fun findPostCardDtos(keyword: String, pageable: Pageable): Page<PostCardDto> {
 
+
         val posts = if (StringUtils.hasLength(keyword)) {
             findPostsByKeyword(keyword, pageable)
         } else findPostsByPage(pageable)

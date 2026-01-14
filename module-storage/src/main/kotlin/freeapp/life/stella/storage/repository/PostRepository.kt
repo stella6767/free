@@ -1,6 +1,10 @@
 package freeapp.life.stella.storage.repository
 
+import com.linecorp.kotlinjdsl.dsl.jpql.Jpql
 import com.linecorp.kotlinjdsl.dsl.jpql.jpql
+import com.linecorp.kotlinjdsl.dsl.jpql.sort.SortNullsStep
+import com.linecorp.kotlinjdsl.querymodel.jpql.path.Paths.path
+import com.linecorp.kotlinjdsl.querymodel.jpql.sort.Sortable
 import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderer
 import freeapp.life.stella.storage.entity.Post
@@ -13,6 +17,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.support.PageableExecutionUtils
+import org.springframework.data.util.Streamable
 
 interface PostRepository : JpaRepository<Post, Long>, PostCustomRepository {
 
@@ -113,7 +118,7 @@ class PostCustomRepositoryImpl(
                     path(Post::deletedAt).isNull(),
                 )
             ).orderBy(
-                path(Post::id).desc(),
+                *sortables(pageable).toTypedArray()
             )
         }
 
@@ -124,6 +129,24 @@ class PostCustomRepositoryImpl(
         return PageableExecutionUtils.getPage(
             fetch, pageable
         ) { count }
+    }
+
+
+    private fun Jpql.sortables(pageable: Pageable): List<SortNullsStep> {
+
+        val step =
+            if (pageable.sort.isEmpty) {
+                listOf(path(Post::id).desc())
+            } else {
+                pageable.sort.map { order ->
+                    when (order.property) {
+                        "createAt" -> if (order.isAscending) path(Post::createdAt).asc() else path(Post::createdAt).desc()
+                        else -> path(Post::id).desc()
+                    }
+                }.toList()
+
+            }
+        return step
     }
 
 
@@ -202,8 +225,6 @@ class PostCustomRepositoryImpl(
 //        println(singleResult)
 
     }
-
-
 
 
 }

@@ -3,7 +3,6 @@
 @param userId: Long?
 @param post: PostDetailDto
 
-<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 
 <div id="post-detail" class="w-1/2 mx-auto mb-5 py-5 min-h-screen">
 

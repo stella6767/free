@@ -1,6 +1,6 @@
 @param postId: Long
 
-<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+
 
 <div class="toastui-editor-contents text-neutral-content" style="overflow-wrap: break-word;">
     <div hx-get="/post/content/${postId}" hx-trigger="load" data-nodeid="1">

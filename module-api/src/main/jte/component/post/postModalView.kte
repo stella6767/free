@@ -8,10 +8,10 @@
                     <div hx-delete="/post/${post.id}"
                          hx-swap="none"
                          hx-on--after-request="location.href='/blog'"
-                         class="btn"
+                         class="btn btn-error btn-ghost"
                          id="post-delete-btn"
                          role="button">
-                        삭제
+                        정말 삭제하시겠습니까?
                     </div>
                 </div>
             </div>

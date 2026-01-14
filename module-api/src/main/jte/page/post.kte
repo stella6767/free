@@ -1,13 +1,109 @@
 @import org.springframework.data.domain.Page
 @import freeapp.life.stella.api.web.dto.PostCardDto
+@import freeapp.life.stella.api.util.isLoggedIn
+@import org.springframework.security.core.Authentication
+@import org.springframework.security.authentication.AnonymousAuthenticationToken
 @import org.springframework.util.StringUtils // Assuming this is for StringUtils.hasText
 
 @param keyword: String
 @param posts: Page<PostCardDto>
+@param isUserLoggedIn: Boolean = freeapp.life.stella.api.util.isLoggedIn ()
+
 
 @template.layout.main(bodyContent = @`
 
-    @template.component.post.postView(keyword = keyword, posts = posts)
+
+    <section id="posts-container" class="container mx-auto px-4 py-4 sm:px-8 lg:px-16 min-h-screen">
+
+        <div id="blog-header" class="sticky top-15 z-20 bg-white w-full flex justify-between py-5">
+            <div>
+                <div role="tablist" class="tabs tabs-border">
+                    <a role="tab" class="tab">Tab 1</a>
+                    <a role="tab" class="tab tab-active">Tab 2</a>
+                    <a role="tab" class="tab">Tab 3</a>
+                </div>
+            </div>
+            <div class="flex">
+                <div class="max-w-md mr-5">
+                    <form method="get" action="/blog" class="relative mx-auto w-max">
+                        <input type="search" name="keyword"
+                               class="peer cursor-pointer relative z-10 h-12 w-12 rounded-full border bg-transparent pl-12 outline-none focus:w-full focus:cursor-text focus:border-lime-300 focus:pl-16 focus:pr-4"/>
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="absolute inset-y-0 my-auto h-8 w-12 border-r border-transparent stroke-gray-500 px-3.5 peer-focus:border-lime-300 peer-focus:stroke-lime-500"
+                             fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </form>
+                </div>
+
+
+                <ul class="menu px-1 font-pretendard">
+                    <li>
+                        <details>
+                            <summary>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     class="inline-block w-5 h-5 stroke-current">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/>
+                                </svg>
+                            </summary>
+                            <ul class="bg-base-100 z-30">
+                                @if (isUserLoggedIn)
+                                    <li>
+                                        <a hx-trigger="click" hx-get="/post/editor" hx-target="#content-body"
+                                           href="/post/editor">
+                                            새글쓰기
+                                        </a>
+                                    </li>
+                                @endif
+
+                            </ul>
+                        </details>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+
+        @if (StringUtils.hasText(keyword))
+            <div>
+                <div class="flex justify-center">
+                    <h1 class="text-xl font-bold">${keyword}의 검색결과</h1>
+                </div>
+                <div class="flex justify-center">
+                    총 <span class="italic">${posts.totalElements}</span> 개의 포스트를 찾았습니다.
+                </div>
+                <div class="flex justify-center mt-3">
+                    <button class="btn btn-wide" onclick="location.href='/blog'">
+                        전체보기
+                    </button>
+                </div>
+            </div>
+        @endif
+
+        @if (!posts.isLast)
+            <div class="grid grid-cols-4 gap-4"
+                 hx-get="/posts?page=${posts.pageable.pageNumber + 1}&keyword=${keyword}"
+                 hx-trigger="revealed"
+                 hx-swap="afterend"
+            >
+                @for (post in posts.content)
+                    @template.component.post.postCardView(post = post)
+                @endfor
+            </div>
+        @else
+            <div class="grid grid-cols-4 gap-4">
+                @for (post in posts.content)
+                    @template.component.post.postCardView(post = post)
+                @endfor
+            </div>
+        @endif
+
+
+    </section>
+
 
 `)
 

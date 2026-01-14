@@ -1,3 +1,4 @@
+@import freeapp.life.stella.storage.entity.type.SignType
 @param isSignUp:Boolean
 
 !{
@@ -7,6 +8,8 @@
     }else {
         "/auth/login";
     }
+
+    val signTypes = SignType.getSocialTypes()
 }
 
 @template.layout.main(bodyContent = @`
@@ -24,13 +27,17 @@
                     <h2 class="text-2xl font-semibold text-gray-700 text-center">Log in to your account</h2>
                 @endif
 
-                <a href="#"
-                   class="flex items-center justify-center mt-4 text-white rounded-lg shadow-md hover:bg-gray-100">
-                    <div class="px-4 py-3">
-                        <img src="/img/icons/google.svg" class="h-6 w-6" alt="google icon">
-                    </div>
-                    <h1 class="px-4 py-3 w-5/6 text-center text-gray-600 font-bold">Sign in with Google</h1>
-                </a>
+                @for (signType in signTypes)
+                    <a href="${signType.authorizationUrl}"
+                       class="flex items-center justify-center mt-4 text-white rounded-lg shadow-md hover:bg-gray-100">
+                        <div class="px-4 py-3">
+                            <img src="${signType.imgUrl}" class="h-6 w-6" alt="google icon">
+                        </div>
+                        <h1 class="px-4 py-3 w-5/6 text-center text-gray-600 font-bold">Sign in with ${signType.clientName}</h1>
+                    </a>
+                @endfor
+
+
 
                 <div class="mt-4 flex items-center justify-between">
                     <span class="border-b w-1/5 lg:w-1/4"></span>

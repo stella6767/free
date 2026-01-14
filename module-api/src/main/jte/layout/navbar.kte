@@ -6,7 +6,7 @@
 @param isUserLoggedIn: Boolean = freeapp.life.stella.api.util.isLoggedIn ()
 
 
-<div class="navbar bg-base-100 sticky top-0 z-30">
+<div class="navbar bg-base-100 sticky top-0 z-30 px-5">
     <div class="drawer navbar-start">
         <input id="my-drawer" type="checkbox" class="drawer-toggle"/>
         <div class="drawer-content">
@@ -21,13 +21,13 @@
         <div class="drawer-side ">
             <label for="my-drawer" class="drawer-overlay"></label>
             <ul class="menu p-4 w-80 h-full bg-base-200 text-base-content font-pretendard ">
-                <li><a href="/about/this">about this</a></li>
-                <li><a href="/page/todos">todos</a></li>
-                <li><a href="/blog">blog</a></li>
-                <li><a href="/publicApis">public api list</a></li>
+                <li><a href="/build">Build Description</a></li>
+                <li><a href="/page/todos">Todo</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/publicApis">Public Api List</a></li>
                 <li><a href="/chat">Chat Lab</a></li>
-                <li><a href="/velog/crawler">velog crawler</a></li>
-                <li><a href="/converter">html to kotlin</a></li>
+                <li><a href="/velog/crawler">Velog Crawler</a></li>
+                <li><a href="/converter">Html to Kotlin</a></li>
             </ul>
         </div>
     </div>
@@ -37,55 +37,18 @@
     </div>
 
     <div class="navbar-end">
-        <div class="max-w-md">
-            <form method="get" action="/blog" class="relative mx-auto w-max">
-                <input type="search" name="keyword"
-                       class="peer cursor-pointer relative z-10 h-12 w-12 rounded-full border bg-transparent pl-12 outline-none focus:w-full focus:cursor-text focus:border-lime-300 focus:pl-16 focus:pr-4"/>
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="absolute inset-y-0 my-auto h-8 w-12 border-r border-transparent stroke-gray-500 px-3.5 peer-focus:border-lime-300 peer-focus:stroke-lime-500"
-                     fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                </svg>
-            </form>
-        </div>
 
-            @if (!isUserLoggedIn)
-
-                <a href="/auth/sign" class="btn btn-ghost normal-case text-xl font-pretendard ">
-                    Login
-                </a>
-
-            @else
-                <a href="/logout">LogOut</a>
-            @endif
+        @if (!isUserLoggedIn)
+            <a href="/auth/sign" class="btn btn-ghost normal-case text-xl font-pretendard ">
+                Login
+            </a>
+        @else
+            <a href="/logout" class="btn btn-ghost normal-case text-xl font-pretendard ">
+                LogOut
+            </a>
+        @endif
 
 
 
-        <ul class="menu menu-horizontal px-1 mr-5">
-            <li>
-                <details>
-                    <summary>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                             class="inline-block w-5 h-5 stroke-current">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/>
-                        </svg>
-                    </summary>
-                    <ul class="p-2 bg-base-100">
-                        @if (!isUserLoggedIn)
-                            <li><a onclick="login_modal.showModal()">Login</a></li>
-                        @else
-                            <li><a href="/logout">LogOut</a></li>
-                            <li>
-                                <a hx-trigger="click" hx-get="/post/editor" hx-target="#content-body"
-                                   href="/post/editor">새글쓰기</a>
-                            </li>
-                        @endif
-                        <li><a href="/readme">빌드 설명</a></li>
-                    </ul>
-                </details>
-            </li>
-        </ul>
     </div>
 </div>

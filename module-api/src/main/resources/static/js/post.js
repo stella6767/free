@@ -53,9 +53,7 @@
 
     });
 
-    function cancelPost ()  {
-        location.href = "/blog"
-    }
+
 
 
     document.getElementById("post-submit-btn").addEventListener("click", (e) => {

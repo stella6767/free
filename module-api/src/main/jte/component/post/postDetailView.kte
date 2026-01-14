@@ -5,7 +5,12 @@
 
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 
-<div id="post-detail" class="w-3/6 mx-auto mb-5 py-5">
+<div id="post-detail" class="w-1/2 mx-auto mb-5 py-5 min-h-screen">
+
+    <div id="post-detail-header" class="sticky top-15 z-20 bg-white w-full flex mb-5 h-20 py-5">
+        <button class="btn" onclick="history.back()">뒤로가기</button>
+    </div>
+
     <div class="sm:text-3xl md:text-3xl lg:text-3xl text-black xl:text-4xl font-bold cursor-pointer">
         ${post.title}
     </div>
@@ -33,7 +38,7 @@
     @template.component.post.postModalView(post = post) 
     
     <%-- ${post.content} --%>
-    <div id="post-detail-viewer-content-${post.id}">
+    <div id="post-detail-viewer-content-${post.id}" class="mt-5 overflow-x-auto">
         $unsafe{post.content}
     </div>
 </div>

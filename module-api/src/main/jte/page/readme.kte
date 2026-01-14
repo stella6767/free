@@ -1,0 +1,16 @@
+@param value:String
+@param isCenter: Boolean = true
+
+@template.layout.main(bodyContent = @`
+
+    <div class="min-h-screen container mx-auto px-4 sm:px-8 lg:px-16 ">
+        <div>
+            @template.component.util.htmlViewer(value = value, isCenter = isCenter)
+        </div>
+
+
+    </div>
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+
+
+`)

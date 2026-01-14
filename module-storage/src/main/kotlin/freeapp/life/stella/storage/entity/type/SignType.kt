@@ -36,5 +36,10 @@ enum class SignType(
                 it.name == str.uppercase()
             }
         }
+
+        fun getSocialTypes(): List<SignType> {
+            return SignType.entries.filter { !it.clientName.contains("Email") }
+        }
+
     }
 }

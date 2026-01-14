@@ -4,7 +4,8 @@
 
 
 # .gitignore
-```angular2html
+
+```
 
 ### IntelliJ IDEA ###
 .idea
@@ -21,7 +22,7 @@ secrets_base64.txt
 
 # secret.yml
 
-```angular2html
+```
 spring:
   security:
     oauth2:
@@ -86,7 +87,7 @@ spring:
 
 [참고](https://shanepark.tistory.com/465)
 
-```angular2html
+```
 
 tar czvf secrets.tar.gz secret.yml
 base64 -i secrets.tar.gz -o secrets_base64.txt
@@ -100,7 +101,7 @@ base64 -i secrets.tar.gz -o secrets_base64.txt
 # Github Action
 
 
-```angular2html
+```
 
 name: Java CI with Gradle DEV
 
@@ -203,7 +204,7 @@ jobs:
 ```
 
 
-```angular2html
+```
 docker compose build
 ./init-letsencrypt.sh
 docker compose up

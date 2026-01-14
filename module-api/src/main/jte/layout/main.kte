@@ -26,18 +26,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+
+
+
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8671709485675431"
             crossorigin="anonymous"></script>
 
     <link href="/css/main.css" rel="stylesheet">
     <link href="/css/loading.css" rel="stylesheet" type="text/css" />
-
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 </head>
 <body xmlns:hx-on="http://www.w3.org/1999/xhtml"  hx-ext="response-targets multi-swap">
 
 @template.layout.navbar()
 
-<div id="content-body" hx-ext="multi-swap">
+<div id="content-body" >
     @template.component.util.progressView()
     <div id="toast"></div>
 

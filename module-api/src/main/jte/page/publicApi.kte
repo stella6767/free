@@ -2,6 +2,17 @@
 
 @template.layout.main(bodyContent = @`
 
-    @template.component.public-api.publicApiPageView(categories = categories)
+    <div class="min-h-screen container mx-auto px-4 sm:px-8 lg:px-16 font-pretendard">
+        <div class="tabs tabs-boxed">
+            @for (category in categories)
+                @template.component.public-api.tabView(category = category, activeCategory = categories.first())
+            @endfor
+        </div>
+
+        @if (categories.isNotEmpty())
+            @template.component.public-api.tableView(category = categories.first())
+        @endif
+    </div>
+
 
 `)

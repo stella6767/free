@@ -1,5 +1,6 @@
 package freeapp.life.stella.api
 
+import freeapp.life.stella.storage.entity.type.SignType
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.nodes.TextNode
@@ -10,6 +11,15 @@ import java.util.*
 
 
 class UtilTest {
+
+
+    @Test
+    fun getSocialTypes(){
+
+        val socialTypes = SignType.getSocialTypes()
+
+        println(socialTypes)
+    }
 
 
     @Test

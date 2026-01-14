@@ -6,6 +6,7 @@ import freeapp.life.stella.api.service.PostService
 import freeapp.life.stella.api.web.dto.PostSaveDto
 import freeapp.life.stella.api.web.dto.PostUpdateDto
 import jakarta.persistence.EntityNotFoundException
+import mu.KotlinLogging
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -20,6 +21,7 @@ class PostController(
     private val postService: PostService,
 ) {
 
+    private val log = KotlinLogging.logger {  }
 
     @GetMapping("/blog")
     fun homeBlog(
@@ -44,7 +46,6 @@ class PostController(
         @PathVariable id: Long,
     ): String {
 
-
         val post =
             postService.findPostDetailById(id) ?: throw EntityNotFoundException()
 
@@ -62,8 +63,11 @@ class PostController(
         @RequestParam(required = false, defaultValue = "") keyword: String
     ): String {
 
-        model.addAttribute("posts", postService.findPostCardDtos(keyword, pageable))
+        val posts = postService.findPostCardDtos(keyword, pageable)
+
+        model.addAttribute("posts", posts)
         model.addAttribute("keyword", keyword)
+
 
         return "component/post/postView"
     }
@@ -161,11 +165,16 @@ class PostController(
     fun postEditor(
         model: Model,
         @RequestParam(required = false, defaultValue = "0") postId: Long,
+        @RequestParam(required = false, defaultValue = "0") page: Int,
     ): String {
+
+        log.debug { "??=>$page" }
 
         val post =
             postService.findPostDetailById(postId)
+
         model.addAttribute("post", post)
+        model.addAttribute("page", page)
 
         return "component/post/postEditorView"
     }

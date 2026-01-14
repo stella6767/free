@@ -3,9 +3,7 @@
 
 @param post: PostDetailDto?
 
-<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
-<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+
 
 <form id="post-form" class="py-4 flex flex-col gap-y-3 mb-3">
     <h1 class="text-center text-black mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl">
@@ -26,7 +24,7 @@
     <br />
     <div class="flex justify-center gap-x-2">
         <button id="post-submit-btn" class="btn btn-success">제출</button>
-        <button type="button" hx-on-click="cancelPost()" class="btn btn-warning">취소</button>
+        <button type="button" hx-on-click="location.href ='/blog' " class="btn btn-warning">취소</button>
     </div>
 
     <input type="hidden" value="${post?.id ?: 0L}" name="postId" />

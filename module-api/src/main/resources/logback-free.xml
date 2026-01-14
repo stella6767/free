@@ -56,7 +56,7 @@
     </root>
 
 
-    <logger name="com.stella.free" level="debug" additivity="false">
+    <logger name="freeapp.life.stella" level="debug" additivity="false">
         <appender-ref ref="STDOUT"/>
 <!--        <springProfile name="prod">-->
 <!--            <appender-ref ref="FILE"/>-->

@@ -19,28 +19,29 @@ class IndexController(
 
         model.addAttribute("author", "Kang Min Kyu")
 
-
         return "page/index"
+    }
+
+    @GetMapping("/build")
+    fun buildDesc(
+        model: Model,
+    ): String {
+
+        val value = ClassPathResource("static/README-korea2.md").getMarkdownValueFormLocal()
+        model.addAttribute("value", value)
+        model.addAttribute("isCenter", false)
+
+        return "page/readme"
     }
 
     @GetMapping("/readme")
     fun readme(
         model: Model,
     ): String {
-        val value = ClassPathResource("static/README-korea2.md").getMarkdownValueFormLocal()
-        model.addAttribute("value", value)
-        model.addAttribute("isCenter", false)
-        return "page/aboutThis"
-    }
-
-    @GetMapping("/about/this")
-    fun aboutMe(
-        model: Model,
-    ): String {
 
         model.addAttribute("value", ClassPathResource("static/README-korea.md").getMarkdownValueFormLocal())
 
-        return "page/aboutThis"
+        return "page/readme"
     }
 
 

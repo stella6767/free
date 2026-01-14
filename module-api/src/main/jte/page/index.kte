@@ -34,8 +34,8 @@
                         <h2 class="text-xl font-bold mt-4 mb-1">Currently Interested in Technologies</h2>
                         <p class="text-sm indent-2">HTMX, Flutter, Go</p>
                         <div class="pt-12 pb-8">
-                            <button class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='https://www.notion.so/b3537e6cfe1947a880bf4c70eb5de7af?pvs=4'">
-                                Get In Touch
+                            <button class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full cursor-pointer" onclick="location.href='/readme'">
+                                Read Me
                             </button>
                         </div>
                         <div class="mt-6 pb-16 lg:pb-0 w-4/5 lg:w-full mx-auto flex flex-wrap items-center justify-between">

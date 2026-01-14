@@ -28,6 +28,7 @@
                 <li><a href="/chat">Chat Lab</a></li>
                 <li><a href="/velog/crawler">Velog Crawler</a></li>
                 <li><a href="/converter">Html to Kotlin</a></li>
+                <li><a href="/qr/">QR Generator</a></li>
             </ul>
         </div>
     </div>

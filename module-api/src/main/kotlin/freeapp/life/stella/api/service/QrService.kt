@@ -56,14 +56,12 @@ class QrService(
                     mapper.convertValue(qrReqDto, TextReqDto::class.java)
                 generateStaticQRCode(textReqDto.text)
             }
-
             QrGeneratorType.WIFI -> {
                 val wifiDto =
                     mapper.convertValue(qrReqDto, WifiReqDto::class.java)
                 val qrValue = "WIFI:T:${wifiDto.encryption};S:${wifiDto.ssid};P:${wifiDto.password};;"
                 generateStaticQRCode(qrValue)
             }
-
             QrGeneratorType.VCARD -> {
                 val vCardDto =
                     mapper.convertValue(qrReqDto, VCardReqDto::class.java)

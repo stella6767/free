@@ -20,7 +20,7 @@ class QrController(
 
 
     @GetMapping("/")
-    fun index(
+    fun qrPage(
         model: Model
     ): String {
 
@@ -29,7 +29,7 @@ class QrController(
 
 
     @HxRequest
-    @GetMapping("/qr/{type}")
+    @GetMapping("/{type}")
     fun qrType(
         @PathVariable type: QrGeneratorType,
         model: Model,
@@ -38,23 +38,20 @@ class QrController(
         model.addAttribute("type", type)
 
         return FragmentsRendering
-            .with("component/qrMainInput")
-            .fragment("component/qrCodeBtn")
+            .with("component/qr/qrMainInput")
+            .fragment("component/qr/qrCodeBtn")
             .build()
     }
 
 
     @HxRequest
-    @PostMapping("/qrcode")
+    @PostMapping("/code")
     fun generateQrCode(
         model: Model,
-        @AuthenticationPrincipal principal: UserPrincipal,
         @RequestParam type: QrGeneratorType,
         @RequestParam("file") file: MultipartFile? = null,
         @RequestParam qrReqDto: HashMap<String, Any>,
     ): FragmentsRendering {
-
-
 
         val qrCode =
             qrService.generateStaticQRCodeByType(type, qrReqDto, file)
@@ -66,8 +63,8 @@ class QrController(
 
 
         return FragmentsRendering
-            .with("component/qrImg")
-            .fragment("component/qrCodeBtn")
+            .with("component/qr/qrImg")
+            .fragment("component/qr/qrCodeBtn")
             .build()
     }
 

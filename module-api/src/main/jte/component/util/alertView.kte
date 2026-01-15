@@ -1,21 +1,32 @@
-@param msg: String
+@param msg:String
+@param isHtmxRequest: Boolean = true
 @param duration: Int = 5000
 
-<div class="alert alert-error fixed top-10 z-40 w-2/5 left-1/2 -translate-x-1/2" id="alert-toast" role="alert">
+
+<div class="alert alert-error fixed top-10 z-50 w-3/5 left-1/2 -translate-x-1/2" id="alert-toast" role="alert">
     <svg class="stroke-current shrink-0 h-6 w-6 cursor-pointer"
          fill="none"
          viewBox="0 0 24 24"
          onclick="document.getElementById('alert-toast').style.display='none'">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
     </svg>
-    <span>${msg}</span>
+    <span id="error-msg-box" class="break-words break-all whitespace-normal overflow-hidden">${msg}</span>
 </div>
-
 <script>
+
+    console.log("????")
+
     setTimeout(() => {
         const alertToast = document.getElementById('alert-toast');
         if (alertToast) {
             alertToast.style.display = 'none';
         }
     }, ${duration});
+
+    @if(!isHtmxRequest)
+    let msg = document.querySelector('#error-msg-box').textContent;
+    alert(msg);
+    history.back();
+    @endif
 </script>

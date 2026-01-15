@@ -49,18 +49,15 @@ class QrController(
     fun generateQrCode(
         model: Model,
         @RequestParam type: QrGeneratorType,
-        @RequestParam("file") file: MultipartFile? = null,
+        @RequestParam("file", required = false) file: MultipartFile? = null,
         @RequestParam qrReqDto: HashMap<String, Any>,
     ): FragmentsRendering {
 
         val qrCode =
             qrService.generateStaticQRCodeByType(type, qrReqDto, file)
 
-        println(file?.originalFilename)
-
         model.addAttribute("imageData", qrCode)
         model.addAttribute("isGenerated", true)
-
 
         return FragmentsRendering
             .with("component/qr/qrImg")

@@ -9,7 +9,6 @@ import freeapp.life.stella.api.web.dto.S3UploadCompleteDto
 import freeapp.life.stella.api.web.dto.S3UploadResultDto
 import freeapp.life.stella.api.web.dto.S3UploadSignedUrlDto
 import mu.KotlinLogging
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.Resource
 import org.springframework.stereotype.Service
@@ -30,7 +29,7 @@ class S3Service(
     private val s3PreSigner: S3Presigner
 ) {
 
-    private val log = KotlinLogging.logger {  }
+    private val log = KotlinLogging.logger { }
 
 
     @Value("\${cloud.aws.s3.bucket}")
@@ -44,7 +43,10 @@ class S3Service(
 
     private val s3Utilities = s3Client.utilities()
 
-    fun putObject(multipartFile: MultipartFile): String {
+    fun putObject(
+        multipartFile: MultipartFile,
+        folderName: String
+    ): String {
 
         if (multipartFile.isEmpty) {
             throw FileNotFoundException()
@@ -55,9 +57,11 @@ class S3Service(
         val fileName =
             generateRandomNumberString() + "_" + multipartFile.originalFilename
 
+        val key = folderName + "/" + fileName
+
         val objectRequest = PutObjectRequest.builder()
             .bucket(bucket)
-            .key(fileName)
+            .key(key)
             .contentType(multipartFile.contentType)
             .build()
 
@@ -67,7 +71,8 @@ class S3Service(
         )
 
         val getUrlRequest = GetUrlRequest.builder()
-            .bucket(bucket).key(fileName)
+            .bucket(bucket)
+            .key(key)
             .build()
 
         val url = s3Utilities.getUrl(getUrlRequest)
@@ -204,8 +209,6 @@ class S3Service(
 
         return resp.response().contentLength()
     }
-
-
 
 
 }

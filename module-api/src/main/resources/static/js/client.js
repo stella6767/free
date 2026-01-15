@@ -52,6 +52,14 @@ htmx.defineExtension('hx-dataset-include', {
 })
 
 
+// htmx.config.responseHandling = [
+//     {code: "204", swap: false},
+//     {code: "[23]..", swap: true},
+//     {code: "[45]..", swap: true, error: true},
+//     {code: "...", swap: false}
+// ]
+
+
 
 // document.addEventListener('htmx:afterRequest', e => {
 //     if (!e.detail.xhr.status.toString().startsWith('2')) {

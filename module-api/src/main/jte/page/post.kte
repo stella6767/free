@@ -58,7 +58,7 @@
                             <ul class="bg-base-100 z-30">
                                 @if (isUserLoggedIn)
                                     <li>
-                                        <a hx-trigger="click" hx-get="/post/editor" hx-target="#content-body"
+                                        <a hx-trigger="click" hx-get="/post/editor" hx-target="#posts-container"
                                            href="/post/editor">
                                             새글쓰기
                                         </a>

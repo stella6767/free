@@ -1,6 +1,8 @@
 
 server:
   port: 8080
+  tomcat:
+    max-swallow-size: 100MB
   servlet:
     context-path: /
     encoding:
@@ -8,6 +10,11 @@ server:
       enabled: true
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB #개별 파일 요청
+
+
   cloud:
     aws:
       region:

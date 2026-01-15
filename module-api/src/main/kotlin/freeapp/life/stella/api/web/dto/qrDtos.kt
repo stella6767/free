@@ -43,6 +43,4 @@ data class CallReqDto(
     val phoneNumber:String,
 )
 
-data class PDFReqDto(
-    val file: MultipartFile,
-)
+

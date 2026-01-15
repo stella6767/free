@@ -25,7 +25,6 @@ import freeapp.life.stella.api.web.dto.WifiReqDto
 
 import jakarta.persistence.EntityNotFoundException
 import mu.KotlinLogging
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
@@ -39,10 +38,12 @@ class QrService(
     private val s3Service: S3Service,
 ) {
 
-    private val log = KotlinLogging.logger {  }
+    private val log = KotlinLogging.logger { }
 
     private val inValidCharacters =
         setOf('\\', '{', '^', '}', '%', '`', ']', '\"', '>', '[', '~', '<', '#', '|')
+
+    private val folderName = "QR"
 
 
     fun generateStaticQRCodeByType(
@@ -50,18 +51,23 @@ class QrService(
         qrReqDto: HashMap<String, Any>,
         file: MultipartFile?
     ): String {
+
+        log.debug { file?.originalFilename }
+
         return when (type) {
             QrGeneratorType.LINK, QrGeneratorType.TEXT -> {
                 val textReqDto =
                     mapper.convertValue(qrReqDto, TextReqDto::class.java)
                 generateStaticQRCode(textReqDto.text)
             }
+
             QrGeneratorType.WIFI -> {
                 val wifiDto =
                     mapper.convertValue(qrReqDto, WifiReqDto::class.java)
                 val qrValue = "WIFI:T:${wifiDto.encryption};S:${wifiDto.ssid};P:${wifiDto.password};;"
                 generateStaticQRCode(qrValue)
             }
+
             QrGeneratorType.VCARD -> {
                 val vCardDto =
                     mapper.convertValue(qrReqDto, VCardReqDto::class.java)
@@ -82,9 +88,8 @@ class QrService(
                 println(qrValue)
                 generateStaticQRCode(qrValue)
             }
-
             QrGeneratorType.PDF -> {
-                generateDynamicQRCode(file!!)
+                generateDynamicQRCode(file ?: throw EntityNotFoundException("file is null"), folderName)
             }
         }
 
@@ -118,15 +123,15 @@ class QrService(
 
 
     fun generateDynamicQRCode(
-        file: MultipartFile
+        file: MultipartFile,
+        folderName: String
     ): String {
 
         val dynamicUrl =
-            s3Service.putObject(file)
+            s3Service.putObject(file, folderName)
 
         return generateStaticQRCode(dynamicUrl)
     }
-
 
 
     fun initiateUpload(
@@ -183,8 +188,6 @@ class QrService(
 
         s3Service.abortUpload(s3UploadAbortDto)
     }
-
-
 
 
 }

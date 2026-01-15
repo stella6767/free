@@ -40,6 +40,9 @@ class PostService(
 
     private val log = KotlinLogging.logger { }
 
+    private val folderName = "Blog"
+
+
     @PostConstruct
     fun init() {
         val posts = findAll()
@@ -215,7 +218,7 @@ class PostService(
 
     fun savePostImg(file: MultipartFile): String {
 
-        return s3Service.putObject(file)
+        return s3Service.putObject(file, folderName)
     }
 
 

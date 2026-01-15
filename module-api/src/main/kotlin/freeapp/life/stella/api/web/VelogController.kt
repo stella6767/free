@@ -25,7 +25,7 @@ class VelogController(
         model: Model,
     ): String {
 
-        model.addAttribute("htmlContent", ClassPathResource("static/velog-README.md").getMarkdownValueFormLocal())
+        model.addAttribute("htmlContent", ClassPathResource("static/doc/velog-README.md").getMarkdownValueFormLocal())
 
         return "page/velog"
     }

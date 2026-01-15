@@ -74,11 +74,24 @@
         <button
                 onclick="var input = document.getElementById('fileInput')
                    input.click(); input.classList.remove('hidden')  "
-                class="mt-2 w-1/2 border rounded p-2 h-[50px] cursor-pointer hover:bg-[#b4b4b480]" >
+                class="mt-2 w-1/2 border rounded p-2 h-[50px] cursor-pointer hover:bg-[#b4b4b480]">
             Upload Now
         </button>
         <input type="file" id="fileInput" name="file"
-               class="hidden">
+               class="hidden"
+               onchange="
+                const f=this.files && this.files[0];
+                const limit=100*1024*1024;
+                const el=document.querySelector('#fileInputError');
+                el.innerHTML='';
+                if(!f) return;
+                if(f.size>limit){
+                  this.value='';
+                  if(el) el.innerHTML=`<div class='p-3 text-red-600'>파일이 너무 큽니다. 최대 100MB까지 업로드할 수 있어요.</div>`;
+                }
+            ">
+
+        <div id="fileInputError"></div>
 
     @else
         <div></div>

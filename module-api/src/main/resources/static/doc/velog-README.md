@@ -8,6 +8,8 @@
 
 https://v2cdn.velog.io/
 
+![secret_val.png](../img/velog-introduction1.png)
+
 
 ## Velog Username 을 입력합니다
 
@@ -16,6 +18,7 @@ https://v2cdn.velog.io/
 3. 시간 여유 있으면, 추후 몇가지 기능 개발 여부 생각중..
 
 
+![secret_val.png](../img/velog-introduction2.png)
 
 
 

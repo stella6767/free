@@ -27,7 +27,7 @@ class IndexController(
         model: Model,
     ): String {
 
-        val value = ClassPathResource("static/README-korea2.md").getMarkdownValueFormLocal()
+        val value = ClassPathResource("static/doc/README-korea2.md").getMarkdownValueFormLocal()
         model.addAttribute("value", value)
         model.addAttribute("isCenter", false)
 
@@ -39,7 +39,7 @@ class IndexController(
         model: Model,
     ): String {
 
-        model.addAttribute("value", ClassPathResource("static/README-korea.md").getMarkdownValueFormLocal())
+        model.addAttribute("value", ClassPathResource("static/doc/README-korea.md").getMarkdownValueFormLocal())
 
         return "page/readme"
     }

@@ -1,7 +1,8 @@
 @import freeapp.life.stella.api.web.dto.QrGeneratorType
-@param  type:QrGeneratorType
-@param imageData:String  = ""
 
+@param  type:QrGeneratorType? = null
+
+@param imageData:String  = ""
 @param isGenerated:Boolean  = false
 
 
@@ -25,7 +26,7 @@
         <button
                 hx-encoding="multipart/form-data"
                 id="qr-generate-btn"
-                hx-post="/qr/code?type=${type.name}"
+                hx-post="/qr/code?type=${type?.name}"
                 hx-target="#qr-container"
                 hx-include="#main-input-form"
                 hx-indicator="#spinner"

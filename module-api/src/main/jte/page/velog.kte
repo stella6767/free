@@ -4,7 +4,7 @@
 @template.layout.main(bodyContent = @`
 
 
-    <div class="min-h-screen container mx-auto px-4 sm:px-8 lg:px-16 ">
+    <div class="min-h-screen container mx-auto px-4 sm:px-8 lg:px-16 font-pretendard">
         <div class="flex justify-between mb-5">
             <input id="username" name="username" placeholder="input username" class="input input-bordered w-full max-w-xs mt-3" required />
             <button>

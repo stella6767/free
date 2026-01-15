@@ -18,13 +18,13 @@ enum class SignType(
     GOOGLE(
         "Google",
         "/oauth2/authorization/google",
-        "/img/google-mark.svg"
+        "/img/icon/google-mark.svg"
     ),
 
     GITHUB(
         "GitHub",
         "/oauth2/authorization/github",
-        "/img/github-mark.png"
+        "/img/icon/github-mark.png"
     ),
 
     ;

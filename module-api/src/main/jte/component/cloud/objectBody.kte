@@ -1,0 +1,120 @@
+@import freeapp.life.stella.api.web.dto.*
+
+@param objects: List<S3ObjectInfo>
+@param continuationToken:String
+@param isLast: Boolean
+@param currentPath: String
+
+
+@if(objects.isEmpty())
+    <tr>
+        <td colspan="4" class="text-center py-8">
+            <div class="flex flex-col items-center">
+                <svg class="w-16 h-16 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+                </svg>
+                <p class="text-lg font-medium text-gray-400">객체가 없습니다</p>
+                <p class="text-sm text-gray-400 mt-1">이 경로에는 파일이나 폴더가 없습니다</p>
+            </div>
+        </td>
+    </tr>
+
+
+
+
+@else
+
+
+    @for(obj in objects)
+
+        @if(obj.isDirectory)
+            <tr
+                    class="hover:bg-base-200 cursor-pointer"
+                    hx-get="/cloud/browser"
+                    hx-vals='{"prefix": "${obj.key}"}'
+                    hx-target="#objects-container"
+                    hx-include="#size-select"
+            >
+
+                <td class="checkbox-column">
+                    <input type="checkbox" class="row-checkbox checkbox" value="2"
+                           hx-on-change="
+                             if (!this.checked) {
+                               htmx.find('#check-all').checked = false;
+                             }
+                       "
+                    >
+                </td>
+
+                <td>
+                    <span class="text-2xl">${obj.getFileIcon()}</span>
+                </td>
+                <td>
+                    <div class="flex items-center gap-2">
+                        <span class="font-medium">${obj.key}</span>
+                    </div>
+                </td>
+                <td>
+                    <span class="text-gray-400">-</span>
+
+                </td>
+                <td>
+                    <span class="text-sm">-</span>
+                </td>
+            </tr>
+        @else
+            <tr
+                    class="hover:bg-base-200 cursor-pointer"
+            >
+
+                <td class="checkbox-column">
+                    <input type="checkbox"
+                           name="fileKey"
+                           class="row-checkbox checkbox"
+                           value="${obj.key}"
+                           hx-on-change="
+                            let count = htmx.findAll(htmx.closest(this, 'table'), '.row-checkbox:checked').length;
+                            htmx.find('#download-btn').disabled = (count !== 1);
+                            "
+                    >
+                </td>
+
+                <td>
+                    <span class="text-2xl">${obj.getFileIcon()}</span>
+                </td>
+                <td>
+                    <div class="flex items-center gap-2">
+                        <span class="font-medium truncate">${obj.name}</span>
+                        @if(!obj.isDirectory && obj.extension.isNotEmpty())
+                            <span class="badge badge-ghost badge-sm">${obj.extension}</span>
+                        @endif
+                    </div>
+                </td>
+                <td>
+
+                    <span class="text-sm">${obj.getFormattedSize()}</span>
+
+                </td>
+                <td>
+                    <span class="text-sm">${obj.getFormattedDate()}</span>
+                </td>
+
+            </tr>
+        @endif
+    @endfor
+
+    @if(continuationToken.isNotEmpty() && !isLast)
+        <tr id="loader-row"
+            hx-indicator="#spinner"
+            hx-get="/cloud/browser/rows?continuationToken=${continuationToken}"
+            hx-include="#size-select"
+            hx-trigger="revealed"
+            hx-swap="outerHTML">
+            <img id="spinner" class="htmx-indicator" src="/img/icon/spinning-circles.svg"/>
+        </tr>
+    @endif
+
+@endif
+
+

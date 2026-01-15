@@ -12,6 +12,7 @@ import freeapp.life.stella.api.web.dto.S3ConnectionRequestDto
 import freeapp.life.stella.api.web.dto.S3UploadAbortDto
 import freeapp.life.stella.api.web.dto.S3UploadCompleteDto
 import freeapp.life.stella.api.web.dto.S3UploadResultDto
+import freeapp.life.stella.api.web.dto.S3keyInfo
 import freeapp.life.stella.api.web.dto.UploadInitiateResponseDto
 
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxRedirectView
@@ -37,6 +38,79 @@ class CloudUploaderController(
     private val mapper: ObjectMapper,
 ) {
 
+
+    @GetMapping("/")
+    fun connectionPage(
+        model: Model,
+        @AuthenticationPrincipal principal: UserPrincipal?,
+    ): String {
+
+        if (principal != null) {
+            cloudUploaderService.findCloudKeyByUser(principal.user)?.let {
+                model.addAttribute("s3Key", S3keyInfo.fromEntity(it))
+            }
+        }
+
+        return "page/cloud/connect"
+    }
+
+
+
+    @HxRequest
+    @PostMapping("/connect")
+    fun connect(
+        @AuthenticationPrincipal principal: UserPrincipal,
+        @Valid s3ConnectionRequestDto: S3ConnectionRequestDto,
+        model: Model
+    ): HtmxRedirectView {
+
+        cloudUploaderService.testConnection(s3ConnectionRequestDto)
+        cloudUploaderService.saveCloudKey(principal.user, s3ConnectionRequestDto)
+
+        return HtmxRedirectView("/cloud/browser")
+    }
+
+
+    @GetMapping("/browser")
+    fun s3Browser(
+        model: Model,
+        htmxRequest: HtmxRequest,
+        dto: S3BrowserRequestDto,
+        @AuthenticationPrincipal principal: UserPrincipal,
+    ): FragmentsRendering {
+
+        val s3Key =
+            cloudUploaderService.findCloudKeyByUser(user = principal.user)
+                ?: throw EntityNotFoundException("s3Key not found")
+
+        val objects =
+            cloudUploaderService.getObjectsByCloudKey(s3Key, dto.prefix, dto.size, dto.continuationToken)
+
+        val finalObjects =
+            cloudUploaderService.buildBreadcrumbs(dto.prefix, objects.objects)
+
+        model.addAttribute("bucket", s3Key.bucket)
+        model.addAttribute("objects", finalObjects)
+        model.addAttribute("size", dto.size)
+        model.addAttribute("continuationToken", objects.continuationToken)
+        model.addAttribute("currentPath", dto.prefix)
+        model.addAttribute("isLast", objects.isLast)
+
+        if (htmxRequest.isHtmxRequest) {
+            //model.asMap()
+            return FragmentsRendering
+                .with("component/cloud/objectList")
+                .fragment("component/cloud/cloudNavbar")
+                .build()
+        }
+
+        return FragmentsRendering.with("page/cloud/browser").build()
+    }
+
+
+
+
+
     @GetMapping("/upload")
     fun uploadPage(
         model: Model,
@@ -52,11 +126,7 @@ class CloudUploaderController(
         model.addAttribute("currentPath", currentPath)
         model.addAttribute("bucket", s3Key.bucket)
 
-        if (htmxRequest.isHtmxRequest) {
-            return "components/s3/uploadForm"
-        }
-
-        return "page/upload"
+        return "page/cloud/upload"
     }
 
 
@@ -133,19 +203,6 @@ class CloudUploaderController(
     }
 
 
-    @HxRequest
-    @PostMapping("/connect")
-    fun connect(
-        @AuthenticationPrincipal principal: UserPrincipal,
-        @Valid s3ConnectionRequestDto: S3ConnectionRequestDto,
-        model: Model
-    ): HtmxRedirectView {
-
-        cloudUploaderService.testConnection(s3ConnectionRequestDto)
-        cloudUploaderService.saveCloudKey(principal.user, s3ConnectionRequestDto)
-
-        return HtmxRedirectView("/s3/browser")
-    }
 
 
     @HxRequest
@@ -158,41 +215,6 @@ class CloudUploaderController(
     }
 
 
-    @GetMapping("/browser")
-    fun s3Browser(
-        model: Model,
-        htmxRequest: HtmxRequest,
-        dto: S3BrowserRequestDto,
-        @AuthenticationPrincipal principal: UserPrincipal,
-    ): FragmentsRendering {
-
-        val s3Key =
-            cloudUploaderService.findCloudKeyByUser(user = principal.user)
-                ?: throw EntityNotFoundException("s3Key not found")
-
-        val objects =
-            cloudUploaderService.getObjectsByCloudKey(s3Key, dto.prefix, dto.size, dto.continuationToken)
-
-        val finalObjects =
-            cloudUploaderService.buildBreadcrumbs(dto.prefix, objects.objects)
-
-        model.addAttribute("bucket", s3Key.bucket)
-        model.addAttribute("objects", finalObjects)
-        model.addAttribute("size", dto.size)
-        model.addAttribute("continuationToken", objects.continuationToken)
-        model.addAttribute("currentPath", dto.prefix)
-        model.addAttribute("isLast", objects.isLast)
-
-        if (htmxRequest.isHtmxRequest) {
-            //model.asMap()
-            return FragmentsRendering
-                .with("components/s3/objectList")
-                .fragment("components/s3/s3BtnNavbar")
-                .build()
-        }
-
-        return FragmentsRendering.with("page/s3Browser").build()
-    }
 
     @HxRequest
     @GetMapping("/browser/rows")
@@ -219,7 +241,7 @@ class CloudUploaderController(
         model.addAttribute("currentPath", dto.prefix)
 
 
-        return "components/s3/objectBody"
+        return "component/cloud/objectBody"
     }
 
     @GetMapping("/download")

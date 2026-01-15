@@ -53,7 +53,11 @@ class CloudUploaderService(
                 req.region
             )
 
-        s3Client.headBucket(HeadBucketRequest.builder().bucket(req.bucket).build())
+        s3Client.listObjectsV2 {
+            it.bucket(req.bucket)
+            it.maxKeys(1)
+        }
+
         s3Client.close()
     }
 

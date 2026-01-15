@@ -36,7 +36,7 @@ class PostController(
         model.addAttribute("posts", posts)
         model.addAttribute("currentSort", pageable.sort.first().direction.name)
 
-        return "page/post"
+        return "page/blog/post"
     }
 
 
@@ -53,7 +53,7 @@ class PostController(
         model.addAttribute("post", post)
         model.addAttribute("userId", userPrincipal?.user?.id)
 
-        return "page/postDetail"
+        return "page/blog/postDetail"
     }
 
 
@@ -71,7 +71,7 @@ class PostController(
         model.addAttribute("currentSort", pageable.sort.first().direction.name)
 
 
-        return "component/post/postView"
+        return "component/blog/postView"
     }
 
 
@@ -87,7 +87,7 @@ class PostController(
         model.addAttribute("userId", userPrincipal?.user?.id)
         model.addAttribute("post", post)
 
-        return "component/post/postDetailView"
+        return "component/blog/postDetailView"
     }
 
 
@@ -152,7 +152,7 @@ class PostController(
         model.addAttribute("posts", posts)
         model.addAttribute("tagName", tagName)
 
-        return "component/post/postByTagView"
+        return "component/blog/postByTagView"
     }
 
 
@@ -178,7 +178,7 @@ class PostController(
         model.addAttribute("post", post)
         model.addAttribute("page", page)
 
-        return "component/post/postEditorView"
+        return "component/blog/postEditorView"
     }
 
 
@@ -195,7 +195,7 @@ class PostController(
         model.addAttribute("posts", posts)
         model.addAttribute("tagName", tagName)
 
-        return  "page/postByTag"
+        return  "page/blog/postByTag"
     }
 
 

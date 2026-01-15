@@ -30,11 +30,11 @@
     </div>
     <div class="mt-2">
         @for (postTag in post.postTags)
-            @template.component.post.tagView(tagName = postTag)
+            @template.component.blog.tagView(tagName = postTag)
         @endfor
     </div>
 
-    @template.component.post.postModalView(post = post) 
+    @template.component.blog.postModalView(post = post)
     
     <%-- ${post.content} --%>
     <div id="post-detail-viewer-content-${post.id}" class="mt-5 overflow-x-auto">

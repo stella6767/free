@@ -1,0 +1,19 @@
+<div id="upload-progress-view" class="hidden">
+    <div role="alert" class="alert alert-info text-white p-6 rounded-lg">
+        <div class="w-full">
+            <div class="flex justify-between items-center mb-2">
+                <h3 class="font-bold">업로드 중</h3>
+                <button id="cancel-upload-btn" class="btn btn-sm btn-outline border-white text-white hover:bg-white hover:text-info">취소</button>
+            </div>
+            <progress id="overall-progress-bar" class="progress progress-primary w-full" value="0" max="100"></progress>
+            <div class="flex justify-end text-sm font-semibold mt-1">
+                <span id="overall-progress-percent">0%</span>
+            </div>
+            <div class="text-xs mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <div>남은 합계: <span id="files-remaining-stats">-</span></div>
+                <div>남은 예상 시간: <span id="time-remaining-stats">-</span></div>
+                <div>전송 속도: <span id="speed-stats">-</span></div>
+            </div>
+        </div>
+    </div>
+</div>

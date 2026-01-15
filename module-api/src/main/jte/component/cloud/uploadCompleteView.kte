@@ -1,0 +1,27 @@
+@param bucket:String
+@param currentPath:String
+
+<div id="upload-complete-view" class="hidden">
+    <div role="alert" class="alert alert-success text-white mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span>업로드 완료: 자세한 내용은 아래를 참고하세요.</span>
+        <button id="close-report-btn" class="btn btn-sm btn-ghost">닫기</button>
+    </div>
+    <div class="bg-base-200 border rounded-lg p-6">
+        <h3 class="text-lg font-bold mb-4">요약</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+                <div class="font-semibold">대상</div>
+                <div class="font-mono text-sm break-all">s3://${bucket}/${currentPath}</div>
+            </div>
+            <div>
+                <div class="font-semibold text-success">성공</div>
+                <div id="successful-files-stats" class="text-sm">-</div>
+            </div>
+            <div>
+                <div class="font-semibold text-error">실패</div>
+                <div id="failed-files-stats" class="text-sm">-</div>
+            </div>
+        </div>
+    </div>
+</div>

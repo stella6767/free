@@ -1,0 +1,112 @@
+@param bucket:String
+@param currentPath:String
+
+@template.layout.main(bodyContent  = @`
+
+    <section id="main-container"
+          class="base-container"
+          hx-on--load="initUploadJS()"
+    >
+        <div class="flex justify-between border-b pb-4 mb-6">
+            <h1 class="text-2xl font-semibold">업로드</h1>
+
+            <button id="close-btn" class="btn hidden">
+                <a href="/cloud/browser?prefix=${currentPath}">
+                    닫기
+                </a>
+            </button>
+
+        </div>
+
+        @template.component.cloud.uploadProgressView()
+        @template.component.cloud.uploadCompleteView(bucket = bucket, currentPath = currentPath)
+
+        <input type="hidden" value="${currentPath}" name="currentPath"/>
+
+        <div id="drop-zone"
+             class="border-2 border-dashed rounded-lg p-8 text-center bg-base-200 hover:border-primary cursor-pointer transition-colors">
+            <div class="flex flex-col items-center justify-center gap-4">
+                <svg class="w-12 h-12 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                     stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M12 16.5V9.75m0 0l-3 3m3-3l3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.33-2.33 3 3 0 013.75 5.625"/>
+                </svg>
+                <p class="text-lg font-medium text-base-content">여기에 파일을 끌어 놓으십시오</p>
+
+            </div>
+            <input type="file" id="file-input" class="hidden" multiple>
+            <input type="file" id="folder-input" class="hidden" webkitdirectory directory>
+        </div>
+
+        <div id="file-list-section" class="mt-8">
+            <div class="flex flex-wrap justify-between items-center gap-4 mb-4">
+                <h2 class="text-xl font-semibold">파일 및 폴더 (<span id="file-count">0</span>)</h2>
+                <div class="flex gap-2">
+                    <button id="clear-btn" class="btn btn-ghost" disabled>지우기</button>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <p class="text-sm mb-1">총 파일 크기: <span id="total-size">0 B</span></p>
+                <progress id="total-progress" class="progress progress-primary w-full" value="0" max="100"></progress>
+            </div>
+
+            <div class="overflow-x-auto border rounded-lg">
+                <table class="table w-full">
+                    <thead>
+                    <tr>
+                        <th><input type="checkbox" id="check-all" class="checkbox"></th>
+                        <th>이름</th>
+                        <th>유형</th>
+                        <th>크기</th>
+                        <th>상태</th>
+                    </tr>
+                    </thead>
+                    <tbody id="file-list-tbody">
+                    <tr id="empty-row">
+                        <td colspan="5" class="text-center text-gray-400 py-6">파일이 없습니다. 파일을 추가하거나 끌어다 놓으세요.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <h2 class="text-xl font-semibold mb-4">대상</h2>
+            <div class="form-control">
+                <label class="label"><span class="label-text">S3 대상 경로</span></label>
+                <div class="border rounded-lg p-4 bg-base-200">
+                    <span class="font-mono">s3://${bucket}/${currentPath}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4 space-y-2">
+            <div class="collapse collapse-arrow bg-base-200">
+                <input type="checkbox"/>
+                <div class="collapse-title text-md font-medium">업로드 세부 정보</div>
+                <div class="collapse-content">
+                    <p>업로드 관련 세부 설정(스토리지 클래스, 암호화 등)을 여기에 배치합니다.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-end gap-4 mt-8 pt-4 border-t">
+            <button id="cancel-btn"
+                    class="btn"
+                    <%--                hx-get="/s3/browser"--%>
+                    <%--                hx-vals='{"prefix": ${currentPath}}'--%>
+                    <%--                hx-target="#objects-container"--%>
+            >
+                <a href="/cloud/browser?prefix=${currentPath}">
+                    취소
+                </a>
+            </button>
+            <button id="upload-btn" class="btn btn-primary" disabled>업로드</button>
+        </div>
+
+    </section>
+
+
+
+`)

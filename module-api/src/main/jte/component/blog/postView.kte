@@ -15,13 +15,13 @@
          hx-swap="afterend"
     >
         @for (post in posts.content)
-            @template.component.post.postCardView(post = post)
+            @template.component.blog.postCardView(post = post)
         @endfor
     </div>
 @else
     <div class="grid grid-cols-4 gap-4">
         @for (post in posts.content)
-            @template.component.post.postCardView(post = post)
+            @template.component.blog.postCardView(post = post)
         @endfor
     </div>
 @endif

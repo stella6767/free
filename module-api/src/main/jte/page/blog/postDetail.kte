@@ -6,6 +6,6 @@
 
 @template.layout.main(bodyContent = @`
 
-    @template.component.post.postDetailView(userId = userId, post = post)
+    @template.component.blog.postDetailView(userId = userId, post = post)
 
 `)

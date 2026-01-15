@@ -13,13 +13,13 @@
          hx-trigger="revealed"
          hx-swap="afterend">
         @for (post in posts.content)
-            @template.component.post.postCardView(post = post)
+            @template.component.blog.postCardView(post = post)
         @endfor
     </div>
 @else
     <div class="container m-auto" id="posts-tag-container">
         @for (post in posts.content)
-            @template.component.post.postCardView(post = post)
+            @template.component.blog.postCardView(post = post)
         @endfor
     </div>
 @endif

@@ -1,0 +1,84 @@
+@import freeapp.life.stella.api.web.dto.*
+@import org.springframework.data.domain.Page
+
+@param bucket: String
+@param objects: List<S3ObjectInfo>
+@param currentPath: String
+@param size: Int
+@param continuationToken:String
+@param isLast: Boolean
+
+@template.layout.main(bodyContent =  @`
+
+
+    <section id="s3-list-container" class="base-container">
+        <!-- Header -->
+        <div class="navbar bg-base-100 border-b mb-6">
+            <div class="navbar-start">
+                <h1 class="text-2xl font-bold text-primary">${bucket}</h1>
+            </div>
+
+            @template.component.cloud.cloudNavbar(currentPath = currentPath)
+
+        </div>
+
+
+        <div class="flex justify-between items-center mb-2">
+            <div
+                    class="input-group flex gap-1"
+                    hx-trigger="keydown[key=='Enter'] from:#search-input, click from:#search-input-btn"
+                    hx-include="#search-input"
+                    hx-on--after-request="document.getElementById('search-input').value = '';"
+                    hx-get="/cloud/browser"
+                    hx-target="#objects-container"
+                    hx-swap="outerHTML"
+            >
+                <input type="text"
+                       id="search-input"
+                       name="prefix"
+                       placeholder="접두사로 객체 찾기"
+                       class="input input-bordered flex-1"
+                />
+                <button
+                        id="search-input-btn"
+                        class="btn btn-square"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </button>
+
+
+            </div>
+            <div class="flex items-center gap-2">
+                <label class="text-sm">페이지당 표시:</label>
+                <select id="size-select"
+                        name="size"
+                        class="select select-bordered select-sm"
+                        hx-get="/cloud/browser"
+                        hx-trigger="change"
+                        hx-target="#objects-container"
+                        hx-swap="outerHTML"
+                >
+                    <option value="20" selected="${size == 20}">20개</option>
+                    <option value="50" selected="${size == 50}">50개</option>
+                    <option value="100" selected="${size == 100}">100개</option>
+                </select>
+            </div>
+        </div>
+
+
+        <!-- Objects List -->
+        @template.component.cloud.objectList(
+        objects = objects,
+        currentPath = currentPath,
+        continuationToken = continuationToken,
+        isLast= isLast
+        )
+
+    </section>
+
+
+`)

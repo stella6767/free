@@ -86,15 +86,13 @@
                 <td>
                     <div class="flex items-center gap-2">
                         <span class="font-medium truncate">${obj.name}</span>
-                        @if(!obj.isDirectory && obj.extension.isNotEmpty())
-                            <span class="badge badge-ghost badge-sm">${obj.extension}</span>
-                        @endif
+<%--                        @if(!obj.isDirectory && obj.extension.isNotEmpty())--%>
+<%--                            <span class="badge badge-ghost badge-sm">${obj.extension}</span>--%>
+<%--                        @endif--%>
                     </div>
                 </td>
                 <td>
-
                     <span class="text-sm">${obj.getFormattedSize()}</span>
-
                 </td>
                 <td>
                     <span class="text-sm">${obj.getFormattedDate()}</span>

@@ -7,6 +7,13 @@
 >
 
 
+    <a href="/cloud/"
+            class="btn btn-outline btn-sm mr-2"
+    >
+        뒤로가기
+    </a>
+
+
     <button id="download-btn" class="btn btn-outline btn-sm mr-2"
             hx-get="/cloud/download"
             hx-indicator="#download-spinner"
@@ -26,6 +33,7 @@
         다운로드
         <img id="download-spinner" class="htmx-indicator" src="/img/icon/spinning-circles.svg"/>
     </button>
+
 
     <button id="upload-btn"
             class="btn btn-outline btn-sm mr-2"

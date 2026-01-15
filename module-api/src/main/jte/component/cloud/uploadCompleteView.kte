@@ -2,10 +2,12 @@
 @param currentPath:String
 
 <div id="upload-complete-view" class="hidden">
-    <div role="alert" class="alert alert-success text-white mb-4">
+    <div role="alert" class="alert alert-success mb-4 py-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-        <span>업로드 완료: 자세한 내용은 아래를 참고하세요.</span>
-        <button id="close-report-btn" class="btn btn-sm btn-ghost">닫기</button>
+        <span id="upload-complete-message" >
+
+        </span>
+        <button id="close-report-btn" class="btn btn-sm btn-ghost ">닫기</button>
     </div>
     <div class="bg-base-200 border rounded-lg p-6">
         <h3 class="text-lg font-bold mb-4">요약</h3>

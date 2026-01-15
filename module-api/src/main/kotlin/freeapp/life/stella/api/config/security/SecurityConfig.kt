@@ -223,7 +223,6 @@ class SecurityConfig(
     }
 
 
-
     fun corsConfigurationSource(): CorsConfigurationSource {
         val configuration = CorsConfiguration()
         configuration.allowedOrigins = listOf("*")

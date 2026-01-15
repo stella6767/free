@@ -18,6 +18,7 @@
 
     <script defer src="/js/htmx.min.js"></script>
     <script defer src="/js/util.js"></script>
+    <script defer src="/js/upload.js"></script>
     <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/multi-swap.js" defer></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/loading-states.js" defer></script>
     <script type="module" src="https://md-block.verou.me/md-block.js"></script>

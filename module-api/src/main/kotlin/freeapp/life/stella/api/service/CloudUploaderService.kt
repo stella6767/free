@@ -189,8 +189,7 @@ class CloudUploaderService(
         fileSize: Long,
     ): UploadInitiateResponseDto {
 
-        val fileKey =
-            targetObjectDir + File.separator + filename
+        val fileKey = "$targetObjectDir/$filename"
 
         if (fileSize <= UPLOAD_THRESHOLD) {
             return UploadInitiateResponseDto(

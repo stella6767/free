@@ -257,7 +257,7 @@ class CloudUploaderController(
                 ?: throw EntityNotFoundException("s3Key not found")
 
         val downloadDto =
-            cloudUploaderService.getDownloadPresignedUrl(principal.user, s3Key.bucket)
+            cloudUploaderService.getDownloadPresignedUrl(principal.user, fileKey)
 
         // JSON 생성: {"eventName":{"key":"value"}}
         val triggerJson =

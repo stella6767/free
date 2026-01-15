@@ -68,7 +68,7 @@ class S3Config {
     fun s3PreSigner(): S3Presigner {
 
         val s3Configuration = S3Configuration.builder()
-            .accelerateModeEnabled(true)
+            .accelerateModeEnabled(false)
             .build()
 
         return S3Presigner

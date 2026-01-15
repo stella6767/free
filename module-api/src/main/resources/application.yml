@@ -54,6 +54,10 @@ management:
 ---
 
 server:
+  servlet:
+    session:
+      timeout: 12h
+
   config:
     activate:
       on-profile:

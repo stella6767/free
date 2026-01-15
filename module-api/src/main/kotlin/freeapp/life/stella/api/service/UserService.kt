@@ -1,6 +1,7 @@
 package freeapp.life.stella.api.service
 
 
+import freeapp.life.stella.api.service.file.S3Service
 import freeapp.life.stella.api.util.clearSecurityContext
 import freeapp.life.stella.api.web.dto.UpdateProfileDto
 import freeapp.life.stella.api.web.dto.UserDeleteRequestDto
@@ -19,11 +20,11 @@ import org.springframework.web.multipart.MultipartFile
 @Service
 class UserService(
     private val userRepository: UserRepository,
+    private val s3Service: S3Service,
     private val encoder: PasswordEncoder,
 ) {
 
     private val log = KotlinLogging.logger { }
-
 
 
     @Transactional
@@ -31,7 +32,7 @@ class UserService(
 
         val users = userRepository.findAll()
 
-        return  if (users.isEmpty()){
+        return if (users.isEmpty()) {
             val rootUser = User(
                 email = "dummy@example.com",
                 password = encoder.encode("1234"),
@@ -42,7 +43,7 @@ class UserService(
                 signType = SignType.EMAIL,
             )
             userRepository.save(rootUser)
-        }else{
+        } else {
             userRepository.findByIdOrNull(1) ?: throw EntityNotFoundException("user with id 1 not found")
         }
 
@@ -84,6 +85,10 @@ class UserService(
 
         log.debug { "Update user $profileDto ${file?.originalFilename}" }
 
+        val profileUrl = if (file != null) {
+            s3Service.putObject(file, "profile")
+        } else ""
+
         val user =
             userRepository.findByIdOrNull(userId)
                 ?: throw EntityNotFoundException("can not find user with id ${userId}")
@@ -92,7 +97,7 @@ class UserService(
             encoder.encode(profileDto.password)
         } else ""
 
-        user.update(profileDto.username, encPassword)
+        user.update(profileDto.username, encPassword, profileUrl)
 
         //principal.user = user //세션동기화
         return UserResponseDto.fromEntity(user)

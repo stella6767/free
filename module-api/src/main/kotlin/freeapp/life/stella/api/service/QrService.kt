@@ -14,11 +14,7 @@ import freeapp.life.stella.api.web.dto.CallReqDto
 import freeapp.life.stella.api.web.dto.InitialUploadDto
 import freeapp.life.stella.api.web.dto.InitialUploadReqDto
 import freeapp.life.stella.api.web.dto.QrGeneratorType
-import freeapp.life.stella.api.web.dto.S3UploadAbortDto
-import freeapp.life.stella.api.web.dto.S3UploadCompleteDto
-import freeapp.life.stella.api.web.dto.S3UploadResultDto
-import freeapp.life.stella.api.web.dto.S3UploadSignedUrlDto
-import freeapp.life.stella.api.web.dto.S3UploadSignedUrlResDto
+
 import freeapp.life.stella.api.web.dto.TextReqDto
 import freeapp.life.stella.api.web.dto.VCardReqDto
 import freeapp.life.stella.api.web.dto.WifiReqDto
@@ -134,60 +130,8 @@ class QrService(
     }
 
 
-    fun initiateUpload(
-        principalDetails: UserPrincipal,
-        initialUploadReqDto: InitialUploadReqDto,
-    ): InitialUploadDto {
-
-        var filename = initialUploadReqDto.filename
-
-        if (filename.any { it in inValidCharacters }) {
-            throw IllegalArgumentException("filename has invalid characters")
-        }
-
-        filename = if (filename.contains(customDelimiter)) {
-            filename.replace(customDelimiter, "")
-        } else filename
-
-        val no = generateRandomNumberString()
-        val createdFileName = addNoFromFilename(filename, no)
-
-        val initiateUpload =
-            s3Service.initiateUpload("test", createdFileName)
 
 
-        return initiateUpload
-    }
-
-
-    fun getUploadSignedUrl(
-        s3UploadSignedUrlDto: S3UploadSignedUrlDto
-    ): S3UploadSignedUrlResDto {
-
-        val uploadSignedUrl = s3Service.getUploadSignedUrl(s3UploadSignedUrlDto)
-
-        return S3UploadSignedUrlResDto(
-            partNumber = s3UploadSignedUrlDto.partNumber,
-            uploadSignedUrl
-        )
-    }
-
-
-    @Transactional
-    fun completeUpload(s3UploadCompleteDto: S3UploadCompleteDto): S3UploadResultDto {
-
-        val completeUpload =
-            s3Service.completeUpload(s3UploadCompleteDto)
-
-        return completeUpload
-    }
-
-
-    @Transactional
-    fun abortUpload(s3UploadAbortDto: S3UploadAbortDto) {
-
-        s3Service.abortUpload(s3UploadAbortDto)
-    }
 
 
 }

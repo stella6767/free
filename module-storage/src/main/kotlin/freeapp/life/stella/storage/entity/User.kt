@@ -45,7 +45,7 @@ class User(
     val rawData = rawData
 
     @Column(name = "profile_img", length = 500)
-    val profileImg = profileImg
+    var profileImg = profileImg
 
     @Enumerated(EnumType.STRING)
     val role = role
@@ -76,8 +76,11 @@ class User(
         this.deleteReason = reason
     }
 
-    fun update(username: String, encPassword: String) {
+    fun update(username: String, encPassword: String, profileUrl: String) {
         this.username = username
+        if (profileUrl.isNotBlank()) {
+            this.profileImg = profileUrl
+        }
         if (encPassword.isNotBlank()) {
             this.password = encPassword
         }

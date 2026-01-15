@@ -1,25 +1,28 @@
 package freeapp.life.stella.api.service.file
 
 
-import freeapp.life.stella.api.util.customDelimiter
 import freeapp.life.stella.api.util.generateRandomNumberString
-import freeapp.life.stella.api.web.dto.InitialUploadDto
-import freeapp.life.stella.api.web.dto.S3UploadAbortDto
-import freeapp.life.stella.api.web.dto.S3UploadCompleteDto
-import freeapp.life.stella.api.web.dto.S3UploadResultDto
-import freeapp.life.stella.api.web.dto.S3UploadSignedUrlDto
+import freeapp.life.stella.api.web.dto.DownloadDto
+import freeapp.life.stella.api.web.dto.S3UploadPartsDetailDto
+
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.Resource
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider
 import software.amazon.awssdk.core.sync.RequestBody
+import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.s3.S3Client
 import software.amazon.awssdk.services.s3.model.*
 import software.amazon.awssdk.services.s3.presigner.S3Presigner
+import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest
+import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest
 import software.amazon.awssdk.services.s3.presigner.model.UploadPartPresignRequest
-import java.io.File
 import java.io.FileNotFoundException
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 import java.time.Duration
 
 
@@ -38,8 +41,9 @@ class S3Service(
     @Value("s3://[S3_BUCKET_NAME]/[FILE_NAME]")
     private val s3Resource: Resource? = null
 
-//    @Value("\${s3.url}")
-//    private lateinit var staticUrl: String
+    @Value("\${cloud.aws.cloudFront.url}")
+    private lateinit var staticUrl: String
+
 
     private val s3Utilities = s3Client.utilities()
 
@@ -76,68 +80,155 @@ class S3Service(
             .build()
 
         val url = s3Utilities.getUrl(getUrlRequest)
-
         log.debug { "url is $url" }
-
-        return url.toString()
+        return staticUrl + key
     }
 
 
-    fun initiateUpload(
-        dirname: String,
-        filename: String
-    ): InitialUploadDto {
+    fun createS3Client(
+        accessKey: String,
+        secretKey: String,
+        region: String,
+    ): S3Client {
 
-        val fileKey = dirname + File.separator + filename
+        val credentials =
+            AwsBasicCredentials.create(accessKey, secretKey)
+
+        return S3Client.builder()
+            .region(Region.of(region))
+            .credentialsProvider(StaticCredentialsProvider.create(credentials))
+            .build()
+    }
+
+
+
+
+    fun getDownloadPresignedUrl(
+        bucket: String,
+        fileKey: String,
+    ): DownloadDto {
+
+        val filename = fileKey.substringAfterLast('/')
+        val encodedFileName =
+            URLEncoder.encode(filename, StandardCharsets.UTF_8.toString())
+
+        val getObjectRequest = GetObjectRequest.builder()
+            .bucket(bucket)
+            .key(fileKey)
+            .responseContentDisposition("attachment; filename=\"$encodedFileName\"")
+            .build()
+
+        val presignRequest = GetObjectPresignRequest.builder()
+            .signatureDuration(Duration.ofMinutes(30))
+            .getObjectRequest(getObjectRequest)
+            .build()
+
+        val presignedUrl =
+            s3PreSigner.presignGetObject(presignRequest)
+
+        val urlString = presignedUrl.url().toString()
+
+        val downloadDto = DownloadDto(
+            url = urlString,
+            filename = encodedFileName
+        )
+
+        return downloadDto
+    }
+
+
+
+
+
+
+    fun initiateMultipartUpload(
+        bucket: String,
+        fileKey: String,
+        contentType: String,
+    ): String {
 
         val createMultipartUploadRequest =
             CreateMultipartUploadRequest.builder()
                 .bucket(bucket) // 버킷 설정
                 .key(fileKey) // 업로드될 경로 설정
+                .contentType(contentType)
                 .build()
+
         // Amazon S3는 멀티파트 업로드에 대한 고유 식별자인 업로드 ID가 포함된 응답을 반환합니다.
         val response =
             s3Client.createMultipartUpload(createMultipartUploadRequest)
 
-        return InitialUploadDto(response.uploadId(), fileKey)
+        return response.uploadId()
     }
 
 
-    fun getUploadSignedUrl(
-        s3UploadSignedUrlDto: S3UploadSignedUrlDto,
+
+    fun getPresignedPartUrl(
+        bucket: String,
+        fileKey: String,
+        uploadId: String,
+        partNumber: Int,
     ): String {
 
         val uploadPartRequest =
             UploadPartRequest.builder()
                 .bucket(bucket)
-                .key(s3UploadSignedUrlDto.fileKey)
-                .uploadId(s3UploadSignedUrlDto.uploadId)
-                .partNumber(s3UploadSignedUrlDto.partNumber)
+                .key(fileKey)
+                .uploadId(uploadId)
+                .partNumber(partNumber)
                 .build()
 
         // 미리 서명된 URL 요청
-        // todo connection pool 문제를 어떻게 해결해야할까..
-        val uploadPartPresignRequest =
+        // connection pool 문제를 어떻게 해결해야할까..
+        val uploadPartPresignedRequest =
             UploadPartPresignRequest.builder()
-                .signatureDuration(Duration.ofMinutes(15))
+                .signatureDuration(Duration.ofMinutes(30))
                 .uploadPartRequest(uploadPartRequest)
                 .build()
 
         // 클라이언트에서 S3로 직접 업로드하기 위해 사용할 인증된 URL을 받는다.
         val presignedUploadPartRequest =
-            s3PreSigner.presignUploadPart(uploadPartPresignRequest)
+            s3PreSigner.presignUploadPart(uploadPartPresignedRequest)
 
         return presignedUploadPartRequest.url().toString()
     }
 
+
+    fun getSingleUploadUrl(
+        bucket: String,
+        fileKey: String,
+        contentType: String
+    ): String {
+        val putObjectRequest = PutObjectRequest.builder()
+            .bucket(bucket)
+            .key(fileKey)
+            .contentType(contentType)
+            .build()
+
+        val preSignRequest = PutObjectPresignRequest.builder()
+            .signatureDuration(Duration.ofMinutes(30)) // The URL will expire in  minutes.
+            .putObjectRequest(putObjectRequest)
+            .build()
+
+        val uploadSignedUrl =
+            s3PreSigner.presignPutObject(preSignRequest).url().toString()
+
+        return uploadSignedUrl
+    }
+
+
+
     fun completeUpload(
-        s3UploadCompleteDto: S3UploadCompleteDto,
-    ): S3UploadResultDto {
+        bucket: String,
+        uploadId: String,
+        fileKey: String,
+        parts: List<S3UploadPartsDetailDto>,
+    ): String {
 
         val completedParts: MutableList<CompletedPart> = ArrayList()
 
         // 모든 한 영상에 대한 모든 부분들에 부분 번호와 Etag를 설정함
-        for (partForm in s3UploadCompleteDto.parts) {
+        for (partForm in parts) {
             val part = CompletedPart.builder()
                 .partNumber(partForm.partNumber)
                 .eTag(partForm.awsETag)
@@ -149,13 +240,13 @@ class S3Service(
         val completedMultipartUpload =
             CompletedMultipartUpload.builder().parts(completedParts).build()
 
-        val fileKey = s3UploadCompleteDto.fileKey
+        val fileKey = fileKey
 
         val completeMultipartUploadRequest =
             CompleteMultipartUploadRequest.builder()
                 .bucket(bucket) // 버킷 설정
                 .key(fileKey)
-                .uploadId(s3UploadCompleteDto.uploadId) // 업로드 아이디
+                .uploadId(uploadId) // 업로드 아이디
                 .multipartUpload(completedMultipartUpload) // 영상의 모든 부분 번호, Etag
                 .build()
 
@@ -163,31 +254,25 @@ class S3Service(
             s3Client.completeMultipartUpload(completeMultipartUploadRequest)
         val objectKey = completeMultipartUploadResponse.key()
         val bucket = completeMultipartUploadResponse.bucket()
-        val fileSize = getFileSizeFromS3Url(bucket, objectKey)
 
-        return S3UploadResultDto(
-            name = fileKey.split(customDelimiter).last(),
-            fileKey = fileKey,
-            size = fileSize,
-            //fileUrl = "${GlobalProperties.staticUrl}/$fileKey",
-            fileUrl = "",
-            isRequest = s3UploadCompleteDto.isRequest,
-        )
+        return fileKey
     }
 
 
-    fun abortUpload(
-        s3UploadAbortDto: S3UploadAbortDto,
+    fun abortMultipartUpload(
+        bucket: String,
+        filename: String,
+        uploadId: String,
     ) {
 
         val abortMultipartUploadRequest =
             AbortMultipartUploadRequest.builder()
                 .bucket(bucket)
-                .key(s3UploadAbortDto.filename)
-                .uploadId(s3UploadAbortDto.uploadId)
+                .key(filename)
+                .uploadId(uploadId)
                 .build()
 
-        log.info { "abort uploadID===>" + s3UploadAbortDto.uploadId }
+        log.debug { "abort uploadID===>" + uploadId }
 
         try {
             s3Client.abortMultipartUpload(abortMultipartUploadRequest)

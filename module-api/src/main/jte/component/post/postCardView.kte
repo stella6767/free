@@ -1,14 +1,14 @@
 @param post: freeapp.life.stella.api.web.dto.PostCardDto
 
-<div class="card mt-5 bg-base-100 shadow-xl hover:bg-cyan-600 cursor-pointer"
+<div class="card mt-5 bg-base-100 shadow-xl hover:bg-cyan-600 cursor-pointer h-60"
      id="post-card-${post.id}"
      onclick="location.href='/page/post/${post.id}'">
-    <figure class="bg-slate-300">
-        <div>
-            <img src="${post.thumbnail}" alt="post-thumbnail" />
-        </div>
+    <figure class="bg-slate-300 h-3/5">
+
+        <img src="${post.thumbnail}" alt="post-thumbnail" class="w-full h-full object-cover "/>
+
     </figure>
-    <div class="card-body h-32 ">
+    <div class="card-body h-2/5 ">
         <h2 class="card-title truncate">${post.title}</h2>
         <p class="truncate">${post.thumbnailContent}</p>
     </div>

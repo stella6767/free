@@ -32,7 +32,8 @@ function initializeUploadPage() {
 
 
     // --- 2. 상태 변수 정의 ---
-    let currentPath = document.querySelector('input[name=currentPath]').value;
+    let currentPath = document.querySelector('#current-path').value;
+
     let filesToUpload = [];
     let uploadState = {
         totalSize: 0,
@@ -179,6 +180,7 @@ function initializeUploadPage() {
 
             // 2. 서버의 계획에 따라 다른 함수 호출
             if (initData.uploadType === 'SINGLE') {
+                console.log('단일 파일 업로드 시작', initData.presignedUrl)
                 await executePresignedUpload(initData.presignedUrl, file, tr);
             } else if (initData.uploadType === 'MULTIPART') {
                 await executeMultipartUpload(initData, file, tr);

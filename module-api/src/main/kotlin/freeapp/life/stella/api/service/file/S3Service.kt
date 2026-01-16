@@ -29,7 +29,7 @@ import java.time.Duration
 
 @Service
 class S3Service(
-    private val s3Client: S3Client,
+    private val appS3Client: S3Client,
     private val s3PreSigner: S3Presigner
 ) {
 
@@ -37,8 +37,7 @@ class S3Service(
 
 
     @Value("\${cloud.aws.s3.bucket}")
-    private lateinit var bucket: String
-
+    private lateinit var appBucket: String
 
     @Value("s3://[S3_BUCKET_NAME]/[FILE_NAME]")
     private val s3Resource: Resource? = null
@@ -47,7 +46,7 @@ class S3Service(
     private lateinit var staticUrl: String
 
 
-    private val s3Utilities = s3Client.utilities()
+    private val appS3Utilities = appS3Client.utilities()
 
     fun putObject(
         multipartFile: MultipartFile,
@@ -66,22 +65,22 @@ class S3Service(
         val key = folderName + "/" + fileName
 
         val objectRequest = PutObjectRequest.builder()
-            .bucket(bucket)
+            .bucket(appBucket)
             .key(key)
             .contentType(multipartFile.contentType)
             .build()
 
-        val objectResponse = s3Client.putObject(
+        val objectResponse = appS3Client.putObject(
             objectRequest,
             RequestBody.fromInputStream(multipartFile.inputStream, multipartFile.size)
         )
 
         val getUrlRequest = GetUrlRequest.builder()
-            .bucket(bucket)
+            .bucket(appBucket)
             .key(key)
             .build()
 
-        val url = s3Utilities.getUrl(getUrlRequest)
+        val url = appS3Utilities.getUrl(getUrlRequest)
         log.debug { "url is $url" }
         return staticUrl + key
     }
@@ -91,8 +90,10 @@ class S3Service(
         accessKey: String,
         secretKey: String,
         region: String,
-        endPoint: String = ""
+        endPoint: String
     ): S3Client {
+
+        log.debug { "createS3Client endPoint===>$endPoint region===>$region" }
 
         val credentials =
             AwsBasicCredentials.create(accessKey, secretKey)
@@ -103,13 +104,14 @@ class S3Service(
 
         return if (endPoint.isNotBlank()) {
             clientBuilder
-                .endpointOverride(URI(endPoint))
+                .endpointOverride(URI.create(endPoint))
                 .build()
         } else clientBuilder.build()
     }
 
 
     fun getDownloadPresignedUrl(
+        preSigner: S3Presigner,
         bucket: String,
         fileKey: String,
     ): DownloadDto {
@@ -130,7 +132,7 @@ class S3Service(
             .build()
 
         val presignedUrl =
-            s3PreSigner.presignGetObject(presignRequest)
+            preSigner.presignGetObject(presignRequest)
 
         val urlString = presignedUrl.url().toString()
 
@@ -144,6 +146,7 @@ class S3Service(
 
 
     fun initiateMultipartUpload(
+        client: S3Client,
         bucket: String,
         fileKey: String,
         contentType: String,
@@ -158,13 +161,14 @@ class S3Service(
 
         // Amazon S3는 멀티파트 업로드에 대한 고유 식별자인 업로드 ID가 포함된 응답을 반환합니다.
         val response =
-            s3Client.createMultipartUpload(createMultipartUploadRequest)
+            client.createMultipartUpload(createMultipartUploadRequest)
 
         return response.uploadId()
     }
 
 
     fun getPresignedPartUrl(
+        signer: S3Presigner,
         bucket: String,
         fileKey: String,
         uploadId: String,
@@ -189,17 +193,19 @@ class S3Service(
 
         // 클라이언트에서 S3로 직접 업로드하기 위해 사용할 인증된 URL을 받는다.
         val presignedUploadPartRequest =
-            s3PreSigner.presignUploadPart(uploadPartPresignedRequest)
+            signer.presignUploadPart(uploadPartPresignedRequest)
 
         return presignedUploadPartRequest.url().toString()
     }
 
 
     fun getSingleUploadUrl(
+        s3PreSigner: S3Presigner,
         bucket: String,
         fileKey: String,
         contentType: String
     ): String {
+
         val putObjectRequest = PutObjectRequest.builder()
             .bucket(bucket)
             .key(fileKey)
@@ -218,7 +224,30 @@ class S3Service(
     }
 
 
+    fun createS3Presigner(
+        accessKey: String,
+        secretKey: String,
+        region: String,
+        endPoint: String
+    ): S3Presigner {
+
+        val credentials =
+            AwsBasicCredentials.create(accessKey, secretKey)
+
+        val builder = S3Presigner
+            .builder()
+            .credentialsProvider(StaticCredentialsProvider.create(credentials))
+
+        log.debug { "createS3Presigner endPoint===>$endPoint region===>$region" }
+
+        return if (endPoint.isNotBlank()) {
+            builder.endpointOverride(URI.create(endPoint)).region(Region.of(region)).build()
+        } else builder.endpointOverride(URI.create(endPoint)).region(Region.of(region)).build()
+    }
+
+
     fun completeUpload(
+        client: S3Client,
         bucket: String,
         uploadId: String,
         fileKey: String,
@@ -251,7 +280,7 @@ class S3Service(
                 .build()
 
         val completeMultipartUploadResponse =
-            s3Client.completeMultipartUpload(completeMultipartUploadRequest)
+            client.completeMultipartUpload(completeMultipartUploadRequest)
         val objectKey = completeMultipartUploadResponse.key()
         val bucket = completeMultipartUploadResponse.bucket()
 
@@ -260,6 +289,7 @@ class S3Service(
 
 
     fun abortMultipartUpload(
+        client: S3Client,
         bucket: String,
         filename: String,
         uploadId: String,
@@ -275,7 +305,7 @@ class S3Service(
         log.debug { "abort uploadID===>" + uploadId }
 
         try {
-            s3Client.abortMultipartUpload(abortMultipartUploadRequest)
+            client.abortMultipartUpload(abortMultipartUploadRequest)
         } catch (e: NoSuchUploadException) {
             log.error { e.localizedMessage }
         }
@@ -290,7 +320,7 @@ class S3Service(
             .build()
 
         val resp =
-            s3Client.getObject(getObjectRequest)
+            appS3Client.getObject(getObjectRequest)
 
         return resp.response().contentLength()
     }

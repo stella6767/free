@@ -14,7 +14,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
                 <div class="font-semibold">대상</div>
-                <div class="font-mono text-sm break-all">s3://${bucket}/${currentPath}</div>
+                <div class="font-mono text-sm break-all"> ://${bucket}/${currentPath}</div>
             </div>
             <div>
                 <div class="font-semibold text-success">성공</div>

@@ -4,6 +4,7 @@ import freeapp.life.stella.api.service.file.S3Service
 import freeapp.life.stella.api.web.dto.DirectoryAddDto
 
 import freeapp.life.stella.api.web.dto.DownloadDto
+import freeapp.life.stella.api.web.dto.InitialUploadReqDto
 import freeapp.life.stella.api.web.dto.PaginatedS3Objects
 import freeapp.life.stella.api.web.dto.PresignedPartRequestDto
 import freeapp.life.stella.api.web.dto.S3ConnectionRequestDto
@@ -66,30 +67,32 @@ class CloudUploaderService(
     }
 
 
-    fun testConnection(req: S3ConnectionRequestDto) {
-
-        val s3Client = if (req.provider == CloudProvider.CloudFlare) {
-            s3Service.createS3Client(req.accessKey, req.secretKey, "auto", req.endPoint)
-        } else {
-            s3Service.createS3Client(req.accessKey, req.secretKey, req.region)
-        }
-
-        s3Client.listObjectsV2 {
-            it.bucket(req.bucket)
-            it.maxKeys(1)
-        }
-
-        s3Client.close()
-    }
-
-
     @Transactional
     fun saveCloudKey(
         user: User,
-        s3ConnectionRequestDto: S3ConnectionRequestDto
+        req: S3ConnectionRequestDto
     ): CloudKey {
+
+        var region = ""
+
+        val s3Client = if (req.provider == CloudProvider.CloudFlare) {
+            region = "auto"
+            s3Service.createS3Client(req.accessKey, req.secretKey, region, req.endPoint)
+        } else {
+            region = req.region
+            s3Service.createS3Client(req.accessKey, req.secretKey, req.region, "")
+        }
+
+        // test connection
+        s3Client.use { client ->
+            client.listObjectsV2 {
+                it.bucket(req.bucket)
+                it.maxKeys(1)
+            }
+        }
         val s3Key =
-            s3ConnectionRequestDto.toEntity(user)
+            req.toEntity(user, region)
+
         return s3KeyRepository.save(s3Key)
     }
 
@@ -105,13 +108,14 @@ class CloudUploaderService(
         val s3Client = s3Service.createS3Client(
             cloudKey.accessKey,
             cloudKey.secretKey,
-            cloudKey.region
+            cloudKey.region,
+            cloudKey.endPoint
         )
 
         val s3Objects =
-            getObjectsBySize(s3Client, cloudKey.bucket, prefix, size, continuationToken)
-
-        s3Client.close()
+            s3Client.use { client ->
+                getObjectsBySize(s3Client, cloudKey.bucket, prefix, size, continuationToken)
+            }
 
         return s3Objects
     }
@@ -136,7 +140,9 @@ class CloudUploaderService(
             findCloudKeyByUser(user = user)
                 ?: throw EntityNotFoundException("s3Key not found")
 
-        return s3Service.getPresignedPartUrl(s3Key.bucket, dto.fileKey, dto.uploadId, dto.partNumber)
+        return s3Service.createS3Presigner(s3Key.accessKey, s3Key.secretKey, s3Key.region, s3Key.endPoint).use { signer ->
+            s3Service.getPresignedPartUrl(signer, s3Key.bucket, dto.fileKey, dto.uploadId, dto.partNumber)
+        }
     }
 
     fun completeUpload(
@@ -148,22 +154,32 @@ class CloudUploaderService(
             findCloudKeyByUser(user = user)
                 ?: throw EntityNotFoundException("s3Key not found")
 
+        val fileKey =
+            s3Service.createS3Client(s3Key.accessKey, s3Key.secretKey, s3Key.region, s3Key.endPoint).use { client ->
+
+                s3Service.completeUpload(client, s3Key.bucket, req.uploadId, req.fileKey, req.parts)
+            }
+
         return S3UploadResultDto(
-            fileKey = s3Service.completeUpload(s3Key.bucket, req.uploadId, req.fileKey, req.parts),
+            fileKey = fileKey,
         )
     }
 
 
     fun abortMultipartUpload(
-        bucket: String,
+        cloudKey: CloudKey,
         s3UploadAbortDto: S3UploadAbortDto,
     ) {
 
-        return s3Service.abortMultipartUpload(
-            bucket = bucket,
-            filename = s3UploadAbortDto.filename,
-            uploadId = s3UploadAbortDto.uploadId
-        )
+        return s3Service.createS3Client(cloudKey.accessKey, cloudKey.secretKey, cloudKey.region, cloudKey.endPoint)
+            .use { client ->
+                s3Service.abortMultipartUpload(
+                    client,
+                    bucket = cloudKey.bucket,
+                    filename = s3UploadAbortDto.filename,
+                    uploadId = s3UploadAbortDto.uploadId
+                )
+            }
     }
 
 
@@ -203,26 +219,39 @@ class CloudUploaderService(
 
 
     fun initiateUpload(
-        bucket: String,
-        targetObjectDir: String,
-        filename: String,
-        contentType: String,
-        fileSize: Long,
+        cloudKey: CloudKey,
+        dto: InitialUploadReqDto,
     ): UploadInitiateResponseDto {
 
-        val fileKey = "$targetObjectDir/$filename"
+        log.debug { "initiateUpload $dto" }
 
-        if (fileSize <= UPLOAD_THRESHOLD) {
-            return UploadInitiateResponseDto(
-                uploadType = UploadType.SINGLE,
-                fileKey = fileKey,
-                presignedUrl = s3Service.getSingleUploadUrl(bucket, fileKey, contentType)
-            )
+        val fileKey = "${dto.targetObjectDir}/${dto.filename}"
+
+        val preSigner =
+            s3Service.createS3Presigner(cloudKey.accessKey, cloudKey.secretKey, cloudKey.region, cloudKey.endPoint)
+
+        val client =
+            s3Service.createS3Client(cloudKey.accessKey, cloudKey.secretKey, cloudKey.region, cloudKey.endPoint)
+
+        if (dto.fileSize <= UPLOAD_THRESHOLD) {
+            return preSigner.use { signer ->
+                UploadInitiateResponseDto(
+                    uploadType = UploadType.SINGLE,
+                    fileKey = fileKey,
+                    presignedUrl = s3Service.getSingleUploadUrl(signer, cloudKey.bucket, fileKey, dto.contentType)
+                )
+            }
         }
+
+        val uploadId =
+            client.use {
+                s3Service.initiateMultipartUpload(it, cloudKey.bucket, fileKey, dto.contentType)
+            }
+
         return UploadInitiateResponseDto(
             uploadType = UploadType.MULTIPART,
             fileKey = fileKey,
-            uploadId = s3Service.initiateMultipartUpload(bucket, fileKey, contentType)
+            uploadId = uploadId
         )
     }
 
@@ -232,11 +261,16 @@ class CloudUploaderService(
         fileKey: String,
     ): DownloadDto {
 
-        val s3Key =
+        val cloudKey =
             findCloudKeyByUser(user = user)
                 ?: throw EntityNotFoundException("s3Key not found")
 
-        return s3Service.getDownloadPresignedUrl(s3Key.bucket, fileKey)
+        val preSigner =
+            s3Service.createS3Presigner(cloudKey.accessKey, cloudKey.secretKey, cloudKey.region, cloudKey.endPoint)
+
+        return preSigner.use { signer ->
+            s3Service.getDownloadPresignedUrl(signer, cloudKey.bucket, fileKey)
+        }
     }
 
 
@@ -251,6 +285,9 @@ class CloudUploaderService(
         val objects =
             mutableListOf<S3ObjectInfo>()
 
+        log.debug { "getObjectsBySize bucket===>$bucket prefix===>$prefix size===>$size token===>$token" }
+
+
         val request = ListObjectsV2Request.builder()
             .bucket(bucket)
             .prefix(prefix)
@@ -263,7 +300,9 @@ class CloudUploaderService(
             }
             .build()
 
-        val response = s3Client.listObjectsV2(request)
+        val response = s3Client.use {
+            it.listObjectsV2(request)
+        }
 
         // 폴더들 (CommonPrefixes) 추가
         response.commonPrefixes().forEach { commonPrefix ->
@@ -298,7 +337,6 @@ class CloudUploaderService(
                 )
             }
         }
-
 
         return PaginatedS3Objects(
             objects,

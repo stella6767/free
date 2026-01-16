@@ -91,15 +91,16 @@ data class S3ConnectionRequestDto(
     val secretKey: String,
     val endPoint: String = ""
 ) {
-    fun toEntity(user: User): CloudKey {
+    fun toEntity(user: User, modifyRegion: String): CloudKey {
 
         return CloudKey(
             user = user,
             provider = this.provider,
-            region = this.region,
+            region = modifyRegion,
             bucket = this.bucket,
             accessKey = this.accessKey,
-            secretKey = this.secretKey
+            secretKey = this.secretKey,
+            endpoint = this.endPoint
         )
     }
 }

@@ -78,12 +78,12 @@ function initInputField(){
 
 let providerElement = document.getElementById("provider");
 
+
 if (providerElement){
     providerElement.addEventListener("change", e => {
         const type = e.target.value
-
         document.getElementById("endpoint").classList.toggle("hidden", type !== "CloudFlare")
-
+        document.getElementById("region-form").classList.toggle("hidden", type !== "AWS")
     })
 }
 

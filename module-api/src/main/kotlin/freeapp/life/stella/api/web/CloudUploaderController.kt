@@ -80,7 +80,6 @@ class CloudUploaderController(
         model: Model
     ): HtmxRedirectView {
 
-        cloudUploaderService.testConnection(s3ConnectionRequestDto)
         cloudUploaderService.saveCloudKey(principal.user, s3ConnectionRequestDto)
 
         return HtmxRedirectView("/cloud/browser")
@@ -138,6 +137,7 @@ class CloudUploaderController(
 
         model.addAttribute("currentPath", currentPath)
         model.addAttribute("bucket", s3Key.bucket)
+        model.addAttribute("provider", s3Key.provider)
 
         return "page/cloud/upload"
     }
@@ -155,11 +155,8 @@ class CloudUploaderController(
                 ?: throw EntityNotFoundException("s3Key not found")
 
         val initiateResponseDto = cloudUploaderService.initiateUpload(
-            s3Key.bucket,
-            dto.targetObjectDir,
-            dto.filename,
-            dto.contentType,
-            dto.fileSize,
+            s3Key,
+            dto
         )
 
         return initiateResponseDto
@@ -212,7 +209,7 @@ class CloudUploaderController(
             cloudUploaderService.findCloudKeyByUser(user = principal.user)
                 ?: throw EntityNotFoundException("s3Key not found")
 
-        cloudUploaderService.abortMultipartUpload(s3Key.bucket, s3UploadAbortDto)
+        cloudUploaderService.abortMultipartUpload(s3Key, s3UploadAbortDto)
     }
 
 

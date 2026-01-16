@@ -17,6 +17,14 @@ class UtilTest {
 
 
     @Test
+    fun s3ClientTest(){
+
+
+
+    }
+
+
+    @Test
     fun createOver100mbFile() {
         val target: Path = Path.of("src/test/resources/dummy-200mb.bin")
         Files.createDirectories(target.parent)

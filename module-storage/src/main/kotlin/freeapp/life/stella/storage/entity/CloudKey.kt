@@ -14,7 +14,7 @@ class CloudKey(
     bucket: String,
     accessKey: String,
     secretKey: String,
-    endpoint: String = "",
+    endpoint: String,
 ) : BaseEntity() {
 
     @ManyToOne(fetch = FetchType.LAZY)

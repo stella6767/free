@@ -48,7 +48,7 @@
                                 </div>
                             @endif
 
-                            <div class="form-control">
+                            <div class="form-control" id="region-form">
                                 <label class="label"><span class="label-text font-medium">Region</span></label>
                                 <select name="region" class="select select-bordered" required
                                         disabled="${s3Key != null}">
@@ -74,6 +74,9 @@
                                     <option value="ap-southeast-1"
                                             selected="${s3Key?.region == "ap-southeast-1"}">
                                         Asia Pacific (Singapore)
+                                    </option>
+                                    <option value="auto" selected="${s3Key?.region == "auto"}">
+                                        auto
                                     </option>
                                 </select>
                             </div>

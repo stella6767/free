@@ -1,5 +1,8 @@
+@import freeapp.life.stella.storage.entity.type.CloudProvider
+
 @param bucket:String
 @param currentPath:String
+@param provider: CloudProvider
 
 @template.layout.main(bodyContent  = @`
 
@@ -21,7 +24,7 @@
         @template.component.cloud.uploadProgressView()
         @template.component.cloud.uploadCompleteView(bucket = bucket, currentPath = currentPath)
 
-        <input type="hidden" value="${currentPath}" name="currentPath"/>
+        <input id="current-path" type="hidden" value="${currentPath}" name="currentPath"/>
 
         <div id="drop-zone"
              class="border-2 border-dashed rounded-lg p-8 text-center bg-base-200 hover:border-primary cursor-pointer transition-colors">
@@ -74,9 +77,9 @@
         <div class="mt-8">
             <h2 class="text-xl font-semibold mb-4">대상</h2>
             <div class="form-control">
-                <label class="label"><span class="label-text">S3 대상 경로</span></label>
+                <label class="label"><span class="label-text">${provider.storage} 대상 경로</span></label>
                 <div class="border rounded-lg p-4 bg-base-200">
-                    <span class="font-mono">s3://${bucket}/${currentPath}</span>
+                    <span class="font-mono">${provider.storage}://${bucket}/${currentPath}</span>
                 </div>
             </div>
         </div>

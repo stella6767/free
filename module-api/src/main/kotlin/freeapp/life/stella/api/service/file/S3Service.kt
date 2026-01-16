@@ -21,6 +21,7 @@ import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignReques
 import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest
 import software.amazon.awssdk.services.s3.presigner.model.UploadPartPresignRequest
 import java.io.FileNotFoundException
+import java.net.URI
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import java.time.Duration
@@ -37,6 +38,7 @@ class S3Service(
 
     @Value("\${cloud.aws.s3.bucket}")
     private lateinit var bucket: String
+
 
     @Value("s3://[S3_BUCKET_NAME]/[FILE_NAME]")
     private val s3Resource: Resource? = null
@@ -89,18 +91,22 @@ class S3Service(
         accessKey: String,
         secretKey: String,
         region: String,
+        endPoint: String = ""
     ): S3Client {
 
         val credentials =
             AwsBasicCredentials.create(accessKey, secretKey)
 
-        return S3Client.builder()
+        val clientBuilder = S3Client.builder()
             .region(Region.of(region))
             .credentialsProvider(StaticCredentialsProvider.create(credentials))
-            .build()
+
+        return if (endPoint.isNotBlank()) {
+            clientBuilder
+                .endpointOverride(URI(endPoint))
+                .build()
+        } else clientBuilder.build()
     }
-
-
 
 
     fun getDownloadPresignedUrl(
@@ -137,10 +143,6 @@ class S3Service(
     }
 
 
-
-
-
-
     fun initiateMultipartUpload(
         bucket: String,
         fileKey: String,
@@ -160,7 +162,6 @@ class S3Service(
 
         return response.uploadId()
     }
-
 
 
     fun getPresignedPartUrl(
@@ -215,7 +216,6 @@ class S3Service(
 
         return uploadSignedUrl
     }
-
 
 
     fun completeUpload(

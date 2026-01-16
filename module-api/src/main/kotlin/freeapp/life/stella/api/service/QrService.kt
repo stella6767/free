@@ -11,8 +11,7 @@ import freeapp.life.stella.api.util.addNoFromFilename
 import freeapp.life.stella.api.util.customDelimiter
 import freeapp.life.stella.api.util.generateRandomNumberString
 import freeapp.life.stella.api.web.dto.CallReqDto
-import freeapp.life.stella.api.web.dto.InitialUploadDto
-import freeapp.life.stella.api.web.dto.InitialUploadReqDto
+
 import freeapp.life.stella.api.web.dto.QrGeneratorType
 
 import freeapp.life.stella.api.web.dto.TextReqDto

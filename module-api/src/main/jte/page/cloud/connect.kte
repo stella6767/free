@@ -6,12 +6,12 @@
 @template.layout.main(bodyContent = @`
 
     <section id="cloud-container"
-            class="base-container">
+             class="base-container">
 
         <!-- Header -->
         <div class="navbar bg-base-100 border-b mb-6">
             <div class="navbar-start">
-                <h1 class="text-2xl font-bold text-primary">S3 Connect</h1>
+                <h1 class="text-2xl font-bold text-primary">Cloud Storage Connect</h1>
             </div>
         </div>
 
@@ -20,17 +20,34 @@
             <!-- Connection Form -->
             <div class="card bg-base-100 shadow-xl mb-6">
                 <div class="card-body">
-                    <h2 class="card-title text-lg mb-4">
-                        <svg class="w-6 h-6 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                        </svg>
-                        AWS S3 연결 설정
-                    </h2>
+                    <div class="card-title flex justify-between mb-4">
+                        <div class="flex">
+                            <svg class="w-6 h-6 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                            <h2 class="text-lg ml-5">
+                                ${s3Key?.provider} ${s3Key?.provider?.storage} 연결 설정
+                            </h2>
+                        </div>
+
+                    </div>
 
                     <form id="s3-connect-form">
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                            @if(s3Key == null)
+                                <div class="form-control">
+
+                                    <label class="label"><span class="label-text font-medium">Provider</span></label>
+                                    <select id="provider" name="provider" class="select select-bordered cursor-pointer">
+                                        <option value="AWS" selected>AWS S3</option>
+                                        <option value="CloudFlare">CloudFlare R2</option>
+                                    </select>
+                                </div>
+                            @endif
+
                             <div class="form-control">
                                 <label class="label"><span class="label-text font-medium">Region</span></label>
                                 <select name="region" class="select select-bordered" required
@@ -60,6 +77,20 @@
                                     </option>
                                 </select>
                             </div>
+
+
+                            <div id="endpoint" class="form-control hidden">
+                                <label class="label">
+                                    <span class="label-text font-medium">EndPoint</span>
+                                </label>
+
+                                <input type="text" name="endPoint" placeholder="endPoint"
+                                       class="input input-bordered" required
+                                       value="${s3Key?.endPoint ?: ""}"
+                                       disabled="${s3Key?.endPoint != null}"/>
+
+                            </div>
+
 
                             <div class="form-control">
                                 <label class="label">
@@ -101,7 +132,7 @@
                             @if(s3Key != null)
 
                                 <a class="btn btn-outline btn-info"
-                                        href="/cloud/browser"
+                                   href="/cloud/browser"
                                 >
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

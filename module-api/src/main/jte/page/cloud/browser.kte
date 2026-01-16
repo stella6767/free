@@ -10,6 +10,8 @@
 
 @template.layout.main(bodyContent =  @`
 
+    @template.component.cloud.directoryAddModal()
+
 
     <section id="s3-list-container" class="base-container">
         <!-- Header -->

@@ -2,6 +2,7 @@ package freeapp.life.stella.api.web.dto
 
 import freeapp.life.stella.storage.entity.CloudKey
 import freeapp.life.stella.storage.entity.User
+import freeapp.life.stella.storage.entity.type.CloudProvider
 import jakarta.validation.constraints.NotBlank
 import java.lang.Math.log
 import java.lang.Math.pow
@@ -14,6 +15,8 @@ enum class UploadType() {
     SINGLE,
     MULTIPART
 }
+
+
 
 data class UploadInitiateResponseDto(
     val uploadType: UploadType,
@@ -79,17 +82,20 @@ data class S3UploadAbortDto(
 
 
 data class S3ConnectionRequestDto(
+    val provider: CloudProvider,
     val region: String,
     val bucket: String,
     @field:NotBlank
     val accessKey: String,
     @field:NotBlank
     val secretKey: String,
+    val endPoint: String = ""
 ) {
     fun toEntity(user: User): CloudKey {
 
         return CloudKey(
             user = user,
+            provider = this.provider,
             region = this.region,
             bucket = this.bucket,
             accessKey = this.accessKey,
@@ -99,14 +105,18 @@ data class S3ConnectionRequestDto(
 }
 
 data class S3keyInfo(
+    val provider: CloudProvider,
     val bucket: String,
     val region: String,
+    val endPoint: String,
 ) {
     companion object {
         fun fromEntity(cloudKey: CloudKey): S3keyInfo {
             return S3keyInfo(
+                provider = cloudKey.provider,
                 bucket = cloudKey.bucket,
-                region = cloudKey.region
+                region = cloudKey.region,
+                endPoint = cloudKey.endPoint
             )
         }
     }
@@ -197,21 +207,11 @@ data class DownloadEventDto(
 
 
 
-
-
-
-data class InitialUploadDto(
-    val uploadId: String,
-    val fileKey: String,
+data class DirectoryAddDto(
+    val directory: String,
+    val currentPath: String,
+    val size: Int,
 )
-
-
-data class S3UploadSignedUrlDto(
-    val fileKey: String,
-    val uploadId: String,
-    val partNumber: Int
-)
-
 
 
 

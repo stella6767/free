@@ -3,6 +3,7 @@ package freeapp.life.stella.api.web
 import com.fasterxml.jackson.databind.ObjectMapper
 import freeapp.life.stella.api.config.security.UserPrincipal
 import freeapp.life.stella.api.service.CloudUploaderService
+import freeapp.life.stella.api.web.dto.DirectoryAddDto
 import freeapp.life.stella.api.web.dto.DownloadEventDto
 import freeapp.life.stella.api.web.dto.InitialUploadReqDto
 import freeapp.life.stella.api.web.dto.PresignedPartRequestDto
@@ -29,6 +30,8 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.view.FragmentsRendering
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 
 @RequestMapping("/cloud")
@@ -44,7 +47,6 @@ class CloudUploaderController(
         model: Model,
         @AuthenticationPrincipal principal: UserPrincipal?,
     ): String {
-
         if (principal != null) {
             cloudUploaderService.findCloudKeyByUser(principal.user)?.let {
                 model.addAttribute("s3Key", S3keyInfo.fromEntity(it))
@@ -54,6 +56,20 @@ class CloudUploaderController(
         return "page/cloud/connect"
     }
 
+    @HxRequest
+    @PostMapping("/directory")
+    fun addDirectory(
+        @AuthenticationPrincipal principal: UserPrincipal,
+        model: Model,
+        directoryAddDto: DirectoryAddDto
+    ): HtmxRedirectView {
+
+        cloudUploaderService.addDirectory(principal.user, directoryAddDto)
+
+        val encodedPrefix = URLEncoder.encode(directoryAddDto.currentPath, StandardCharsets.UTF_8)
+
+        return HtmxRedirectView("/cloud/browser?prefix=${encodedPrefix}&size=${directoryAddDto.size}")
+    }
 
 
     @HxRequest
@@ -106,9 +122,6 @@ class CloudUploaderController(
 
         return FragmentsRendering.with("page/cloud/browser").build()
     }
-
-
-
 
 
     @GetMapping("/upload")
@@ -203,8 +216,6 @@ class CloudUploaderController(
     }
 
 
-
-
     @HxRequest
     @PutMapping("/disconnect")
     fun disconnect(
@@ -213,7 +224,6 @@ class CloudUploaderController(
         cloudUploaderService.disconnectCloudKeyByUser(principal.user)
         return HtmxRefreshView()
     }
-
 
 
     @HxRequest

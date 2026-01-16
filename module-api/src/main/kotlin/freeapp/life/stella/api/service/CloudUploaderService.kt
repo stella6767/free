@@ -1,6 +1,8 @@
 package freeapp.life.stella.api.service
 
 import freeapp.life.stella.api.service.file.S3Service
+import freeapp.life.stella.api.web.dto.DirectoryAddDto
+
 import freeapp.life.stella.api.web.dto.DownloadDto
 import freeapp.life.stella.api.web.dto.PaginatedS3Objects
 import freeapp.life.stella.api.web.dto.PresignedPartRequestDto
@@ -13,21 +15,17 @@ import freeapp.life.stella.api.web.dto.UploadInitiateResponseDto
 import freeapp.life.stella.api.web.dto.UploadType
 import freeapp.life.stella.storage.entity.CloudKey
 import freeapp.life.stella.storage.entity.User
+import freeapp.life.stella.storage.entity.type.CloudProvider
 import freeapp.life.stella.storage.repository.CloudKeyRepository
 import freeapp.life.stella.storage.repository.CloudObjectRepository
 import jakarta.persistence.EntityNotFoundException
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.services.s3.S3Client
-import software.amazon.awssdk.services.s3.model.GetObjectRequest
-import software.amazon.awssdk.services.s3.model.HeadBucketRequest
 import software.amazon.awssdk.services.s3.model.ListObjectsV2Request
-import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest
-import java.io.File
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
-import java.time.Duration
+import software.amazon.awssdk.services.s3.model.PutObjectRequest
 import java.time.ZoneId
 
 
@@ -44,14 +42,37 @@ class CloudUploaderService(
     private val UPLOAD_THRESHOLD = 100 * 1024 * 1024 // 100MB
 
 
+    @Transactional(readOnly = true)
+    fun addDirectory(user: User, req: DirectoryAddDto) {
+
+        log.debug { "Adding directory: ${req}" }
+
+        val cloudKey =
+            s3KeyRepository.findKeyByUser(user) ?: throw EntityNotFoundException("cloudKey not found")
+
+        val client =
+            s3Service.createS3Client(cloudKey.accessKey, cloudKey.secretKey, cloudKey.region, cloudKey.endPoint)
+
+        client.use {
+            val newDirectory = "${req.currentPath}${req.directory}/"
+            it.putObject(
+                PutObjectRequest.builder()
+                    .bucket(cloudKey.bucket)
+                    .key(newDirectory)
+                    .build(),
+                RequestBody.empty()
+            )
+        }
+    }
+
+
     fun testConnection(req: S3ConnectionRequestDto) {
 
-        val s3Client =
-            s3Service.createS3Client(
-                req.accessKey,
-                req.secretKey,
-                req.region
-            )
+        val s3Client = if (req.provider == CloudProvider.CloudFlare) {
+            s3Service.createS3Client(req.accessKey, req.secretKey, "auto", req.endPoint)
+        } else {
+            s3Service.createS3Client(req.accessKey, req.secretKey, req.region)
+        }
 
         s3Client.listObjectsV2 {
             it.bucket(req.bucket)
@@ -217,7 +238,6 @@ class CloudUploaderService(
 
         return s3Service.getDownloadPresignedUrl(s3Key.bucket, fileKey)
     }
-
 
 
     fun getObjectsBySize(

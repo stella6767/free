@@ -7,8 +7,22 @@
 >
 
 
+    <button id="refresh-btn" class="btn btn-outline btn-sm mr-2"
+            hx-get="/cloud/browser"
+            hx-include="#size-select"
+            hx-vals='{"prefix": "${currentPath}"}'
+            hx-target="#objects-container"
+            hx-swap="outerHTML"
+    >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+        </svg>
+    </button>
+
+
     <a href="/cloud/"
-            class="btn btn-outline btn-sm mr-2"
+       class="btn btn-outline btn-sm mr-2"
     >
         뒤로가기
     </a>
@@ -35,6 +49,12 @@
     </button>
 
 
+    <button class="directory-add-btn btn btn-outline btn-sm mr-2"
+            onclick=" document.getElementById('parent-path').value = `${currentPath}`;  directory_modal.showModal()">
+        폴더 만들기
+    </button>
+
+
     <button id="upload-btn"
             class="btn btn-outline btn-sm mr-2"
             hx-get="/cloud/upload"
@@ -45,21 +65,6 @@
             hx-select=".base-container"
     >
         업로드
-    </button>
-
-
-    <button id="refresh-btn" class="btn btn-outline btn-sm mr-2"
-            hx-get="/cloud/browser"
-            hx-include="#size-select"
-            hx-vals='{"prefix": "${currentPath}"}'
-            hx-target="#objects-container"
-            hx-swap="outerHTML"
-    >
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-        </svg>
-        새로고침
     </button>
 
 

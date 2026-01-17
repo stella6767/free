@@ -35,6 +35,7 @@ class CommentRepositoryImpl(
     private val em: EntityManager,
 ) : CommentRepository {
 
+
 //    override fun findCommentsByPostId(id: Long): List<Comment> {
 //
 //        return queryFactory.listQuery {
@@ -47,8 +48,6 @@ class CommentRepositoryImpl(
 //            )
 //        }
 //    }
-
-
 
 
     override fun findCommentById(id: Long): Comment? {

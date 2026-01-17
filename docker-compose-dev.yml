@@ -23,7 +23,6 @@ services:
 #    depends_on:
 #      - web
 #    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
-
 #  certbot:
 #    container_name: certbot
 #    image: certbot/certbot:arm32v6-latest
@@ -42,8 +41,8 @@ services:
 #      - linux/amd64
     build:
       context: .  # docker-compose.yml 파일이 있는 현재 디렉토리
-      #dockerfile: /Users/stella6767/IdeaProjects/free/DockerFile
-      dockerfile: DockerFile
+      #dockerfile: /Users/stella6767/IdeaProjects/free/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "8081:8081"
     volumes:

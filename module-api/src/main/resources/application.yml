@@ -95,6 +95,10 @@ gg:
 ---
 
 server:
+  servlet:
+    session:
+      timeout: 10h
+
   port: 8081
   config:
     activate:
@@ -102,16 +106,6 @@ server:
         - prod
 
 spring:
-  ai:
-    ollama:
-      base-url: http://host.docker.internal:11434/
-      chat:
-        model: qwen2:0.5b
-
-  cloud:
-    config:
-      enabled: false
-
   config:
     activate:
       on-profile:

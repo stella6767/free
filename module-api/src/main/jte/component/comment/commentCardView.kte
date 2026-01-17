@@ -1,7 +1,7 @@
 @param comment: freeapp.life.stella.api.web.dto.CommentCardDto
 @param userId: Long?
 
-<div id="comment-card-${comment.commentId}">
+<div id="comment-card-${comment.commentId}" class="mb-2">
     <div class="flex mt-3" id="comment-card-${comment.commentId}">
         <div class="text-black font-bold">
 

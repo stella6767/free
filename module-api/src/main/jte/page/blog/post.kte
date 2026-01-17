@@ -56,12 +56,22 @@
                                 </svg>
                             </summary>
                             <ul class="bg-base-100 z-30">
+
                                 @if (isUserLoggedIn)
                                     <li>
                                         <a hx-trigger="click" hx-get="/post/editor" hx-target="#posts-container"
                                            href="/post/editor">
                                             새글쓰기
                                         </a>
+                                    </li>
+
+                                 @else
+                                    <li>
+                                        <div class="tooltip" data-tip="require login">
+                                            <button hx-trigger="click" class="btn" disabled="disabled" >
+                                                새글쓰기
+                                            </button>
+                                        </div>
                                     </li>
                                 @endif
 

@@ -4,7 +4,7 @@ package freeapp.life.stella.api.service.sign
 
 import freeapp.life.stella.api.config.security.UserPrincipal
 import freeapp.life.stella.api.web.dto.GithubAuth2UserInfo
-import freeapp.life.stella.api.web.dto.GoogleAuth2UserInfo
+
 import freeapp.life.stella.api.web.dto.OAuth2UserInfo
 import freeapp.life.stella.storage.entity.User
 import freeapp.life.stella.storage.entity.type.SignType
@@ -91,9 +91,9 @@ class OAuth2SignService(
         log.debug("머로 로그인 됐지? $clientName")
 
         return when (clientName) {
-            SignType.GOOGLE.clientName -> {
-                GoogleAuth2UserInfo(oAuth2User.attributes)
-            }
+//            SignType.GOOGLE.clientName -> {
+//                GoogleAuth2UserInfo(oAuth2User.attributes)
+//            }
             SignType.GITHUB.clientName -> {
                 GithubAuth2UserInfo(oAuth2User.attributes)
             }

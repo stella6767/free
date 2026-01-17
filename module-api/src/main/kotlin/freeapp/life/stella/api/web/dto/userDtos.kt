@@ -104,23 +104,23 @@ interface OAuth2UserInfo {
 }
 
 
-data class GoogleAuth2UserInfo(
-    override val attributes: Map<String, Any?>,
-    override val signType: SignType = SignType.GOOGLE,
-) : OAuth2UserInfo {
-
-
-    override fun getSocialId(): String {
-        return attributes.get("sub").toString()
-    }
-
-    override fun getSocialPictureUrl(): String? {
-        return attributes.get("picture")?.toString()
-    }
-    override fun getEmail(): String? {
-        return attributes.get("email")?.toString()
-    }
-}
+//data class GoogleAuth2UserInfo(
+//    override val attributes: Map<String, Any?>,
+//    override val signType: SignType = SignType.GOOGLE,
+//) : OAuth2UserInfo {
+//
+//
+//    override fun getSocialId(): String {
+//        return attributes.get("sub").toString()
+//    }
+//
+//    override fun getSocialPictureUrl(): String? {
+//        return attributes.get("picture")?.toString()
+//    }
+//    override fun getEmail(): String? {
+//        return attributes.get("email")?.toString()
+//    }
+//}
 
 
 

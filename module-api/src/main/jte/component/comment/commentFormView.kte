@@ -2,7 +2,7 @@
 @param postId: Long
 @param idAncestor: Long = 0L
 
-<form class="bg-white rounded-lg border p-2 mx-auto"
+<form class="bg-white rounded-lg border p-2 mx-auto "
       id="comment-form-${idAncestor}"
       hx-post="/comment"
       hx-swap="beforeend"

@@ -23,8 +23,8 @@ dependencies {
 
     implementation(project(":module-storage"))
 
-    //implementation("org.dhatim:fastexcel:0.16.4")
-    //implementation("org.dhatim:fastexcel-reader:0.16.4")
+    implementation("com.opencsv:opencsv:5.12.0")
+
 
     //common utilities
     implementation("org.apache.commons:commons-lang3:3.12.0")

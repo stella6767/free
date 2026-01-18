@@ -1,0 +1,64 @@
+@template.layout.main(bodyContent = @`
+
+    <div class="base-container ">
+        <div class="w-full h-screen font-pretendard">
+            <div class="w-full h-1/10 flex justify-center items-center pb-3">
+                <h1 class="font-bold text-4xl">서울시 흡연구역</h1>
+            </div>
+
+            <div id="map" class="w-full h-9/10">
+
+
+            </div>
+        </div>
+    </div>
+
+
+    @raw
+    <script>
+        const map = new naver.maps.Map('map', {
+            center: new naver.maps.LatLng(37.5665, 126.9780), // 서울
+            zoom: 12
+        });
+
+        fetch('/smoking-spot/json')
+            .then(res => res.json())
+            .then(spots => {
+                spots.forEach(spot => {
+                    naver.maps.Service.geocode(
+                        {query: spot.address},
+                        (status, response) => {
+                            if (status !== naver.maps.Service.Status.OK) return;
+
+                            const result = response.v2.addresses[0];
+                            if (!result) return;
+
+                            const lat = result.y;
+                            const lng = result.x;
+
+                            const marker = new naver.maps.Marker({
+                                position: new naver.maps.LatLng(lat, lng),
+                                map: map
+                            });
+
+
+                            const info = new naver.maps.InfoWindow({
+                                content: `
+                                <div style="padding:8px">
+                                <b>${spot.name}</b><br/>
+                                ${spot.address}
+                                </div>
+                                `
+                            });
+
+                            naver.maps.Event.addListener(marker, 'click', () => {
+                                info.open(map, marker);
+                            });
+
+                        });
+                })
+            });
+
+    </script>
+    @endraw
+`)

@@ -1,26 +1,151 @@
 package freeapp.life.stella.api.util
 
+import com.opencsv.CSVReader
 import freeapp.life.stella.storage.entity.type.SignType
-import org.jetbrains.kotlin.konan.file.File
+
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.nodes.TextNode
 import org.junit.jupiter.api.Test
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import java.io.File
+import java.io.FileInputStream
+import java.io.InputStreamReader
 import java.io.RandomAccessFile
+import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
-import java.util.ArrayList
-import java.util.Stack
+import java.util.*
+import java.util.stream.Collectors
+import kotlin.io.inputStream
+
 
 class UtilTest {
 
+    private val NAME_KEYS = listOf(
+        "시설명", "시설명(업소)", "건물명", "상호명", "시설 구분", "구분", "설치 주체"
+    )
+
+    private val ADDRESS_KEYS = listOf(
+        "도로명주소",
+        "소재지도로명주소",
+        "주소",
+        "지번주소",
+        "설치위치",
+        "설치 위치",
+        "서울특별시 용산구 설치 위치"
+    )
+
 
     @Test
-    fun s3ClientTest(){
+    fun readCsv() {
+
+        val dirPath = "src/test/resources/csv-utf8"
+
+        File(dirPath).listFiles { file ->
+            file.extension.lowercase() == "csv"
+        }?.forEach { csv ->
+            println("===== ${csv.name} =====")
+
+            csv.bufferedReader(StandardCharsets.UTF_8).useLines { lines ->
+                lines.take(2).forEach { println(it) }
+//                lines.forEach { line ->
+//                    println(line)
+//                }
+            }
+        }
+    }
 
 
 
+    @Test
+    fun convertCsvDirectoryToUtf8() {
+
+        val inputDir = File("src/test/resources/csv")
+        val outputDir = File("src/test/resources/csv-utf8")
+
+        require(inputDir.isDirectory) { "inputDir must be a directory" }
+        outputDir.mkdirs()
+
+        inputDir.listFiles { file ->
+            file.extension.lowercase() == "csv"
+        }?.forEach { csv ->
+            val sourceCharset = detectCharset(csv)
+
+            println("Converting ${csv.name} [$sourceCharset → UTF-8]")
+
+            val text = csv.readText(sourceCharset)
+
+            val outputFile = File(outputDir, csv.name)
+            outputFile.writeText(text, StandardCharsets.UTF_8)
+        }
+    }
+
+
+    @Test
+    fun convert() {
+
+        convertTsvToCsv(
+            File("src/test/resources/csv/서울특별시 용산구_흡연구역_20240719.csv"),
+            File("src/test/resources/csv-utf8/서울특별시 용산구_흡연구역_20240719.csv"),
+            StandardCharsets.UTF_8
+        )
+
+
+    }
+
+    fun convertTsvToCsv(
+        input: File,
+        output: File,
+        sourceCharset: Charset = StandardCharsets.UTF_8
+    ) {
+        input.bufferedReader(sourceCharset).useLines { lines ->
+            output.bufferedWriter(StandardCharsets.UTF_8).use { writer ->
+                lines.forEach { line ->
+                    val csvLine = line
+                        .split('\t')
+                        .joinToString(",") { value ->
+                            if (value.contains(","))
+                                "\"$value\""
+                            else value
+                        }
+                    writer.write(csvLine)
+                    writer.newLine()
+                }
+            }
+        }
+    }
+
+
+    fun detectCharset(file: File): Charset {
+        file.inputStream().use { input ->
+            val bom = ByteArray(3)
+            val read = input.read(bom)
+
+            if (read >= 2) {
+                // UTF-16 LE BOM: FF FE
+                if (bom[0] == 0xFF.toByte() && bom[1] == 0xFE.toByte()) {
+                    return StandardCharsets.UTF_16LE
+                }
+                // UTF-16 BE BOM: FE FF
+                if (bom[0] == 0xFE.toByte() && bom[1] == 0xFF.toByte()) {
+                    return StandardCharsets.UTF_16BE
+                }
+            }
+            if (read == 3) {
+                // UTF-8 BOM: EF BB BF
+                if (bom[0] == 0xEF.toByte() &&
+                    bom[1] == 0xBB.toByte() &&
+                    bom[2] == 0xBF.toByte()
+                ) {
+                    return StandardCharsets.UTF_8
+                }
+            }
+        }
+
+        // BOM 없으면 → 현실적으로 CP949가 제일 안전
+        return Charset.forName("x-windows-949")
     }
 
 
@@ -38,9 +163,9 @@ class UtilTest {
 
 
     @Test
-    fun folderTest(){
+    fun folderTest() {
 
-        val string = "blog" + File.Companion.separator + "2023"
+        val string = "blog" + File.separator + "2023"
 
         println(string)
 
@@ -48,7 +173,7 @@ class UtilTest {
 
 
     @Test
-    fun getSocialTypes(){
+    fun getSocialTypes() {
 
         val socialTypes = SignType.Companion.getSocialTypes()
 

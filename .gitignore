@@ -33,6 +33,8 @@ secrets_base64.txt
 ./logs
 /node_modules
 module-api/src/main/node/node_modules/
+module-api/src/test/resources/
+
 
 ### NetBeans ###
 /nbproject/private/

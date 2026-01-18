@@ -78,7 +78,9 @@ class User(
 
     fun update(username: String, encPassword: String, profileUrl: String) {
         this.username = username
+
         if (profileUrl.isNotBlank()) {
+            println("!!!!!: " + profileUrl)
             this.profileImg = profileUrl
         }
         if (encPassword.isNotBlank()) {

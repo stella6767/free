@@ -13,76 +13,74 @@
 @template.layout.main(bodyContent = @`
 
 
-    <section id="posts-container" class="container mx-auto px-4 py-4 sm:px-8 lg:px-16 min-h-screen">
+    <section id="posts-container" class="base-container bg-base-200 text-base-content">
 
-        <div id="blog-header" class="sticky top-15 z-20 bg-white w-full flex justify-between py-5">
+        <div id="blog-header" class="sticky top-15 z-20 bg-base-100 w-full flex justify-between py-5">
             <div>
                 <div role="tablist" class="tabs tabs-border">
-                    <a role="tab" class="tab ${if (currentSort == "ASC") "tab-active" else ""}"
-                       href="/blog?page=${posts.pageable.pageNumber}&keyword=${keyword}&sort=createAt,asc"
-                    >
+                    <a role="tab"
+                       class="tab ${if (currentSort == "ASC") "tab-active" else ""}"
+                       href="/blog?page=${posts.pageable.pageNumber}&keyword=${keyword}&sort=createAt,asc">
                         기본
                     </a>
-                    <a role="tab" class="tab ${if (currentSort == "DESC") "tab-active" else ""}"
-                       href="/blog?page=${posts.pageable.pageNumber}&keyword=${keyword}&sort=createAt,desc"
-                    >
+                    <a role="tab"
+                       class="tab ${if (currentSort == "DESC") "tab-active" else ""}"
+                       href="/blog?page=${posts.pageable.pageNumber}&keyword=${keyword}&sort=createAt,desc">
                         최신
                     </a>
                 </div>
             </div>
-            <div class="flex">
-                <div class="max-w-md mr-5">
-                    <form method="get" action="/blog" class="relative mx-auto w-max">
+
+            <div class="flex items-center gap-4">
+
+                <!-- Search -->
+                <div class="max-w-md">
+                    <form method="get" action="/blog" class="join">
                         <input type="search" name="keyword"
-                               class="peer cursor-pointer relative z-10 h-12 w-12 rounded-full border bg-transparent pl-12 outline-none focus:w-full focus:cursor-text focus:border-lime-300 focus:pl-16 focus:pr-4"/>
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                             class="absolute inset-y-0 my-auto h-8 w-12 border-r border-transparent stroke-gray-500 px-3.5 peer-focus:border-lime-300 peer-focus:stroke-lime-500"
-                             fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                        </svg>
+                               placeholder="Search"
+                               class="input input-bordered join-item w-64 sm:w-80 bg-base-100" />
+
+                        <button class="btn btn-square join-item" type="submit" aria-label="Search">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                        </button>
                     </form>
                 </div>
 
+                <!-- Menu / Dropdown -->
+                <div class="dropdown dropdown-end">
+                    <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                             class="inline-block w-5 h-5 stroke-current">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/>
+                        </svg>
+                    </div>
 
-                <ul class="menu px-1 font-pretendard">
-                    <li>
-                        <details>
-                            <summary>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                     class="inline-block w-5 h-5 stroke-current">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/>
-                                </svg>
-                            </summary>
-                            <ul class="bg-base-100 z-30">
+                    <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box shadow w-40 z-30">
+                        @if (isUserLoggedIn)
+                            <li>
+                                <a hx-trigger="click" hx-get="/post/editor" hx-target="#posts-container" href="/post/editor">
+                                    새글쓰기
+                                </a>
+                            </li>
+                        @else
+                            <li>
+                                <div class="tooltip" data-tip="require login">
+                                    <button class="btn btn-sm w-full" disabled>
+                                        새글쓰기
+                                    </button>
+                                </div>
+                            </li>
+                        @endif
+                    </ul>
+                </div>
 
-                                @if (isUserLoggedIn)
-                                    <li>
-                                        <a hx-trigger="click" hx-get="/post/editor" hx-target="#posts-container"
-                                           href="/post/editor">
-                                            새글쓰기
-                                        </a>
-                                    </li>
-
-                                 @else
-                                    <li>
-                                        <div class="tooltip" data-tip="require login">
-                                            <button hx-trigger="click" class="btn" disabled="disabled" >
-                                                새글쓰기
-                                            </button>
-                                        </div>
-                                    </li>
-                                @endif
-
-                            </ul>
-                        </details>
-                    </li>
-                </ul>
             </div>
-
         </div>
-
 
         @if (StringUtils.hasText(keyword))
             <div>
@@ -105,8 +103,7 @@
                  class="grid grid-cols-4 gap-4"
                  hx-get="/posts?page=${posts.pageable.pageNumber + 1}&keyword=${keyword}&sort=createAt,${currentSort}"
                  hx-trigger="revealed"
-                 hx-swap="afterend"
-            >
+                 hx-swap="afterend">
                 @for (post in posts.content)
                     @template.component.blog.postCardView(post = post)
                 @endfor
@@ -118,7 +115,6 @@
                 @endfor
             </div>
         @endif
-
 
     </section>
 

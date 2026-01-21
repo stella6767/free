@@ -1,23 +1,38 @@
 
 @template.layout.main(bodyContent = @`
 
-    <form class="min-h-screen container mx-auto px-4 sm:px-8 lg:px-16 font-pretendard"
+    <form class="base-container font-pretendard bg-base-200 text-base-content"
           hx-post="/convert/html"
           hx-target="#converter-output"
           hx-on--after-request="javascript:document.getElementById('converter-input').value='';">
 
-        <div>
-            <label for="input" class="block text-lg font-bold leading-6 text-gray-900">HTML</label>
-            <textarea id="converter-input" name="input" placeholder="HTML" class="textarea textarea-bordered textarea-lg w-full min-h-80"></textarea>
-        </div>
-        <button id="convert-button" type="submit" class="mt-2 rounded-md w-full bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-            Convert
-        </button>
-        <div class="mt-10">
-            <label for="output" class="block text-lg font-bold leading-6 text-gray-900">Kotlin</label>
-            <textarea id="converter-output" name="output" readonly class="textarea textarea-bordered textarea-lg w-full min-h-80"></textarea>
+        <div class="card bg-base-100 shadow">
+            <div class="card-body gap-4">
+
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text text-lg font-bold">HTML</span>
+                    </div>
+                    <textarea id="converter-input" name="input" placeholder="HTML"
+                              class="textarea textarea-bordered textarea-lg w-full min-h-80 bg-base-100"></textarea>
+                </label>
+
+                <button id="convert-button" type="submit" class="btn btn-primary btn-block">
+                    Convert
+                </button>
+
+                <label class="form-control w-full mt-4">
+                    <div class="label">
+                        <span class="label-text text-lg font-bold">Kotlin</span>
+                    </div>
+                    <textarea id="converter-output" name="output" readonly
+                              class="textarea textarea-bordered textarea-lg w-full min-h-80 bg-base-100"></textarea>
+                </label>
+
+            </div>
         </div>
     </form>
+
 
 
 `)

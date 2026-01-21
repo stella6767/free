@@ -14,20 +14,16 @@ class SmokingSpotController(
     private val smokingSpotService: SmokingSpotService,
 ) {
 
-
     @GetMapping("/")
     fun smokingSpotPage(
-
     ): String {
-
         return "page/smokingSpot"
     }
-
 
     @ResponseBody
     @GetMapping("/json")
     fun smokingSpots(): List<SmokingSpotMapDto> {
-        
+
         return smokingSpotService.findSmokingSpots()
     }
 

@@ -1,95 +1,142 @@
 @import  freeapp.life.stella.api.web.dto.QrGeneratorType
 @param type:QrGeneratorType
 
-<div id="main-input-form">
+<div id="main-input-form" class="text-base-content">
     @if(type == QrGeneratorType.LINK)
         <h2 class="font-semibold">1. Complete the content</h2>
-        <input id="value" name="text" type="text" placeholder="https://"
-               class="w-full p-2 border rounded mt-2" required>
+
+        <label class="form-control w-full mt-2">
+            <input id="value" name="text" type="text" placeholder="https://"
+                   class="input input-bordered w-full bg-base-100"
+                   required>
+        </label>
+
     @elseif(type == QrGeneratorType.TEXT)
-        <h2 class="font-semibold text-black">1. Complete the content</h2>
-        <div class="flex flex-col mt-2">
-            <label for="generator-section-input-2" class="font-semibold">Message</label>
-            <textarea id="value" name="text" type="text" maxlength="1000"
-                      placeholder="Write your text here" class="border p-2 mt-2"
+        <h2 class="font-semibold">1. Complete the content</h2>
+
+        <label class="form-control w-full mt-2">
+            <div class="label">
+                <span class="label-text font-semibold">Message</span>
+            </div>
+            <textarea id="value" name="text" maxlength="1000"
+                      placeholder="Write your text here"
+                      class="textarea textarea-bordered w-full bg-base-100"
                       required></textarea>
-        </div>
+        </label>
+
     @elseif(type == QrGeneratorType.TEL)
         <h2 class="font-semibold">1. Complete the content</h2>
-        <div class="flex space-x-3 mt-2">
+
+        <div class="flex gap-3 mt-2">
             <div class="w-1/4">
-                <label class="font-semibold">Country code</label>
+                <div class="label px-0">
+                    <span class="label-text font-semibold">Country code</span>
+                </div>
                 @template.component.qr.countryCode()
             </div>
 
-            <div class="w-3/4 flex flex-col">
-                <label class="font-semibold">Phone number</label>
-                <input id="phone-number" name="phoneNumber" type="text" class="p-2 border rounded mt-2" required>
-            </div>
-
+            <label class="form-control w-3/4">
+                <div class="label">
+                    <span class="label-text font-semibold">Phone number</span>
+                </div>
+                <input id="phone-number" name="phoneNumber" type="text"
+                       class="input input-bordered w-full bg-base-100"
+                       required>
+            </label>
         </div>
+
     @elseif(type == QrGeneratorType.WIFI)
         <h2 class="font-semibold">1. Complete the content</h2>
-        <div class="flex space-x-3 mt-2">
-            <div class="flex flex-col flex-1">
-                <label class="font-semibold">Network name</label>
-                <input id="ssid" name="ssid" placeholder="SSID" type="text" class="p-2 border rounded mt-2" required>
-            </div>
-            <div class="flex flex-col flex-1">
-                <label class="font-semibold">Type of encryption</label>
-                <select name="encryption" id="encryption" class="p-2 border rounded mt-2">
-                    <option value="">Type of encryption</option>
+
+        <div class="flex gap-3 mt-2">
+            <label class="form-control flex-1">
+                <div class="label">
+                    <span class="label-text font-semibold">Network name</span>
+                </div>
+                <input id="ssid" name="ssid" placeholder="SSID" type="text"
+                       class="input input-bordered w-full bg-base-100"
+                       required>
+            </label>
+
+            <label class="form-control flex-1">
+                <div class="label">
+                    <span class="label-text font-semibold">Type of encryption</span>
+                </div>
+                <select name="encryption" id="encryption"
+                        class="select select-bordered w-full bg-base-100">
+                    <option value="" selected>Type of encryption</option>
                     <option value="WEP">WEP</option>
                     <option value="WPA">WPA/WPA2</option>
                 </select>
-            </div>
-            <div class="flex flex-col flex-1">
-                <label class="font-semibold">Password</label>
+            </label>
+
+            <label class="form-control flex-1">
+                <div class="label">
+                    <span class="label-text font-semibold">Password</span>
+                </div>
                 <input id="wifi-password" name="password" placeholder="WI-FI password" type="text"
-                       class="p-2 border rounded mt-2" required>
-            </div>
+                       class="input input-bordered w-full bg-base-100"
+                       required>
+            </label>
         </div>
+
     @elseif(type == QrGeneratorType.VCARD)
         <h2 class="font-semibold">1. Complete the content</h2>
-        <div class="flex space-x-3 mt-2">
-            <div class="flex flex-col flex-1">
-                <label class="font-semibold">first name</label>
-                <input id="first-name" name="firstName" type="text" class="p-2 border rounded mt-2" required>
-            </div>
-            <div class="flex flex-col flex-1">
-                <label class="font-semibold">last name</label>
-                <input id="last-name" name="lastName" type="text" class="p-2 border rounded mt-2" required>
-            </div>
+
+        <div class="flex gap-3 mt-2">
+            <label class="form-control flex-1">
+                <div class="label">
+                    <span class="label-text font-semibold">First name</span>
+                </div>
+                <input id="first-name" name="firstName" type="text"
+                       class="input input-bordered w-full bg-base-100"
+                       required>
+            </label>
+
+            <label class="form-control flex-1">
+                <div class="label">
+                    <span class="label-text font-semibold">Last name</span>
+                </div>
+                <input id="last-name" name="lastName" type="text"
+                       class="input input-bordered w-full bg-base-100"
+                       required>
+            </label>
         </div>
-        <br/>
-        <h2 class="font-semibold">Contact Information</h2>
-        <div class="flex flex-col">
-            <label class="font-semibold">Phone number</label>
-            <input id="Phone-number" name="phoneNumber" type="text" class="p-2 border rounded mt-2" required>
-        </div>
+
+        <div class="divider my-4">Contact Information</div>
+
+        <label class="form-control w-full">
+            <div class="label">
+                <span class="label-text font-semibold">Phone number</span>
+            </div>
+            <input id="Phone-number" name="phoneNumber" type="text"
+                   class="input input-bordered w-full bg-base-100"
+                   required>
+        </label>
 
     @elseif(type == QrGeneratorType.PDF)
         <h2 class="font-semibold">PDF QR Code</h2>
-        <p class="font-light">Share PDF Document inside your QR Code.</p>
-        <button
-                onclick="var input = document.getElementById('fileInput')
-                   input.click(); input.classList.remove('hidden')  "
-                class="mt-2 w-1/2 border rounded p-2 h-[50px] cursor-pointer hover:bg-[#b4b4b480]">
+        <p class="opacity-80">Share PDF Document inside your QR Code.</p>
+
+        <button type="button"
+                onclick="var input=document.getElementById('fileInput'); input.click(); input.classList.remove('hidden')"
+                class="btn btn-outline btn-primary mt-2 w-1/2">
             Upload Now
         </button>
+
         <input type="file" id="fileInput" name="file"
-               class="hidden"
+               class="file-input file-input-bordered w-full mt-2 hidden bg-base-100"
                onchange="
-                const f=this.files && this.files[0];
-                const limit=100*1024*1024;
-                const el=document.querySelector('#fileInputError');
-                el.innerHTML='';
-                if(!f) return;
-                if(f.size>limit){
-                  this.value='';
-                  if(el) el.innerHTML=`<div class='p-3 text-red-600'>파일이 너무 큽니다. 최대 100MB까지 업로드할 수 있어요.</div>`;
-                }
-            ">
+              const f=this.files && this.files[0];
+              const limit=100*1024*1024;
+              const el=document.querySelector('#fileInputError');
+              el.innerHTML='';
+              if(!f) return;
+              if(f.size>limit){
+                this.value='';
+                if(el) el.innerHTML=`<div class='alert alert-error mt-2'><span>파일이 너무 큽니다. 최대 100MB까지 업로드할 수 있어요.</span></div>`;
+              }
+           ">
 
         <div id="fileInputError"></div>
 

@@ -6,93 +6,80 @@
 @param endPoint: String
 @param targetTagId: String
 
-
 !{
-    var maxPageItems = 5
-    var start = floor((page.number / maxPageItems).toDouble()) * maxPageItems + 1
-    var end = if ((start + maxPageItems - 1) < page.totalPages) start + maxPageItems - 1 else page.totalPages.toDouble()
-
+  var maxPageItems = 5
+  var start = floor((page.number / maxPageItems).toDouble()) * maxPageItems + 1
+  var end = if ((start + maxPageItems - 1) < page.totalPages) start + maxPageItems - 1 else page.totalPages.toDouble()
 }
-
 
 <div class="flex justify-center" id="page-view">
     <div class="join">
 
-        <button class="join-item btn text-white bg-black"
+        <button class="join-item btn btn-sm"
                 hx-trigger="click"
                 hx-get="/${endPoint}?page=0"
                 hx-swap="multi:#${targetTagId},#page-view"
-                hx-include="#size-select"
-        >
+                hx-include="#size-select">
             First
         </button>
 
-
         @if (page.isFirst)
-            <button class="join-item btn text-white bg-black disabled:bg-slate-50 disabled:text-slate-500"
-                    disabled>
+            <button class="join-item btn btn-sm" disabled>
                 &lt;&lt;
             </button>
         @else
-            <button class="join-item btn text-white bg-black"
+            <button class="join-item btn btn-sm"
                     hx-trigger="click"
                     hx-get="/${endPoint}?page=${page.number - 1}"
                     hx-swap="multi:#${targetTagId},#page-view"
-                    hx-include="#size-select"
-            >
+                    hx-include="#size-select">
                 &lt;&lt;
             </button>
         @endif
 
-
         @for (i in start.toInt()..end.toInt())
             @if (i == page.number + 1)
-                <button class="join-item btn btn-square btn-active btn-primary text-block bg-accent"
+                <button class="join-item btn btn-sm btn-square btn-active btn-primary"
                         hx-trigger="click"
                         hx-get="/${endPoint}?page=${i - 1}"
                         hx-swap="multi:#${targetTagId},#page-view"
-                        hx-include="#size-select"
-                >
+                        hx-include="#size-select">
                     ${i}
                 </button>
             @else
-                <button class="join-item btn btn-square "
+                <button class="join-item btn btn-sm btn-square"
                         hx-trigger="click"
                         hx-get="/${endPoint}?page=${i - 1}"
                         hx-swap="multi:#${targetTagId},#page-view"
-                        hx-include="#size-select"
-                >
+                        hx-include="#size-select">
                     ${i}
                 </button>
             @endif
         @endfor
 
-
         @if (page.isLast)
-            <button class="join-item btn text-white bg-black"
-                    disabled>
+            <button class="join-item btn btn-sm" disabled>
                 &gt;&gt;
             </button>
         @else
-            <button class="join-item btn text-white bg-black"
+            <button class="join-item btn btn-sm"
                     hx-trigger="click"
                     hx-get="/${endPoint}?page=${page.number + 1}"
                     hx-swap="multi:#${targetTagId},#page-view"
-                    hx-include="#size-select"
-            >
+                    hx-include="#size-select">
                 &gt;&gt;
             </button>
         @endif
 
-
-        <button class="join-item btn text-white bg-black"
+        <button class="join-item btn btn-sm"
                 hx-trigger="click"
                 hx-get="/${endPoint}?page=${page.totalPages - 1}"
                 hx-swap="multi:#${targetTagId},#page-view"
-                hx-include="#size-select"
-        >
+                hx-include="#size-select">
             Last
         </button>
+
     </div>
 </div>
+
 <br/>

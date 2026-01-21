@@ -5,22 +5,21 @@
 @param defaultType:QrGeneratorType
 
 
-<div class="flex flex-wrap space-x-4 space-y-2 border-b pb-2">
+<div role="tablist" class="tabs tabs-border w-full">
     @for(type in types)
-        !{var selectedColor = if (type == defaultType)  "bg-green-100 text-green-700 tab-active" else  "";}
-        <div hx-get="/qr/${type.name}"
-             hx-target="#qrMainInput"
-             hx-on--after-on-load="
-                   let currentTab = document.querySelector('.tab-active');
-                   currentTab.classList.remove('tab-active', 'bg-green-100', 'text-green-700')
-                   let newTab = event.target
-                   newTab.classList.add('tab-active', 'bg-green-100', 'text-green-700')
-                "
-             class="w-[calc(20%-1rem)] text-center px-4 py-2 border rounded cursor-pointer hover:bg-[#b4b4b480] ${selectedColor}">
+        !{ var active = if (type == defaultType) "tab-active text-primary" else ""; }
+
+        <a role="tab"
+           hx-get="/qr/${type.name}"
+           hx-target="#qrMainInput"
+           hx-on--after-on-load="
+          const currentTab = document.querySelector('.tab-active');
+          if (currentTab) currentTab.classList.remove('tab-active', 'text-primary');
+          const newTab = event.target.closest('[role=tab]');
+          newTab.classList.add('tab-active', 'text-primary');
+       "
+           class="tab flex-1 ${active}">
             ${type.icon} ${type.fieldName}
-        </div>
+        </a>
     @endfor
-
 </div>
-
-

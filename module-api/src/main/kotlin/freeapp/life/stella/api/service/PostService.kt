@@ -75,7 +75,7 @@ class PostService(
     @Transactional(readOnly = true)
     fun findPostsByPage(pageable: Pageable): Page<PostCardDto> {
 
-        return postRepository.findPostsByPage(pageable).map {
+        return postRepository.  findPostsByPage(pageable).map {
             val text =
                 Jsoup.parse(it.content).text()
             PostCardDto.fromEntity(it, text)

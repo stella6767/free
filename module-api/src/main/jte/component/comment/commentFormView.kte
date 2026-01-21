@@ -2,15 +2,19 @@
 @param postId: Long
 @param idAncestor: Long = 0L
 
-<form class="bg-white rounded-lg border p-2 mx-auto "
+<form class="card bg-base-100 border border-base-300 p-2 mx-auto"
       id="comment-form-${idAncestor}"
       hx-post="/comment"
       hx-swap="beforeend"
       hx-target="@if(idAncestor != 0L)#comment-card-${idAncestor}@else#comment-card-container@endif"
       hx-on="htmx:afterRequest: document.getElementById('comment-form-${idAncestor}').reset()">
 
-    <div class="px-3 mb-2 mt-2">
-        <input type="text" required name="nickName" placeholder="input your nickname" class="input input-bordered" />
+    <div class="flex flex-col gap-2 px-3 mb-2 mt-2">
+        <input type="text"
+               required
+               name="nickName"
+               placeholder="input your nickname"
+               class="input input-bordered w-full bg-base-100" />
         @if (userId != null)
             <input type="hidden" name="userId" value="${userId}" />
         @endif
@@ -20,9 +24,16 @@
     <input type="hidden" name="idAncestor" value="${idAncestor}" />
 
     <div class="px-3 mb-2 mt-2">
-        <textarea placeholder="comment" name="content" id="comment-text" class="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white text-black"></textarea>
+    <textarea placeholder="comment"
+              name="content"
+              id="comment-text"
+              class="textarea textarea-bordered w-full h-20 resize-none bg-base-100"
+              required></textarea>
     </div>
-    <div class="flex justify-end px-4">
-        <input type="submit" class="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500 cursor-pointer" />
+
+    <div class="flex justify-end px-4 pb-2">
+        <button type="submit" class="btn btn-primary btn-sm">
+            Submit
+        </button>
     </div>
 </form>

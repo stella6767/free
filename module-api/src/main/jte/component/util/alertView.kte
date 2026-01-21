@@ -3,25 +3,23 @@
 @param duration: Int = 5000
 
 
-<div class="alert alert-error fixed top-10 z-50 w-3/5 left-1/2 -translate-x-1/2" id="alert-toast" role="alert">
-    <svg class="stroke-current shrink-0 h-6 w-6 cursor-pointer"
-         fill="none"
-         viewBox="0 0 24 24"
-         onclick="document.getElementById('alert-toast').style.display='none'">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-    </svg>
-    <span id="error-msg-box" class="break-words break-all whitespace-normal overflow-hidden">${msg}</span>
+<div class="toast toast-top toast-center z-50" id="alert-toast-wrapper">
+    <div class="alert alert-error w-[min(60%,48rem)]" id="alert-toast" role="alert">
+        <button type="button" class="btn btn-ghost btn-sm btn-circle"
+                onclick="document.getElementById('alert-toast-wrapper').style.display='none'">
+            ✕
+        </button>
+
+        <span id="error-msg-box" class="break-words whitespace-normal overflow-hidden">
+      ${msg}
+    </span>
+    </div>
 </div>
+
 <script>
-
-    console.log("????")
-
     setTimeout(() => {
-        const alertToast = document.getElementById('alert-toast');
-        if (alertToast) {
-            alertToast.style.display = 'none';
-        }
+        const wrap = document.getElementById('alert-toast-wrapper');
+        if (wrap) wrap.style.display = 'none';
     }, ${duration});
 
     @if(!isHtmxRequest)

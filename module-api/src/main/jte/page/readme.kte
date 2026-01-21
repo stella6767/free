@@ -3,7 +3,7 @@
 
 @template.layout.main(bodyContent = @`
 
-    <div class="min-h-screen container mx-auto px-4 sm:px-8 lg:px-16 ">
+    <div class="base-container">
         <div>
             @template.component.util.htmlViewer(value = value, isCenter = isCenter)
         </div>

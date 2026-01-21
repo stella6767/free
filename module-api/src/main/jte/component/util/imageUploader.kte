@@ -1,39 +1,47 @@
 @param profileImg:String
 
+<div class="mb-6 text-base-content">
+    <label class="form-control w-full">
+        <div class="label">
+            <span class="label-text font-bold">프로필 사진 *</span>
+        </div>
 
-<div class="mb-6">
-    <label class="block text-gray-700 text-sm font-bold mb-2" for="profile-image">
-        프로필 사진 *
+        <div class="flex flex-wrap items-center gap-3">
+            <!-- v5 기준: file-input은 border가 기본이라 file-input-bordered가 필요 없을 수 있음 -->
+            <input type="file"
+                   id="profile-image"
+                   name="profileImage"
+                   accept=".jpg,.jpeg,.png,.bmp"
+                   class="file-input w-full max-w-xs"
+                   onchange="updateFilePreview(event)">
+
+            <span id="file-name" class="text-sm opacity-70">선택된 파일 없음</span>
+        </div>
+
+        <div class="label">
+            <span class="label-text-alt opacity-70">- 해상도: 2000px*2000px 이하</span>
+        </div>
+        <div class="label pt-0">
+            <span class="label-text-alt opacity-70">- 파일 형식: jpg(jpeg), png, bmp</span>
+        </div>
+        <div class="label pt-0">
+            <span class="label-text-alt opacity-70">- 파일 용량: 10MB</span>
+        </div>
     </label>
-    <div class="flex items-center space-x-4">
-        <label class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded cursor-pointer">
-            파일 선택
-            <input
-                    type="file"
-                    id="profile-image"
-                    name="profileImage"
-                    accept=".jpg,.jpeg,.png,.bmp"
-                    class="hidden"
-                    onchange="updateFilePreview(event)"
-            >
-        </label>
-        <span id="file-name" class="text-gray-600 text-sm">
-                    선택된 파일 없음
-                </span>
-    </div>
-    <div class="mt-2 text-xs text-gray-600">
-        <p>- 해상도: 2000px*2000px 이하</p>
-        <p>- 파일 형식: jpg(jpeg), png, bmp</p>
-        <p>- 파일 용량: 10MB</p>
-    </div>
-    <div
-            id="image-preview"
-            class="mt-4 w-40 h-40 bg-gray-200 rounded-full flex items-center justify-center"
-    >
+
+    <div id="image-preview" class="mt-4">
         @if(profileImg.isEmpty())
-            <span class="text-gray-500">프로필 이미지</span>
+            <div class="avatar placeholder">
+                <div class="bg-base-200 text-base-content w-40 rounded-full flex items-center justify-center">
+                    <span class="opacity-60">프로필 이미지</span>
+                </div>
+            </div>
         @else
-            <img class="w-full h-full object-cover rounded-full" src="${profileImg}">
+            <div class="avatar">
+                <div class="w-40 rounded-full ring-2 ring-primary ring-offset-2 ring-offset-base-100">
+                    <img class="object-cover" src="${profileImg}" alt="profile image">
+                </div>
+            </div>
         @endif
     </div>
 </div>

@@ -6,38 +6,43 @@
 @param isGenerated:Boolean  = false
 
 
-<div id="qr-code-btn" class="mt-3 flex flex-col"
+<div id="qr-code-btn" class="mt-3 flex flex-col gap-2"
      hx-on--load="initInputField();"
-     hx-swap-oob="true"
->
+     hx-swap-oob="true">
+
     @if(isGenerated)
-        <button
-                id="qr-generate-btn"
-                class="px-4 py-2 bg-gray-400 text-white border rounded opacity-50 cursor-not-allowed">
+        <!-- 생성 완료: Generate 비활성, Download 활성 -->
+        <button id="qr-generate-btn"
+                class="btn btn-primary btn-block"
+                disabled>
             Generate QR Code
         </button>
-        <button id="qr-download-btn"
-                class="mt-2 px-4 py-2 bg-white-400 text-blue rounded opacity-50 cursor-pointer hover:bg-[#b4b4b480]">
-            <a download="qrcode.png" href="data:image/png;base64,${imageData}">
-                ⬇ Download QR Code
-            </a>
-        </button>
+
+        <a id="qr-download-btn"
+           class="btn btn-outline btn-primary btn-block"
+           download="qrcode.png"
+           href="data:image/png;base64,${imageData}">
+            ⬇ Download QR Code
+        </a>
     @else
-        <button
-                hx-encoding="multipart/form-data"
+        <!-- 생성 전: Generate 활성, Download 비활성 -->
+        <button hx-encoding="multipart/form-data"
                 id="qr-generate-btn"
                 hx-post="/qr/code?type=${type?.name}"
                 hx-target="#qr-container"
                 hx-include="#main-input-form"
                 hx-indicator="#spinner"
-                class="px-4 py-2 bg-white-400 text-blue border rounded hover:bg-[#b4b4b480] opacity-50 cursor-pointer">
+                class="btn btn-primary btn-block">
             Generate QR Code
+            <!-- 원하면 로딩 UI를 버튼에 직접 붙일 수도 있음 -->
+            <!-- <span class="loading loading-spinner loading-sm"></span> -->
         </button>
+
         <button id="qr-download-btn"
-                class="mt-2 px-4 py-2 bg-gray-400 text-white rounded opacity-50 cursor-not-allowed">
+                class="btn btn-outline btn-primary btn-block"
+                disabled>
             ⬇ Download QR Code
         </button>
     @endif
 </div>
-
 

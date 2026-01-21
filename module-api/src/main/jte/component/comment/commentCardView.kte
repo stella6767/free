@@ -2,44 +2,52 @@
 @param userId: Long?
 
 <div id="comment-card-${comment.commentId}" class="mb-2">
-    <div class="flex mt-3" id="comment-card-${comment.commentId}">
-        <div class="text-black font-bold">
+    <div class="mt-3" id="comment-card-${comment.commentId}">
 
-        </div>
-        <div class="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
-            <strong class="text-black">${comment.username}</strong>
-            <span class="text-xs text-black ml-2">${comment.createdAt}</span>
-            <p class="text-sm text-black" id="comment-content-${comment.commentId}">
-                @if (comment.parentCommentUsername.isNotEmpty())
-                    <span class="truncate text-sm text-gray">@${comment.parentCommentUsername}  </span>
-                @endif
-                ${comment.content}
-            </p>
-            <div class="mt-4 flex items-center justify-between">
-                <div class="flex -space-x-2 mr-2">
-<%--                    <button class="text-right text-blue-500 mr-10" hx-on--click="htmx.toggleClass('#comment-reply-form-${comment.commentId}', 'hidden')">--%>
-<%--                        Reply--%>
-<%--                    </button>--%>
-                    @if (comment.childComments.isNotEmpty())
-                        <button hx-on--click="htmx.toggleClass('#reply-comment-card-${comment.commentId}', 'hidden')" class="text-right text-blue-500 ml-5">
-                            show reply
-                        </button>
-                    @endif
+        <div class="card bg-base-100 border border-base-300">
+            <div class="card-body p-4 sm:p-6">
+
+                <div class="flex items-center gap-2">
+                    <strong class="text-base-content">${comment.username}</strong>
+                    <span class="text-xs text-base-content/60">${comment.createdAt}</span>
                 </div>
-                <div>
-                    @if (comment.userId == userId)
-                        <button class="btn btn-link delete-comment"
-                                hx-delete="/comment/${comment.commentId}"
-                                hx-confirm="Are you sure you wish to delete your comment?"
-                                hx-trigger="click"
-                                hx-target="#comment-card-${comment.commentId}"
-                                hx-swap="delete">
-                            X
-                        </button>
+
+                <p class="text-sm text-base-content mt-1" id="comment-content-${comment.commentId}">
+                    @if (comment.parentCommentUsername.isNotEmpty())
+                        <span class="text-sm text-primary/80">@${comment.parentCommentUsername}</span>
                     @endif
+                    ${comment.content}
+                </p>
+
+                <div class="mt-4 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        @if (comment.childComments.isNotEmpty())
+                            <button type="button"
+                                    hx-on--click="htmx.toggleClass('#reply-comment-card-${comment.commentId}', 'hidden')"
+                                    class="btn btn-link btn-sm px-0">
+                                show reply
+                            </button>
+                        @endif
+                    </div>
+
+                    <div>
+                        @if (comment.userId == userId)
+                            <button type="button"
+                                    class="btn btn-ghost btn-sm text-error delete-comment"
+                                    hx-delete="/comment/${comment.commentId}"
+                                    hx-confirm="Are you sure you wish to delete your comment?"
+                                    hx-trigger="click"
+                                    hx-target="#comment-card-${comment.commentId}"
+                                    hx-swap="delete">
+                                Delete
+                            </button>
+                        @endif
+                    </div>
                 </div>
+
             </div>
         </div>
+
     </div>
 
     <div class="hidden" id="comment-reply-form-${comment.commentId}">

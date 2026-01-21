@@ -3,25 +3,33 @@
 @param todo: Todo
 
 !{
-    val line = if(todo.status) "line-through" else ""
- }
+  val line = if(todo.status) "line-through opacity-60" else ""
+}
 
 <div id="todo-container-${todo.id}">
-    <div class="flex mb-4 items-center" id="todo-box-${todo.id}">
-        <p class="w-full text-info-content ${line}">${todo.content}</p>
-        <button class="btn flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-info-content border-green hover:bg-green"
+    <div class="flex items-center gap-3 mb-4" id="todo-box-${todo.id}">
+        <p class="flex-1 text-base-content ${line}">
+            ${todo.content}
+        </p>
+
+        <button
+                class="btn btn-sm btn-outline btn-success"
                 hx-trigger="click"
                 hx-put="/todo/${todo.id}"
                 hx-target="#todo-container-${todo.id}"
-                hx-swap="innerHTML">
+                hx-swap="innerHTML"
+        >
             @if(todo.status)Yet@elseDone@endif
         </button>
-        <button class="btn flex-no-shrink p-2 ml-2 border-2 rounded text-info-content border-red hover:text-white hover:bg-red"
+
+        <button
+                class="btn btn-sm btn-outline btn-error"
                 hx-confirm="Are you sure?"
                 hx-swap="outerHTML swap:1s"
                 hx-trigger="click"
                 hx-delete="/todo/${todo.id}"
-                hx-target="closest div">
+                hx-target="closest div"
+        >
             Remove
         </button>
     </div>

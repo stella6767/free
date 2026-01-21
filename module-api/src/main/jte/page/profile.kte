@@ -6,72 +6,78 @@
 
 @template.layout.main(bodyContent = @`
 
-    <section class="min-h-screen flex container mx-auto px-4 py-4 sm:px-8 lg:px-16 lg:pt-24 lg:pb-16 ">
-        <div class="shadow-md rounded px-8 pt-6 pb-8 w-full">
-            <form
-                    enctype="multipart/form-data"
-                    hx-put="/user"
-                    hx-swap="outerHTML"
-            >
-                <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
-                        Email(ID) *
-                    </label>
-                    <div class="appearance-none w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        ${currentUser.email}
+    <section class="base-container flex bg-base-200 text-base-content">
+        <div class="card bg-base-100 shadow w-full">
+            <div class="card-body px-8 pt-6 pb-8">
+
+                <form enctype="multipart/form-data"
+                      hx-put="/user"
+                      hx-swap="outerHTML">
+
+                    <!-- Email -->
+                    <div class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text font-bold">Email(ID) *</span>
+                        </div>
+
+                        <!-- 읽기 전용 표시(입력 UI 톤 유지하려면 input disabled 추천) -->
+                        <input class="input input-bordered w-full bg-base-100"
+                               value="${currentUser.email}"
+                               disabled />
                     </div>
-                </div>
 
-                <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-                        Password *
-                    </label>
+                    <!-- Password -->
+                    <div class="form-control w-full mt-4">
+                        <div class="label">
+                            <span class="label-text font-bold">Password *</span>
+                        </div>
 
-                    @if(currentUser.signType == SignType.EMAIL)
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                               id="password" type="password" name="password" placeholder="please input password">
-<%--                        <p class="text-xs text-gray-600">--%>
-<%--                            (영문 대/소문자, 숫자, 특수문자를 입력하세요. 특수문자 경우 !@#$%^&*()-_=+만 사용 가능)--%>
-<%--                        </p>--%>
-                    @else
-                        <p class="text-xs text-gray-600">
-                            (social sign up user can't support password.)
-                        </p>
-                    @endif
+                        @if(currentUser.signType == SignType.EMAIL)
+                            <input class="input input-bordered w-full bg-base-100"
+                                   id="password" type="password" name="password"
+                                   placeholder="please input password">
+                        @else
+                            <div class="text-sm opacity-70">
+                                (social sign up user can't support password.)
+                            </div>
+                        @endif
+                    </div>
 
-                </div>
+                    <!-- Nickname -->
+                    <div class="form-control w-full mt-4">
+                        <div class="label">
+                            <span class="label-text font-bold">Nickname *</span>
+                        </div>
+                        <input class="input input-bordered w-full bg-base-100"
+                               id="name" name="username" type="text"
+                               value="${currentUser.username}"
+                               placeholder="input your nickname">
+                    </div>
 
-                <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
-                        Nickname *
-                    </label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                           id="name" name="username" type="text" value="${currentUser.username}"
-                           placeholder="input your nickname">
-                </div>
-
+                    <div class="mt-4">
                         @template.component.util.imageUploader(profileImg = currentUser.profileImg)
+                    </div>
 
-                <div class="flex items-center justify-end">
-                    <button type="submit"
-                            class="cursor-pointer bg-gray-700 hover:bg-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                        Edit Profile
+                    <div class="flex items-center justify-end mt-6">
+                        <button type="submit" class="btn btn-primary">
+                            Edit Profile
+                        </button>
+                    </div>
+                </form>
+
+                @template.component.auth.userDeleteModal()
+
+                <div class="flex justify-end mt-3">
+                    <button class="btn btn-ghost btn-sm text-error"
+                            type="button"
+                            onclick="document.getElementById('user-delete-modal-overlay').classList.remove('hidden')">
+                        Are you wanna delete this account?
                     </button>
                 </div>
-            </form>
 
-            @template.component.auth.userDeleteModal()
-
-            <div class="flex justify-end mt-3"
-            >
-                <div class="text-sm font-medium cursor-pointer text-red-500 py-2"
-                     onclick="document.getElementById('user-delete-modal-overlay').classList.remove('hidden')"
-                >
-                    Are you wanna delete this account?
-                </div>
             </div>
         </div>
-
     </section>
+
 
 `)

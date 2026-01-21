@@ -2,7 +2,7 @@
 
 @template.layout.main(bodyContent = @`
 
-    <div class="min-h-screen container mx-auto px-4 sm:px-8 lg:px-16 font-pretendard">
+    <div class="base-container font-pretendard">
         <div class="tabs tabs-boxed">
             @for (category in categories)
                 @template.component.public-api.tabView(category = category, activeCategory = categories.first())

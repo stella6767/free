@@ -3,53 +3,64 @@
 
 @param todos: Page<Todo>
 
-<div class="w-full flex items-center justify-center bg-teal-lightest font-sans" id="todos-with-page">
-    <div class="rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg">
-        <div class="mb-4">
-            <h1 class="text-5xl font-bold text-primary">Todo List</h1>
-            <div class="flex mt-4">
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker"
-                       autofocus="autofocus"
-                       id="new-todo"
-                       name="newTodo"
-                       placeholder="To do..."
-                       required
-                       type="text" />
-                <button class="flex-no-shrink p-2 border-2 rounded text-info-content border-teal hover:text-white hover:bg-teal"
-                        hx-include="#new-todo"
-                        hx-trigger="click"
-                        hx-post="/todo"
-                        hx-target="#todo-list"
-                        hx-swap="afterbegin"
-                        hx-on--after-request="javascript:document.getElementById('new-todo').value='';">
-                    Add
-                </button>
+<div class="w-full min-h-screen flex items-center justify-center bg-base-200 text-base-content font-sans"
+     id="todos-with-page">
+    <div class="card bg-base-100 shadow w-full lg:w-3/4 lg:max-w-lg m-4">
+        <div class="card-body p-6">
+            <div class="mb-4">
+                <h1 class="text-5xl font-bold text-primary">Todo List</h1>
+
+                <div class="flex mt-4 gap-3">
+                    <input
+                            class="input input-bordered w-full bg-base-100"
+                            autofocus="autofocus"
+                            id="new-todo"
+                            name="newTodo"
+                            placeholder="To do..."
+                            required
+                            type="text"
+                    />
+
+                    <button
+                            class="btn btn-primary"
+                            hx-include="#new-todo"
+                            hx-trigger="click"
+                            hx-post="/todo"
+                            hx-target="#todo-list"
+                            hx-swap="afterbegin"
+                            hx-on--after-request="javascript:document.getElementById('new-todo').value='';"
+                    >
+                        Add
+                    </button>
+                </div>
+            </div>
+
+            <div class="mb-4 flex items-center gap-2">
+                <label for="size-select" class="label p-0">
+                    <span class="label-text">항목 수:</span>
+                </label>
+
+                <select
+                        id="size-select"
+                        name="size"
+                        class="select select-bordered bg-base-100"
+                        hx-get="/todos"
+                        hx-trigger="change"
+                        hx-swap="multi:#todo-list,#page-view"
+                >
+                    <option value="10" selected>10개씩 보기</option>
+                    <option value="20">20개씩 보기</option>
+                    <option value="100">100개씩 보기</option>
+                </select>
+            </div>
+
+            <div id="todo-list">
+                @for (todo in todos)
+                    @template.component.todo.todoComponent(todo = todo)
+                @endfor
             </div>
         </div>
-
-        <div class="mb-4 flex items-center">
-            <label for="size-select" class="mr-2 text-info-content">항목 수:</label>
-            <select id="size-select"
-                    name="size"
-                    class="p-2 rounded"
-                    hx-get="/todos"
-                    hx-trigger="change"
-                    hx-swap="multi:#todo-list,#page-view"
-            >
-                <option value="10" selected>10개씩 보기</option>
-                <option value="20">20개씩 보기</option>
-                <option value="100">100개씩 보기</option>
-            </select>
-        </div>
-
-
-        <div id="todo-list">
-            @for (todo in todos)
-                @template.component.todo.todoComponent(todo = todo)
-            @endfor
-        </div>
     </div>
-
 </div>
 
 @template.component.util.paginationView(page = todos, endPoint = "todos", targetTagId = "todo-list")

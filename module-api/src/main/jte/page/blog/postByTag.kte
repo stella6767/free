@@ -7,24 +7,28 @@
 
 @template.layout.main(bodyContent = @`
 
-    <section class="container mx-auto px-4 py-4 sm:px-8 lg:px-16 min-h-screen">
+    <section class="base-container bg-base-200 text-base-content">
 
         @if (tagName.isNotEmpty())
             <div class="py-5">
                 <div class="flex justify-center">
-                    <h1 class="text-xl font-bold text-black">${tagName} 의 검색결과</h1>
+                    <h1 class="text-xl font-bold">${tagName} 의 검색결과</h1>
                 </div>
-                <div class="flex justify-center text-black">
-                    총 <span class="italic text-black"> ${posts.totalElements} </span>  개의 포스트를 찾았습니다.
+
+                <div class="flex justify-center text-base-content/80">
+                    총 <span class="italic text-base-content">${posts.totalElements}</span> 개의 포스트를 찾았습니다.
                 </div>
+
                 <div class="flex justify-center mt-3">
                     <button class="btn btn-wide" onclick="location.href='/blog'">전체보기</button>
                 </div>
+
+                <div class="divider mt-6"></div>
             </div>
         @endif
 
         @if (!posts.isLast)
-            <div class="" id="posts-tag-container"
+            <div id="posts-tag-container"
                  hx-get="/posts/tag?page=${posts.pageable.pageNumber + 1}&tagName=${tagName}"
                  hx-trigger="revealed"
                  hx-swap="afterend">
@@ -33,7 +37,7 @@
                 @endfor
             </div>
         @else
-            <div class="container m-auto" id="posts-tag-container">
+            <div id="posts-tag-container" class="container m-auto">
                 @for (post in posts.content)
                     @template.component.blog.postCardView(post = post)
                 @endfor

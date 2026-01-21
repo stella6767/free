@@ -4,18 +4,18 @@
 @template.layout.main(bodyContent = @`
 
 
-    <div class="min-h-screen container mx-auto px-4 sm:px-8 lg:px-16 font-pretendard">
+    <section class="base-container font-pretendard">
         <div class="flex justify-between mb-5">
             <input id="username" name="username" placeholder="input username" class="input input-bordered w-full max-w-xs mt-3" required />
             <button>
-                <a id="downloader" href="#" class="font-extrabold text-black">
+                <a id="downloader" href="#" class="font-extrabold">
                     가져오기
                 </a>
             </button>
         </div>
 
         @template.component.util.htmlViewer(value = htmlContent, isCenter = false)
-    </div>
+    </section>
 
     <script src="/js/velog.js" defer></script>
 

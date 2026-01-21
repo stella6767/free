@@ -2,107 +2,90 @@
 @param isSignUp:Boolean
 
 !{
-    var url = "";
-    url = if (isSignUp) {
-        "/auth/sign-up";
-    }else {
-        "/auth/login";
-    }
+  var url = "";
+  url = if (isSignUp) {
+    "/auth/sign-up";
+  } else {
+    "/auth/login";
+  }
 
-    val signTypes = SignType.getSocialTypes()
+  val signTypes = SignType.getSocialTypes()
 }
 
 @template.layout.main(bodyContent = @`
 
-
     <section id="login-section"
-             class="min-h-screen flex container mx-auto px-4 sm:px-8 lg:px-16 lg:pt-24 lg:pb-16 bg-white mt-44">
-        <div class="flex w-full">
+             class="base-container mt-44 bg-base-200 text-base-content">
+        <div class="flex w-full justify-center">
 
+            <div class="card bg-base-100 shadow w-full max-w-md">
+                <div class="card-body px-6 py-6">
 
-            <div class=" px-6 py-6 w-full">
-                @if(isSignUp)
-                    <h2 class="text-2xl font-semibold text-gray-700 text-center">Create an account</h2>
-                @else
-                    <h2 class="text-2xl font-semibold text-gray-700 text-center">Log in to your account</h2>
-                @endif
+                    @if(isSignUp)
+                        <h2 class="text-2xl font-semibold text-center">Create an account</h2>
+                    @else
+                        <h2 class="text-2xl font-semibold text-center">Log in to your account</h2>
+                    @endif
 
-                @for (signType in signTypes)
-                    <a href="${signType.authorizationUrl}"
-                       class="flex items-center justify-center mt-4 text-white rounded-lg shadow-md hover:bg-gray-100">
-                        <div class="px-4 py-3">
-                            <img src="${signType.imgUrl}" class="h-6 w-6" alt="google icon">
+                    @for (signType in signTypes)
+                        <a href="${signType.authorizationUrl}"
+                           class="btn btn-outline w-full justify-start gap-3 mt-4">
+                            <img src="${signType.imgUrl}" class="h-6 w-6" alt="${signType.clientName} icon">
+                            <span class="flex-1 text-center">
+              Sign in with ${signType.clientName}
+            </span>
+                        </a>
+                    @endfor
+
+                    <div class="divider my-6">or with email</div>
+
+                    <form hx-post="${url}"
+                          hx-target="#login-section"
+                          hx-disable-elt="#submit-btn">
+
+                        <label class="form-control w-full">
+                            <div class="label">
+                                <span class="label-text">Email Address</span>
+                            </div>
+                            <input name="email" type="email"
+                                   class="input input-bordered w-full bg-base-100" />
+                        </label>
+
+                        <label class="form-control w-full mt-4">
+                            <div class="label">
+                                <span class="label-text">Password</span>
+                                <a href="#" class="label-text-alt link link-hover">Forget Password?</a>
+                            </div>
+                            <input name="password" type="password" required
+                                   class="input input-bordered w-full bg-base-100" />
+                        </label>
+
+                        <div class="mt-8">
+                            @if(isSignUp)
+                                <button id="submit-btn" type="submit" class="btn btn-primary btn-block">
+                                    Sign up
+                                </button>
+                            @else
+                                <button id="submit-btn" type="submit" class="btn btn-primary btn-block">
+                                    Login
+                                </button>
+                            @endif
                         </div>
-                        <h1 class="px-4 py-3 w-5/6 text-center text-gray-600 font-bold">Sign in with ${signType.clientName}</h1>
-                    </a>
-                @endfor
 
+                        <div class="divider mt-6">
+                            @if(isSignUp)
+                                <a href="/auth/sign" class="link link-hover text-xs uppercase">or Log in</a>
+                            @else
+                                <a href="/auth/sign?isSignUp=true" class="link link-hover text-xs uppercase">or Sign up</a>
+                            @endif
+                        </div>
 
+                    </form>
 
-                <div class="mt-4 flex items-center justify-between">
-                    <span class="border-b w-1/5 lg:w-1/4"></span>
-                    <a href="#" class="text-xs text-center text-gray-500 uppercase">or with email</a>
-                    <span class="border-b w-1/5 lg:w-1/4"></span>
                 </div>
-
-                <form class=""
-                      hx-post="${url}"
-                      hx-target="#login-section"
-                      hx-disable-elt="#submit-btn"
-                >
-                    <div class="mt-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
-                        <input class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
-                               name="email"
-                               type="email"/>
-                    </div>
-
-                    <div class="mt-4">
-                        <div class="flex justify-between">
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
-                            <a href="#" class="text-xs text-gray-500">Forget Password?</a>
-                        </div>
-                        <input class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
-                               required
-                               name="password"
-                               type="password"/>
-                    </div>
-                    <div class="mt-8">
-                        @if(isSignUp)
-                            <button id="submit-btn"
-                                    type="submit"
-                                    class="cursor-pointer bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">
-                                Sign up
-                            </button>
-                        @else
-                            <button id="submit-btn"
-                                    type="submit"
-                                    class="cursor-pointer bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">
-                                Login
-                            </button>
-                        @endif
-
-                    </div>
-                    <div class="mt-4 flex items-center justify-between">
-                        <span class="border-b w-1/5 md:w-1/4"></span>
-
-                        @if(isSignUp)
-                            <a href="/auth/sign" class="text-xs text-gray-500 uppercase">or Log in</a>
-                        @else
-                            <a href="/auth/sign?isSignUp=true" class="text-xs text-gray-500 uppercase">or Sign up</a>
-                        @endif
-                        <span class="border-b w-1/5 md:w-1/4"></span>
-                    </div>
-
-                </form>
-
-
             </div>
 
-
         </div>
-
     </section>
-
 
 `)

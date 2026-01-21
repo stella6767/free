@@ -1,9 +1,13 @@
 <footer class="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4 font-pretendard font-bold">
-    <div>
+    <aside class="grid-flow-row gap-1 place-items-center">
         <p>Created by Stella6767</p>
         <p>alsrb9434@gmail.com</p>
-        <a href="https://github.com/stella6767" target="_blank" style="text-decoration: none;">
-            <img class="h-6 fill-current text-gray-600 hover:text-green-700"  src="/img/icon/github.svg" alt="github">
+
+        <a class="link link-hover mt-2"
+           href="https://github.com/stella6767"
+           target="_blank"
+           rel="noreferrer">
+            <img class="h-6" src="/img/icon/github.svg" alt="github">
         </a>
-    </div>
+    </aside>
 </footer>

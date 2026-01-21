@@ -1,23 +1,29 @@
 @param post: freeapp.life.stella.api.web.dto.PostDetailDto
 
 <dialog id="post_delete_modal" class="modal">
-    <form method="dialog" class="modal-box">
-        <div class="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
-            <div class="p-5">
-                <div class="mt-3 space-x-2 flex justify-around">
-                    <div hx-delete="/post/${post.id}"
-                         hx-swap="none"
-                         hx-on--after-request="location.href='/blog'"
-                         class="btn btn-error btn-ghost"
-                         id="post-delete-btn"
-                         role="button">
-                        정말 삭제하시겠습니까?
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="modal-box bg-base-100 text-base-content">
+        <h3 class="text-lg font-bold text-error">정말 삭제하시겠습니까?</h3>
+        <p class="mt-2 text-sm opacity-70">삭제 후에는 복구할 수 없습니다.</p>
+
         <div class="modal-action">
-            <button type="submit" class="btn">Close</button>
+            <!-- Cancel -->
+            <form method="dialog">
+                <button type="submit" class="btn">Close</button>
+            </form>
+
+            <!-- Execute delete -->
+            <button type="button"
+                    id="post-delete-btn"
+                    class="btn btn-error"
+                    hx-delete="/post/${post.id}"
+                    hx-swap="none"
+                    hx-on--after-request="location.href='/blog'">
+                Delete
+            </button>
         </div>
+    </div>
+
+    <form method="dialog" class="modal-backdrop">
+        <button>close</button>
     </form>
 </dialog>

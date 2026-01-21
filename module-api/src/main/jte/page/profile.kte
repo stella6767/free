@@ -6,7 +6,7 @@
 
 @template.layout.main(bodyContent = @`
 
-    <section class="base-container flex bg-base-200 text-base-content">
+    <section class="base-container flex text-base-content">
         <div class="card bg-base-100 shadow w-full">
             <div class="card-body px-8 pt-6 pb-8">
 

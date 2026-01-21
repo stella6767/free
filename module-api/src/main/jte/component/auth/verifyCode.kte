@@ -2,7 +2,7 @@
 @param expireMinute:Long
 @param token:String
 
-<div class="flex-grow flex items-center justify-center w-full px-4 bg-base-200 text-base-content">
+<div class="flex-grow flex items-center justify-center w-full px-4 text-base-content">
     <div class="card bg-base-100 shadow-sm w-full max-w-md">
         <div class="card-body p-8">
 

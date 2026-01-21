@@ -13,7 +13,7 @@
 @template.layout.main(bodyContent = @`
 
 
-    <section id="posts-container" class="base-container bg-base-200 text-base-content">
+    <section id="posts-container" class="base-container text-base-content">
 
         <div id="blog-header" class="sticky top-15 z-20 bg-base-100 w-full flex justify-between py-5">
             <div>

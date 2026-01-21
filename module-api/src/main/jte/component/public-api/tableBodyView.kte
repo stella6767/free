@@ -7,13 +7,13 @@
     <thead>
     <tr>
         @for (name in fieldNames)
-            <th class="text-black">${name}</th>
+            <th class="">${name}</th>
         @endfor
     </tr>
     </thead>
     <tbody>
     @for (entry in entries)
-        <tr class="text-black" id="${entry.Link}">
+        <tr class="" id="${entry.Link}">
             <td>${entry.API}</td>
             <td>${entry.Auth}</td>
             <td>${entry.Category}</td>

@@ -81,8 +81,8 @@ const onMessageReceived = (payload) => {
     if (username == sender){
         console.log("username", username)
         chatDom.querySelector("#chat-box-comment").classList.add('items-end', 'justify-end');
-        chatDom.querySelector("#chat-message-box").classList.add('bg-blue-600', 'text-white');
-        chatDom.querySelector("#chat-message-box").classList.remove('bg-gray-300', 'text-gray-600');
+        chatDom.querySelector("#chat-message-box").classList.add("bg-primary", "text-primary-content");
+        chatDom.querySelector("#chat-message-box").classList.remove("bg-base-200", "text-base-content");
     }
 
     console.log("chatDom", chatDom)

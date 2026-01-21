@@ -1,7 +1,7 @@
 
 @template.layout.main(bodyContent = @`
 
-    <form class="base-container font-pretendard bg-base-200 text-base-content"
+    <form class="base-container font-pretendard text-base-content"
           hx-post="/convert/html"
           hx-target="#converter-output"
           hx-on--after-request="javascript:document.getElementById('converter-input').value='';">

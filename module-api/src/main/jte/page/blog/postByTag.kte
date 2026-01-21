@@ -7,7 +7,7 @@
 
 @template.layout.main(bodyContent = @`
 
-    <section class="base-container bg-base-200 text-base-content">
+    <section class="base-container text-base-content">
 
         @if (tagName.isNotEmpty())
             <div class="py-5">

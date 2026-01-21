@@ -3,6 +3,28 @@
 
 console.log("setup custom client");
 
+(function () {
+    const THEME_KEY = "theme";
+
+    // 1. 저장된 테마 적용 (페이지 로드 시)
+    const savedTheme = localStorage.getItem(THEME_KEY) || "light";
+    console.log(`Saved theme: ${savedTheme}`);
+    document.documentElement.setAttribute("data-theme", savedTheme);
+
+    // 2. 토글 상태 동기화
+    const toggle = document.getElementById("themeToggle");
+
+    if (toggle) {
+        toggle.checked = savedTheme === "dark";
+
+        toggle.addEventListener("change", () => {
+            const theme = toggle.checked ? "dark" : "light";
+            document.documentElement.setAttribute("data-theme", theme);
+            localStorage.setItem(THEME_KEY, theme);
+        });
+    }
+})();
+
 function client(endpoint, {body, ...customConfig} = {}) {
     //const headers = {'Content-Type': 'application/json'}
 

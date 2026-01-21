@@ -6,10 +6,10 @@
     <div class="w-full bg-cover bg-index ">
         <div class="hero min-h-screen font-pretendard">
             <!-- 배경이 이미 bg-index로 깔린다면 overlay만 사용 -->
-            <div class="hero-overlay bg-neutral/20"></div>
+            <div class="hero-overlay "></div>
 
-            <div class="hero-content w-full px-4 sm:px-8 lg:px-16">
-                <div class="card bg-base-100/80 backdrop-blur shadow-2xl w-full max-w-4xl">
+            <div class="hero-content w-full px-4 sm:px-8 lg:px-16 ">
+                <div class="card text-info bg-info-content/30 backdrop-blur shadow-2xl w-full max-w-4xl">
                     <div class="card-body p-4 md:p-12 text-center lg:text-left">
 
                         <div class="block lg:hidden avatar mx-auto -mt-16">

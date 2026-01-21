@@ -1,7 +1,7 @@
 @param post: freeapp.life.stella.api.web.dto.PostDetailDto
 @param userId: Long?
 
-<div class="antialiased mx-auto w-full max-w-3xl mt-10 bg-base-200 text-base-content">
+<div class="antialiased mx-auto w-full max-w-3xl mt-10 text-base-content">
     <div class="flex items-center justify-between">
         <h3 class="text-lg font-semibold">Comments</h3>
     </div>

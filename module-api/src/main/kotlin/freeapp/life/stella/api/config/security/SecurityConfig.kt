@@ -40,6 +40,8 @@ class SecurityConfig(
 ) {
 
 
+    private val log = KotlinLogging.logger {}
+
     @Bean
     fun passwordEncoder(): PasswordEncoder {
         return BCryptPasswordEncoder()
@@ -99,13 +101,19 @@ class SecurityConfig(
                         endpoint.userService(OAuth2SignService(userRepository, encoder))
                     }
                     .successHandler(CustomLoginSuccessHandler(userRepository))
+                    .failureHandler { request, response, exception ->
+                        log.error(exception.message, exception)
+                        response.sendRedirect("/auth/sign")
+                    }
                     .permitAll()
             }
             .logout {
                 it.logoutRequestMatcher(AntPathRequestMatcher("/logout", "GET"))
                 it.logoutSuccessHandler(CustomLogoutSuccessHandler())
                 it.invalidateHttpSession(true)
-                it.deleteCookies("JSESSIONID").permitAll()
+                it.clearAuthentication(true)
+                it.deleteCookies("JSESSIONID")
+                it.permitAll()
             }
             .exceptionHandling {
                 it.accessDeniedHandler(WebAccessDeniedHandler()) // 권한이 없는 사용자 접근 시

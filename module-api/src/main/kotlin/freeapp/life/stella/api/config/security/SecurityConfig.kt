@@ -95,10 +95,6 @@ class SecurityConfig(
             }
             .oauth2Login { oauth2 ->
                 oauth2
-                    .authorizationEndpoint {
-                        it.baseUri("/oauth2/authorization")
-                        //.authorizationRequestRepository(authorizationRequestRepository()) //default session repository
-                    }
                     .userInfoEndpoint { endpoint ->
                         endpoint.userService(OAuth2SignService(userRepository, encoder))
                     }

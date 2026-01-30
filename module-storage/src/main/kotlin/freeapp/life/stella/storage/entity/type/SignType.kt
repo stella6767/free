@@ -15,11 +15,11 @@ enum class SignType(
         ""
     ),
 
-//    GOOGLE(
-//        "Google",
-//        "/oauth2/authorization/google",
-//        "/img/icon/google-mark.svg"
-//    ),
+    GOOGLE(
+        "Google",
+        "/oauth2/authorization/google",
+        "/img/icon/google-mark.svg"
+    ),
 
     GITHUB(
         "GitHub",

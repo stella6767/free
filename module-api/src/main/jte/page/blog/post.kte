@@ -63,7 +63,7 @@
                     <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box shadow w-40 z-30">
                         @if (isUserLoggedIn)
                             <li>
-                                <a hx-trigger="click" hx-get="/post/editor" hx-target="#posts-container" href="/post/editor">
+                                <a hx-trigger="click" hx-get="/blog/post/editor" hx-target="#posts-container" href="/post/editor">
                                     새글쓰기
                                 </a>
                             </li>
@@ -101,7 +101,7 @@
         @if (!posts.isLast)
             <div id="post-card-container"
                  class="grid grid-cols-4 gap-4"
-                 hx-get="/posts?page=${posts.pageable.pageNumber + 1}&keyword=${keyword}&sort=createAt,${currentSort}"
+                 hx-get="/blog/posts?page=${posts.pageable.pageNumber + 1}&keyword=${keyword}&sort=createAt,${currentSort}"
                  hx-trigger="revealed"
                  hx-swap="afterend">
                 @for (post in posts.content)

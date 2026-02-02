@@ -34,7 +34,7 @@
                         @if (comment.userId == userId)
                             <button type="button"
                                     class="btn btn-ghost btn-sm text-error delete-comment"
-                                    hx-delete="/comment/${comment.commentId}"
+                                    hx-delete="/blog/comment/${comment.commentId}"
                                     hx-confirm="Are you sure you wish to delete your comment?"
                                     hx-trigger="click"
                                     hx-target="#comment-card-${comment.commentId}"

@@ -4,7 +4,7 @@
 
 <form class="card bg-base-100 border border-base-300 p-2 mx-auto"
       id="comment-form-${idAncestor}"
-      hx-post="/comment"
+      hx-post="/blog/comment"
       hx-swap="beforeend"
       hx-target="@if(idAncestor != 0L)#comment-card-${idAncestor}@else#comment-card-container@endif"
       hx-on="htmx:afterRequest: document.getElementById('comment-form-${idAncestor}').reset()">

@@ -11,6 +11,20 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=prod
     restart: unless-stopped
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+
     networks:
       - nginx-ssl_default  # NGINX 네트워크 연결
 

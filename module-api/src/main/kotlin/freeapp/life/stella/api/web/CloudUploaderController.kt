@@ -42,17 +42,17 @@ class CloudUploaderController(
 ) {
 
 
-    @GetMapping("/")
+    @GetMapping("")
     fun connectionPage(
         model: Model,
         @AuthenticationPrincipal principal: UserPrincipal?,
     ): String {
+
         if (principal != null) {
             cloudUploaderService.findCloudKeyByUser(principal.user)?.let {
                 model.addAttribute("s3Key", S3keyInfo.fromEntity(it))
             }
         }
-
         return "page/cloud/connect"
     }
 

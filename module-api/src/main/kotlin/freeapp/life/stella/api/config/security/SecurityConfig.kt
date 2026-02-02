@@ -56,7 +56,7 @@ class SecurityConfig(
                 AntPathRequestMatcher("/static/**"),
                 AntPathRequestMatcher("/img/**"),
                 AntPathRequestMatcher("/css/**"),
-                AntPathRequestMatcher("/js/**")
+                AntPathRequestMatcher("/js/**"),
             )
             web.ignoring()
                 .requestMatchers(*arrays)
@@ -69,9 +69,6 @@ class SecurityConfig(
         http: HttpSecurity,
         encoder: PasswordEncoder,
     ): SecurityFilterChain {
-
-        val authorizePattern =
-            arrayOf("/asdasdsad")
 
 
         http.csrf { csrf -> csrf.disable() }
@@ -86,14 +83,17 @@ class SecurityConfig(
                 it.configurationSource(corsConfigurationSource())
             }
 
+        val authorizePattern =
+            arrayOf("/user/**", "/cloud/**", "/blog/post")
+
 
         http
             .authorizeHttpRequests { authorizeHttpRequests ->
                 authorizeHttpRequests
-                    .requestMatchers(*authorizePattern)
-                    .authenticated()
-                    .anyRequest()
-                    .permitAll()
+                    .requestMatchers("/cloud", "/actuator/health").permitAll()
+                    .requestMatchers(*authorizePattern).authenticated()
+                    .requestMatchers("/actuator/**").hasRole(User.Role.ADMIN.name)
+                    .anyRequest().permitAll()
             }
             .oauth2Login { oauth2 ->
                 oauth2
@@ -145,9 +145,9 @@ class SecurityConfig(
             authException: AuthenticationException
         ) {
 
-            log.debug("Access denied, redirecting to index page")
+            log.debug("Authentication invalid, redirecting to sign page")
             // 인증되지 않은 경우 페이지 이동 시 사용
-            response.sendRedirect("/")
+            response.sendRedirect("/auth/sign")
             // 인증되지 않은 경우 에러코드 반환 시 사용
             //response.sendError(HttpServletResponse.SC_UNAUTHORIZED)
         }

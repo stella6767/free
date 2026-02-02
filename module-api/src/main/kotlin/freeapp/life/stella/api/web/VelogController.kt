@@ -1,6 +1,5 @@
 package freeapp.life.stella.api.web
 
-
 import freeapp.life.stella.api.service.VelogCrawler
 import freeapp.life.stella.api.util.getMarkdownValueFormLocal
 import freeapp.life.stella.api.web.dto.VelogCrawlerReqDto
@@ -11,16 +10,18 @@ import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
 
 
+@RequestMapping("/velog")
 @Controller
 class VelogController(
     private val velogCrawler: VelogCrawler
 ) {
 
 
-    @GetMapping("/velog/crawler")
+    @GetMapping("/crawler")
     fun velogCrawlerView(
         model: Model,
     ): String {
@@ -32,7 +33,7 @@ class VelogController(
 
 
     @ResponseBody
-    @GetMapping("/velog")
+    @GetMapping("")
     fun velogApiTest(
         @Valid velogCrawlerReqDto: VelogCrawlerReqDto,
         response: HttpServletResponse
@@ -42,5 +43,6 @@ class VelogController(
         headers.add(HttpHeaders.CONTENT_TYPE, "application/zip")
         velogCrawler.parseAndDownloadAsZip(velogCrawlerReqDto.username, response.outputStream)
     }
+
 
 }

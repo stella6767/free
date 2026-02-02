@@ -13,7 +13,7 @@
 <div>
     <a id="${categoryTabId}"
        class="cursor-pointer tab tab-lifted m-tab @if(categoryTabId == activeCategoryTabId) tab-active @endif"
-       hx-get="/table/${category}"
+       hx-get="/public-api/table/${category}"
        hx-target="#category-table"
        hx-on--after-on-load="
                let currentTab = document.querySelector('.tab.tab-active');

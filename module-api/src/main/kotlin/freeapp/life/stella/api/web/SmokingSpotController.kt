@@ -7,14 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
 
-
 @RequestMapping("/smoking-spot")
 @Controller
 class SmokingSpotController(
     private val smokingSpotService: SmokingSpotService,
 ) {
 
-    @GetMapping("/")
+    @GetMapping("")
     fun smokingSpotPage(
     ): String {
         return "page/smokingSpot"

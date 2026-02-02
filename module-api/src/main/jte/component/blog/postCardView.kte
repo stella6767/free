@@ -2,7 +2,7 @@
 
 <div class="card mt-5 bg-base-100 shadow-xl hover:bg-base-200 hover:shadow-2xl transition cursor-pointer h-60"
      id="post-card-${post.id}"
-     onclick="location.href='/page/post/${post.id}'">
+     onclick="location.href='/blog/page/post/${post.id}'">
 
     <figure class="bg-base-300 h-3/5">
         <img src="${post.thumbnail}"

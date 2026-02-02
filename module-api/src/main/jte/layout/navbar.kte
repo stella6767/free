@@ -22,15 +22,15 @@
             <label for="my-drawer" class="drawer-overlay"></label>
             <ul class="menu p-4 w-80 h-full bg-base-200 text-base-content  ">
                 <li><a href="/build">Build Description</a></li>
-                <li><a href="/page/todos">Todo</a></li>
+                <li><a href="/todo">Todo</a></li>
                 <li><a href="/blog">Blog</a></li>
-                <li><a href="/publicApis">Public Api List</a></li>
+                <li><a href="/public-api">Public Api List</a></li>
                 <li><a href="/chat">Chat Lab</a></li>
                 <li><a href="/velog/crawler">Velog Crawler</a></li>
                 <li><a href="/converter">Html to Kotlin</a></li>
                 <li><a href="/qr/">QR Generator</a></li>
-                <li><a href="/cloud/">Cloud Uploader</a></li>
-                <li><a href="/smoking-spot/">서울시 흡연 구역</a></li>
+                <li><a href="/cloud">Cloud Uploader</a></li>
+                <li><a href="/smoking-spot">서울시 흡연 구역</a></li>
             </ul>
         </div>
     </div>

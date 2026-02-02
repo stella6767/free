@@ -12,7 +12,7 @@
   var end = if ((start + maxPageItems - 1) < page.totalPages) start + maxPageItems - 1 else page.totalPages.toDouble()
 }
 
-<div class="flex justify-center" id="page-view">
+<div class="flex justify-center mt-5" id="page-view">
     <div class="join">
 
         <button class="join-item btn btn-sm"

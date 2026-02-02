@@ -38,7 +38,7 @@
                 const formData = new FormData();
                 formData.append('file', blob);
 
-                client('/post/file', {body: formData, method: 'POST'}).then(
+                client('/blog/post/file', {body: formData, method: 'POST'}).then(
                     data => {
                         console.log("data", data)
                         callback(data, '사진 대체 텍스트 입력');
@@ -96,11 +96,11 @@
         }
 
         let reqBody = JSON.stringify(formData);
-        client('/post', {body: reqBody, headers: headers, method: method}).then(
+        client('/blog/post', {body: reqBody, headers: headers, method: method}).then(
             data => {
                 console.log("data", data)
 
-                location.href = "/page/post/" + data;
+                location.href = "/blog/page/post/" + data;
             },
             error => {
                 console.error('oh no,  failed', error);

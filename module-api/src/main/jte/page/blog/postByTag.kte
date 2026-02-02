@@ -29,7 +29,7 @@
 
         @if (!posts.isLast)
             <div id="posts-tag-container"
-                 hx-get="/posts/tag?page=${posts.pageable.pageNumber + 1}&tagName=${tagName}"
+                 hx-get="/blog/posts/tag?page=${posts.pageable.pageNumber + 1}&tagName=${tagName}"
                  hx-trigger="revealed"
                  hx-swap="afterend">
                 @for (post in posts.content)

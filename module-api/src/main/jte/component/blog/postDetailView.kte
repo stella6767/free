@@ -24,7 +24,7 @@
 
                 @if (userId != null && (post.userId == userId))
                     <div class="flex gap-2">
-                        <button hx-get="/post/editor?postId=${post.id}"
+                        <button hx-get="/blog/post/editor?postId=${post.id}"
                                 hx-swap="outerHTML"
                                 hx-target="#post-detail"
                                 class="btn btn-sm btn-outline"

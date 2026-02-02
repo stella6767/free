@@ -1,21 +1,28 @@
 package freeapp.life.stella.api.web
 
-
 import freeapp.life.stella.api.service.TodoService
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.ResponseBody
 
 
+@RequestMapping("/todo")
 @Controller
 class TodoController(
     private val todoService: TodoService
 ) {
 
 
-    @GetMapping("/page/todos")
+    @GetMapping("")
     fun todoPage(
         model: Model,
         @PageableDefault(size = 10) pageable: Pageable
@@ -27,7 +34,7 @@ class TodoController(
 
 
 
-    @GetMapping("/todos")
+    @GetMapping("/list")
     fun findTodos(
         model: Model,
         @PageableDefault(size = 10) pageable: Pageable
@@ -40,7 +47,7 @@ class TodoController(
         return "component/todo/todosViewWithPage"
     }
 
-    @PutMapping("/todo/{id}")
+    @PutMapping("/{id}")
     fun updateTodo(
         model: Model,
         @PathVariable id: Long,
@@ -56,13 +63,13 @@ class TodoController(
 
 
     @ResponseBody
-    @DeleteMapping("/todo/{id}")
+    @DeleteMapping("/{id}")
     fun deleteTodoById(@PathVariable id: Long): String {
         todoService.deleteTodoById(id)
         return ""
     }
 
-    @PostMapping("/todo")
+    @PostMapping("")
     fun addTodo(
         model: Model,
         @RequestParam("newTodo") todo: String,

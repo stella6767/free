@@ -1,6 +1,5 @@
 package freeapp.life.stella.api.web
 
-
 import freeapp.life.stella.api.web.dto.ChatSendDto
 import gg.jte.TemplateEngine
 import gg.jte.output.StringOutput
@@ -10,11 +9,11 @@ import org.springframework.messaging.handler.annotation.Payload
 import org.springframework.messaging.handler.annotation.SendTo
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor
 import org.springframework.stereotype.Controller
-import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.ResponseBody
+import org.springframework.web.bind.annotation.RequestMapping
 
 
+@RequestMapping("/chat")
 @Controller
 class ChatController(
     private val templateEngine: TemplateEngine
@@ -22,7 +21,7 @@ class ChatController(
 
     private val log = KotlinLogging.logger { }
 
-    @GetMapping("/chat")
+    @GetMapping("")
     fun chatPage(): String {
 
         return "page/chat"

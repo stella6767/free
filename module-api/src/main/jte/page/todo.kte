@@ -5,5 +5,8 @@
 
 
 @template.layout.main(bodyContent = @`
-    @template.component.todo.todosViewWithPage(todos = todos)
+    <div class="base-container font-pretendard ">
+        @template.component.todo.todosViewWithPage(todos = todos)
+    </div>
+
 `)

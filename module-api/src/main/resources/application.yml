@@ -113,6 +113,19 @@ spring:
     import:
       - secret.yml
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: never
+
+
+
 gg:
   jte:
     templateLocation: module-api/src/main/jte

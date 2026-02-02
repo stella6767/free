@@ -1,7 +1,5 @@
 package freeapp.life.stella.api.web
 
-
-
 import freeapp.life.stella.api.config.security.UserPrincipal
 import freeapp.life.stella.api.service.UserService
 import freeapp.life.stella.api.service.sign.SignService
@@ -19,8 +17,11 @@ import mu.KotlinLogging
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.*
-
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.ResponseBody
 
 @RequestMapping("/auth")
 @Controller

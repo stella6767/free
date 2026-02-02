@@ -1,7 +1,7 @@
 @param category: String
 
 <div class="overflow-x-auto" id="category-table"
-     hx-get="/table/${category}"
+     hx-get="/public-api/table/${category}"
      hx-trigger="load">
 
 </div>

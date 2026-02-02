@@ -15,7 +15,7 @@
             <button type="button"
                     id="post-delete-btn"
                     class="btn btn-error"
-                    hx-delete="/post/${post.id}"
+                    hx-delete="/blog/post/${post.id}"
                     hx-swap="none"
                     hx-on--after-request="location.href='/blog'">
                 Delete
